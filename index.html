@@ -119,8 +119,8 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 
 
   <!-- PWA / aplicativo instalável -->
-  <link rel="manifest" href="/Pessoal-Tiago/manifest.webmanifest?v=final1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/Pessoal-Tiago/icon-180.png?v=final1">
+  <link rel="manifest" href="/Personal-Tiago/manifest.webmanifest?v=final2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/Personal-Tiago/icon-180.png?v=final2">
   <link rel="icon" type="image/png" sizes="64x64" href="./icon-64.png">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1700,7 +1700,7 @@ H4sIAAAAAAACA+y961obyZIo+t9PUfby6iq1hdBdQjTthUG4tRojb4Tt6aEZKKQSVFuo2CrJmPZ4vn32
 (function () {
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/Pessoal-Tiago/service-worker.js?v=final1', { scope: '/Pessoal-Tiago/' })
+      navigator.serviceWorker.register('/Personal-Tiago/service-worker.js?v=final2', { scope: '/Personal-Tiago/' })
         .catch(err => console.warn('Service worker não registrado:', err));
     });
   }

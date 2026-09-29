@@ -1,5 +1,5 @@
-const CACHE_NAME = 'avaliacoes-tl-final-v1';
-const BASE = '/Pessoal-Tiago/';
+const CACHE_NAME = 'avaliacoes-tl-final-v2';
+const BASE = '/Personal-Tiago/';
 const CORE = [
   BASE,
   BASE + 'index.html',
