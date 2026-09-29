@@ -1,0 +1,35 @@
+AVALIAÇÕES TL — ARQUIVOS PRONTOS PARA GITHUB PAGES
+
+IMPORTANTE: não suba apenas o ZIP. Primeiro extraia o ZIP e envie TODOS os itens que estão dentro da pasta para a raiz do repositório.
+
+Arquivos/pastas que precisam ficar juntos:
+- index.html
+- manifest.webmanifest
+- service-worker.js
+- .nojekyll
+- pasta icons
+
+PASSOS NO GITHUB
+1. Abra o repositório onde ficará o aplicativo.
+2. Toque em Add file > Upload files.
+3. Envie os arquivos acima e a pasta icons, mantendo a estrutura.
+4. Confirme o commit.
+5. Em Settings > Pages, use Deploy from a branch, branch main e pasta /(root), se ainda não estiver ativado.
+6. Aguarde o GitHub Pages publicar o endereço HTTPS.
+
+INSTALAR NO ANDROID
+1. Abra o endereço do GitHub Pages no Google Chrome.
+2. Aguarde alguns segundos na primeira abertura.
+3. Abra o menu ⋮ do Chrome.
+4. Toque em "Instalar aplicativo" ou "Adicionar à tela inicial".
+5. Confirme a instalação.
+
+O app foi preparado com:
+- nome: Tiago Lima · Avaliações
+- nome curto: Avaliações TL
+- ícone roxo aprovado
+- modo standalone (abre como aplicativo)
+- cache offline do núcleo do sistema
+- banco local do próprio sistema preservado
+
+OBSERVAÇÃO: links externos, como Google Calendar, ainda precisam de internet. O núcleo da avaliação foi preparado para abrir offline depois da primeira instalação/carregamento.
