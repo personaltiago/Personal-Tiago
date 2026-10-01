@@ -975,10 +975,198 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
     const match = nearby.match(/(\d{1,2}(?:[,.]\d+)?)\s*%/);
     return match ? Number(match[1].replace(',', '.')) : null;
   }
+  function pdfLooseNumber(text) {
+    const match = String(text || '').match(/[-+]?\d{1,3}(?:[.,]\d{1,2})?/);
+    return match ? Number(match[0].replace(',', '.')) : null;
+  }
+  function pdfExactAnchor(items, label) {
+    const key = pdfKey(label);
+    return items.filter(item => pdfKey(item.text) === key || pdfKey(item.text).startsWith(key + ' ')).sort((a, b) => b.y - a.y)[0] || null;
+  }
+  function pdfBelowValue(items, label, yRange = 55, xRange = 85) {
+    const anchor = pdfExactAnchor(items, label);
+    if (!anchor) return null;
+    const candidates = items.filter(item => {
+      const value = pdfLooseNumber(item.text);
+      return value !== null && item.y < anchor.y - 1 && item.y > anchor.y - yRange && Math.abs(item.x - anchor.x) < xRange;
+    }).sort((a, b) => (anchor.y - a.y) - (anchor.y - b.y) || Math.abs(a.x - anchor.x) - Math.abs(b.x - anchor.x));
+    return candidates.length ? pdfLooseNumber(candidates[0].text) : null;
+  }
+  function pdfRowValue(items, label) {
+    const anchor = pdfExactAnchor(items, label);
+    if (!anchor) return null;
+    const sameRow = items.filter(item => item.x > anchor.x + 12 && Math.abs(item.y - anchor.y) <= 4 && pdfLooseNumber(item.text) !== null)
+      .sort((a, b) => a.x - b.x);
+    if (sameRow.length) return pdfLooseNumber(sameRow[0].text);
+    const line = pdfLines(items).find(row => Math.abs(row.y - anchor.y) <= 4 && pdfKey(row.text).startsWith(pdfKey(label)));
+    if (!line) return null;
+    const tail = line.text.slice(line.text.toLowerCase().indexOf(label.toLowerCase()) + label.length);
+    return pdfLooseNumber(tail);
+  }
+  function pdfStandaloneNumber(text) {
+    const match = String(text || '').trim().match(/^[-+]?\d{1,3}(?:[.,]\d{1,2})?\s*(?:%|kg|cm|mm)?$/i);
+    return match ? pdfLooseNumber(match[0]) : null;
+  }
+  function pdfMetricValue(items, labels, yRange = 90, xRange = 105) {
+    const list = Array.isArray(labels) ? labels : [labels];
+    for (const label of list) {
+      const exact = pdfBelowValue(items, label, yRange, xRange);
+      if (Number.isFinite(exact)) return exact;
+    }
+    const keys = list.map(label => pdfKey(label));
+    const anchors = items.filter(item => {
+      const key = pdfKey(item.text);
+      return keys.some(target => key === target || key.startsWith(target + ' ') || target.startsWith(key + ' '));
+    }).sort((a, b) => b.y - a.y);
+    for (const anchor of anchors) {
+      const candidates = items.filter(item => {
+        const value = pdfStandaloneNumber(item.text);
+        return Number.isFinite(value) && item.y < anchor.y - 1 && item.y > anchor.y - yRange && Math.abs(item.x - anchor.x) < xRange;
+      }).sort((a, b) => (anchor.y - a.y) - (anchor.y - b.y) || Math.abs(a.x - anchor.x) - Math.abs(b.x - anchor.x));
+      if (candidates.length) return pdfStandaloneNumber(candidates[0].text);
+    }
+    return null;
+  }
+  function pdfRowValueFlexible(items, label) {
+    const direct = pdfRowValue(items, label);
+    if (Number.isFinite(direct)) return direct;
+    const key = pdfKey(label);
+    const lines = pdfLines(items);
+    for (const line of lines) {
+      const lineKey = pdfKey(line.text);
+      if (lineKey === key || lineKey.startsWith(key + ' ')) {
+        const tail = line.text.replace(new RegExp('^' + label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\s*', 'i'), '');
+        const value = pdfLooseNumber(tail);
+        if (Number.isFinite(value)) return value;
+      }
+    }
+    const firstWord = key.split(' ')[0];
+    const anchors = items.filter(item => pdfKey(item.text) === key || pdfKey(item.text).startsWith(key + ' ') || pdfKey(item.text).startsWith(firstWord))
+      .sort((a, b) => b.y - a.y);
+    for (const anchor of anchors) {
+      const candidates = items.filter(item => {
+        const value = pdfStandaloneNumber(item.text);
+        if (!Number.isFinite(value)) return false;
+        const sameRow = Math.abs(item.y - anchor.y) <= 4 && item.x > anchor.x + 10;
+        const nextWrappedRow = item.y < anchor.y + 3 && item.y > anchor.y - 28 && item.x > anchor.x + 15;
+        return sameRow || nextWrappedRow;
+      }).sort((a, b) => Math.abs(a.y - anchor.y) - Math.abs(b.y - anchor.y) || a.x - b.x);
+      if (candidates.length) return pdfStandaloneNumber(candidates[0].text);
+    }
+    return null;
+  }
+  function pdfComparisonSectionRows(items, heading, stopHeading = null) {
+    const lines = pdfLines(items);
+    const headingLine = lines.find(line => pdfKey(line.text).startsWith(pdfKey(heading)));
+    if (!headingLine) return [];
+    const stopLine = stopHeading ? lines.find(line => pdfKey(line.text).startsWith(pdfKey(stopHeading)) && line.y < headingLine.y) : null;
+    const lowY = stopLine ? stopLine.y + 3 : -Infinity;
+    return lines.filter(line => line.y < headingLine.y - 3 && line.y > lowY).sort((a, b) => b.y - a.y);
+  }
+  function pdfComparisonFolds(items) {
+    const rows = pdfComparisonSectionRows(items, 'Dobras cutâneas', 'Principais perímetros');
+    const values = [];
+    for (const row of rows) {
+      if (pdfKey(row.text).startsWith('total')) continue;
+      const matches = [...row.text.matchAll(/[-+−]?\d{1,3}(?:[.,]\d{1,2})?/g)]
+        .map(match => match[0]).filter(token => !/^[+−-]/.test(token)).map(token => Number(token.replace(',', '.')))
+        .filter(value => Number.isFinite(value) && value >= .5 && value <= 90);
+      if (matches.length) values.push(matches[0]);
+      if (values.length === folds.length) break;
+    }
+    return Object.fromEntries(folds.map(([key], index) => [key, values[index] ?? null]));
+  }
+  function pdfComparisonCircumferences(items) {
+    const rows = pdfComparisonSectionRows(items, 'Principais perímetros');
+    const pairKeys = [['neck','shoulder'], ['chest','waist'], ['abdomen','hip'], ['armLeft','armRight'], ['thighLeft','thighRight'], ['calfLeft','calfRight']];
+    const pairRows = [];
+    for (const row of rows) {
+      const tokens = [...row.text.matchAll(/[-+−]?\d{1,3}(?:[.,]\d{1,2})?/g)].map(match => match[0]);
+      const values = tokens.filter(token => !/^[+−-]/.test(token)).map(token => Number(token.replace(',', '.')))
+        .filter(value => Number.isFinite(value) && value >= 10 && value <= 250);
+      if (values.length >= 2) pairRows.push(values.slice(0, 2));
+      if (pairRows.length === pairKeys.length) break;
+    }
+    const result = Object.fromEntries(circumferences.map(([key]) => [key, null]));
+    pairKeys.forEach((keys, index) => {
+      const row = pairRows[index];
+      if (!row) return;
+      result[keys[0]] = row[0] ?? null;
+      result[keys[1]] = row[1] ?? null;
+    });
+    return result;
+  }
+  function pdfComparisonPanel(items) {
+    const lines = pdfLines(items);
+    const joined = lines.map(line => line.text).join(' ');
+    const identity = lines.find(line => /\d{2}\/\d{2}\/\d{4}.*\b\d{1,3}\s*anos/i.test(line.text));
+    const identityText = identity?.text || joined;
+    const rawDate = identityText.match(/\d{2}\/\d{2}\/\d{4}/)?.[0] || '';
+    const age = Number(identityText.match(/\b(\d{1,3})\s*anos/i)?.[1] || NaN);
+    const weight = pdfMetricValue(items, ['Peso', 'Peso corporal'], 80, 40);
+    const bmi = pdfMetricValue(items, ['Índice de Massa Corporal (IMC)', 'Índice de Massa Corporal', 'Índice de'], 95, 45);
+    const reportedFat = pdfMetricValue(items, ['Gordura corporal', 'Gordura'], 95, 45);
+    const circumference = pdfComparisonCircumferences(items);
+    const skinfolds = pdfComparisonFolds(items);
+    const height = Number.isFinite(weight) && Number.isFinite(bmi) && bmi > 0 ? Math.round(Math.sqrt(weight / bmi) * 1000) / 10 : null;
+    const sum = folds.every(([key]) => Number.isFinite(skinfolds[key])) ? folds.reduce((total, [key]) => total + skinfolds[key], 0) : null;
+    const semFoto = items.filter(item => pdfKey(item.text).startsWith('sem foto')).length;
+    return { date: pdfISO(rawDate), age: Number.isInteger(age) ? age : null, height, weight, bmi, reportedFat, circumference, folds: skinfolds, sum, hasPhotos: semFoto < 3 };
+  }
+  function parseTiagoComparisonPdf(pages) {
+    const poster = pages.find(page => {
+      const keyText = page.map(item => pdfKey(item.text)).join(' ');
+      return keyText.includes('avaliacao inicial') && keyText.includes('reavaliacao') && keyText.includes('principais evolucoes');
+    });
+    if (!poster) return null;
+    const initialCandidates = poster.filter(item => {
+      const key = pdfKey(item.text);
+      return key === 'avaliacao inicial' || key === 'avaliacao';
+    }).sort((a, b) => a.x - b.x);
+    const currentCandidates = poster.filter(item => pdfKey(item.text).startsWith('reavaliacao')).sort((a, b) => b.x - a.x);
+    const initialAnchor = initialCandidates[0];
+    const currentAnchor = currentCandidates[0];
+    if (!initialAnchor || !currentAnchor || currentAnchor.x <= initialAnchor.x) return null;
+    const gap = currentAnchor.x - initialAnchor.x;
+    const leftMax = initialAnchor.x + gap * 0.58;
+    const rightMin = currentAnchor.x - 10;
+    const initialItems = poster.filter(item => item.x <= leftMax);
+    const currentItems = poster.filter(item => item.x >= rightMin);
+    const initial = pdfComparisonPanel(initialItems);
+    const current = pdfComparisonPanel(currentItems);
+    if (!initial.date || !current.date || !Number.isInteger(initial.age) || !Number.isInteger(current.age)) return null;
+    if (!Number.isFinite(initial.weight) || !Number.isFinite(current.weight)) return null;
+    if (!Number.isFinite(initial.height) && Number.isFinite(current.height)) initial.height = current.height;
+    if (!Number.isFinite(current.height) && Number.isFinite(initial.height)) current.height = initial.height;
+    if (!Number.isFinite(initial.height) || !Number.isFinite(current.height)) return null;
+    if (!folds.every(([key]) => Number.isFinite(initial.folds[key]) && Number.isFinite(current.folds[key]))) return null;
+    const candidates = ['male', 'female'].map(equation => {
+      const a = skinfoldResult(equation, initial.age, initial.folds);
+      const b = skinfoldResult(equation, current.age, current.folds);
+      const error = (a && Number.isFinite(initial.reportedFat) ? Math.abs(a.bodyFat - initial.reportedFat) : 99) + (b && Number.isFinite(current.reportedFat) ? Math.abs(b.bodyFat - current.reportedFat) : 99);
+      return { equation, a, b, error };
+    }).sort((a, b) => a.error - b.error);
+    const chosen = candidates[0];
+    if (!chosen?.a || !chosen?.b || chosen.error > 1.5) return null;
+    const allLines = pages.flatMap(page => pdfLines(page));
+    const footerName = allLines.map(line => line.text.match(/^Relat[oó]rio de\s+(.+?)\s*[·•]\s*Jackson/i)).find(Boolean);
+    const clientName = (footerName?.[1] || '').trim();
+    if (!clientName) return null;
+    const makeData = (panel, result) => ({
+      clientName, professional: 'TIAGO LIMA', equation: chosen.equation, age: panel.age, date: panel.date,
+      nextDate: '', nextTime: '', height: panel.height, weight: panel.weight,
+      goalModel: null, goalSource: null, peakFat: null, fitnessFat: null, healthyFat: null, stageFat: null, longFat: null,
+      objective: '', circumference: panel.circumference, folds: panel.folds,
+      goal: '', notes: '', hasPhotos: panel.hasPhotos, bodyFat: result.bodyFat, reportedFat: panel.reportedFat, sum: panel.sum
+    });
+    return { kind: 'comparison', clientName, equation: chosen.equation, assessments: [makeData(initial, chosen.a), makeData(current, chosen.b)] };
+  }
   function parseTiagoPdf(pages) {
+    const comparison = parseTiagoComparisonPdf(pages);
+    if (comparison) return comparison;
     if (pages.length < 2) throw new Error('Este PDF não contém as páginas de medidas da avaliação.');
     const first = pages[0], details = pages.find(page => page.some(item => pdfKey(item.text) === 'perimetros corporais' && item.x < 120));
-    if (!details) throw new Error('Não encontrei a tabela de medidas. Use um PDF gerado por este aplicativo.');
+    if (!details) throw new Error('Este PDF foi aberto, mas o formato das medidas não foi reconhecido. Use um PDF de avaliação ou comparação gerado por este aplicativo.');
     const lines = pdfLines(first), detailLines = pdfLines(details);
     const title = lines.find(line => /^avalia(?:cao|ção) de\s+.+/i.test(line.text));
     const footerName = [...lines, ...detailLines].map(line => line.text.match(/^Relat[oó]rio de\s+(.+?)\s*[·•]\s*Jackson/i)).find(Boolean);
@@ -1028,7 +1216,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
     const stageFat = pdfGoal(first, 'Primeira etapa'), longFat = pdfGoal(first, 'Longo prazo');
     const hasThreeGoals = [competitionFat, fitnessFat, generalFat].some(Number.isFinite);
     const hasPdfGoals = [peakFat, fitnessFat, healthyFat, stageFat, longFat].some(Number.isFinite);
-    return { clientName, date, age, nextDate, nextTime, height, weight, equation, circumference, folds: skinfolds,
+    return { kind: 'single', clientName, date, age, nextDate, nextTime, height, weight, equation, circumference, folds: skinfolds,
       goalModel: (Number.isFinite(competitionFat) && Number.isFinite(fitnessFat) && !Number.isFinite(generalFat)) ? 'competitionFitnessWeight' : (hasThreeGoals ? 'threeReferenceTiers' : (peakFat !== null || healthyFat !== null ? 'ambitiousHealthy' : 'stageLong')),
       goalSource: pdfKey(lines.map(line => line.text).join(' ')).includes('sugestoes automaticas') ? (hasThreeGoals ? 'auto-reference-v3' : 'auto-reference-v2') : hasPdfGoals ? 'manual' : null,
       peakFat, fitnessFat, healthyFat, stageFat, longFat,
@@ -1810,14 +1998,31 @@ Tiago Lima · Personal Trainer`;
     return pdfjsPromise;
   }
   async function extractPdf(file) {
+    if (!file || file.size === 0) throw new Error('O arquivo selecionado está vazio.');
     if (file.size > 20_000_000) throw new Error('O PDF deve ter até 20 MB.');
+
     const bytes = new Uint8Array(await file.arrayBuffer());
-    if (new TextDecoder().decode(bytes.subarray(0, 5)) !== '%PDF-') throw new Error('O arquivo selecionado não é um PDF válido.');
+
+    // O teste antigo exigia %PDF- exatamente nos 5 primeiros bytes.
+    // Alguns PDFs válidos podem conter poucos bytes antes do cabeçalho,
+    // então agora procuramos a assinatura no início e deixamos o PDF.js
+    // fazer a validação definitiva do documento.
+    const probeLength = Math.min(bytes.length, 4096);
+    let headerOffset = -1;
+    for (let i = 0; i <= probeLength - 5; i++) {
+      if (bytes[i] === 0x25 && bytes[i + 1] === 0x50 && bytes[i + 2] === 0x44 && bytes[i + 3] === 0x46 && bytes[i + 4] === 0x2D) {
+        headerOffset = i;
+        break;
+      }
+    }
+
     const pdfjs = await pdfReader();
-    const task = pdfjs.getDocument({ data: bytes, useSystemFonts: true, isEvalSupported: false, useWasm: false });
+    let task;
     try {
+      task = pdfjs.getDocument({ data: bytes, useSystemFonts: true, isEvalSupported: false, useWasm: false });
       const pdf = await task.promise;
       if (pdf.numPages > 10) throw new Error('Este relatório tem páginas demais. Selecione o PDF de uma avaliação.');
+
       const pages = [];
       for (let n = 1; n <= pdf.numPages; n++) {
         const page = await pdf.getPage(n);
@@ -1825,7 +2030,20 @@ Tiago Lima · Personal Trainer`;
         page.cleanup();
       }
       return parseTiagoPdf(pages);
-    } finally { await task.destroy(); }
+    } catch (problem) {
+      const message = String(problem?.message || '').toLowerCase();
+      if (message.includes('password')) {
+        throw new Error('Este PDF está protegido por senha. Salve uma cópia sem senha e tente novamente.');
+      }
+      if (headerOffset < 0 || message.includes('invalid pdf') || message.includes('missing pdf') || message.includes('format')) {
+        throw new Error('Não foi possível abrir este PDF. Se ele foi salvo pelo próprio aplicativo, selecione novamente o arquivo original gerado em “Salvar em PDF”.');
+      }
+      throw problem;
+    } finally {
+      if (task) {
+        try { await task.destroy(); } catch (_) {}
+      }
+    }
   }
   const pdfImportDialog = document.getElementById('pdf-import-dialog');
   const pdfImportPreview = document.getElementById('pdf-import-preview');
@@ -1837,7 +2055,18 @@ Tiago Lima · Personal Trainer`;
     pdfImportMessage.classList.toggle('is-error', isError);
     pdfImportMessage.hidden = !message;
   }
+  function pdfImportComparisonFacts(data) {
+    const cards = data.assessments.map((item, index) => `<div class="pdf-import-facts"><div><span>${index === 0 ? 'Avaliação inicial' : 'Reavaliação'}</span><strong>${dateLabel(item.date)} · ${item.age} anos</strong></div><div><span>Peso</span><strong>${fmt(item.weight)} kg</strong></div><div><span>Gordura estimada</span><strong>${fmt(item.reportedFat ?? item.bodyFat)}%</strong></div><div><span>Soma das 7 dobras</span><strong>${fmt(item.sum)} mm</strong></div><div><span>Estatura reconstruída pelo IMC</span><strong>${fmt(item.height)} cm</strong></div><div><span>Perímetros lidos</span><strong>${circumferences.filter(([key]) => Number.isFinite(item.circumference[key])).length}/12</strong></div></div>`).join('');
+    pdfImportPreview.innerHTML = `<p>Este é um PDF de comparação do próprio aplicativo. As duas avaliações serão restauradas separadamente no histórico do aluno.</p>
+      <div class="pdf-import-identity"><label class="field"><span>Nome do aluno <b>*</b></span><input id="pdf-import-name" required maxlength="90" value="${escapeHTML(data.clientName)}" placeholder="Nome completo"></label><div class="field"><span>Equação identificada</span><input value="${data.equation === 'male' ? 'Masculina' : 'Feminina'}" readonly></div></div>
+      ${cards}<div id="pdf-import-target-box"></div>
+      <p class="pdf-import-note">Como o comparativo imprime o IMC, a estatura é reconstruída matematicamente a partir de peso e IMC. As fotos do PDF não são extraídas; adicione as imagens originais depois se quiser mantê-las no cadastro.</p>`;
+    pdfImportSave.textContent = 'Salvar 2 avaliações no histórico';
+    updatePdfImportTarget();
+  }
   function pdfImportFacts(data) {
+    if (data.kind === 'comparison') return pdfImportComparisonFacts(data);
+    pdfImportSave.textContent = 'Salvar no histórico';
     const measures = (schema, values, unit) => schema.map(([key, label]) => `<span>${escapeHTML(label)}: <strong>${Number.isFinite(values[key]) ? `${fmt(values[key])} ${unit}` : '—'}</strong></span>`).join('');
     pdfImportPreview.innerHTML = `<p>Confira a identificação e as medidas do PDF antes de salvar. Se algum campo não foi encontrado, preencha com o dado original.</p>
       <div class="pdf-import-identity"><label class="field"><span>Nome do aluno <b>*</b></span><input id="pdf-import-name" required maxlength="90" value="${escapeHTML(data.clientName)}" placeholder="Nome completo"></label><label class="field"><span>Data da avaliação <b>*</b></span><input id="pdf-import-date" type="date" required value="${escapeHTML(data.date)}"></label><label class="field"><span>Idade na avaliação <b>*</b></span><input id="pdf-import-age" inputmode="numeric" required value="${Number.isInteger(data.age) ? data.age : ''}" placeholder="Anos"></label><label class="field"><span>Estatura em centímetros <b>*</b></span><input id="pdf-import-height" inputmode="decimal" required value="${Number.isFinite(data.height) ? data.height : ''}" placeholder="Ex.: 179"></label></div>
@@ -1853,7 +2082,8 @@ Tiago Lima · Personal Trainer`;
   function updatePdfImportTarget() {
     if (!pendingPdf || !document.getElementById('pdf-import-name')) return;
     const name = document.getElementById('pdf-import-name').value.trim().replace(/\s+/g, ' ');
-    const date = document.getElementById('pdf-import-date').value;
+    const isComparison = pendingPdf.kind === 'comparison';
+    const dates = isComparison ? pendingPdf.assessments.map(item => item.date) : [document.getElementById('pdf-import-date')?.value || ''];
     const matches = name ? clients.filter(client => pdfKey(client.name) === pdfKey(name)) : [];
     const sameEquation = matches.filter(client => client.equation === pendingPdf.equation);
     const box = document.getElementById('pdf-import-target-box');
@@ -1861,11 +2091,11 @@ Tiago Lima · Personal Trainer`;
     if (matches.length > 1) {
       box.innerHTML = `<label class="field"><span>Aluno no histórico <b>*</b></span><select id="pdf-import-target" required><option value="">Selecione o aluno correto</option>${sameEquation.map(client => `<option value="${escapeHTML(client.id)}">${escapeHTML(client.name)} · ${client.assessments.length} ${client.assessments.length === 1 ? 'avaliação' : 'avaliações'}${client.assessments.length ? ` · última ${dateLabel(client.assessments.at(-1).date)}` : ''}</option>`).join('')}<option value="new">Criar novo cadastro com esse nome</option></select><small>Há mais de um cadastro com esse nome. Escolha em qual histórico salvar.</small></label>`;
       if (previousChoice && [...box.querySelector('select').options].some(option => option.value === previousChoice)) box.querySelector('select').value = previousChoice;
-    } else box.innerHTML = name ? `<p class="pdf-import-note">${matches.length ? `Cadastro encontrado: ${escapeHTML(matches[0].name)}. A avaliação será vinculada a esse histórico.` : 'Nenhum cadastro com esse nome foi encontrado. Um novo aluno será criado.'}</p>` : '';
+    } else box.innerHTML = name ? `<p class="pdf-import-note">${matches.length ? `Cadastro encontrado: ${escapeHTML(matches[0].name)}. ${isComparison ? 'As duas avaliações' : 'A avaliação'} será${isComparison ? 'ão' : ''} vinculada${isComparison ? 's' : ''} a esse histórico.` : 'Nenhum cadastro com esse nome foi encontrado. Um novo aluno será criado.'}</p>` : '';
     if (matches.length === 1 && !sameEquation.length) pdfImportNotice('Já existe um aluno com esse nome e outra equação. Confira o PDF e o cadastro antes de importar.', true);
     else if (matches.length > 1 && !sameEquation.length) pdfImportNotice('Nenhum cadastro com esse nome usa a equação deste PDF. Revise antes de criar outro.', true);
-    else if (matches.length === 1 && matches[0].assessments.some(item => item.date === date)) pdfImportNotice('Já existe uma avaliação desse aluno nesta data. Abra o registro existente para editar; a importação não substitui dados.', true);
-    else if (!name || !date || !document.getElementById('pdf-import-age').value) pdfImportNotice('Complete a identificação que não pôde ser lida do PDF. As medidas foram mantidas para conferência.');
+    else if (matches.length === 1 && matches[0].assessments.some(item => dates.includes(item.date))) pdfImportNotice('Já existe uma avaliação desse aluno em uma das datas deste PDF. A importação não substitui registros existentes.', true);
+    else if (!name || dates.some(date => !date) || (!isComparison && !document.getElementById('pdf-import-age')?.value)) pdfImportNotice('Complete a identificação que não pôde ser lida do PDF.');
     else pdfImportNotice('');
   }
   pdfImportPreview.addEventListener('input', event => { if (['pdf-import-name', 'pdf-import-date', 'pdf-import-age'].includes(event.target.id)) updatePdfImportTarget(); });
@@ -1893,9 +2123,55 @@ Tiago Lima · Personal Trainer`;
   document.getElementById('pdf-import-cancel').addEventListener('click', () => pdfImportDialog.close());
   pdfImportDialog.addEventListener('close', () => { pendingPdf = null; pdfImportBusy = false; });
   pdfImportDialog.addEventListener('cancel', event => { if (pdfImportBusy) event.preventDefault(); });
+  function importedDataFromPdf(d, clientName) {
+    return { clientName, professional: 'TIAGO LIMA', equation: d.equation,
+      age: d.age, date: d.date, nextDate: d.nextDate || '', nextTime: d.nextTime || '', height: d.height, weight: d.weight,
+      goalModel: d.goalModel, goalSource: d.goalSource, peakFat: d.peakFat, fitnessFat: d.fitnessFat, healthyFat: d.healthyFat,
+      stageFat: d.stageFat, longFat: d.longFat, objective: d.objective || '',
+      circumference: d.circumference, folds: d.folds,
+      previous: { date: '', age: null, weight: null, circumference: Object.fromEntries(circumferences.map(([key]) => [key, null])), folds: Object.fromEntries(folds.map(([key]) => [key, null])) },
+      goal: d.goal || '', notes: d.notes || '', photos: [], demo: false };
+  }
+  async function saveComparisonPdfImport(d) {
+    const clientName = document.getElementById('pdf-import-name').value.trim().replace(/\s+/g, ' ');
+    const records = d.assessments.map(item => importedDataFromPdf(item, clientName));
+    for (const data of records) {
+      const issues = validate(data);
+      if (issues.length) return pdfImportNotice(`Revise ${dateLabel(data.date)}: ${issues.join(' ')}`, true);
+      const resultCheck = skinfoldResult(data.equation, data.age, data.folds);
+      const source = d.assessments.find(item => item.date === data.date);
+      if (source?.reportedFat !== null && (!resultCheck || Math.abs(resultCheck.bodyFat - source.reportedFat) > .4)) return pdfImportNotice(`A gordura estimada de ${dateLabel(data.date)} não confere com as dobras extraídas.`, true);
+    }
+    const matches = clients.filter(client => pdfKey(client.name) === pdfKey(clientName));
+    const selectedId = document.getElementById('pdf-import-target')?.value;
+    if (matches.length > 1 && !selectedId) return pdfImportNotice('Escolha o cadastro do aluno para continuar.', true);
+    const existing = matches.length > 1 ? matches.find(client => client.id === selectedId) : matches[0];
+    let client = selectedId === 'new' ? null : existing;
+    if (client && client.equation !== d.equation) return pdfImportNotice('A equação do PDF é diferente da usada no histórico desse aluno.', true);
+    if (client?.assessments.some(record => records.some(data => data.date === record.date))) return pdfImportNotice('Já existe uma avaliação desse aluno em uma das datas do PDF. A importação não substitui registros existentes.', true);
+    pdfImportBusy = true;
+    pdfImportSave.disabled = true; pdfImportSave.textContent = 'Salvando 2 avaliações…'; pdfImportNotice('');
+    try {
+      let clientId = client?.id || null;
+      if (!clientId) {
+        const firstResult = await api('/api/workspace', { method: 'POST', body: JSON.stringify({ action: 'firstAssessment', name: clientName, equation: d.equation, data: records[0] }) });
+        clientId = firstResult.clientId;
+      } else {
+        await api('/api/workspace', { method: 'POST', body: JSON.stringify({ action: 'assessment', clientId, data: records[0] }) });
+      }
+      await api('/api/workspace', { method: 'POST', body: JSON.stringify({ action: 'assessment', clientId, data: records[1] }) });
+      selectedClientId = clientId;
+      await loadWorkspace();
+      pdfImportDialog.close();
+      showDashboard();
+      alert(`As duas avaliações de ${clientName} (${dateLabel(records[0].date)} e ${dateLabel(records[1].date)}) foram restauradas no histórico.`);
+    } catch (problem) { pdfImportNotice(problem.message || 'Não foi possível salvar as avaliações.', true); }
+    finally { pdfImportBusy = false; pdfImportSave.disabled = false; pdfImportSave.textContent = 'Salvar 2 avaliações no histórico'; }
+  }
   pdfImportSave.addEventListener('click', async () => {
     if (!pendingPdf || pdfImportBusy) return;
     const d = pendingPdf;
+    if (d.kind === 'comparison') return saveComparisonPdfImport(d);
     const data = { clientName: document.getElementById('pdf-import-name').value.trim().replace(/\s+/g, ' '), professional: 'TIAGO LIMA', equation: d.equation,
       age: number(document.getElementById('pdf-import-age').value), date: document.getElementById('pdf-import-date').value,
       nextDate: d.nextDate, nextTime: d.nextTime, height: number(document.getElementById('pdf-import-height').value), weight: d.weight,
