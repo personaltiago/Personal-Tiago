@@ -2,6 +2,13 @@ name: Gerar APK Agenda Personal
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'AgendaPersonal_AndroidStudio.zip'
+      - '.github/workflows/android-apk.yml'
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -22,36 +29,39 @@ jobs:
         with:
           gradle-version: '8.9'
 
-      - name: Localizar e extrair projeto Android
+      - name: Restaurar chave de assinatura
+        shell: bash
         run: |
-          ZIP_FILE=$(find . -maxdepth 1 -type f -name '*AndroidStudio*.zip' | head -n 1)
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > "$RUNNER_TEMP/agenda-personal-release.jks"
+          test -s "$RUNNER_TEMP/agenda-personal-release.jks"
 
-          if [ -z "$ZIP_FILE" ]; then
-            echo "Arquivo ZIP do Agenda Personal não encontrado."
-            exit 1
-          fi
-
-          mkdir android
-          unzip -q "$ZIP_FILE" -d android
-
-          PROJECT_DIR=$(dirname "$(find android -name settings.gradle | head -n 1)")
-
-          if [ -z "$PROJECT_DIR" ]; then
-            echo "Projeto Android não encontrado dentro do ZIP."
-            exit 1
-          fi
-
+      - name: Extrair projeto Android
+        shell: bash
+        run: |
+          test -f AgendaPersonal_AndroidStudio.zip
+          rm -rf android
+          mkdir -p android
+          unzip -q AgendaPersonal_AndroidStudio.zip -d android
+          PROJECT_DIR=$(dirname "$(find android -name settings.gradle -print -quit)")
+          test -n "$PROJECT_DIR"
           echo "PROJECT_DIR=$PROJECT_DIR" >> "$GITHUB_ENV"
 
-      - name: Gerar APK
+      - name: Gerar APK assinado
+        shell: bash
+        env:
+          ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/agenda-personal-release.jks
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           cd "$PROJECT_DIR"
-          gradle :app:assembleDebug
-          cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/AgendaPersonal.apk"
+          export ANDROID_VERSION_CODE=$((1000 + GITHUB_RUN_NUMBER))
+          gradle :app:assembleRelease
+          cp app/build/outputs/apk/release/app-release.apk "$GITHUB_WORKSPACE/AgendaPersonal.apk"
 
       - name: Disponibilizar APK
         uses: actions/upload-artifact@v4
         with:
-          name: Agenda-Personal-APK
+          name: Agenda-Pessoal-APK
           path: AgendaPersonal.apk
           if-no-files-found: error
