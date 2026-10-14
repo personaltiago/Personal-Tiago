@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b0b10">
+  <title>Agenda Personal — Cadastro</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b0b10;--card:#15151d;--line:#31313e;--text:#f7f7fb;--muted:#b5b5c4;--pink:#f52b7b;--pink2:#bc185a;--ok:#73d69b;--error:#ff8f9a}
+    *{box-sizing:border-box}body{margin:0;min-height:100svh;font:16px/1.45 Arial,sans-serif;color:var(--text);background:radial-gradient(700px 440px at 100% 0,#3c1029 0,transparent 65%),var(--bg)}
+    main{width:min(100%,520px);margin:auto;padding:32px 18px 42px}.brand{letter-spacing:2px;font-size:12px;font-weight:800;color:#ff91bd}.brand:after{content:"";display:block;width:45px;height:2px;margin-top:8px;background:var(--pink)}h1{font-size:clamp(30px,8vw,41px);line-height:1.05;letter-spacing:-1px;margin:20px 0 10px}p{margin:0;color:var(--muted)}.card{margin-top:28px;padding:21px 17px;border:1px solid var(--line);border-radius:20px;background:#15151ded;box-shadow:0 16px 40px #0004}.intro{font-size:14px;margin-bottom:21px}label{display:block;margin:14px 0 6px;font-size:13px;font-weight:700;color:#e7e7ee}input,select{width:100%;height:49px;border:1px solid #41414d;border-radius:11px;padding:0 13px;background:#0d0d13;color:var(--text);font:inherit}input:focus,select:focus{outline:2px solid #ee498c;border-color:transparent}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid label{margin-top:14px}button{width:100%;min-height:53px;margin-top:24px;border:0;border-radius:12px;background:linear-gradient(120deg,var(--pink),var(--pink2));color:white;font:800 16px Arial;cursor:pointer;box-shadow:0 10px 22px #9b164f44}button:disabled{opacity:.62;cursor:wait}.status{display:none;margin-top:16px;padding:12px;border-radius:10px;font-size:14px}.status.show{display:block}.status.ok{background:#153626;color:#b5ffd0}.status.error{background:#421c25;color:#ffc1c8}.small{font-size:12px;text-align:center;margin:16px 8px 0}.done{display:none;text-align:center}.done h2{font-size:27px;margin:18px 0 8px}.check{display:grid;place-items:center;width:65px;height:65px;margin:2px auto 18px;border-radius:50%;background:#193b29;color:var(--ok);font-size:33px}@media(max-width:390px){.grid{grid-template-columns:1fr}main{padding-top:24px}}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand">AGENDA PERSONAL</div>
+    <h1>Seu cadastro começa aqui.</h1>
+    <p>Preencha seus dados. O professor analisará e liberará seu acesso.</p>
+    <section class="card" id="card">
+      <form id="form">
+        <p class="intro">Você receberá acesso ao aplicativo depois da aprovação.</p>
+        <label for="nome">Nome completo</label><input id="nome" required minlength="2" maxlength="120" autocomplete="name">
+        <div class="grid"><div><label for="email">E-mail</label><input id="email" type="email" required maxlength="254" autocomplete="email"></div><div><label for="whatsapp">WhatsApp</label><input id="whatsapp" type="tel" required inputmode="numeric" placeholder="(00) 00000-0000" maxlength="25" autocomplete="tel"></div></div>
+        <div class="grid"><div><label for="nascimento">Data de nascimento</label><input id="nascimento" type="date" required></div><div><label for="genero">Gênero</label><select id="genero" required><option value="" selected disabled>Selecione</option><option>Masculino</option><option>Feminino</option><option>Prefiro não informar</option></select></div></div>
+        <label for="senha">Crie uma senha</label><input id="senha" type="password" required minlength="6" autocomplete="new-password" placeholder="Mínimo de 6 caracteres">
+        <label for="confirmar">Confirme a senha</label><input id="confirmar" type="password" required minlength="6" autocomplete="new-password">
+        <button id="submit" type="submit">Enviar cadastro</button>
+        <div id="status" class="status" role="status"></div>
+      </form>
+      <div id="done" class="done"><div class="check">✓</div><h2>Cadastro enviado.</h2><p>Seu pedido está pendente de aprovação. Quando o professor liberar, você poderá entrar no aplicativo com seu e-mail e senha.</p></div>
+    </section>
+    <p class="small">Seus dados são usados somente para seu cadastro no Agenda Personal.</p>
+  </main>
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js';
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js';
+    import { getFirestore, doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
+
+    const app = initializeApp({apiKey:'AIzaSyCiu1dqqya8vI3DLTWChz6IoW8wWRg0mtE',authDomain:'agenda-personal-bdb58.firebaseapp.com',projectId:'agenda-personal-bdb58',storageBucket:'agenda-personal-bdb58.firebasestorage.app',messagingSenderId:'1044097605904'});
+    const auth = getAuth(app), db = getFirestore(app), professorId = 'R2EmnDVcvMWt7TjPxOP6DjW1VOn1';
+    const $ = id => document.getElementById(id), form = $('form'), status = $('status'), submit = $('submit');
+    function message(text,type){status.textContent=text;status.className='status show '+type}
+    $('whatsapp').addEventListener('input',e=>{let n=e.target.value.replace(/\D/g,'').slice(0,11);e.target.value=n.length>10?`(${n.slice(0,2)}) ${n.slice(2,7)}-${n.slice(7)}`:n.length>6?`(${n.slice(0,2)}) ${n.slice(2,6)}-${n.slice(6)}`:n.length>2?`(${n.slice(0,2)}) ${n.slice(2)}`:n});
+    form.addEventListener('submit', async e=>{
+      e.preventDefault(); status.className='status';
+      const nome=$('nome').value.trim(), email=$('email').value.trim().toLowerCase(), whatsapp=$('whatsapp').value.trim(), nascimento=$('nascimento').value, genero=$('genero').value, senha=$('senha').value;
+      if(senha!==$('confirmar').value){message('As senhas não são iguais.','error');return}
+      if(whatsapp.replace(/\D/g,'').length<10){message('Digite um WhatsApp válido com DDD.','error');return}
+      submit.disabled=true; submit.textContent='Enviando…';
+      try{
+        const result=await createUserWithEmailAndPassword(auth,email,senha);
+        await updateProfile(result.user,{displayName:nome});
+        await setDoc(doc(db,'usuarios',result.user.uid),{nome,email,whatsapp,nascimento,genero,perfil:'aluno',ativo:false,professorId,criadoEm:serverTimestamp()});
+        form.style.display='none';$('done').style.display='block';
+      }catch(error){
+        const readable={
+          'auth/email-already-in-use':'Esse e-mail já possui cadastro. Use outro e-mail ou entre pelo aplicativo.',
+          'auth/invalid-email':'Digite um e-mail válido.','auth/weak-password':'A senha precisa ter pelo menos 6 caracteres.',
+          'auth/operation-not-allowed':'O cadastro por e-mail ainda não está habilitado no Firebase.'
+        };
+        message(readable[error.code]||'Não foi possível enviar agora. Verifique a internet e tente novamente.','error');
+      }finally{submit.disabled=false;submit.textContent='Enviar cadastro'}
+    });
+  </script>
+</body>
+</html>
