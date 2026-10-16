@@ -28,7 +28,10 @@
     *{box-sizing:border-box}body{margin:0;min-height:100svh;font:16px/1.45 Arial,sans-serif;color:var(--text);background:radial-gradient(700px 440px at 100% 0,#3c1029 0,transparent 65%),var(--bg)}
     main{width:min(100%,520px);margin:auto;padding:32px 18px 42px}.brand{letter-spacing:2px;font-size:12px;font-weight:800;color:#ff91bd}.brand:after{content:"";display:block;width:45px;height:2px;margin-top:8px;background:var(--pink)}h1{font-size:clamp(30px,8vw,41px);line-height:1.05;letter-spacing:-1px;margin:20px 0 10px}p{margin:0;color:var(--muted)}.card{margin-top:28px;padding:21px 17px;border:1px solid var(--line);border-radius:20px;background:#15151ded;box-shadow:0 16px 40px #0004}.intro{font-size:14px;margin-bottom:21px}label{display:block;margin:14px 0 6px;font-size:13px;font-weight:700;color:#e7e7ee}input,select{width:100%;height:49px;border:1px solid #41414d;border-radius:11px;padding:0 13px;background:#0d0d13;color:var(--text);font:inherit}input:focus,select:focus{outline:2px solid #ee498c;border-color:transparent}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid label{margin-top:14px}button{width:100%;min-height:53px;margin-top:24px;border:0;border-radius:12px;background:linear-gradient(120deg,var(--pink),var(--pink2));color:white;font:800 16px Arial;cursor:pointer;box-shadow:0 10px 22px #9b164f44}button:disabled{opacity:.62;cursor:wait}.status{display:none;margin-top:16px;padding:12px;border-radius:10px;font-size:14px}.status.show{display:block}.status.ok{background:#153626;color:#b5ffd0}.status.error{background:#421c25;color:#ffc1c8}.small{font-size:12px;text-align:center;margin:16px 8px 0}.done{display:none;text-align:center}.done h2{font-size:27px;margin:18px 0 8px}.check{display:grid;place-items:center;width:65px;height:65px;margin:2px auto 18px;border-radius:50%;background:#193b29;color:var(--ok);font-size:33px}@media(max-width:390px){.grid{grid-template-columns:1fr}main{padding-top:24px}}
   </style>
-</head>
+<style id="ap-registration-photo-css">.registration-photo{padding:16px;border:1px solid var(--line,#41414d);border-radius:14px;margin:18px 0 22px;text-align:center}.registration-photo>strong{display:block;font-size:15px}.registration-photo>strong span{font-size:13px;font-weight:400;color:var(--muted,#b5b5c4)}.registration-photo-preview{width:112px;height:112px;border-radius:50%;margin:14px auto;overflow:hidden;background:#23212b;display:grid;place-items:center;border:2px solid #b55b91}.registration-photo-preview span{font-size:44px}.registration-photo-preview img{width:100%;height:100%;object-fit:cover}.registration-photo-actions{display:flex;gap:10px;flex-wrap:wrap}.registration-photo .registration-photo-actions button{flex:1;min-width:110px;margin:0;min-height:46px;padding:10px 8px;font-size:14px}.registration-photo #registrationPhotoRemove{background:transparent;box-shadow:none;border:1px solid #6a5268;margin-top:12px;min-height:40px;font-size:13px}.registration-photo [hidden]{display:none!important}.registration-photo .registration-photo-input{display:none}.registration-photo-status{font-size:12px;line-height:1.5;margin:12px 0 0;color:var(--muted,#b5b5c4)}.registration-photo-status[data-error="true"]{color:#ff96a6}
+
+.registration-photo #registrationPhotoAdjust{margin:0 0 14px;min-height:44px;background:transparent;border:1px solid #94617f;box-shadow:none;font-size:14px}.registration-photo-editor{text-align:left;margin:14px 0 18px}.registration-photo-editor>strong{display:block;font-size:16px}.registration-photo-editor>p{font-size:13px;line-height:1.5;margin:8px 0 12px}.registration-photo-editor canvas{display:block;width:100%;max-width:320px;height:auto;margin:0 auto;background:#111;touch-action:none;cursor:grab;border-radius:12px}.registration-photo-editor canvas:active{cursor:grabbing}.registration-photo-editor canvas:focus-visible{outline:2px solid #ed91be;outline-offset:3px}.registration-photo .registration-photo-zoom{display:grid;grid-template-columns:auto minmax(0,1fr) 42px;align-items:center;gap:8px;margin:14px 0}.registration-photo-zoom input{padding:0;height:40px;min-height:40px;accent-color:#dc5595;min-width:0}.registration-photo-zoom output{font-size:13px;text-align:right}.registration-photo-crop-actions{display:flex;flex-wrap:wrap;gap:8px}.registration-photo .registration-photo-crop-actions button{margin:0;min-height:46px;flex:1 1 100px;font-size:13px;padding:10px 6px}.registration-photo #registrationPhotoCancel{background:transparent;border:1px solid #94617f;box-shadow:none}
+</style></head>
 <body>
   <main>
     <div class="brand">AGENDA PERSONAL</div>
@@ -36,7 +39,24 @@
     <p>Preencha seus dados. O professor analisará e liberará seu acesso.</p>
     <section class="card" id="card">
       <form id="form">
-        <p class="intro">Você receberá acesso ao aplicativo depois da aprovação.</p>
+        <p class="intro">Você receberá acesso ao aplicativo depois da aprovação.</p><div class="registration-photo" role="group" aria-labelledby="registrationPhotoTitle">
+ <strong id="registrationPhotoTitle">Sua foto <span>(opcional)</span></strong>
+ <div class="registration-photo-preview"><span id="registrationPhotoPlaceholder" aria-hidden="true">👤</span><img id="registrationPhotoPreview" alt="Prévia da sua foto de cadastro" width="112" height="112" hidden></div>
+ <button id="registrationPhotoAdjust" type="button" hidden>Ajustar recorte</button>
+ <div id="registrationPhotoEditor" class="registration-photo-editor" hidden>
+  <strong>Escolha o centro da foto</strong>
+  <p id="registrationPhotoCropHelp">Arraste a foto dentro do círculo. Ajuste o zoom para aproximar.</p>
+  <canvas id="registrationPhotoCrop" width="320" height="320" tabindex="0" aria-label="Recorte da foto: arraste para escolher o centro" aria-describedby="registrationPhotoCropHelp"></canvas>
+  <label class="registration-photo-zoom" for="registrationPhotoZoom"><span>Zoom</span><input id="registrationPhotoZoom" type="range" min="1" max="4" step="0.05" value="1"><output id="registrationPhotoZoomValue" for="registrationPhotoZoom">1×</output></label>
+  <div class="registration-photo-crop-actions"><button id="registrationPhotoCancel" type="button">Cancelar</button><button id="registrationPhotoApply" type="button">Usar este recorte</button></div>
+ </div>
+ <div class="registration-photo-actions"><button id="registrationPhotoGallery" type="button">Escolher foto</button><button id="registrationPhotoCamera" type="button">Tirar foto</button></div>
+ <button id="registrationPhotoRemove" type="button" hidden>Remover foto</button>
+ <input id="registrationPhotoFile" class="registration-photo-input" type="file" accept="image/jpeg,image/png,image/webp">
+ <input id="registrationPhotoCameraFile" class="registration-photo-input" type="file" accept="image/jpeg,image/png,image/webp" capture="user">
+ <p id="registrationPhotoStatus" class="registration-photo-status" role="status" aria-live="polite">A foto será enviada ao professor junto com seu cadastro. Você também pode continuar sem foto.</p>
+</div>
+
         <label for="nome">Nome completo</label><input id="nome" required minlength="2" maxlength="120" autocomplete="name">
         <div class="grid"><div><label for="email">E-mail</label><input id="email" type="email" required maxlength="254" autocomplete="email"></div><div><label for="whatsapp">WhatsApp</label><input id="whatsapp" type="tel" required inputmode="numeric" placeholder="(00) 00000-0000" maxlength="25" autocomplete="tel"></div></div>
         <div class="grid"><div><label for="nascimento">Data de nascimento</label><input id="nascimento" type="date" required></div><div><label for="genero">Gênero</label><select id="genero" required><option value="" selected disabled>Selecione</option><option>Masculino</option><option>Feminino</option><option>Prefiro não informar</option></select></div></div>
@@ -49,37 +69,103 @@
     </section>
     <p class="small">Seus dados são usados somente para seu cadastro no Agenda Personal.</p>
   </main>
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js';
-    import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js';
-    import { getFirestore, doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
-
-    const app = initializeApp({apiKey:'AIzaSyCiu1dqqya8vI3DLTWChz6IoW8wWRg0mtE',authDomain:'agenda-personal-bdb58.firebaseapp.com',projectId:'agenda-personal-bdb58',storageBucket:'agenda-personal-bdb58.firebasestorage.app',messagingSenderId:'1044097605904'});
-    const auth = getAuth(app), db = getFirestore(app), professorId = 'R2EmnDVcvMWt7TjPxOP6DjW1VOn1';
-    const $ = id => document.getElementById(id), form = $('form'), status = $('status'), submit = $('submit');
-    function message(text,type){status.textContent=text;status.className='status show '+type}
-    $('whatsapp').addEventListener('input',e=>{let n=e.target.value.replace(/\D/g,'').slice(0,11);e.target.value=n.length>10?`(${n.slice(0,2)}) ${n.slice(2,7)}-${n.slice(7)}`:n.length>6?`(${n.slice(0,2)}) ${n.slice(2,6)}-${n.slice(6)}`:n.length>2?`(${n.slice(0,2)}) ${n.slice(2)}`:n});
-    form.addEventListener('submit', async e=>{
-      e.preventDefault(); status.className='status';
-      const nome=$('nome').value.trim(), email=$('email').value.trim().toLowerCase(), whatsapp=$('whatsapp').value.trim(), nascimento=$('nascimento').value, genero=$('genero').value, senha=$('senha').value;
-      if(senha!==$('confirmar').value){message('As senhas não são iguais.','error');return}
-      if(whatsapp.replace(/\D/g,'').length<10){message('Digite um WhatsApp válido com DDD.','error');return}
-      submit.disabled=true; submit.textContent='Enviando…';
-      try{
-        const result=await createUserWithEmailAndPassword(auth,email,senha);
-        await updateProfile(result.user,{displayName:nome});
-        await setDoc(doc(db,'usuarios',result.user.uid),{nome,email,whatsapp,nascimento,genero,perfil:'aluno',ativo:false,professorId,criadoEm:serverTimestamp()});
-        form.style.display='none';$('done').style.display='block';
-      }catch(error){
-        const readable={
-          'auth/email-already-in-use':'Esse e-mail já possui cadastro. Use outro e-mail ou entre pelo aplicativo.',
-          'auth/invalid-email':'Digite um e-mail válido.','auth/weak-password':'A senha precisa ter pelo menos 6 caracteres.',
-          'auth/operation-not-allowed':'O cadastro por e-mail ainda não está habilitado no Firebase.'
-        };
-        message(readable[error.code]||'Não foi possível enviar agora. Verifique a internet e tente novamente.','error');
-      }finally{submit.disabled=false;submit.textContent='Enviar cadastro'}
-    });
-  </script>
-</body>
+<script type="module">import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js';
+import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,updateProfile} from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js';
+import {getFirestore,doc,getDoc,setDoc,updateDoc,serverTimestamp} from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
+const app=initializeApp({apiKey:'AIzaSyCiu1dqqya8vI3DLTWChz6IoW8wWRg0mtE',authDomain:'agenda-personal-bdb58.firebaseapp.com',projectId:'agenda-personal-bdb58',storageBucket:'agenda-personal-bdb58.firebasestorage.app',messagingSenderId:'1044097605904'});
+const auth=getAuth(app),db=getFirestore(app),professorId='R2EmnDVcvMWt7TjPxOP6DjW1VOn1';
+const $=id=>document.getElementById(id),form=$('form'),status=$('status'),submit=$('submit');let busy=false;
+function message(text,type){status.textContent=text;status.className='status show '+type}
+$('nascimento').max=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);
+$('whatsapp').addEventListener('input',e=>{let n=e.target.value.replace(/\D/g,'').slice(0,11);e.target.value=n.length>10?`(${n.slice(0,2)}) ${n.slice(2,7)}-${n.slice(7)}`:n.length>6?`(${n.slice(0,2)}) ${n.slice(2,6)}-${n.slice(6)}`:n.length>2?`(${n.slice(0,2)}) ${n.slice(2)}`:n});
+form.addEventListener('submit',async e=>{
+ e.preventDefault();if(busy)return;status.className='status';
+ const nome=$('nome').value.trim(),email=$('email').value.trim().toLowerCase(),whatsapp=$('whatsapp').value.trim(),nascimento=$('nascimento').value,genero=$('genero').value,senha=$('senha').value;
+ if(senha!==$('confirmar').value){message('As senhas não são iguais.','error');return}
+ if(whatsapp.replace(/\D/g,'').length<10){message('Digite um WhatsApp válido com DDD.','error');return}
+ let fotoCadastro='';try{fotoCadastro=window.APRegistrationPhoto.value()}catch(error){message(error.message,'error');return}
+ busy=true;submit.disabled=true;submit.textContent='Enviando…';
+ try{
+  let user=auth.currentUser;
+  if(!user||String(user.email||'').toLowerCase()!==email){try{user=(await createUserWithEmailAndPassword(auth,email,senha)).user}catch(error){if(error.code!=='auth/email-already-in-use')throw error;user=(await signInWithEmailAndPassword(auth,email,senha)).user}}
+  if(user.uid===professorId)throw Error('Use o e-mail do aluno para solicitar cadastro.');
+  const ref=doc(db,'usuarios',user.uid),prior=await getDoc(ref);let approved=false;
+  if(prior.exists()){
+   const current=prior.data();if(current.professorId!==professorId||current.perfil!=='aluno')throw Error('Esta conta já possui outro cadastro. Fale com o professor.');
+   approved=current.ativo===true;if(fotoCadastro&&!approved)await updateDoc(ref,{fotoCadastro});
+  }else{
+   const data={nome,email,whatsapp,nascimento,genero,perfil:'aluno',ativo:false,professorId,criadoEm:serverTimestamp()};if(fotoCadastro)data.fotoCadastro=fotoCadastro;
+   await setDoc(ref,data);try{await updateProfile(user,{displayName:nome})}catch(_){}
+  }
+  form.style.display='none';$('done').style.display='block';if(approved){$('done').querySelector('h2').textContent='Seu cadastro já foi aprovado.';$('done').querySelector('p').textContent='Entre no aplicativo com seu e-mail e sua senha.'}
+ }catch(error){
+  const readable={'auth/invalid-credential':'Esse e-mail já tem cadastro. Confira a senha e tente novamente.','auth/invalid-email':'Digite um e-mail válido.','auth/weak-password':'A senha precisa ter pelo menos 6 caracteres.','auth/operation-not-allowed':'O cadastro por e-mail ainda não está habilitado.','permission-denied':fotoCadastro?'O cadastro com foto precisa ser liberado nas permissões do formulário pelo professor. Sua foto foi mantida para tentar novamente.':'O formulário ainda não tem permissão para receber este cadastro. Avise o professor.'};
+  message(readable[error.code]||error.message||'Não foi possível enviar agora. Confira sua internet e tente novamente.','error');
+ }finally{busy=false;submit.disabled=false;submit.textContent='Enviar cadastro'}
+});
+</script>
+<script id="ap-registration-photo-js">(function(){
+ 'use strict';
+ const el=id=>document.getElementById(id),canvas=el('registrationPhotoCrop');
+ let photo='',working=false,ticket=0,saved=null,draft=null,drag=null;
+ const say=(text,error=false)=>{const n=el('registrationPhotoStatus');n.textContent=text;n.dataset.error=String(error)};
+ const clamp=(n,min,max)=>Math.min(max,Math.max(min,n));
+ function constrain(){if(!draft)return;const side=Math.min(draft.image.naturalWidth,draft.image.naturalHeight)/draft.zoom;draft.x=clamp(draft.x,side/2,draft.image.naturalWidth-side/2);draft.y=clamp(draft.y,side/2,draft.image.naturalHeight-side/2)}
+ function paint(target=canvas,mask=true){
+  if(!draft)return;constrain();const g=target.getContext('2d'),size=target.width,side=Math.min(draft.image.naturalWidth,draft.image.naturalHeight)/draft.zoom;
+  g.fillStyle='#15151d';g.fillRect(0,0,size,size);g.drawImage(draft.image,draft.x-side/2,draft.y-side/2,side,side,0,0,size,size);
+  if(mask){g.save();g.fillStyle='rgba(0,0,0,.65)';g.beginPath();g.rect(0,0,size,size);g.arc(size/2,size/2,size/2-2,0,2*Math.PI,true);g.fill('evenodd');g.strokeStyle='#f1c2dd';g.lineWidth=2;g.beginPath();g.arc(size/2,size/2,size/2-2,0,Math.PI*2);g.stroke();g.restore()}
+ }
+ function render(){
+  const image=el('registrationPhotoPreview');image.hidden=!photo;if(photo)image.src=photo;else image.removeAttribute('src');
+  el('registrationPhotoPlaceholder').hidden=!!photo;image.parentElement.hidden=!!draft;
+  el('registrationPhotoRemove').hidden=!photo;el('registrationPhotoAdjust').hidden=!photo||!saved||!!draft;
+  el('registrationPhotoEditor').hidden=!draft;
+  if(draft){el('registrationPhotoZoom').value=String(draft.zoom);el('registrationPhotoZoomValue').textContent=draft.zoom.toFixed(2).replace(/0+$/,'').replace(/\.$/,'')+'×';paint()}
+ }
+ function openCrop(value){draft={...value};drag=null;render();say('Arraste a foto dentro do círculo e ajuste o zoom. Depois toque em Usar este recorte.');canvas.focus({preventScroll:true});el('registrationPhotoEditor').scrollIntoView({block:'nearest',behavior:'smooth'})}
+ async function choose(file){
+  if(!file)return;const token=++ticket;working=false;
+  if(file.size>8*1024*1024){say('Escolha uma foto de até 8 MB.',true);return}
+  if(!/^image\/(jpeg|png|webp)$/i.test(file.type)){say('Escolha uma foto JPG, PNG ou WebP.',true);return}
+  working=true;say('Preparando sua foto…');let url='';
+  try{
+   url=URL.createObjectURL(file);const image=new Image();await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=reject;image.src=url});
+   if(token!==ticket)return;if(!image.naturalWidth||!image.naturalHeight)throw Error();
+   openCrop({image,x:image.naturalWidth/2,y:image.naturalHeight/2,zoom:1});
+  }catch(_){if(token===ticket)say('Não foi possível abrir essa foto. Escolha outra imagem.',true)}
+  finally{if(url)URL.revokeObjectURL(url);if(token===ticket)working=false}
+ }
+ canvas.addEventListener('pointerdown',event=>{
+  if(!draft||drag||event.button>0)return;event.preventDefault();drag={id:event.pointerId,x:event.clientX,y:event.clientY};try{canvas.setPointerCapture(event.pointerId)}catch(_){}
+ });
+ canvas.addEventListener('pointermove',event=>{
+  if(!draft||drag?.id!==event.pointerId)return;event.preventDefault();const side=Math.min(draft.image.naturalWidth,draft.image.naturalHeight)/draft.zoom,ratio=side/canvas.getBoundingClientRect().width;
+  draft.x-=(event.clientX-drag.x)*ratio;draft.y-=(event.clientY-drag.y)*ratio;drag.x=event.clientX;drag.y=event.clientY;paint();
+ });
+ for(const name of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(name,event=>{if(drag?.id===event.pointerId)drag=null});
+ canvas.addEventListener('keydown',event=>{
+  if(!draft||!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;event.preventDefault();const step=Math.min(draft.image.naturalWidth,draft.image.naturalHeight)/draft.zoom/30;
+  if(event.key==='ArrowLeft')draft.x+=step;if(event.key==='ArrowRight')draft.x-=step;if(event.key==='ArrowUp')draft.y+=step;if(event.key==='ArrowDown')draft.y-=step;paint();
+ });
+ el('registrationPhotoZoom').oninput=event=>{if(!draft)return;draft.zoom=clamp(Number(event.target.value)||1,1,4);render()};
+ el('registrationPhotoApply').onclick=()=>{
+  if(!draft||working)return;
+  try{
+   const output=document.createElement('canvas');output.width=output.height=320;paint(output,false);let compressed='';
+   for(const quality of [.82,.65,.45]){compressed=output.toDataURL('image/jpeg',quality);if(compressed.length<=120000)break}
+   if(compressed.length>120000||!/^data:image\/jpeg;base64,[A-Za-z0-9+/]+={0,2}$/.test(compressed))throw Error();
+   photo=compressed;saved={...draft};draft=null;drag=null;render();say('Foto pronta para enviar com seu cadastro.');el('registrationPhotoAdjust').focus({preventScroll:true});
+  }catch(_){say('Não foi possível preparar esse recorte. Tente outra foto.',true)}
+ };
+ el('registrationPhotoCancel').onclick=()=>{draft=null;drag=null;render();say(photo?'A foto anterior foi mantida.':'Recorte cancelado. Você pode escolher outra foto ou continuar sem foto.');el('registrationPhotoGallery').focus({preventScroll:true})};
+ el('registrationPhotoAdjust').onclick=()=>{if(saved)openCrop(saved)};
+ for(const [button,input]of [['registrationPhotoGallery','registrationPhotoFile'],['registrationPhotoCamera','registrationPhotoCameraFile']]){
+  el(button).onclick=()=>{const n=el(input);n.value='';n.click()};el(input).onchange=e=>choose(e.target.files?.[0]);
+ }
+ el('registrationPhotoRemove').onclick=()=>{ticket++;working=false;photo='';saved=null;draft=null;drag=null;render();say('Foto removida. Você pode continuar sem foto.')};
+ window.APRegistrationPhoto=Object.freeze({value(){if(working)throw Error('Aguarde a preparação da foto antes de enviar.');if(draft)throw Error('Confirme o recorte da foto ou toque em Cancelar antes de enviar.');return photo}});render();
+})();
+</script></body>
 </html>
 
