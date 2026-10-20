@@ -1,19 +1,43 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" prefix="og: https://ogp.me/ns#">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#100c17">
+
 <title>Instale o Agenda Personal</title>
 <meta name="description" content="Instale o Agenda Personal. Escolha Android ou iPhone para continuar.">
+
 <meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Agenda Personal">
+<meta property="og:url" content="https://personaltiago.github.io/Personal-Tiago/instalar.html">
 <meta property="og:title" content="Agenda Personal — Instale no seu celular">
 <meta property="og:description" content="Escolha Android ou iPhone para continuar.">
-<meta property="og:image" content="https://raw.githubusercontent.com/personaltiago/Personal-Tiago/main/fundo-agenda.png">
-<meta property="og:image:alt" content="Academia com iluminação roxa — Agenda Personal">
+<meta property="og:image" content="https://personaltiago.github.io/Personal-Tiago/icon-512.png">
+<meta property="og:image:secure_url" content="https://personaltiago.github.io/Personal-Tiago/icon-512.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:image:alt" content="Logo Agenda Personal">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Agenda Personal — Instale no seu celular">
+<meta name="twitter:description" content="Escolha Android ou iPhone para continuar.">
+<meta name="twitter:image" content="https://personaltiago.github.io/Personal-Tiago/icon-512.png">
+
+<link rel="icon" type="image/png" href="icon-64.png">
+
 <style>
-*{box-sizing:border-box}
-html{min-height:100%;background:#0b0810}
+*{
+  box-sizing:border-box;
+}
+
+html{
+  min-height:100%;
+  background:#0b0810;
+}
+
 body{
   margin:0;
   min-height:100vh;
@@ -21,23 +45,34 @@ body{
   color:#fff;
   font-family:Arial,Helvetica,sans-serif;
   background:#0b0810;
+  isolation:isolate;
 }
+
 .backdrop{
   position:fixed;
   inset:0;
   z-index:-1;
+  pointer-events:none;
   background:
-    linear-gradient(180deg,rgba(7,4,12,.12),rgba(7,4,12,.22)),
+    linear-gradient(
+      180deg,
+      rgba(7,4,12,.12),
+      rgba(7,4,12,.22)
+    ),
     url("fundo-agenda.png") center center/cover no-repeat;
 }
-body{isolation:isolate}
+
 main{
   width:min(78%,324px);
   margin:0 auto;
   padding:clamp(40px,9svh,82px) 0 32px;
   text-align:center;
 }
-.brand{margin-bottom:23px}
+
+.brand{
+  margin-bottom:23px;
+}
+
 .brand strong{
   display:block;
   font-size:clamp(34px,10.6vw,44px);
@@ -46,6 +81,7 @@ main{
   line-height:1;
   letter-spacing:-1.8px;
 }
+
 .brand span{
   display:block;
   margin:7px 0 0 6px;
@@ -53,6 +89,7 @@ main{
   font-weight:600;
   letter-spacing:7px;
 }
+
 .brand::after{
   content:"";
   display:block;
@@ -62,6 +99,7 @@ main{
   border-radius:2px;
   background:#9d39ef;
 }
+
 h1{
   margin:0;
   font-size:clamp(25px,7.4vw,31px);
@@ -69,13 +107,19 @@ h1{
   line-height:1.17;
   letter-spacing:-.7px;
 }
+
 .intro{
   margin:12px -8px 22px;
   color:#d4cddc;
   font-size:14px;
   line-height:1.5;
 }
-.choices{display:grid;gap:11px}
+
+.choices{
+  display:grid;
+  gap:11px;
+}
+
 .choice{
   display:flex;
   align-items:center;
@@ -88,10 +132,12 @@ h1{
   text-decoration:none;
   text-align:left;
 }
+
 .choice.android{
   border-color:#792fba;
   background:linear-gradient(110deg,#55118b,#41106e);
 }
+
 .symbol{
   display:flex;
   align-items:center;
@@ -103,18 +149,24 @@ h1{
   border-right:1px solid rgba(255,255,255,.3);
   flex:none;
 }
+
 .symbol svg{
   display:block;
   width:25px;
   height:29px;
   fill:currentColor;
 }
-.label{min-width:0}
+
+.label{
+  min-width:0;
+}
+
 .choice strong{
   display:block;
   font-size:clamp(14px,4.2vw,17px);
   line-height:1.3;
 }
+
 .choice small{
   display:block;
   margin-top:4px;
@@ -122,22 +174,34 @@ h1{
   font-size:12px;
   line-height:1.4;
 }
-.choice:hover{filter:brightness(1.12)}
+
+.choice:hover{
+  filter:brightness(1.12);
+}
+
 .choice:focus-visible{
   outline:3px solid #fff;
   outline-offset:4px;
 }
+
 details{
   margin-top:17px;
   color:#d4c9df;
   font-size:12px;
   line-height:1.7;
 }
+
 summary{
   width:fit-content;
   margin:auto;
   cursor:pointer;
 }
+
+summary:focus-visible{
+  outline:2px solid #fff;
+  outline-offset:4px;
+}
+
 details p{
   margin:10px 0 0;
   padding:12px;
@@ -145,13 +209,18 @@ details p{
   border-radius:12px;
   background:rgba(12,8,18,.88);
 }
+
 @media(min-width:700px){
-  main{padding-top:70px}
+  main{
+    padding-top:70px;
+  }
 }
 </style>
 </head>
+
 <body>
 <div class="backdrop" aria-hidden="true"></div>
+
 <main>
   <header class="brand" aria-label="Agenda Personal">
     <strong>AGENDA</strong>
@@ -159,34 +228,45 @@ details p{
   </header>
 
   <h1>Instale o<br>Agenda Personal</h1>
-  <p class="intro">Escolha seu celular para continuar.</p>
+
+  <p class="intro">
+    Escolha seu celular para continuar.
+  </p>
 
   <nav class="choices" aria-label="Opções de instalação">
-    <a class="choice android"
-       href="https://github.com/personaltiago/Personal-Tiago/releases/download/v1.143/AgendaPersonal-v1.143.apk">
+
+    <a
+      class="choice android"
+      href="https://github.com/personaltiago/Personal-Tiago/releases/download/v1.143/AgendaPersonal-v1.143.apk"
+    >
       <span class="symbol">
         <svg viewBox="0 0 32 36" aria-hidden="true">
           <path d="M8 10 5 5l1.5-.8 3 5a14 14 0 0 1 13 0l3-5L27 5l-3 5a10 10 0 0 1 4 8H4a10 10 0 0 1 4-8Zm2 3a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Zm12 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3ZM4 20h24v9a3 3 0 0 1-3 3h-1v3h-4v-3h-8v3H8v-3H7a3 3 0 0 1-3-3Z"/>
         </svg>
       </span>
+
       <span class="label">
         <strong>Baixar para Android</strong>
         <small>APK · Versão 1.143</small>
       </span>
     </a>
 
-    <a class="choice"
-       href="https://agenda-personal-distribuicao.silvanaoliveira1411.chatgpt.site/app/">
+    <a
+      class="choice"
+      href="https://agenda-personal-distribuicao.silvanaoliveira1411.chatgpt.site/app/"
+    >
       <span class="symbol">
         <svg viewBox="0 0 24 28" aria-hidden="true">
           <path d="M17 0c.3 3-1.8 5.7-4.6 6 .1-2.9 2-5.2 4.6-6ZM20.7 20.5c-.7 1.7-1 2.4-2 3.8-1.3 1.8-3.1 4-5.2 3.7-1.9-.1-2.4-1.2-4.9-1.2s-3.1 1.1-5 1.2c-2 .2-3.6-1.8-4.9-3.6C-4.8 18 0 8.4 5 8.3c2.1 0 3.4 1.2 5.1 1.2s2.8-1.2 5.1-1.2c1.8 0 3.8 1 5.1 2.6-4.5 2.4-3.8 8.4.4 9.6Z" transform="translate(3 0) scale(.87 1)"/>
         </svg>
       </span>
+
       <span class="label">
         <strong>Instalar no iPhone</strong>
         <small>Versão web pelo Safari</small>
       </span>
     </a>
+
   </nav>
 
   <details>
