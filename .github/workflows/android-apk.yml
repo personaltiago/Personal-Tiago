@@ -1,52 +1,64 @@
-name: Gerar APK Agenda Personal
+name: Gerar e publicar APK Agenda Personal
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'AgendaPersonal_AndroidStudio.zip'
-      - '.github/workflows/android-apk.yml'
 
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: agenda-publicar-apk
+  cancel-in-progress: false
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Baixar arquivos
+      - name: Baixar repositório
         uses: actions/checkout@v4
-
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Configurar Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
-
       - name: Configurar Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-
-      - name: Restaurar chave de assinatura
+      - name: Extrair o projeto com o nome atual
         shell: bash
         run: |
-          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > "$RUNNER_TEMP/agenda-personal-release.jks"
+          python3 - <<'PY'
+          import os, stat, zipfile
+          from pathlib import Path
+          source = Path('AgendaPersonal_AndroidStudio_v1.65_contas_convites.zip')
+          target = Path(os.environ['RUNNER_TEMP']) / 'agenda-project'
+          target.mkdir()
+          with zipfile.ZipFile(source) as archive:
+              for item in archive.infolist():
+                  path = target / item.filename
+                  if not path.resolve().is_relative_to(target.resolve()) or stat.S_ISLNK(item.external_attr >> 16):
+                      raise RuntimeError('Caminho inválido no ZIP.')
+              archive.extractall(target)
+          projects = list(target.rglob('settings.gradle'))
+          if len(projects) != 1:
+              raise RuntimeError('O ZIP precisa conter um único projeto Android.')
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('PROJECT_DIR=' + str(projects[0].parent) + '\n')
+          PY
+      - name: Restaurar a assinatura existente
+        env:
+          KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        shell: bash
+        run: |
+          test -n "$KEYSTORE"
+          printf '%s' "$KEYSTORE" | base64 --decode > "$RUNNER_TEMP/agenda-personal-release.jks"
           test -s "$RUNNER_TEMP/agenda-personal-release.jks"
-
-      - name: Extrair projeto Android
-        shell: bash
-        run: |
-          test -f AgendaPersonal_AndroidStudio.zip
-          rm -rf android
-          mkdir -p android
-          unzip -q AgendaPersonal_AndroidStudio.zip -d android
-          PROJECT_DIR=$(dirname "$(find android -name settings.gradle -print -quit)")
-          test -n "$PROJECT_DIR"
-          echo "PROJECT_DIR=$PROJECT_DIR" >> "$GITHUB_ENV"
-
-      - name: Gerar APK assinado
+      - name: Compilar e conferir o APK por dentro
         shell: bash
         env:
           ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/agenda-personal-release.jks
@@ -54,14 +66,47 @@ jobs:
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
+          test -n "$ANDROID_KEYSTORE_PASSWORD"
+          test -n "$ANDROID_KEY_ALIAS"
+          test -n "$ANDROID_KEY_PASSWORD"
           cd "$PROJECT_DIR"
           export ANDROID_VERSION_CODE=$((1000 + GITHUB_RUN_NUMBER))
+          node tools/prepare_assets.cjs
+          node tools/check_release.cjs --assets
           gradle :app:assembleRelease
-          cp app/build/outputs/apk/release/app-release.apk "$GITHUB_WORKSPACE/AgendaPersonal.apk"
-
-      - name: Disponibilizar APK
+          python3 - <<'PY'
+          import hashlib, json, os, shutil, subprocess, sys
+          from pathlib import Path
+          sys.path.insert(0, 'tools')
+          from verify_apk import verify
+          project = Path.cwd()
+          release = json.loads(Path('release.json').read_text())
+          apk = Path('app/build/outputs/apk/release/app-release.apk')
+          sdk = Path(os.environ.get('ANDROID_HOME') or os.environ['ANDROID_SDK_ROOT'])
+          verify(apk, sdk, release, int(os.environ['ANDROID_VERSION_CODE']), project / 'app/src/main/assets')
+          signers = sorted((sdk / 'build-tools').glob('*/apksigner'))
+          if not signers:
+              raise RuntimeError('Verificador de assinatura indisponível.')
+          subprocess.run([str(signers[-1]), 'verify', '--verbose', str(apk)], check=True)
+          destination = Path(os.environ['GITHUB_WORKSPACE']) / 'AgendaPersonal-Android.apk'
+          shutil.copyfile(apk, destination)
+          sha = hashlib.sha256(destination.read_bytes()).hexdigest()
+          native, content = release['androidVersion'], release['contentVersion']
+          title = f'Android {native} · conteúdo {content}'
+          tag = f'android-{native}-conteudo-{content}-{os.environ["GITHUB_RUN_ID"]}'
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write(f'RELEASE_TITLE={title}\nRELEASE_TAG={tag}\n')
+          Path(os.environ['GITHUB_WORKSPACE'], 'apk-notes.txt').write_text(title + '\nSHA-256: ' + sha + '\nAssinado com a chave existente; fontes e telas conferidas.\n')
+          PY
+      - name: Guardar cópia da compilação
         uses: actions/upload-artifact@v4
         with:
-          name: Agenda-Pessoal-APK
-          path: AgendaPersonal.apk
+          name: Agenda-Personal-APK-publicado
+          path: AgendaPersonal-Android.apk
           if-no-files-found: error
+      - name: Publicar o arquivo usado pelo botão Android
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh release create "$RELEASE_TAG" AgendaPersonal-Android.apk --title "$RELEASE_TITLE" --notes-file apk-notes.txt --target "$GITHUB_SHA" --latest
