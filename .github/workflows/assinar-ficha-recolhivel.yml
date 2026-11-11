@@ -1,0 +1,134 @@
+name: Assinar ficha recolhível do professor
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/assinar-ficha-recolhivel.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sign:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Extrair as ferramentas de assinatura do projeto
+        run: |
+          python3 - <<'PY'
+          import os, zipfile
+          from pathlib import Path
+          directory = Path(os.environ['RUNNER_TEMP']) / 'agenda-sign'
+          directory.mkdir(mode=0o700)
+          with zipfile.ZipFile('AgendaPersonal_AndroidStudio_v1.65_contas_convites.zip') as archive:
+              for filename in ('sign_update.cjs', 'SignAgendaUpdate.java'):
+                  member = next(n for n in archive.namelist() if n.endswith('/tools/' + filename))
+                  (directory / filename).write_bytes(archive.read(member))
+          PY
+      - name: Preparar o arquivo da correção
+        run: |
+          python3 - <<'PY'
+          import base64, gzip, hashlib
+          from pathlib import Path
+          payload = """
+          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
+          """
+          data = gzip.decompress(base64.b64decode(''.join(payload.split()), validate=True))
+          expected = "d1bee23eb0fda3c68cd571ae6751d3808dd86599481f2bcb7a2f3e39c27b7c22"
+          if hashlib.sha256(data).hexdigest() != expected:
+              raise RuntimeError('O arquivo da correção está incompleto.')
+          target = Path('.agenda/ficha-recolhivel.agenda.json')
+          target.parent.mkdir(exist_ok=True)
+          target.write_bytes(data)
+          PY
+      - name: Assinar e verificar a correção do professor
+        env:
+          AGENDA_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          umask 077
+          dir="$RUNNER_TEMP/agenda-sign"
+          export ANDROID_KEYSTORE_PATH="$dir/release.jks"
+          trap 'rm -f "$ANDROID_KEYSTORE_PATH"' EXIT
+          test -n "$AGENDA_KEYSTORE"
+          printf '%s' "$AGENDA_KEYSTORE" | base64 --decode > "$ANDROID_KEYSTORE_PATH"
+          mkdir signed-update
+          node "$dir/sign_update.cjs" .agenda/ficha-recolhivel.agenda.json signed-update/AgendaPersonal-Professor-Ficha-Recolhivel-Assinado.agenda.json
+          keytool -exportcert -keystore "$ANDROID_KEYSTORE_PATH" -storepass:env ANDROID_KEYSTORE_PASSWORD -alias "$ANDROID_KEY_ALIAS" -file "$dir/release.der"
+          node - "$dir" <<'JS'
+          const {verify, X509Certificate} = require('node:crypto');
+          const fs = require('node:fs');
+          const dir = process.argv[2];
+          const {packageDigest} = require(dir + '/sign_update.cjs');
+          const update = JSON.parse(fs.readFileSync('signed-update/AgendaPersonal-Professor-Ficha-Recolhivel-Assinado.agenda.json', 'utf8'));
+          const original = JSON.parse(fs.readFileSync('.agenda/ficha-recolhivel.agenda.json', 'utf8'));
+          const certificate = new X509Certificate(fs.readFileSync(dir + '/release.der'));
+          if (!packageDigest(update).equals(packageDigest(original)) ||
+              !verify('sha256', packageDigest(update), certificate.publicKey, Buffer.from(update.agendaSignature, 'base64')))
+            throw Error('Assinatura ou conteúdo divergente.');
+          fs.writeFileSync('signed-update/certificado-publico.der', certificate.raw);
+          console.log('Pacote assinado e validado com o certificado Android da versão de produção.');
+          JS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AgendaPersonal-Ficha-Recolhivel-Assinado
+          path: signed-update/
+          if-no-files-found: error
