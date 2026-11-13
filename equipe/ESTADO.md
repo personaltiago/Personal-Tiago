@@ -74,16 +74,22 @@ A lista vem dos blocos `ap-*` de cada tela. **Estar no código não significa te
 
 ## 3. Funcionalidades aprovadas pelo Tiago
 
-| Funcionalidade | Classe |
-|---|---|
-| Urso (panda) e Galo removidos dos pets. Quem tinha um deles vira gato, com XP, moedas e compras mantidos. | [A] e [V] (teste `pets_removed`, 26 verificações) |
-| A Conferência de atualizações mostra em Pets só Gato, Lobo e Capivara (Urso, Galo, Peixe e Raposa saíram da lista) | [A] e [V] (`UpdateAreaPatch.MODULES` e `update-catalog.js`) |
-| Mascotes de fundo da tela de Avaliações com a imagem **original**, sem redução | [A] e [V] |
-| Emblema fixo do app no cabeçalho e no perfil, com a cor do tema e sem upload de logo | [A] e [V] (teste `app_symbol`) |
-| Foto do professor: só a dele; sem foto, mostra as iniciais | [A] e [V] |
-| Histórico limitado a 200 movimentações | [A] e [V] (teste `history_limit`) |
-| Pacote `.agenda.json` sem assinatura aceito só por importação manual, com confirmação | [A] e [V] (teste `update_import_review`, 196 verificações) |
-| Descanso na tela bloqueada aparecendo (a 1.201 foi elogiada: "Vc e top parabéns") | [A] *(ver seção 5: a piscada ainda incomoda)* |
+As duas colunas são independentes:
+- **"Aprovado"** registra que o Tiago aprovou a funcionalidade numa versão anterior [A].
+- **"Na 1.204"** registra o que foi conferido **nesta** versão, no código ou em teste automático [V], ou o que ainda não foi conferido [H].
+
+Nenhuma linha está validada **no aparelho** na 1.204; isso continua [H] até o Tiago confirmar.
+
+| Funcionalidade | Aprovado (versão) | Na 1.204, código e testes | Na 1.204, aparelho |
+|---|---|---|---|
+| Urso (panda) e Galo removidos dos pets. Quem tinha um deles vira gato, com XP, moedas e compras mantidos. | [A] 1.195 | [V] teste `pets_removed` (26 verificações) passou | [H] |
+| Conferência de atualizações: Pets só com Gato, Lobo e Capivara | [A] 1.203 | [V] `UpdateAreaPatch.MODULES` só tem gato, lobo e capivara; `update-catalog.js` não tem urso, galo, peixe nem raposa | [H] |
+| Mascotes de fundo de Avaliações com a imagem original | [A] 1.193 | [V] teste `size_reductions` confere as dimensões originais | [H] |
+| Emblema fixo do app, com a cor do tema e sem upload de logo | [A] 1.18x | [V] teste `app_symbol` (21) passou | [H] |
+| Foto do professor só a dele; sem foto, as iniciais | [A] 1.191 | [V] `trainer-photo-initials` e "Remover foto" presentes no `professor.html` (sem teste dedicado) | [H] |
+| Histórico limitado a 200 | [A] 1.189 | [V] teste `history_limit` passou | [H] |
+| `.agenda.json` sem assinatura só por importação manual, com confirmação | [A] 1.194 | [V] teste `update_import_review` (196) passou | [H] |
+| Descanso na tela bloqueada aparecendo | [A] 1.201 ("Vc e top parabéns") | [V] o cartão da 1.204 é o mesmo da 1.201 (`restTitle` em `LessonTimerOverlayService`) | [H] (sem print da 1.204); a piscada continua pendente |
 
 ---
 
@@ -97,12 +103,14 @@ A lista vem dos blocos `ap-*` de cada tela. **Estar no código não significa te
   - o `beep(volume)` do `index.html` também voltou.
 - **Na 1.204**, conferido agora: `ap-workout-audio-options-ui` **não existe**, só o `ap-workout-audio-options-css` sobrou, e `ap-workout-audio-settings` existe.
 - A remoção não foi motivada por um erro encontrado. Foi uma tentativa de voltar ao estado da 1.178 para recuperar o descanso na tela bloqueada [V]. Conferido: o módulo de áudio não chama a parte Android do descanso.
-- **Pendente:** o Tiago decide se as opções de áudio voltam [H].
+- **Pendência confirmada.** **Não será restaurada automaticamente**: só volta por PR próprio, com aprovação do Tiago.
+- Até lá, o teste de presença (REGRAS, seção 5.2) registra esse bloco como **ausência conhecida**.
 
 ### 4.2 "Guardar a agenda no telefone" — ativação desligada na 1.199 e na 1.204 [V]
 - O botão de ativar o armazenamento principal no telefone não aparece mais. O texto "Guardar a agenda no telefone" não existe no `professor.html` da 1.204.
 - A **leitura** de quem já ativou continua [V] (`ap-native-store` presente, teste `native_store` passou).
 - Não foi aprovado pelo Tiago. Foi uma decisão da 1.199 [H sobre o motivo].
+- **Pendência confirmada.** **Não será restaurada automaticamente**: só volta por PR próprio, com aprovação do Tiago. Até lá, o teste de presença registra o controle como **ausência conhecida**.
 
 ---
 
@@ -167,9 +175,9 @@ Conclusões:
 
 ## 9. Pendências (decisão do Tiago)
 
-1. Voltar ou não as **opções de áudio do treino** (seção 4.1).
-2. Voltar ou não o botão **"Guardar a agenda no telefone"** (seção 4.2).
+1. Voltar ou não as **opções de áudio do treino** (seção 4.1). É uma regressão confirmada, sem restauração automática.
+2. Voltar ou não o botão **"Guardar a agenda no telefone"** (seção 4.2). Também é uma regressão confirmada, sem restauração automática.
 3. Descanso: aceitar a piscada (1.204) ou testar a atualização a cada 5 s (seção 5).
-4. Aplicar as mudanças de `REGRAS.md`: assinatura segura, simulação sem commit na `main` e proteção da `main`.
+4. Aprovar ou não as **propostas** de `REGRAS.md`: assinatura manual, simulação sem commit na `main`, teste de presença e proteção da `main`. **Nenhum workflow foi alterado.**
 5. Disponibilizar o código descompactado e provar que gera o mesmo app que o ZIP.
 6. Permissão de escrita da integração do ChatGPT (HTTP 403 em 13/11).

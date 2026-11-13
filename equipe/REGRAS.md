@@ -17,7 +17,11 @@ Classificação:
    - exigir que os testes automáticos passem (seção 5), quando o workflow existir;
    - bloquear push forçado e exclusão da branch.
 3. Exceções existentes hoje, que precisam ser corrigidas [V]:
-   - O workflow `simular-descanso.yml` grava resultados na `main` (commit automático do autor "simulacao-agenda"). **Correção proposta:** guardar os resultados como **artifact** e rodar a simulação só em branches e PRs.
+   - O workflow `simular-descanso.yml` grava resultados na `main` (commit automático do autor "simulacao-agenda").
+     - **Regra:** nenhum workflow de simulação ou de teste pode fazer commit na `main`.
+     - **Correção proposta [H, pendente de aprovação]:** guardar os resultados como **artifact** e rodar só em branches e PRs.
+     - A correção será feita num **PR próprio**. Este PR documental não altera nenhum workflow.
+     - Até lá, o workflow só é disparado por pedido expresso do Tiago.
    - O Tiago envia arquivos pelo site ("Add files via upload") direto na `main`. **Proposta:** enviar para uma branch e abrir PR. Se o upload direto continuar, que seja só o ZIP aprovado.
 
 ---
@@ -52,10 +56,12 @@ Situação atual [V]:
 Regras:
 1. **Nenhum assistente mexe nos segredos, na chave, no keystore ou nos workflows de assinatura** sem um pedido expresso do Tiago naquele PR.
 2. **Nenhum `.agenda.json` na raiz da `main`** sem revisão. Um pacote ali é assinado sozinho [V].
-3. **Correção proposta [H, a aprovar]:**
+3. **Proposta pendente de aprovação [H].** **Nada foi alterado**: os workflows de assinatura continuam como estão.
    - a assinatura só roda pelo botão (`workflow_dispatch`);
    - só para arquivos da pasta `para-assinar/`;
    - e só depois que o pacote tiver sido revisado por PR.
+
+   A mudança, se aprovada, vem num PR próprio, com revisão cruzada.
 4. **Pacote sem assinatura:** só por importação manual, com confirmação do professor [A] e [V]. Os aparelhos dos alunos recusam pacote sem assinatura [V].
 5. Nenhum assistente publica APK, release ou pacote assinado. **Quem publica é o Tiago.**
 
@@ -103,6 +109,25 @@ Regras:
    | Armazenamento e backup | `NativeStore`, `NativeMirror`, `ap-native-store`, `ap-save-guard`, backup | `native_store`, `native_mirror`, `save_guard`, `storage_meter` |
 
 4. **Inventário de blocos (proposta [H]):** uma lista dos ids `ap-*` de cada tela, com hash. Um bloco que some ou muda precisa ser justificado no PR.
+
+### 5.2 Teste de presença das funcionalidades aprovadas (proposta [H], vem num PR próprio)
+
+Objetivo: o teste falha se sumir algo aprovado.
+
+- **Lista de exigidos.** Um arquivo `equipe/funcionalidades-exigidas.json` lista, por tela, os blocos `ap-*`, as classes, os textos de interface e as entradas da ponte Android que **precisam existir**. Exemplos:
+  - `ap-native-store`, `ap-save-guard`, `ap-storage-meter`, `ap-native-mirror`;
+  - `trainer-photo-initials`;
+  - `ap-timer-compatibility`, `ap-rest-floating`;
+  - em `UpdateAreaPatch`, os módulos `gato`, `lobo` e `capivara`;
+  - na ponte Android, `nsRead` e `nsWrite`.
+- **Lista de ausências conhecidas.** As regressões confirmadas ficam registradas, com o motivo e o link para a pendência no `ESTADO.md`:
+  - `ap-workout-audio-options-ui`, em `professor.html` (seção 4.1 do ESTADO);
+  - o controle "Guardar a agenda no telefone" / `nsActivate` na tela (seção 4.2 do ESTADO).
+- **Regras do teste:**
+  - qualquer item exigido que suma **reprova** o PR;
+  - um item novo que some precisa entrar na lista de ausências **por PR aprovado pelo Tiago**.
+- **Quando uma regressão for resolvida:** o item sai das ausências e passa para os exigidos. A partir daí o teste impede que ele suma de novo.
+- O teste roda junto com `run_all.py` no workflow de testes do PR (item 2).
 5. O que o emulador não reproduz (Xiaomi/HyperOS) é sempre classificado como **[H]** até o Tiago confirmar no aparelho.
 
 ---
@@ -110,10 +135,19 @@ Regras:
 ## 6. Reversão
 
 1. Todo PR descreve **como reverter**: qual versão anterior e qual commit.
-2. As versões publicadas ficam nos **Releases** do GitHub (`android-<versão>-conteudo-<conteúdo>-<execução>`) [V]. Para voltar, basta instalar o APK do release anterior. Não é preciso mexer no código.
-3. No código: `git revert` do merge do PR, num novo PR. Nunca reescrever o histórico da `main`.
-4. **Cuidado com os dados:** voltar para uma versão sem `NativeStore` (por exemplo a 1.178), quando "Guardar a agenda no telefone" foi ativado, faz a agenda parecer vazia [V pelo código]. Antes de voltar versões antigas, fazer backup.
-5. Os pacotes de conteúdo (`sequence`) não podem diminuir. A regra `baseSeen<seq>` do `UpdateManager` descarta uma vez o conteúdo local mais antigo que a base [V].
+2. **Instalar um APK antigo NÃO é um caminho seguro de reversão.**
+   - O `versionCode` publicado é `1000 + número da execução` [V] (`android-apk.yml`). Um release antigo tem `versionCode` menor.
+   - O Android **recusa** instalar por cima uma versão com `versionCode` menor (downgrade) [V pela regra do Android]. A única forma seria **desinstalar** o app, e isso **apaga os dados locais**: agenda, fotos, comprovantes, `localStorage` e arquivos do `NativeStore`.
+3. **Caminho de reversão correto:**
+   1. `git revert` do merge do PR, num novo PR. Nunca reescrever o histórico da `main`.
+   2. Gerar um **novo** APK pelo `android-apk.yml`. Ele recebe um `versionCode` maior e é instalado **por cima**, preservando os dados.
+4. **Antes de instalar qualquer versão que mexa em armazenamento, atualizações ou dados:**
+   1. criar um **backup** no app (Backup → Criar e salvar backup);
+   2. **validar o backup**: o arquivo abre na tela de restauração e o resumo mostra o número de alunos e de treinos esperado;
+   3. guardar uma cópia **fora do celular**, nunca no repositório;
+   4. ter o **plano de recuperação** escrito no PR: qual backup, em qual versão restaurar e quem confere.
+5. **Cuidado com os dados:** um código sem `NativeStore` (por exemplo, o da 1.178), quando "Guardar a agenda no telefone" foi ativado, faz a agenda parecer vazia [V pelo código]. Mesmo num novo build, nunca reverter para um código que não lê o `NativeStore`.
+6. Os pacotes de conteúdo (`sequence`) não podem diminuir. A regra `baseSeen<seq>` do `UpdateManager` descarta uma vez o conteúdo local mais antigo que a base [V].
 
 ---
 
@@ -121,7 +155,13 @@ Regras:
 
 1. `AgendaPersonal_AndroidStudio_v1.65_contas_convites.zip` continua sendo a **fonte oficial** do APK. O `android-apk.yml` compila a partir dele [V] [A].
 2. O nome do arquivo não muda [A].
-3. O código descompactado (`app-fonte/`) entra **numa branch e por PR**. Só substitui o ZIP como fonte depois de um workflow provar que compilar a partir dele gera o mesmo resultado. A comparação é pela lista de arquivos e pelos hashes das telas e do Java.
+3. O código descompactado (`app-fonte/`) entra **numa branch e por PR**, primeiro só como **cópia para revisão**. Ele **só substitui o ZIP** como fonte oficial quando **todas** as provas abaixo passarem, registradas num relatório:
+   1. **Arquivos:** a lista de arquivos de `app-fonte/` é idêntica à do ZIP (mesmos caminhos, nenhum a mais ou a menos).
+   2. **Hashes:** o SHA-256 de cada arquivo é igual ao do ZIP.
+   3. **Compilação:** o build a partir de `app-fonte/` e o build a partir do ZIP geram o mesmo conteúdo de telas (`assets`) e de código, conferidos por `tools/verify_apk.py` e pela comparação dos dois APKs (exceto assinatura e `versionCode`).
+   4. **Testes:** `tests/run_all.py` e `tools/check_release.cjs` passam nos dois.
+   5. **Funcional:** teste de presença (seção 5.2), simulação do descanso e validação no aparelho pelo Tiago.
+   6. **Aprovação expressa do Tiago** [A].
 4. Todo PR que troca o ZIP precisa trazer, ao lado, a **diferença em texto** (patch ou lista de blocos alterados). Sem isso, a revisão é impossível.
 5. Os ZIPs antigos (`AgendaPersonal_AndroidStudio.zip`, `AgendaPersonal_v1_4_AndroidStudio.zip`, `AgendaPersonal-TESTE/`) **não são apagados** sem decisão do Tiago.
 
