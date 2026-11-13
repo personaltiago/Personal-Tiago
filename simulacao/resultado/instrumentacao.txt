@@ -32,7 +32,7 @@ INSTRUMENTATION_STATUS: test=descansoComAlarmesELembretesLigado
 INSTRUMENTATION_STATUS_CODE: 0
 INSTRUMENTATION_RESULT: stream=
 
-Time: 54.493
+Time: 55.872
 
 OK (2 tests)
 
