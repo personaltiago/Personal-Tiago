@@ -14,7 +14,7 @@ Legenda:
 |---|---|
 | `equipe/funcionalidades-exigidas.json` | O inventário. É a referência do que não pode sumir. |
 | `equipe/testes/verificar_funcionalidades.py` | O teste. Lê o ZIP **sem extrair e sem alterar nada** e confere o inventário. |
-| `equipe/testes/testar_verificador.py` | O autoteste. Cria cópias **modificadas** do ZIP numa pasta temporária nova e confere se o teste reprova o que deve reprovar. |
+| `equipe/testes/testar_verificador.py` | O autoteste. Cria cópias **modificadas** do ZIP e do inventário dentro de um `tempfile.TemporaryDirectory()` próprio (só esses arquivos temporários são removidos no fim) e confere se o teste reprova o que deve reprovar. |
 | `equipe/relatorios/2026-11-13-claude-testes-regressao.md` | Este relatório |
 
 **Não alterado [V]:**
@@ -105,3 +105,56 @@ Esta branch só acrescenta arquivos em `equipe/`. Para reverter, basta fechar o 
 
 1. Revisão cruzada do ChatGPT neste PR.
 2. Num PR próprio: um workflow `testes-regressao.yml` que roda em `pull_request` e executa `verificar_funcionalidades.py`, `testar_verificador.py`, `tests/run_all.py` e `tools/check_release.cjs`. Ele **não faz commits** e **não usa segredos**.
+
+---
+
+## Revisão 2 (correções pedidas pelo ChatGPT no commit `0864dc5`)
+
+### 1. Arquivos temporários [V]
+- O autoteste agora usa `tempfile.TemporaryDirectory()`. As cópias modificadas do ZIP e do inventário ficam só nessa pasta, que é removida automaticamente no fim.
+- O ZIP original e o inventário original **nunca** são abertos para escrita.
+- O autoteste confere o **SHA-256 dos dois antes e depois**. Resultado: "intactos: sim".
+- A versão anterior (`mkdtemp`) deixou duas pastas em `/tmp` da sessão do Claude: `agenda-autoteste-gle4t2ih` e `agenda-autoteste-6y4d9you`. Elas ficam **fora do repositório** e só contêm cópias de teste. Não foram apagadas, por causa da regra de não fazer exclusões.
+
+### 2. Substituir ou renomear uma funcionalidade legitimamente
+O bloqueio não é permanente. Quando uma funcionalidade muda de nome ou é trocada por outra **com aprovação**, o PR que muda o app também atualiza o inventário:
+1. Troca o item antigo pelo novo nos exigidos, por exemplo `ap-finance-wallet` → `ap-finance-wallet-v2`.
+2. Acrescenta em `substituicoes` uma entrada **completa**: `tipo`, `tela`, `de`, `para`, `motivo`, `aprovado_por` e `pr`.
+3. O verificador então:
+   - aceita que o item `de` suma;
+   - exige que o item `para` exista e esteja entre os exigidos;
+   - reprova a substituição se faltar `aprovado_por` ou `pr`.
+4. Depois do merge, a entrada pode continuar como histórico. Ela não bloqueia nada.
+
+Para **retirar** uma funcionalidade de vez (sem substituto), o caminho é o mesmo de uma regressão aceita. A retirada precisa de aprovação do Tiago num PR que altere `EXCECOES_APROVADAS` no verificador. Isso deixa a decisão visível no código.
+
+### 3. Proteção das ausências conhecidas [V]
+- As 4 exceções ficam **fixadas no código** do verificador (`EXCECOES_APROVADAS`): id, tela, tipo e valor.
+- O inventário precisa ter **exatamente** essas 4. O verificador reprova:
+  - **exceção nova**, por exemplo mover `ap-finance-wallet` para as ausências para esconder uma regressão;
+  - **exceção alterada**, quando o valor ou a tela mudam;
+  - **exceção retirada** do inventário sem atualizar o verificador;
+  - **item exigido e ausência ao mesmo tempo**;
+  - **item exigido apagado do inventário**. O verificador compara com o inventário da `main` (`origin/main`), ou com o arquivo indicado em `--base-inventario`. Tudo o que era exigido na base e sumiu do inventário sem uma substituição aprovada reprova.
+- Observação [V]: enquanto este PR não entrar na `main`, ela ainda não tem inventário. A comparação com a base aparece como "ignorada" na execução normal. O autoteste usa o inventário atual como base para provar que a regra funciona.
+
+### 4. Validação — resultados reais desta execução [V]
+
+| Execução | Resultado |
+|---|---|
+| `verificar_funcionalidades.py` na `main` (1.204 / 1.12.268 / 374), base `origin/main` | **APROVADO**: 455 exigidos presentes, 0 falhas, 0 avisos, saída 0; as 4 ausências "ausente (documentada)"; base "ainda não tem inventário" |
+| O mesmo, com `--base-inventario equipe/funcionalidades-exigidas.json` | **APROVADO**: 0 falhas, saída 0 |
+| `testar_verificador.py` | **16/16 casos corretos**, saída 0; ZIP e inventário intactos |
+| Conferência cruzada no ZIP 1.197 (fora do repositório) | REPROVADO, como esperado: as 4 ausências "VOLTOU A EXISTIR" e 1 falha (`ap-workout-audio-settings` ausente na 1.197) |
+
+Casos do autoteste:
+- **A1:** a 1.204 é aprovada.
+- **B1 a B6:** o desaparecimento no app de um bloco do financeiro, da função do descanso, da migração do urso e do galo, de um método da ponte, de uma classe Java ou do lobo na Conferência **reprova**.
+- **C1/C2:** uma regressão restaurada avisa, e com `--estrito` reprova.
+- **D1:** um exigido transferido para as ausências **reprova**.
+- **D2:** uma exceção alterada **reprova**.
+- **D3:** uma exceção retirada **reprova**.
+- **D4:** um item exigido e ausente ao mesmo tempo **reprova**.
+- **D5:** um exigido apagado do inventário **reprova**.
+- **D6:** uma substituição sem aprovação **reprova**.
+- **E1:** uma renomeação aprovada e completa **é aceita**.

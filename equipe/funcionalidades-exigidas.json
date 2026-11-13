@@ -9,8 +9,11 @@
   "regras": [
     "Item exigido ausente reprova.",
     "Bloco com menos ocorrências do que o registrado reprova.",
-    "Ausência conhecida presente não reprova: o relatório pede para movê-la para os exigidos.",
-    "Adicionar ou remover exigidos só por PR aprovado pelo Tiago."
+    "Ausência conhecida presente não reprova: o relatório pede para movê-la para os exigidos (com --estrito, reprova).",
+    "As ausências conhecidas são fixadas em EXCECOES_APROVADAS no verificador; acrescentar ou mudar uma exige alterar o código do verificador num PR aprovado pelo Tiago.",
+    "Um item não pode ser exigido e ausência conhecida ao mesmo tempo.",
+    "Remover um item do inventário em relação à main reprova, salvo se coberto por uma substituição aprovada.",
+    "Renomear ou substituir uma funcionalidade: registrar em 'substituicoes' (tipo, tela, de, para, motivo, aprovado_por, pr) no mesmo PR que muda o app; o item 'de' pode sumir se o 'para' existir."
   ],
   "telas": {
     "index.html": {
@@ -611,6 +614,7 @@
     "tests/run_all.py",
     "tools/check_release.cjs"
   ],
+  "substituicoes": [],
   "ausencias_conhecidas": [
     {
       "id": "audio-opcoes-treino",
