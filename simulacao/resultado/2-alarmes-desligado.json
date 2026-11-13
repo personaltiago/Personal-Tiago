@@ -1,0 +1,11 @@
+{
+  "cenario": "2-alarmes-desligado",
+  "alarmesELembretes": "deny",
+  "webViewEncontrado": true,
+  "pagina": "\"{\\\"pagina\\\":\\\"https:\/\/appassets.androidplatform.net\/assets\/index.html\\\",\\\"temAndroid\\\":true,\\\"temStartWorkoutRest\\\":true,\\\"resultado\\\":\\\"false\\\",\\\"status\\\":\\\"{\\\\\\\"showing\\\\\\\":false,\\\\\\\"kind\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"dismissed\\\\\\\":true,\\\\\\\"allowed\\\\\\\":true}\\\"}\"",
+  "notificacaoComAppAberto": "NENHUMA notificação do Agenda Personal",
+  "despertadorUltimoDisparo": "Intervalo sem aviso programado: Intervalo inválido",
+  "notificacaoComTelaBloqueada": "NENHUMA notificação do Agenda Personal",
+  "telaBloqueada": true,
+  "despertadorDepois": "Intervalo sem aviso programado: Intervalo inválido"
+}
