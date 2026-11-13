@@ -1,0 +1,428 @@
+diff -ruN -x AlarmScheduler.java -x LessonTimerOverlayService.java ok/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/LocalPages.java o22/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/LocalPages.java
+--- ok/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/LocalPages.java	2026-11-11 07:32:06.000000000 -0400
++++ o22/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/LocalPages.java	2026-11-12 16:31:00.000000000 -0400
+@@ -19,8 +19,7 @@
+         if (prefix == null || path == null || !path.startsWith(prefix)) return null;
+         String name = path.substring(prefix.length());
+         if ("index.html".equals(name) || "avaliacoes.html".equals(name)
+-            || "professor.html".equals(name) || "cadastro.html".equals(name)
+-            || "icon.png".equals(name)) return name;
++            || "professor.html".equals(name) || "cadastro.html".equals(name)) return name;
+         return null;
+     }
+ 
+diff -ruN -x AlarmScheduler.java -x LessonTimerOverlayService.java ok/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/MainActivity.java o22/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/MainActivity.java
+--- ok/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/MainActivity.java	2026-11-11 07:33:48.000000000 -0400
++++ o22/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/MainActivity.java	2026-11-12 11:09:34.000000000 -0400
+@@ -412,6 +412,17 @@
+ 
+         Bridge(Activity activity) { this.activity = activity; }
+ 
++        @JavascriptInterface public int getMirrorVersion() { return 2; }
++        @JavascriptInterface public boolean nsActive() { return NativeStore.active(activity.getFilesDir()); }
++        @JavascriptInterface public String nsRead() { return NativeStore.read(activity.getFilesDir()); }
++        @JavascriptInterface public boolean nsWrite(String value) { return NativeStore.write(activity.getFilesDir(), value); }
++        @JavascriptInterface public String nsActivate(String value) { return NativeStore.activate(activity.getFilesDir(), value); }
++        @JavascriptInterface public boolean nsDeactivate() { return NativeStore.deactivate(activity.getFilesDir()); }
++        @JavascriptInterface public String nsInfo() { return NativeStore.info(activity.getFilesDir()); }
++        @JavascriptInterface public boolean mirrorSave(String key, String value) { return NativeMirror.save(activity.getFilesDir(), key, value); }
++        @JavascriptInterface public boolean mirrorSaveForce(String key, String value) { return NativeMirror.save(activity.getFilesDir(), key, value, true); }
++        @JavascriptInterface public String mirrorInfo(String key) { return NativeMirror.info(activity.getFilesDir(), key); }
++        @JavascriptInterface public String mirrorRead(String key) { return NativeMirror.read(activity.getFilesDir(), key); }
+         @JavascriptInterface public String getLaunchGeometry() { return ((MainActivity) activity).launchGeometry; }
+         @JavascriptInterface public int getGoogleSignInVersion() { return 1; }
+         @JavascriptInterface public void beginGoogleSignIn(String requestId) {
+diff -ruN -x AlarmScheduler.java -x LessonTimerOverlayService.java ok/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/NativeMirror.java o22/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/NativeMirror.java
+--- ok/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/NativeMirror.java	1969-12-31 20:00:00.000000000 -0400
++++ o22/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/NativeMirror.java	2026-11-12 06:35:18.000000000 -0400
+@@ -0,0 +1,109 @@
++package com.tiagolima.agendapersonal;
++
++import java.io.File;
++import java.io.FileOutputStream;
++import java.io.IOException;
++import java.nio.charset.StandardCharsets;
++import java.nio.file.Files;
++import java.nio.file.StandardCopyOption;
++
++/**
++ * Cópia de segurança, no armazenamento interno do telefone, de chaves específicas do localStorage.
++ * O localStorage continua sendo a fonte principal: esta cópia nunca altera nem substitui os dados do app.
++ * Cada gravação é atômica (arquivo temporário + troca) e mantém a geração anterior em ".prev".
++ */
++final class NativeMirror {
++    static final String MAIN_KEY = "agendaPersonalTL_v1";
++    private static final int MAX_CHARS = 64 * 1024 * 1024;
++    private static final Object LOCK = new Object();
++
++    private NativeMirror() { }
++
++    static boolean allowed(String key) { return MAIN_KEY.equals(key); }
++
++    /** Hash FNV-1a sobre as unidades UTF-16, idêntico ao calculado no JavaScript. */
++    static String hash(String value) {
++        int h = 0x811c9dc5;
++        for (int i = 0; i < value.length(); i++) { h ^= value.charAt(i); h *= 0x01000193; }
++        return Long.toString(h & 0xffffffffL, 16);
++    }
++
++    private static File folder(File base) {
++        File dir = new File(base, "mirror");
++        if (!dir.isDirectory() && !dir.mkdirs() && !dir.isDirectory()) return null;
++        return dir;
++    }
++
++    static boolean save(File base, String key, String value) { return save(base, key, value, false); }
++
++    /**
++     * Sem force, recusa substituir uma cópia grande por um conteúdo menos da metade do tamanho: isso costuma indicar
++     * que os dados do app foram apagados e a cópia é justamente o que permite recuperá-los.
++     */
++    static boolean save(File base, String key, String value, boolean force) {
++        if (!allowed(key) || value == null || value.length() < 2 || value.length() > MAX_CHARS) return false;
++        if (value.charAt(0) != '{' || value.charAt(value.length() - 1) != '}') return false;
++        File dir = folder(base);
++        if (dir == null) return false;
++        if (!force) {
++            int existing = intField(info(base, key), "length");
++            if (existing > 20000 && value.length() < existing / 2) return false;
++        }
++        synchronized (LOCK) {
++            File data = new File(dir, key + ".json"), prev = new File(dir, key + ".prev"), tmp = new File(dir, key + ".tmp");
++            File meta = new File(dir, key + ".meta"), metaTmp = new File(dir, key + ".meta.tmp");
++            try {
++                byte[] bytes = value.getBytes(StandardCharsets.UTF_8);
++                try (FileOutputStream out = new FileOutputStream(tmp)) { out.write(bytes); out.getFD().sync(); }
++                if (tmp.length() != bytes.length) throw new IOException("Gravação incompleta");
++                if (data.exists()) Files.copy(data.toPath(), prev.toPath(), StandardCopyOption.REPLACE_EXISTING);
++                Files.move(tmp.toPath(), data.toPath(), StandardCopyOption.REPLACE_EXISTING);
++                String info = "{\"length\":" + value.length() + ",\"bytes\":" + bytes.length + ",\"hash\":\"" + hash(value)
++                    + "\",\"savedAt\":" + System.currentTimeMillis() + "}";
++                try (FileOutputStream out = new FileOutputStream(metaTmp)) { out.write(info.getBytes(StandardCharsets.UTF_8)); out.getFD().sync(); }
++                Files.move(metaTmp.toPath(), meta.toPath(), StandardCopyOption.REPLACE_EXISTING);
++                return true;
++            } catch (Exception | OutOfMemoryError e) {
++                tmp.delete(); metaTmp.delete();
++                return false;
++            }
++        }
++    }
++
++    /** JSON com length, bytes, hash e savedAt da última cópia íntegra, ou {"exists":false}. */
++    static String info(File base, String key) {
++        if (!allowed(key)) return "{\"exists\":false}";
++        File dir = folder(base);
++        if (dir == null) return "{\"exists\":false}";
++        synchronized (LOCK) {
++            try {
++                File data = new File(dir, key + ".json"), meta = new File(dir, key + ".meta");
++                if (!data.isFile() || !meta.isFile()) return "{\"exists\":false}";
++                String text = new String(Files.readAllBytes(meta.toPath()), StandardCharsets.UTF_8);
++                int bytes = intField(text, "bytes");
++                if (bytes < 0 || data.length() != bytes) return "{\"exists\":false,\"damaged\":true}";
++                return "{\"exists\":true," + text.substring(1);
++            } catch (Exception e) { return "{\"exists\":false}"; }
++        }
++    }
++
++    static String read(File base, String key) {
++        if (!allowed(key)) return "";
++        File dir = folder(base);
++        if (dir == null) return "";
++        synchronized (LOCK) {
++            try {
++                if (!info(base, key).startsWith("{\"exists\":true")) return "";
++                return new String(Files.readAllBytes(new File(dir, key + ".json").toPath()), StandardCharsets.UTF_8);
++            } catch (Exception | OutOfMemoryError e) { return ""; }
++        }
++    }
++
++    private static int intField(String json, String name) {
++        int i = json.indexOf("\"" + name + "\":");
++        if (i < 0) return -1;
++        int s = i + name.length() + 3, e = s;
++        while (e < json.length() && Character.isDigit(json.charAt(e))) e++;
++        try { return Integer.parseInt(json.substring(s, e)); } catch (Exception ex) { return -1; }
++    }
++}
+diff -ruN -x AlarmScheduler.java -x LessonTimerOverlayService.java ok/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/NativeStore.java o22/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/NativeStore.java
+--- ok/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/NativeStore.java	1969-12-31 20:00:00.000000000 -0400
++++ o22/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/NativeStore.java	2026-11-12 11:09:20.000000000 -0400
+@@ -0,0 +1,145 @@
++package com.tiagolima.agendapersonal;
++
++import java.io.File;
++import java.io.FileOutputStream;
++import java.nio.charset.StandardCharsets;
++import java.nio.file.Files;
++import java.nio.file.StandardCopyOption;
++
++/**
++ * Armazenamento principal opcional dos dados da agenda (chave agendaPersonalTL_v1) em arquivo no telefone,
++ * fora do limite de ~5 MB do localStorage. Só é usado depois que o professor ativa o modo; até lá nada muda.
++ * Toda gravação é atômica (temporário + troca), mantém a geração anterior (.prev) e a leitura tem cadeia de
++ * recuperação: principal → anterior → cópia de segurança (NativeMirror) → reserva feita na ativação.
++ */
++final class NativeStore {
++    private static final int MAX_CHARS = 128 * 1024 * 1024;
++    private static final Object LOCK = new Object();
++    private static volatile String lastSource = "";
++
++    private NativeStore() { }
++
++    private static File dir(File base) {
++        File d = new File(base, "nstore");
++        if (!d.isDirectory() && !d.mkdirs() && !d.isDirectory()) return null;
++        return d;
++    }
++
++    private static boolean shape(String v) {
++        return v != null && v.length() >= 2 && v.length() <= MAX_CHARS && v.charAt(0) == '{' && v.charAt(v.length() - 1) == '}';
++    }
++
++    static boolean active(File base) {
++        File d = dir(base);
++        return d != null && new File(d, "mode").isFile();
++    }
++
++    private static boolean writeAtomic(File target, byte[] bytes) {
++        File tmp = new File(target.getParentFile(), target.getName() + ".tmp");
++        try {
++            try (FileOutputStream out = new FileOutputStream(tmp)) { out.write(bytes); out.getFD().sync(); }
++            if (tmp.length() != bytes.length) { tmp.delete(); return false; }
++            Files.move(tmp.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
++            return true;
++        } catch (Exception | OutOfMemoryError e) { tmp.delete(); return false; }
++    }
++
++    /** Grava o conteúdo principal. Retorna false sem alterar nada se a gravação não puder ser confirmada. */
++    static boolean write(File base, String value) {
++        if (!shape(value)) return false;
++        File d = dir(base);
++        if (d == null) return false;
++        synchronized (LOCK) {
++            try {
++                File main = new File(d, "main.json"), prev = new File(d, "main.prev"), meta = new File(d, "main.meta");
++                byte[] bytes = value.getBytes(StandardCharsets.UTF_8);
++                File tmp = new File(d, "main.next");
++                try (FileOutputStream out = new FileOutputStream(tmp)) { out.write(bytes); out.getFD().sync(); }
++                if (tmp.length() != bytes.length) { tmp.delete(); return false; }
++                if (main.isFile()) Files.copy(main.toPath(), prev.toPath(), StandardCopyOption.REPLACE_EXISTING);
++                Files.move(tmp.toPath(), main.toPath(), StandardCopyOption.REPLACE_EXISTING);
++                String info = "{\"length\":" + value.length() + ",\"bytes\":" + bytes.length + ",\"hash\":\"" + NativeMirror.hash(value)
++                    + "\",\"savedAt\":" + System.currentTimeMillis() + "}";
++                return writeAtomic(meta, info.getBytes(StandardCharsets.UTF_8));
++            } catch (Exception | OutOfMemoryError e) { return false; }
++        }
++    }
++
++    private static String readFile(File f) {
++        try { return f.isFile() ? new String(Files.readAllBytes(f.toPath()), StandardCharsets.UTF_8) : ""; }
++        catch (Exception | OutOfMemoryError e) { return ""; }
++    }
++
++    private static String field(String json, String name) {
++        int i = json.indexOf("\"" + name + "\":");
++        if (i < 0) return "";
++        int s = i + name.length() + 3, e = s;
++        if (s < json.length() && json.charAt(s) == '"') { s++; e = json.indexOf('"', s); return e < 0 ? "" : json.substring(s, e); }
++        while (e < json.length() && Character.isDigit(json.charAt(e))) e++;
++        return json.substring(s, e);
++    }
++
++    /** Lê com a cadeia de recuperação. Retorna "" se nada íntegro for encontrado. */
++    static String read(File base) {
++        File d = dir(base);
++        synchronized (LOCK) {
++            lastSource = "";
++            if (d != null) {
++                String metaText = readFile(new File(d, "main.meta"));
++                String main = readFile(new File(d, "main.json"));
++                if (shape(main) && metaText.length() > 2 && NativeMirror.hash(main).equals(field(metaText, "hash"))
++                    && String.valueOf(main.length()).equals(field(metaText, "length"))) { lastSource = "main"; return main; }
++                String prev = readFile(new File(d, "main.prev"));
++                if (shape(prev)) { lastSource = "prev"; return prev; }
++            }
++            String mirror = NativeMirror.read(base, NativeMirror.MAIN_KEY);
++            if (shape(mirror)) { lastSource = "mirror"; return mirror; }
++            if (d != null) {
++                String reserve = readFile(new File(d, "reserve.json"));
++                if (shape(reserve)) { lastSource = "reserve"; return reserve; }
++            }
++            return "";
++        }
++    }
++
++    static String lastSource() { return lastSource; }
++
++    /**
++     * Ativa o modo: guarda uma reserva do conteúdo atual, grava o principal, lê de volta e compara.
++     * Só marca o modo como ativo se tudo conferir.
++     */
++    static String activate(File base, String value) {
++        if (!shape(value)) return "{\"ok\":false,\"error\":\"conteudo\"}";
++        File d = dir(base);
++        if (d == null) return "{\"ok\":false,\"error\":\"pasta\"}";
++        synchronized (LOCK) {
++            try {
++                if (!writeAtomic(new File(d, "reserve.json"), value.getBytes(StandardCharsets.UTF_8))) return "{\"ok\":false,\"error\":\"reserva\"}";
++                if (!write(base, value)) return "{\"ok\":false,\"error\":\"gravacao\"}";
++                String back = read(base);
++                if (!back.equals(value) || !"main".equals(lastSource)) return "{\"ok\":false,\"error\":\"verificacao\"}";
++                if (!writeAtomic(new File(d, "mode"), "native".getBytes(StandardCharsets.UTF_8))) return "{\"ok\":false,\"error\":\"modo\"}";
++                return "{\"ok\":true,\"length\":" + value.length() + ",\"hash\":\"" + NativeMirror.hash(value) + "\"}";
++            } catch (Exception | OutOfMemoryError e) { return "{\"ok\":false,\"error\":\"erro\"}"; }
++        }
++    }
++
++    /** Volta ao modo antigo. Os arquivos continuam no telefone como cópia. */
++    static boolean deactivate(File base) {
++        File d = dir(base);
++        if (d == null) return false;
++        synchronized (LOCK) {
++            File mode = new File(d, "mode");
++            return !mode.exists() || mode.delete();
++        }
++    }
++
++    static String info(File base) {
++        File d = dir(base);
++        boolean on = active(base);
++        String meta = d == null ? "" : readFile(new File(d, "main.meta"));
++        boolean reserve = d != null && new File(d, "reserve.json").isFile();
++        return "{\"active\":" + on + ",\"exists\":" + (meta.length() > 2) + ",\"reserve\":" + reserve + ",\"source\":\"" + lastSource + "\""
++            + (meta.length() > 2 ? "," + meta.substring(1, meta.length() - 1) : "") + "}";
++    }
++}
+diff -ruN -x AlarmScheduler.java -x LessonTimerOverlayService.java ok/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/UpdateDownloads.java o22/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/UpdateDownloads.java
+--- ok/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/UpdateDownloads.java	2026-11-11 07:32:06.000000000 -0400
++++ o22/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/UpdateDownloads.java	2026-11-12 05:20:10.000000000 -0400
+@@ -31,7 +31,7 @@
+     private volatile boolean destroyed;
+     private volatile int accountGeneration;
+     private volatile int preparedGeneration=-1;
+-    private static final int LIMIT=24*1024*1024;
++    private static final int LIMIT=32*1024*1024;
+ 
+     UpdateDownloads(MainActivity activity, WebView web, Sources sources, BooleanSupplier teacher, BooleanSupplier updating) {
+         this.activity=activity;this.web=web;this.sources=sources;this.teacher=teacher;this.updating=updating;
+diff -ruN -x AlarmScheduler.java -x LessonTimerOverlayService.java ok/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/UpdateExport.java o22/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/UpdateExport.java
+--- ok/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/UpdateExport.java	2026-11-11 07:32:06.000000000 -0400
++++ o22/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/UpdateExport.java	2026-11-12 05:21:14.000000000 -0400
+@@ -10,7 +10,7 @@
+ 
+ /** Streams only the current APK's source pages. No historical bundles or student storage. */
+ final class UpdateExport {
+-    private static final int LIMIT=24*1024*1024;
++    private static final int LIMIT=32*1024*1024;
+     static void check(BooleanSupplier allowed)throws IOException {
+         if(!allowed.getAsBoolean())throw new IOException("Download cancelado: a conta mudou ou o aplicativo foi fechado.");
+     }
+diff -ruN -x AlarmScheduler.java -x LessonTimerOverlayService.java ok/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/UpdateManager.java o22/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/UpdateManager.java
+--- ok/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/UpdateManager.java	2026-11-11 07:35:50.000000000 -0400
++++ o22/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/UpdateManager.java	2026-11-12 23:24:14.000000000 -0400
+@@ -37,13 +37,13 @@
+ public final class UpdateManager {
+     public static final String SITE_URL = "https://agenda-personal-distribuicao.silvanaoliveira1411.chatgpt.site";
+     public static final int IMPORT_REQUEST = 3003;
+-    private static final String BASE_VERSION = "1.12.215";
+-    static final int BASE_SEQUENCE = 321;
++    private static final String BASE_VERSION = "1.12.267";
++    static final int BASE_SEQUENCE = 373;
+     private static final String HOME_URL = LocalPages.HOME;
+     // The built-in agenda includes the professor, student and invitation screens.
+     // It is intentionally larger than a small web page, so keep this limit above
+     // the packaged asset size as well as future on-device updates.
+-    private static final int MAX_BYTES = 24 * 1024 * 1024;
++    private static final int MAX_BYTES = 32 * 1024 * 1024;
+     private final UpdateDownloads downloads;
+     private final UpdateArchive archive;
+     private final AndroidInstaller installer;
+@@ -178,6 +178,12 @@
+     private JSONObject readActive() {
+         try {
+             StoredRelease stored = readStoredRelease(activeFile);
++            // Primeira abertura depois de um APK com base mais nova: o conteúdo local mais antigo cede lugar ao do APK
++            // (dados não são tocados). Depois disso, restaurar uma versão menor continua valendo normalmente.
++            String seenKey = "baseSeen" + BASE_SEQUENCE;
++            boolean newerBase = !preferences.getBoolean(seenKey, false);
++            if (newerBase) preferences.edit().putBoolean(seenKey, true).commit();
++            if (newerBase && stored.release.optInt("sequence", 0) < BASE_SEQUENCE) { new AtomicFile(activeFile).delete(); storedRelease = null; return null; }
+             storedRelease = stored;
+             return stored.release; // Compatible local releases remain valid after restoring a lower sequence.
+         }
+@@ -447,7 +453,7 @@
+     }
+     private void showInstalledDetails() {
+         String notes = active == null
+-            ? "Acrescenta Download da versão em uso nos três pontos da Conferência de atualizações. Salva o pacote atual pelo seletor de arquivos, sem incluir versões antigas no APK. Baixar não instala. Preserva as funções da 1.12.213, os pets e o urso atual."
++            ? "Versão incluída no aplicativo. Urso e Galo removidos dos pets: quem tinha um deles passa a ter o gato, com nome, XP, moedas e compras mantidos."
+             : active.optString("notes", "");
+         if (notes.trim().isEmpty()) notes = "A descrição deste pacote não foi informada. Consulte a Conferência de atualizações.";
+         new AlertDialog.Builder(activity, android.R.style.Theme_Material_Dialog_Alert)
+@@ -766,7 +772,12 @@
+             try (InputStream input = activity.getContentResolver().openInputStream(uri)) {
+                 if (input == null) throw new Exception("Arquivo indisponível.");
+                 JSONObject selected = new JSONObject(new String(readLimited(input, MAX_BYTES), StandardCharsets.UTF_8));
+-                UpdatePackageTrust.verify(activity, selected);
++                // A file the teacher picks by hand may come without the signature; the teacher then
++                // confirms it explicitly. Packages downloaded from the server still require it.
++                boolean unsignedPackage = false;
++                try { UpdatePackageTrust.verify(activity, selected); }
++                catch (UpdatePackageSignature.Invalid missing) { unsignedPackage = true; }
++                final boolean unsigned = unsignedPackage;
+                 boolean modular = UpdateAreaPatch.recognizes(selected);
+                 final JSONObject bundle, inverse;
+                 if (modular) {
+@@ -782,7 +793,7 @@
+                 } else { bundle = validateBundle(selected); inverse = null; }
+                 // Keep the exact validated bytes in memory. Confirmation must not
+                 // reopen a document that another app could have changed meanwhile.
+-                activity.runOnUiThread(() -> {
++                Runnable proceed = () -> {
+                     if (destroyed || generation != reviewGeneration) return;
+                     if (modular && active != installed) {
+                         cancelReview("O conteúdo em uso mudou. Selecione a correção novamente.");
+@@ -790,6 +801,10 @@
+                     }
+                     if (modular) { reviewPatch = selected; reviewInverse = inverse; }
+                     reviewUpdate(bundle, "", generation, modular);
++                };
++                activity.runOnUiThread(() -> {
++                    if (destroyed || generation != reviewGeneration) return;
++                    if (unsigned) confirmUnsigned(generation, proceed); else proceed.run();
+                 });
+             } catch (Exception | OutOfMemoryError | StackOverflowError e) {
+                 activity.runOnUiThread(() -> {
+@@ -804,6 +819,19 @@
+         });
+     }
+ 
++    private void confirmUnsigned(int generation, Runnable proceed) {
++        AlertDialog ask = new AlertDialog.Builder(activity, android.R.style.Theme_Material_Dialog_Alert)
++            .setTitle("Pacote sem assinatura")
++            .setMessage("Este arquivo não tem a assinatura do Agenda Personal. Instale só se foi você quem gerou ou baixou este pacote de um lugar confiável.\n\nPacotes sem assinatura não são aceitos pelos aparelhos dos alunos.")
++            .setCancelable(false)
++            .setPositiveButton("Continuar mesmo assim", (d, w) -> proceed.run())
++            .setNegativeButton("Cancelar", (d, w) -> {
++                if (!destroyed && generation == reviewGeneration) cancelReview("Importação cancelada: pacote sem assinatura.");
++            })
++            .create();
++        ask.show();
++    }
++
+     private JSONObject patchBase(JSONObject installed) throws Exception {
+         JSONObject current = installed == null ? null : installed.getJSONObject("files");
+         if (current != null && current.length() == 4) return installed;
+diff -ruN -x AlarmScheduler.java -x LessonTimerOverlayService.java ok/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/UpdateManifest.java o22/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/UpdateManifest.java
+--- ok/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/UpdateManifest.java	2026-11-11 07:32:06.000000000 -0400
++++ o22/AgendaPersonal_AndroidStudio/app/src/main/java/com/tiagolima/agendapersonal/UpdateManifest.java	2026-11-12 05:17:22.000000000 -0400
+@@ -8,7 +8,7 @@
+         if (value.optInt("format") != 1 || !appId.equals(value.optString("appId"))
+                 || value.optInt("bridgeVersion") != 3 || value.optInt("dataSchema") != 4
+                 || value.optInt("sequence") < 1 || !value.optString("version").matches("\\d+\\.\\d+\\.\\d+")
+-                || value.optInt("size") < 1 || value.optInt("size") > 24 * 1024 * 1024
++                || value.optInt("size") < 1 || value.optInt("size") > 32 * 1024 * 1024
+                 || !value.optString("sha256").matches("[a-f0-9]{64}")
+                 || !value.optString("bundlePath").matches("/api/bundle/[a-f0-9-]{36}"))
+             throw new Exception("Esta atualização precisa de outra versão do APK.");

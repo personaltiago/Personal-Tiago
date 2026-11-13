@@ -1,0 +1,154 @@
+##### professor.html
+-.brand img{width:48px;
++.brand img,.brand .ap-app-symbol{width:48px;
+-.brand img{width:51px;
++.brand img,.brand .ap-app-symbol{width:51px;
+-.brand img{width:44px;
++.brand img,.brand .ap-app-symbol{width:44px;
+-.brand img{width:max(44px,calc(100 * var(--home-u)));
++.brand img,.brand .ap-app-symbol{width:max(44px,calc(100 * var(--home-u)));
+-.trainer-reference-photo{background-size:879.412% auto;
+-background-position:95.849% 1.01%;
+-background-repeat:no-repeat}
++.trainer-photo.trainer-photo-empty{display:grid;
++place-items:center;
++background:linear-gradient(145deg,var(--ac-raised,#22162a),var(--ac-surface,#100d13))}
++.trainer-photo-initials{font-weight:900;
++font-size:15px;
++line-height:1;
++letter-spacing:.02em;
++color:var(--ac-accent,#e7c8fb);
++text-transform:uppercase;
++user-select:none}
++#trainerPhotoPreview .trainer-photo-initials{font-size:28px}
+-.brand img{width:39px;
++.brand img,.brand .ap-app-symbol{width:39px;
+-.trainer-reference-photo{background-image:url(<DATA 254KB>
+-)}
+-:where(html[data-agenda-colors]) .brand img{border-top-color:var(--ac-accent-border);
++:where(html[data-agenda-colors]) .brand img,:where(html[data-agenda-colors]) .brand .ap-app-symbol{border-top-color:var(--ac-accent-border);
+-:where(html[data-agenda-colors]) .brand img{border-top-color:var(--ac-accent-border);
++:where(html[data-agenda-colors]) .brand img,:where(html[data-agenda-colors]) .brand .ap-app-symbol{border-top-color:var(--ac-accent-border);
+-html[data-agenda-design=neon-tl] :is(.brand img,.header-profile){border-color:var(--nt-rim);
++html[data-agenda-design=neon-tl] :is(.brand img,.brand .ap-app-symbol,.header-profile){border-color:var(--nt-rim);
+-html[data-agenda-design=metal-tl] :is(.brand img,.header-profile){border-color:var(--nt-rim);
++html[data-agenda-design=metal-tl] :is(.brand img,.brand .ap-app-symbol,.header-profile){border-color:var(--nt-rim);
+-html[data-agenda-design=metal-tl] :is(.brand img,.header-profile,.more-identity-logo){border-color:rgba(var(--ac-text-rgb),.4);
++html[data-agenda-design=metal-tl] :is(.brand img,.brand .ap-app-symbol,.header-profile,.more-identity-logo){border-color:rgba(var(--ac-text-rgb),.4);
+-html[data-agenda-design=pro-tl] .brand img{width:40px;
++html[data-agenda-design=pro-tl] .brand img,html[data-agenda-design=pro-tl] .brand .ap-app-symbol{width:40px;
+-html[data-agenda-design=deep-tl] :is(.brand img,.header-profile){border-color:var(--nt-rim);
++html[data-agenda-design=deep-tl] :is(.brand img,.brand .ap-app-symbol,.header-profile){border-color:var(--nt-rim);
+-html[data-agenda-design=deep-tl] :is(.brand img,.header-profile,.more-identity-logo){border-color:rgba(var(--ac-text-rgb),.4);
++html[data-agenda-design=deep-tl] :is(.brand img,.brand .ap-app-symbol,.header-profile,.more-identity-logo){border-color:rgba(var(--ac-text-rgb),.4);
+-<img src="<DATA 422KB>
+-" alt="Logo TL">
++<span class="ap-app-symbol" role="img" aria-label="Agenda Personal">
++</span>
+-<span id="headerTrainerPhoto" class="trainer-photo trainer-reference-photo">
++<span id="headerTrainerPhoto" class="trainer-photo trainer-photo-empty">
+-
+    <img class="more-identity-logo" data-ap-shared-logo alt="Logo TL">
+-<script id="ap-shared-brand-logo">
+-(function(){const source=document.querySelector('.brand img'),target=document.querySelector('.more-identity-logo[data-ap-shared-logo]');
+-if(source&&target){target.setAttribute('src',source.getAttribute('src'));
+-target.removeAttribute('data-ap-shared-logo')}
+-}
+-)();
+-</script>
++
+    <span class="more-identity-logo ap-app-symbol" role="img" aria-label="Agenda Personal">
++</span>
+-Personalizar nome, foto e logo</span>
++Personalizar nome e foto</span>
+-<span id="trainerPhotoPreview" class="trainer-photo trainer-reference-photo">
++<span id="trainerPhotoPreview" class="trainer-photo trainer-photo-empty">
+-Usar foto do painel</button>
++Remover foto</button>
+-d.history=Array.isArray(d.history)?d.history:[];
++d.history=Array.isArray(d.history)?d.history.slice(0,200):[];
+-
+function save(){localStorage.setItem(DB_KEY,JSON.stringify(state));
++
+function save(){if(Array.isArray(state.history)&&state.history.length>
++200)state.history.length=200;
++localStorage.setItem(DB_KEY,JSON.stringify(state));
+-photo.classList.toggle('trainer-reference-photo',!profile.photoDataUrl);
++photo.classList.toggle('trainer-photo-empty',!profile.photoDataUrl);
+-`:'';
++`:`<span class="trainer-photo-initials" aria-hidden="true">
++${hesc(studentInitials(profile.name))}
++</span>
++`;
+-
+ photo.classList.toggle('trainer-reference-photo',!trainerPhotoDraft);
++
+ photo.classList.toggle('trainer-photo-empty',!trainerPhotoDraft);
+-`:'';
++`:`<span class="trainer-photo-initials" aria-hidden="true">
++${hesc(studentInitials(document.getElementById('trainerName')?.value.trim()||trainerProfile().name))}
++</span>
++`;
++
+document.getElementById('trainerName')?.addEventListener('input',()=>
++{if(!trainerPhotoDraft)updateTrainerPhotoPreview()}
++);
+-
+
+/* Embedded DejaVu Sans fonts, Bitstream Vera / DejaVu license retained in the font name tables. */
+const WORKOUT_REP
+-,"widths":[600,318,401,460,838,636,950,780,275,390,390,500,838,318,361,318,337,636,636,636,636,636,636,636,636,636,636,337,337,838,838,838,531,1000,684,686,698,770,632,575,775,752,295,295,656,557,863,748,787,603,787,695,635,611,732,684,989,685,611,685,390,337,390,838,500,500,613,635,550,635,615,352,635,634,278,278,579,278,974,634,612,635,635,411,521,392,634,592,818,592,592,525,636,337,636,838,318,401,636,636,636,636,337,500,500,1000,471,612,838,361,1000,500,500,838,401,401,500,636,636,318,500,4
+-,"bold":{"base64":"AAEAAAARAQAABAAQR0RFRsn4zpcACLXoAAAB9kdQT1NEdkx1AAi34AAAACBHU1VCJ6Q/wwAIuAAAAACWT1MvMlpXmJQAAAGYAAAAVmNtYXCFx8BJAABfJAAAFERjdnQgPrkxCAAAe7wAAAJUZnBnbVsCa/AAAHNoAAAArGdhc3AABwAHAAi13AAAAAxnbHlmPcpKRwAA20gAB7IvaGVhZC5auCcAAAEcAAAANmhoZWEOrx6+AAABVAAAACRobXR4yOf4KQAAAfAAAF00bG9jYVBFdqMAAH4QAABdOG1heHAdkgYtAAABeAAAACBuYW1lgfmlCgAIjXgAAChEcG9zdP/bAFoACLW8AAAAIHByZXB8YaLnAAB0FAAAB6cAAQAAAAJeuG4vts9fDzz1AB0IAAAAAADg+tE5AAAAAObtPV33cvzgD80I+wABAAgAAgABAAAAAAABAAAHbf4dAAAQIfdy+TIPzQAB
+-,"widths":[600,348,456,521,838,696,1002,872,306,457,457,523,838,380,415,380,365,696,696,696,696,696,696,696,696,696,696,400,400,838,838,838,580,1000,774,762,734,830,683,683,821,837,372,372,775,637,995,837,850,733,850,770,720,682,812,774,1103,771,724,725,457,365,457,838,500,500,675,716,593,716,678,435,716,712,343,343,665,343,1042,712,687,716,716,493,595,478,712,652,924,645,652,582,712,365,712,838,348,456,696,696,636,696,365,500,500,1000,564,646,838,415,1000,500,500,838,438,438,500,736,636,380,50
++
+
+/* Embedded DejaVu Sans fonts, Bitstream Vera / DejaVu license retained in the font name tables. */
+const WORKOUT_REP
++,"widths":[600,318,401,460,838,636,950,780,275,390,390,500,838,318,361,318,337,636,636,636,636,636,636,636,636,636,636,337,337,838,838,838,531,1000,684,686,698,770,632,575,775,752,295,295,656,557,863,748,787,603,787,695,635,611,732,684,989,685,611,685,390,337,390,838,500,500,613,635,550,635,615,352,635,634,278,278,579,278,974,634,612,635,635,411,521,392,634,592,818,592,592,525,636,337,636,838,318,401,636,636,636,636,337,500,500,1000,471,612,838,361,1000,500,500,838,401,401,500,636,636,318,500,4
++,"bold":{"base64":"AAEAAAAOAIAAAwBgT1MvMnHi4kgAAAFoAAAAVmNtYXCopnuRAABBcAAADSxjdnQgPrkxCAAAVvAAAAJUZnBnbVsCa/AAAE6cAAAArGdhc3AABwAHAAZJFAAAAAxnbHlm7EIQjAAAmPgABYe4aGVhZC2lRgUAAADsAAAANmhoZWENyxl5AAABJAAAACRobXR4EDjbPQAAAcAAAD+wbG9jYSexl0IAAFlEAAA/tG1heHAWKgYtAAABSAAAACBuYW1lgfmlCgAGILAAAChEcG9zdP/bAFoABkj0AAAAIHByZXB8YaLnAABPSAAAB6cAAQAAAAJeuLMsduVfDzz1AB0IAAAAAADg+tE5AAAAAOcbyxT3cv0HDukI+wABAAgAAgABAAAAAAABAAAHbf4dAAAPGPdy/FcO6QABAAAAAAAAAAAAAAAAAAAP7AABAAAP7ANOACsAeAAHAAIAEABAAAgAAAXtAiEABgAE
++,"widths":[600,348,456,521,838,696,1002,872,306,457,457,523,838,380,415,380,365,696,696,696,696,696,696,696,696,696,696,400,400,838,838,838,580,1000,774,762,734,830,683,683,821,837,372,372,775,637,995,837,850,733,850,770,720,682,812,774,1103,771,724,725,457,365,457,838,500,500,675,716,593,716,678,435,716,712,343,343,665,343,1042,712,687,716,716,493,595,478,712,652,924,645,652,582,712,365,712,838,348,456,696,696,636,696,365,500,500,1000,564,646,838,415,1000,500,500,838,438,438,500,736,636,380,50
++","menu-storage":"<path d=\"M12 3C7.6 3 4 4.3 4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6c0-1.7-3.6-3-8-3Zm0 2c3.9 0 6 .9 6 1s-2.1 1-6 1-6-.9-6-1 2.1-1 6-1ZM6 9.2C7.5 9.7 9.6 10 12 10s4.5-.3 6-.8V12c0 .1-2.1 1-6 1s-6-.9-6-1Zm0 5c1.5.5 3.6.8 6 .8s4.5-.3 6-.8V18c0 .1-2.1 1-6 1s-6-.9-6-1Z\"/>
+-
+ const byId={moreWorkoutCatalog:['training',2,'book'],moreSmartwatch:['training',4,'menu-watch'],moreRegistrationLink:['students',3,'menu-link'],moreFollowup:['students',4,'menu-followup'],moreThemeButton:['appearance',0,'palette'],moreLessonSounds:['appearance',1,'menu-alarm'],moreFullBackup:['app',1,'menu-backup'],moreTeacherSync:['app',2,'menu-sync']}
++
+ const byId={moreWorkoutCatalog:['training',2,'book'],moreSmartwatch:['training',4,'menu-watch'],moreRegistrationLink:['students',3,'menu-link'],moreFollowup:['students',4,'menu-followup'],moreThemeButton:['appearance',0,'palette'],moreLessonSounds:['appearance',1,'menu-alarm'],moreFullBackup:['app',1,'menu-backup'],moreStorage:['app',1.5,'menu-storage'],moreTeacherSync:['app',2,'menu-sync']}
+##### index.html
+-<div class="aps-imagebox">
++<div class="aps-imagebox" hidden>
+-(),M(),a.style.setProperty("--ap-c",T()),a.style.setProperty("--ap-bg",s.bg),n("apsPreviewName").textContent=s.name.trim()||"Seu nome profissional",n("apsPreviewDesc").textContent=s.description.trim()||"Personal Trainer",n("apsPreviewLogo").innerHTML=s.logo?'<img alt="Logo escolhido">
+-':"",s.logo?n("apsPreviewLogo").firstChild.src=s.logo:n("apsPreviewLogo").textContent=_(s.name);
++(),M(),a.style.setProperty("--ap-c",T()),a.style.setProperty("--ap-bg",s.bg),n("apsPreviewName").textContent=s.name.trim()||"Seu nome profissional",n("apsPreviewDesc").textContent=s.description.trim()||"Personal Trainer",n("apsPreviewLogo").innerHTML='<span class="ap-app-symbol" role="img" aria-label="Agenda Personal">
++</span>
++';
+-window.__AP_TEST_BRAND="+JSON.stringify({name:t.name,description:t.description,photo:t.photo,logo:t.logo,main:t.main,support:t.support,bg:t.bg,design:t.design}
++window.__AP_TEST_BRAND="+JSON.stringify({name:t.name,description:t.description,photo:t.photo,main:t.main,support:t.support,bg:t.bg,design:t.design}
+-let o=t.logo;
+-if(!o){const e=_(t.name),a='<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
+-<rect width="180" height="180" rx="28" fill="'+t.bg+'"/>
+-<text x="90" y="106" font-family="Arial" font-size="62" font-weight="bold" fill="'+t.main+'" text-anchor="middle">
+-'+e+"</text>
+-</svg>
+-";
+-o="data:image/svg+xml;
+-charset=utf-8,"+encodeURIComponent(a)}
+-return a=a.replace(/(<div class="brand">
+-<img src=")[^"]+("[^>
+-]*>
+-)/,(e,t,a)=>
+-t+o+a),a=a.replace(/(<img class="more-identity-logo" src=")[^"]+("[^>
+-]*>
+-)/,(e,t,a)=>
+-t+o+a),a=a.replace(/<title>
++return a=a.replace(/<title>
+-),j=Object.freeze({wolf:Object.freeze([t("original","Cinza clássico","#90918f"),t("black","Negro","#292823",0),t("white","Branco ártico","#f0eee4",1),t("sand","Areia","#c8aa76",2),t("brown","Castanho","#8f5b39",4)]),panda:Object.freeze([t("original","Preto e branco","#b2ada1"),t("white","Todo branco","#f0eee5",0),t("black","Todo preto","#302a26",1),t("brown","Castanho e branco","#8c6550",2),t("cream","Creme","#e2c99f",3),t("cinnamon","Canela","#985b37",4)]),kitten:Object.freeze([t("original","B
++),j=Object.freeze({wolf:Object.freeze([t("original","Cinza clássico","#90918f"),t("black","Negro","#292823",0),t("white","Branco ártico","#f0eee4",1),t("sand","Areia","#c8aa76",2),t("brown","Castanho","#8f5b39",4)]),kitten:Object.freeze([t("original","Bicolor clássico","#b5a293"),t("black","Preto","#2d2a29",0),t("white","Branco","#f0ede6",1),t("ginger","Laranja tigrado","#c48b4a",2),t("tabby","Cinza tigrado","#8d8a85",3),t("calico","Tricolor","#ae835c",4)]),capybara:Object.freeze([t("original",
+-,panda:{red:"cinnamon",blue:"original",gold:"cream",violet:"brown"}
+-,rooster:{red:"original",blue:"barred",gold:"buff",violet:"white"}
+-,{id:"panda",name:"Panda"}
+-,{id:"rooster",name:"Galo"}
+-]),O=Object.freeze({wolf:[["sit","Sentado","Atento, com a cauda junto às patas."],["rest","Deitado","Descansando com as patas à frente."]],kitten:[["sit","Sentado","Sentadinho com a cauda junto às patas."],["rest","Enroladinho","Dormindo aconchegado na própria cauda."]],panda:[["sit","Sentado","Patas para a frente e um descanso tranquilo."]],capybara:[["sit","Sentada","Tranquila, sentadinha no seu cantinho."],["rest","Descansando","Deitadinha com as patas recolhidas."],["play","Espreguiçando","
++]),O=Object.freeze({wolf:[["sit","Sentado","Atento, com a cauda junto às patas."],["rest","Deitado","Descansando com as patas à frente."]],kitten:[["sit","Sentado","Sentadinho com a cauda junto às patas."],["rest","Enroladinho","Dormindo aconchegado na própria cauda."]],capybara:[["sit","Sentada","Tranquila, sentadinha no seu cantinho."],["rest","Descansando","Deitadinha com as patas recolhidas."],["play","Espreguiçando","Um alongamento tranquilo para acordar."]]}
+-)))]),E=Object.freeze(["pose-panda-play","pose-panda-rest","pose-alligator-sit","pose-alligator-rest","pose-alligator-play","pose-kitten-play","pose-wolf-play"]),w=a=>
++)))]),E=Object.freeze(["pose-alligator-sit","pose-alligator-rest","pose-alligator-play","pose-kitten-play","pose-wolf-play"]),w=a=>
++(s.species==="panda"||s.species==="rooster")&&(s.species="kitten");
+##### avaliacoes.html
