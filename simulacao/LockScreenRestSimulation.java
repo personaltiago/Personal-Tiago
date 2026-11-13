@@ -59,6 +59,9 @@ public class LockScreenRestSimulation {
             AtomicReference<WebView> web = new AtomicReference<>();
             scenario.onActivity(activity -> web.set(findWebView(activity)));
             report.put("webViewEncontrado", web.get() != null);
+            // O Android só aceita descanso de aluno cadastrado (como no app real, a agenda já está sincronizada).
+            report.put("agendaPreparada", String.valueOf(call("AlarmStore", "saveSnapshot", app,
+                new JSONObject("{\"workoutStudents\":[{\"id\":\"s\",\"name\":\"Aluno Simulação\"}],\"students\":[{\"id\":\"s\",\"name\":\"Aluno Simulação\"}]}"))));
             long end = System.currentTimeMillis() + 120000L;
             String rest = new JSONObject().put("id", "sim").put("studentId", "s").put("planId", "p").put("dayId", "d")
                 .put("exerciseId", "e").put("student", "Aluno Simulação").put("exercise", "Abdução de Quadril Máquina")
@@ -82,6 +85,7 @@ public class LockScreenRestSimulation {
             report.put("telaBloqueada", sh("dumpsys window").contains("mDreamingLockscreen=true")
                 || sh("dumpsys window policy").contains("showing=true"));
             report.put("despertadorDepois", String.valueOf(call("AlarmStore", "lastDelivery", app)));
+            report.put("canais", channels());
         } finally {
             call("AlarmScheduler", "cancelWorkoutRest", app);
             sh("input keyevent KEYCODE_WAKEUP");
@@ -118,6 +122,14 @@ public class LockScreenRestSimulation {
                     || line.contains("importance") || line.contains("chronometer"))) found.append(line.trim()).append('\n');
         }
         return found.length() == 0 ? "NENHUMA notificação do Agenda Personal" : found.toString();
+    }
+
+    private String channels() throws Exception {
+        StringBuilder out = new StringBuilder();
+        for (String line : sh("dumpsys notification --noredact").split("\n"))
+            if (line.contains("rest_countdown") && (line.contains("NotificationChannel{") || line.contains("mId=")))
+                out.append(line.trim().replaceAll("mSound=[^,]*,", "")).append('\n');
+        return out.toString();
     }
 
     private static WebView findWebView(Activity activity) {
