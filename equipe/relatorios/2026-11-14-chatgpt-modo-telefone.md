@@ -44,3 +44,13 @@ A reabertura foi validada no ambiente de teste. O comportamento em um Xiaomi fí
 ## Reversão
 
 A referência anterior é `818736e5065ee43ba936fb1f77bff6eac889089b`, que já lê o arquivo do `NativeStore`. Se a mudança vier a ser integrada e precisar de reversão, reverter o merge em outro PR e seguir a distribuição normal de um build instalável por cima. Na validação futura em dispositivo, usar uma agenda fictícia e exportar e conferir um backup fora do aparelho antes da instalação. A pessoa que realiza o teste deve conferir, no resumo do backup e após reabrir o app, o número de alunos e treinos fictícios e a agenda reaberta.
+
+## Complemento do PR #4 — edição durante a recuperação
+
+O teste independente do PR #4 recuperou os dados nas quatro combinações de modo e momento da interrupção. Em uma verificação adicional, o salvamento normal do painel aceitava uma edição durante a recuperação, que em seguida era sobrescrita.
+
+O painel agora mostra “Recuperação da agenda” e bloqueia interação e salvamentos até recarregar os dados corretos em memória e renderizar. Se a recuperação falhar, o aviso permanece e oferece “Reabrir painel” para tentar novamente. O fluxo normal volta a salvar assim que o painel reabre com os dados anteriores. Continuam em vigor os limites e as regras de restauração do PR original.
+
+O teste do `verify_native_store.cjs` usa a função real de salvamento e a interface real de recuperação no Chromium. Em ambos os modos, trava a recuperação na etapa assíncrona, confirma o painel modal e o bloqueio do salvamento, e verifica a retomada da edição. Simula também falha e nova tentativa. Usa somente dados fictícios e ponte Android simulada. O teste de histórico continua conferindo o limite de 200 registros.
+
+Este complemento conserva a versão de conteúdo da revisão. A versão e a sequência de distribuição devem ser atualizadas em conjunto antes da publicação. A validação no Xiaomi físico continua pendente.
