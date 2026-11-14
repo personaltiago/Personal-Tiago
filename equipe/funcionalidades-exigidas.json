@@ -317,6 +317,16 @@
       },
       "marcadores": [
         {
+          "id": "guardar-agenda-telefone",
+          "area": "armazenamento",
+          "texto": "Guardar a agenda no telefone"
+        },
+        {
+          "id": "guardar-agenda-telefone-ativacao",
+          "area": "armazenamento",
+          "texto": "a.nsActivate(value)"
+        },
+        {
           "area": "descanso",
           "texto": "function saveWorkoutRest"
         },
@@ -637,28 +647,6 @@
       "ausente_desde": "1.199 / 1.12.268",
       "pendencia": "equipe/ESTADO.md seção 4.1",
       "decisao": "Sem restauração automática; só por PR aprovado pelo Tiago."
-    },
-    {
-      "id": "guardar-agenda-telefone",
-      "descricao": "Botão 'Guardar a agenda no telefone' (ativação do armazenamento principal no telefone)",
-      "tipo": "texto",
-      "tela": "professor.html",
-      "valor": "Guardar a agenda no telefone",
-      "presente_ate": "1.197 / 1.12.267",
-      "ausente_desde": "1.199 / 1.12.268",
-      "pendencia": "equipe/ESTADO.md seção 4.2",
-      "decisao": "Sem restauração automática; leitura de quem já ativou continua (ap-native-store, nsRead). Só volta por PR aprovado pelo Tiago."
-    },
-    {
-      "id": "guardar-agenda-telefone-ativacao",
-      "descricao": "Chamada da tela para ativar o armazenamento nativo (Android.nsActivate)",
-      "tipo": "texto",
-      "tela": "professor.html",
-      "valor": "nsActivate",
-      "presente_ate": "1.197 / 1.12.267",
-      "ausente_desde": "1.199 / 1.12.268",
-      "pendencia": "equipe/ESTADO.md seção 4.2",
-      "decisao": "O método nativo nsActivate continua na ponte (exigido); só a chamada na tela está ausente."
     }
   ]
 }

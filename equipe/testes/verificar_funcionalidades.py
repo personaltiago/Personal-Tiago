@@ -39,8 +39,6 @@ PONTE = re.compile(r'@JavascriptInterface\s+public\s+[\w<>\[\]]+\s+(\w+)\s*\(')
 EXCECOES_APROVADAS = {
     'audio-opcoes-treino': ('professor.html', 'bloco', 'ap-workout-audio-options-ui'),
     'audio-opcoes-treino-aluno': ('index.html', 'bloco', 'ap-workout-audio-options-ui'),
-    'guardar-agenda-telefone': ('professor.html', 'texto', 'Guardar a agenda no telefone'),
-    'guardar-agenda-telefone-ativacao': ('professor.html', 'texto', 'nsActivate'),
 }
 
 

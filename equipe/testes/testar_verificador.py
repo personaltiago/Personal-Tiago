@@ -110,7 +110,7 @@ def inv_renomear(inv, completa=True):
 
 CASOS = [
     # (nome, mudança no ZIP, mudança no inventário, argumentos extras, saída esperada, trecho esperado)
-    ('A1 versão atual (1.204) é aprovada', None, None, [], 0, 'ausente (documentada)'),
+    ('A1 versão atual é aprovada', None, None, [], 0, 'ausente (documentada)'),
     ('B1 bloco do financeiro removido do app reprova', SEM_CARTEIRA, None, [], 1, 'bloco "ap-finance-wallet"'),
     ('B2 função do descanso removida reprova',
      mudar_tela('professor.html', 'function saveWorkoutRest', 'function x_saveWorkoutRest'), None, [], 1, 'function saveWorkoutRest'),
@@ -120,6 +120,11 @@ CASOS = [
      substituir_em('MainActivity.java', 'public boolean startWorkoutRest(', 'public boolean x_startWorkoutRest('), None, [], 1, 'startWorkoutRest'),
     ('B5 classe Java removida reprova', sem_arquivo('agendapersonal/NativeStore.java'), None, [], 1, 'NativeStore.java'),
     ('B6 pet removido da Conferência reprova', substituir_em('update-catalog.js', "['lobo', ", "['x-lobo', "), None, [], 1, 'lobo'),
+    ('B7 botão de guardar a agenda removido reprova',
+     mudar_tela('professor.html', "b.textContent='Guardar a agenda no telefone'", "b.textContent='Botão removido'"),
+     None, [], 1, 'Guardar a agenda no telefone'),
+    ('B8 chamada de ativação removida reprova',
+     mudar_tela('professor.html', 'a.nsActivate(value)', '{}'), None, [], 1, 'a.nsActivate(value)'),
     ('C1 regressão de áudio restaurada só avisa', AUDIO_DE_VOLTA, None, [], 0, 'parece RESTAURADA'),
     ('C2 regressão restaurada reprova com --estrito', AUDIO_DE_VOLTA, None, ['--estrito'], 1, 'parece RESTAURADA'),
     ('D1 exigido transferido para ausências (escondendo regressão) reprova',
