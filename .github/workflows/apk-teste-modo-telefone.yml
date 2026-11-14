@@ -66,11 +66,16 @@ jobs:
       - name: Conferir o APK de teste por dentro
         shell: bash
         run: |
+          set -x
           cd "$PROJECT_DIR"
+          ls -la app/build/outputs/apk/debug/
           APK=app/build/outputs/apk/debug/app-debug.apk
           SDK="${ANDROID_HOME:-$ANDROID_SDK_ROOT}"
           BT=$(ls -d "$SDK"/build-tools/* | sort -V | tail -1)
-          "$BT/aapt2" dump badging "$APK" > badging.txt
+          echo "build-tools: $BT"
+          "$BT/aapt2" dump badging "$APK" > badging.txt || true
+          head -5 badging.txt
+          grep "application-label" badging.txt || true
           grep -q "package: name='com.tiagolima.agendapersonal.teste'" badging.txt
           grep -q "application-label:'Agenda Teste'" badging.txt
           grep -o "package: name='[^']*' versionCode='[^']*' versionName='[^']*'" badging.txt
