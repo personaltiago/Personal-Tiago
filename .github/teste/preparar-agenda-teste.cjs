@@ -31,6 +31,11 @@ const strings = path.join(projeto, 'app/src/main/res/values/strings.xml');
 fs.writeFileSync(strings, trocaUma(fs.readFileSync(strings, 'utf8'),
   '<string name="app_name">Agenda Personal</string>', '<string name="app_name">Agenda Teste</string>', 'strings.xml'));
 
+// 2b. O manifesto traz o nome escrito direto.
+const manifesto = path.join(projeto, 'app/src/main/AndroidManifest.xml');
+fs.writeFileSync(manifesto, trocaUma(fs.readFileSync(manifesto, 'utf8'),
+  'android:label="Agenda Personal"', 'android:label="Agenda Teste"', 'AndroidManifest.xml'));
+
 // 3. Telas: CSP connect-src + script do modo de teste no começo do <head>.
 const modo = fs.readFileSync(path.join(__dirname, 'modo-teste.js'), 'utf8');
 if (modo.includes('</script')) falha('o script de teste não pode conter </script');

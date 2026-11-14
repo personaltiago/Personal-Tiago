@@ -73,9 +73,9 @@ jobs:
           SDK="${ANDROID_HOME:-$ANDROID_SDK_ROOT}"
           BT=$(ls -d "$SDK"/build-tools/* | sort -V | tail -1)
           echo "build-tools: $BT"
-          "$BT/aapt2" dump badging "$APK" > badging.txt || true
-          head -5 badging.txt
-          grep "application-label" badging.txt || true
+          "$BT/aapt2" dump badging "$APK" > badging.txt
+          head -1 badging.txt
+          grep "^application-label:" badging.txt
           grep -q "package: name='com.tiagolima.agendapersonal.teste'" badging.txt
           grep -q "application-label:'Agenda Teste'" badging.txt
           grep -o "package: name='[^']*' versionCode='[^']*' versionName='[^']*'" badging.txt
