@@ -1,0 +1,103 @@
+name: APK de teste (Agenda Teste) — PR 4 modo telefone
+
+# Só roda em push para esta branch de teste. Não publica release, não usa a chave oficial
+# nem segredos, e não altera o botão de download. O APK sai apenas como artefato da execução.
+on:
+  push:
+    branches: [claude/apk-teste-modo-telefone]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: agenda-apk-teste-modo-telefone
+  cancel-in-progress: true
+
+jobs:
+  apk-teste:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Configurar Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Extrair o projeto do ZIP
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os, stat, zipfile
+          from pathlib import Path
+          source = Path('AgendaPersonal_AndroidStudio_v1.65_contas_convites.zip')
+          target = Path(os.environ['RUNNER_TEMP']) / 'agenda-teste'
+          target.mkdir()
+          with zipfile.ZipFile(source) as archive:
+              for item in archive.infolist():
+                  path = target / item.filename
+                  if not path.resolve().is_relative_to(target.resolve()) or stat.S_ISLNK(item.external_attr >> 16):
+                      raise RuntimeError('Caminho inválido no ZIP.')
+              archive.extractall(target)
+          projects = list(target.rglob('settings.gradle'))
+          if len(projects) != 1:
+              raise RuntimeError('O ZIP precisa conter um único projeto Android.')
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('PROJECT_DIR=' + str(projects[0].parent) + '\n')
+          PY
+      - name: Preparar o Agenda Teste (identificador separado e modo de teste)
+        shell: bash
+        run: node .github/teste/preparar-agenda-teste.cjs "$PROJECT_DIR"
+      - name: Compilar com a assinatura de depuração
+        shell: bash
+        run: |
+          cd "$PROJECT_DIR"
+          unset ANDROID_KEYSTORE_PATH ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD ANDROID_VERSION_CODE
+          node tools/prepare_assets.cjs
+          gradle :app:assembleDebug
+      - name: Conferir o APK de teste por dentro
+        shell: bash
+        run: |
+          cd "$PROJECT_DIR"
+          APK=app/build/outputs/apk/debug/app-debug.apk
+          SDK="${ANDROID_HOME:-$ANDROID_SDK_ROOT}"
+          BT=$(ls -d "$SDK"/build-tools/* | sort -V | tail -1)
+          "$BT/aapt2" dump badging "$APK" > badging.txt
+          grep -q "package: name='com.tiagolima.agendapersonal.teste'" badging.txt
+          grep -q "application-label:'Agenda Teste'" badging.txt
+          grep -o "package: name='[^']*' versionCode='[^']*' versionName='[^']*'" badging.txt
+          "$BT/apksigner" verify --print-certs "$APK" > certs.txt
+          cat certs.txt
+          grep -q "CN=Android Debug" certs.txt
+          for page in index.html professor.html avaliacoes.html cadastro.html; do
+            unzip -p "$APK" "assets/$page" | grep -q 'id="ap-modo-teste"'
+            unzip -p "$APK" "assets/$page" | grep -q "connect-src 'self' data: blob:"
+          done
+          unzip -p "$APK" assets/professor.html | grep -q 'global.APFullBackupCore='
+          unzip -p "$APK" assets/professor.html | grep -q 'restoreAgenda'
+          mkdir -p "$GITHUB_WORKSPACE/saida"
+          cp "$APK" "$GITHUB_WORKSPACE/saida/AgendaTeste-modo-telefone.apk"
+          cd "$GITHUB_WORKSPACE/saida"
+          sha256sum AgendaTeste-modo-telefone.apk | tee AgendaTeste-modo-telefone.apk.sha256
+          {
+            echo "Agenda Teste — APK de TESTE (não é o app oficial)"
+            echo "Commit: $GITHUB_SHA (base do PR #4: d504a02)"
+            echo "Identificador: com.tiagolima.agendapersonal.teste · nome: Agenda Teste"
+            echo "Assinatura: chave de depuração (Android Debug)"
+            echo "Professor fictício local; Firebase falso; rede externa da tela bloqueada."
+            echo "Use somente dados fictícios. Não importe backup real."
+          } > LEIA-ME.txt
+      - name: Entregar como artefato da execução
+        uses: actions/upload-artifact@v4
+        with:
+          name: Agenda-Teste-APK-modo-telefone
+          path: saida/
+          retention-days: 14
