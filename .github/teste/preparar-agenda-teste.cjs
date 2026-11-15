@@ -36,6 +36,26 @@ const manifesto = path.join(projeto, 'app/src/main/AndroidManifest.xml');
 fs.writeFileSync(manifesto, trocaUma(fs.readFileSync(manifesto, 'utf8'),
   'android:label="Agenda Personal"', 'android:label="Agenda Teste"', 'AndroidManifest.xml'));
 
+// A pausa existe apenas no APK de teste. A agenda já foi gravada e o journal
+// ainda está presente quando o aviso aparece.
+const APOS_GRAVAR = '   await apply(prepared.data);';
+const PAUSA_RESTAURACAO = `
+   await new Promise(resolve => {
+    const pausa = document.createElement('dialog');
+    pausa.className = 'ap-full-backup';
+    pausa.setAttribute('aria-labelledby', 'apPausaRestauracaoTitulo');
+    pausa.innerHTML = '<h2 id="apPausaRestauracaoTitulo">Restauração pausada para teste</h2><p>Agora você pode fechar o Agenda Teste e abrir de novo, sem pressa. Se quiser concluir a restauração, toque em Continuar restauração.</p><button type="button">Continuar restauração</button>';
+    pausa.addEventListener('cancel', event => event.preventDefault());
+    pausa.querySelector('button').addEventListener('click', () => {
+     pausa.close();
+     pausa.remove();
+     resolve();
+    }, {once: true});
+    document.body.append(pausa);
+    pausa.showModal();
+   });
+`;
+
 // 3. Telas: CSP connect-src + script do modo de teste no começo do <head>.
 const modo = fs.readFileSync(path.join(__dirname, 'modo-teste.js'), 'utf8');
 if (modo.includes('</script')) falha('o script de teste não pode conter </script');
@@ -50,11 +70,18 @@ for (const p of PAGINAS) {
   if (typeof html !== 'string') falha('tela ausente: ' + p);
   const i = html.indexOf('<head>');
   if (i < 0 || html.slice(0, i).includes('<script')) falha('<head> inesperado em ' + p);
-  rel.files[p] = html.slice(0, i + 6) + INJECAO + html.slice(i + 6);
+  const tela = html.slice(0, i + 6) + INJECAO + html.slice(i + 6);
+  rel.files[p] = p === 'professor.html'
+    ? trocaUma(tela, APOS_GRAVAR, APOS_GRAVAR + PAUSA_RESTAURACAO, 'etapa de restauração')
+    : tela;
 }
-// Conferência: retirando a injeção, cada tela é byte a byte a original (backup e recuperação preservados).
+// Retirando o modo de teste e a pausa, cada tela é byte a byte a original.
 for (const p of PAGINAS) {
-  if (rel.files[p].replace(INJECAO, '') !== original.files[p]) falha('a tela mudou além da injeção: ' + p);
+  const tela = rel.files[p].replace(INJECAO, '');
+  const originalRestaurado = p === 'professor.html'
+    ? trocaUma(tela, APOS_GRAVAR + PAUSA_RESTAURACAO, APOS_GRAVAR, 'conferência da pausa')
+    : tela;
+  if (originalRestaurado !== original.files[p]) falha('a tela mudou fora dos trechos de teste: ' + p);
   for (const marca of ['global.APFullBackupCore=', 'restoreAgenda', 'Recuperação da agenda', 'function save(){if(globalThis.APBackupRestoring'])
     if (p === 'professor.html' && !rel.files[p].includes(marca)) falha('trecho do backup ausente: ' + marca);
 }
@@ -69,5 +96,5 @@ if (release.sourceHashes['web/native-release.agenda.json'] !== sha(bruto)) falha
 release.sourceHashes['web/native-release.agenda.json'] = sha(novo);
 fs.writeFileSync(releaseFile, JSON.stringify(release, null, 2) + '\n');
 
-console.log(`Agenda Teste preparado: ${ID_TESTE}; conteúdo ${rel.version} (seq ${rel.sequence}) com modo de teste em ${PAGINAS.length} telas; resto das telas idêntico.`);
+console.log(`Agenda Teste preparado: ${ID_TESTE}; conteúdo ${rel.version} (seq ${rel.sequence}) com modo de teste em ${PAGINAS.length} telas e pausa de restauração; restante idêntico.`);
 console.log('SHA-256 do modo de teste: ' + sha(Buffer.from(modo, 'utf8')));
