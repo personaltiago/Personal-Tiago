@@ -1,0 +1,72 @@
+// Dentro de match /databases/{database}/documents, junto às regras atuais.
+match /muralTurmas/{turmaId}/publicacoes/{publicacaoId} {
+  function perfilMural() {
+    return get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data;
+  }
+
+  function professorDaTurma() {
+    return turmaId == professorUid() && isProfessor();
+  }
+
+  function alunoDaTurma() {
+    return request.auth != null
+      && turmaId == professorUid()
+      && request.auth.uid != turmaId
+      && perfilMural().perfil == 'aluno'
+      && perfilMural().ativo == true
+      && perfilMural().professorId == turmaId;
+  }
+
+  function podeLerMural() {
+    return professorDaTurma() || alunoDaTurma();
+  }
+
+  function novoTexto(limite) {
+    let d = request.resource.data;
+    let campos = ['autorId', 'autorNome', 'texto', 'criadoEm', 'visivel'];
+    return alunoDaTurma()
+      && d.keys().hasAll(campos)
+      && d.keys().hasOnly(campos)
+      && d.autorId == request.auth.uid
+      && d.autorNome is string
+      && d.autorNome == perfilMural().nome
+      && d.texto is string
+      && d.texto.size() > 0
+      && d.texto.size() <= limite
+      && d.criadoEm == request.time
+      && d.visivel == true;
+  }
+
+  function removerTexto() {
+    let d = request.resource.data;
+    return (professorDaTurma()
+        || (alunoDaTurma() && resource.data.autorId == request.auth.uid))
+      && resource.data.visivel == true
+      && d.diff(resource.data).affectedKeys().hasOnly(['texto', 'visivel'])
+      && d.visivel == false
+      && d.texto == '';
+  }
+
+  function publicacaoVisivel() {
+    return get(/databases/$(database)/documents/muralTurmas/$(turmaId)/publicacoes/$(publicacaoId)).data.visivel == true;
+  }
+
+  allow read: if podeLerMural() && resource.data.visivel == true;
+  allow create: if novoTexto(2000);
+  allow update: if removerTexto();
+
+  match /comentarios/{comentarioId} {
+    allow read: if podeLerMural() && publicacaoVisivel() && resource.data.visivel == true;
+    allow create: if alunoDaTurma() && publicacaoVisivel() && novoTexto(500);
+    allow update: if publicacaoVisivel() && removerTexto();
+  }
+
+  match /curtidas/{usuarioId} {
+    allow read: if podeLerMural() && publicacaoVisivel();
+    allow create, update: if alunoDaTurma()
+      && publicacaoVisivel()
+      && request.auth.uid == usuarioId
+      && request.resource.data.keys().hasOnly(['ativo'])
+      && request.resource.data.ativo is bool;
+  }
+}
