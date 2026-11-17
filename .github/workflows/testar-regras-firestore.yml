@@ -47,6 +47,12 @@ jobs:
           "$RUNNER_TEMP/fb/node_modules/.bin/firebase" emulators:exec \
             --config "$RUNNER_TEMP/fb/firebase.json" --only firestore --project demo-agenda-mural \
             "node --test --test-concurrency=1 --test-reporter=spec equipe/testes/mural-firestore.test.cjs equipe/testes/mural-regras-reais.test.cjs" 2>&1 | tee "$RUNNER_TEMP/saida.txt"
+      - name: Rodar o teste do botão Grupo da turma
+        env:
+          NODE_PATH: ${{ runner.temp }}/fb/node_modules
+        run: |
+          set -euo pipefail
+          node equipe/testes/grupo-turma.smoke.cjs 2>&1 | tee -a "$RUNNER_TEMP/saida.txt"
       - name: Resumo da execução
         if: always()
         run: |
