@@ -4,7 +4,7 @@ name: Testar regras do Firestore (mural)
 # Somente leitura: não usa segredos, não publica nada e não altera o repositório.
 on:
   push:
-    branches: [claude/testar-regras-mural]
+    branches: [claude/testar-regras-mural, claude/mural-limite-diario]
   workflow_dispatch:
 
 permissions:
@@ -34,7 +34,7 @@ jobs:
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/fb"
           printf '%s\n' '{"emulators":{"firestore":{"host":"127.0.0.1","port":8080},"ui":{"enabled":false}}}' > "$RUNNER_TEMP/fb/firebase.json"
-          npm install --prefix "$RUNNER_TEMP/fb" --no-save --no-audit --no-fund firebase@12 @firebase/rules-unit-testing@5 firebase-tools@15
+          npm install --prefix "$RUNNER_TEMP/fb" --no-save --no-audit --no-fund firebase@12 @firebase/rules-unit-testing@5 firebase-tools@15 jsdom@26
           node --version
           java -version 2>&1 | head -1
           "$RUNNER_TEMP/fb/node_modules/.bin/firebase" --version
@@ -47,6 +47,12 @@ jobs:
           "$RUNNER_TEMP/fb/node_modules/.bin/firebase" emulators:exec \
             --config "$RUNNER_TEMP/fb/firebase.json" --only firestore --project demo-agenda-mural \
             "node --test --test-concurrency=1 --test-reporter=spec equipe/testes/mural-firestore.test.cjs equipe/testes/mural-regras-reais.test.cjs" 2>&1 | tee "$RUNNER_TEMP/saida.txt"
+      - name: Rodar o teste da tela do mural
+        env:
+          NODE_PATH: ${{ runner.temp }}/fb/node_modules
+        run: |
+          set -euo pipefail
+          node equipe/testes/mural-tela.smoke.cjs 2>&1 | tee -a "$RUNNER_TEMP/saida.txt"
       - name: Resumo da execução
         if: always()
         run: |

@@ -27,6 +27,7 @@ const aluna = "aluna-real";
 const colega = "colega-real";
 const outra = "outra-real";
 const FOTO = "data:image/jpeg;base64,/9j/" + "A".repeat(40);
+const dia = () => new Date().toISOString().slice(0, 10).replace(/-/g, "");
 const turma = ["muralTurmas", professor, "publicacoes"];
 let env;
 
@@ -39,7 +40,7 @@ const cadastro = (uid, extra = {}) => ({
 const texto = (uid, nome = "Aluna Teste") => ({
   autorId: uid, autorNome: nome, texto: "Hoje terminei a última série.", criadoEm: serverTimestamp(), visivel: true
 });
-const post = store => doc(store, ...turma, "treino-teste");
+const post = (store, uid) => doc(store, ...turma, `${uid}_${dia()}`);
 const feed = store => query(collection(store, ...turma), where("visivel", "==", true));
 const aprovar = (uid, ativo = true) => updateDoc(userRef(db(professor), uid), {ativo});
 const cadastrar = uid => assertSucceeds(setDoc(userRef(db(uid), uid), cadastro(uid)));
@@ -97,31 +98,48 @@ test("Mural: só entra quem o professor aprovou, e a aprovação não vem do alu
   await cadastrar(outra);
   const pendente = db(aluna);
   await assertFails(getDocs(feed(pendente)));
-  await assertFails(setDoc(post(pendente), texto(aluna)));
+  await assertFails(setDoc(post(pendente, aluna), texto(aluna)));
   await assertFails(updateDoc(userRef(pendente, aluna), {ativo: true}));
-  await assertFails(setDoc(post(pendente), texto(aluna)));
+  await assertFails(setDoc(post(pendente, aluna), texto(aluna)));
 
   await assertSucceeds(aprovar(aluna));
-  await assertSucceeds(setDoc(post(db(aluna)), texto(aluna)));
-  await assertFails(setDoc(doc(db(aluna), ...turma, "nome-trocado"), texto(aluna, "Outro Nome")));
+  await assertSucceeds(setDoc(post(db(aluna), aluna), texto(aluna)));
+  await assertFails(setDoc(post(db(aluna), aluna), texto(aluna)));
   await assertSucceeds(getDocs(feed(db(aluna))));
 
   await assertFails(getDocs(feed(db(outra))));
-  await assertFails(getDoc(post(db(outra))));
+  await assertFails(getDoc(post(db(outra), aluna)));
 
   await assertSucceeds(setDoc(userRef(db(professor), "vinculada"), {
     nome: "Vinculada", perfil: "aluno", ativo: true, professorId: "outro-professor"
   }));
   await assertFails(getDocs(feed(db("vinculada"))));
-  await assertFails(setDoc(post(db("vinculada")), texto("vinculada", "Vinculada")));
+  await assertFails(setDoc(post(db("vinculada"), "vinculada"), texto("vinculada", "Vinculada")));
 
   await assertSucceeds(aprovar(aluna, false));
   await assertFails(getDocs(feed(db(aluna))));
-  await assertFails(setDoc(doc(db(aluna), ...turma, "depois-da-revogacao"), texto(aluna)));
 
   await assertSucceeds(aprovar(aluna, true));
-  await assertSucceeds(updateDoc(post(db(professor)), {visivel: false, texto: ""}));
-  await assertFails(getDoc(post(db(aluna))));
+  await assertSucceeds(updateDoc(post(db(professor), aluna), {visivel: false, texto: ""}));
+  await assertFails(getDoc(post(db(aluna), aluna)));
+});
+
+test("Comentários do mural: só aluno aprovado que publicou hoje, até 10 por dia", async () => {
+  await cadastrar(aluna);
+  await cadastrar(colega);
+  await assertSucceeds(aprovar(aluna));
+  await assertSucceeds(aprovar(colega));
+  const coment = (uid, n, extra = {}) => [
+    doc(db(uid), "muralTurmas", professor, "comentarios", `${uid}_${dia()}_${n}`),
+    {autorId: uid, autorNome: "Aluna Teste", texto: "Boa!", criadoEm: serverTimestamp(), visivel: true,
+      publicacaoId: `${colega}_${dia()}`, dia: dia(), ...extra}
+  ];
+  await assertSucceeds(setDoc(post(db(colega), colega), texto(colega, "Aluna Teste")));
+  await assertFails(setDoc(...coment(aluna, 1)));
+  await assertSucceeds(setDoc(post(db(aluna), aluna), texto(aluna)));
+  for (let n = 1; n <= 10; n++) await assertSucceeds(setDoc(...coment(aluna, n)));
+  await assertFails(setDoc(...coment(aluna, 11)));
+  await assertFails(setDoc(doc(db(aluna), ...turma, `${colega}_${dia()}`, "comentarios", "antigo"), texto(aluna)));
 });
 
 test("Feedback, evolução e demais caminhos seguem fechados para qualquer conta (negação padrão)", async () => {
