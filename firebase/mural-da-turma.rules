@@ -1,72 +1,112 @@
 // Dentro de match /databases/{database}/documents, junto às regras atuais.
+// Regras do mural: 1 publicação por aluno por dia e 10 comentários por aluno por dia.
+// O "dia" é o dia em UTC (vira às 20h em Cuiabá), igual ao que o app calcula.
+function muralPerfil() {
+  return get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data;
+}
+
+function muralProfessor(turmaId) {
+  return turmaId == professorUid() && isProfessor();
+}
+
+function muralAluno(turmaId) {
+  return request.auth != null
+    && turmaId == professorUid()
+    && request.auth.uid != turmaId
+    && muralPerfil().perfil == 'aluno'
+    && muralPerfil().ativo == true
+    && muralPerfil().professorId == turmaId;
+}
+
+function muralLeitura(turmaId) {
+  return muralProfessor(turmaId) || muralAluno(turmaId);
+}
+
+function muralDia() {
+  let mes = request.time.month();
+  let dia = request.time.day();
+  return string(request.time.year()) + (mes < 10 ? '0' : '') + string(mes) + (dia < 10 ? '0' : '') + string(dia);
+}
+
+function muralPublicacao(turmaId, publicacaoId) {
+  return get(/databases/$(database)/documents/muralTurmas/$(turmaId)/publicacoes/$(publicacaoId)).data;
+}
+
+// Vagas de comentário do aluno hoje: uma vaga usada não volta, nem se o comentário for removido.
+function muralVagas() {
+  let base = request.auth.uid + '_' + muralDia() + '_';
+  return [base + '1', base + '2', base + '3', base + '4', base + '5',
+          base + '6', base + '7', base + '8', base + '9', base + '10'];
+}
+
+function muralAutoria(d, limite) {
+  return d.autorId == request.auth.uid
+    && d.autorNome is string
+    && d.autorNome == muralPerfil().nome
+    && d.texto is string
+    && d.texto.size() > 0
+    && d.texto.size() <= limite
+    && d.criadoEm == request.time
+    && d.visivel == true;
+}
+
+function muralRemover(turmaId) {
+  let d = request.resource.data;
+  return (muralProfessor(turmaId)
+      || (muralAluno(turmaId) && resource.data.autorId == request.auth.uid))
+    && resource.data.visivel == true
+    && d.diff(resource.data).affectedKeys().hasOnly(['texto', 'visivel'])
+    && d.visivel == false
+    && d.texto == '';
+}
+
 match /muralTurmas/{turmaId}/publicacoes/{publicacaoId} {
-  function perfilMural() {
-    return get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data;
-  }
-
-  function professorDaTurma() {
-    return turmaId == professorUid() && isProfessor();
-  }
-
-  function alunoDaTurma() {
-    return request.auth != null
-      && turmaId == professorUid()
-      && request.auth.uid != turmaId
-      && perfilMural().perfil == 'aluno'
-      && perfilMural().ativo == true
-      && perfilMural().professorId == turmaId;
-  }
-
-  function podeLerMural() {
-    return professorDaTurma() || alunoDaTurma();
-  }
-
-  function novoTexto(limite) {
+  function campos() {
     let d = request.resource.data;
-    let campos = ['autorId', 'autorNome', 'texto', 'criadoEm', 'visivel'];
-    return alunoDaTurma()
-      && d.keys().hasAll(campos)
-      && d.keys().hasOnly(campos)
-      && d.autorId == request.auth.uid
-      && d.autorNome is string
-      && d.autorNome == perfilMural().nome
-      && d.texto is string
-      && d.texto.size() > 0
-      && d.texto.size() <= limite
-      && d.criadoEm == request.time
-      && d.visivel == true;
+    let lista = ['autorId', 'autorNome', 'texto', 'criadoEm', 'visivel'];
+    return d.keys().hasAll(lista) && d.keys().hasOnly(lista);
   }
 
-  function removerTexto() {
-    let d = request.resource.data;
-    return (professorDaTurma()
-        || (alunoDaTurma() && resource.data.autorId == request.auth.uid))
-      && resource.data.visivel == true
-      && d.diff(resource.data).affectedKeys().hasOnly(['texto', 'visivel'])
-      && d.visivel == false
-      && d.texto == '';
-  }
-
-  function publicacaoVisivel() {
-    return get(/databases/$(database)/documents/muralTurmas/$(turmaId)/publicacoes/$(publicacaoId)).data.visivel == true;
-  }
-
-  allow read: if podeLerMural() && resource.data.visivel == true;
-  allow create: if novoTexto(2000);
-  allow update: if removerTexto();
-
-  match /comentarios/{comentarioId} {
-    allow read: if podeLerMural() && publicacaoVisivel() && resource.data.visivel == true;
-    allow create: if alunoDaTurma() && publicacaoVisivel() && novoTexto(500);
-    allow update: if publicacaoVisivel() && removerTexto();
-  }
+  allow read: if muralLeitura(turmaId) && resource.data.visivel == true;
+  allow create: if muralAluno(turmaId)
+    && publicacaoId == request.auth.uid + '_' + muralDia()
+    && campos()
+    && muralAutoria(request.resource.data, 2000);
+  allow update: if muralRemover(turmaId);
 
   match /curtidas/{usuarioId} {
-    allow read: if podeLerMural() && publicacaoVisivel();
-    allow create, update: if alunoDaTurma()
-      && publicacaoVisivel()
+    allow read: if muralLeitura(turmaId) && muralPublicacao(turmaId, publicacaoId).visivel == true;
+    allow create, update: if muralAluno(turmaId)
+      && muralPublicacao(turmaId, publicacaoId).visivel == true
       && request.auth.uid == usuarioId
       && request.resource.data.keys().hasOnly(['ativo'])
       && request.resource.data.ativo is bool;
   }
+}
+
+match /muralTurmas/{turmaId}/comentarios/{comentarioId} {
+  function campos() {
+    let d = request.resource.data;
+    let lista = ['autorId', 'autorNome', 'texto', 'criadoEm', 'visivel', 'publicacaoId', 'dia'];
+    return d.keys().hasAll(lista) && d.keys().hasOnly(lista);
+  }
+
+  // Para comentar, o aluno precisa ter a própria publicação de hoje visível na turma.
+  function temCredito() {
+    return muralPublicacao(turmaId, request.auth.uid + '_' + muralDia()).visivel == true;
+  }
+
+  allow read: if muralLeitura(turmaId)
+    && ((resource.data.visivel == true
+          && muralPublicacao(turmaId, resource.data.publicacaoId).visivel == true)
+        || resource.data.autorId == request.auth.uid);
+  allow create: if muralAluno(turmaId)
+    && comentarioId in muralVagas()
+    && campos()
+    && muralAutoria(request.resource.data, 500)
+    && request.resource.data.dia == muralDia()
+    && request.resource.data.publicacaoId is string
+    && muralPublicacao(turmaId, request.resource.data.publicacaoId).visivel == true
+    && temCredito();
+  allow update: if muralRemover(turmaId);
 }

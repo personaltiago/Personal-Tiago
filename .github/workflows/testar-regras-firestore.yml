@@ -4,7 +4,7 @@ name: Testar regras do Firestore (mural)
 # Somente leitura: não usa segredos, não publica nada e não altera o repositório.
 on:
   push:
-    branches: [claude/testar-regras-mural]
+    branches: [claude/testar-regras-mural, claude/mural-limite-diario]
   workflow_dispatch:
 
 permissions:
