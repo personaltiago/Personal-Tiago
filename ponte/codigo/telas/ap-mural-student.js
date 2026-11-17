@@ -6,12 +6,16 @@
   const document = global.document;
   const postLimit = 2000;
   const commentLimit = 500;
+  const dailyComments = 10;
   const active = {
     session: null, revision: 0, busy: false, ready: false, likesReady: false,
-    liked: false, post: null, posts: new Map(), feed: null, detail: []
+    liked: false, post: null, posts: new Map(), feed: null, detail: [], mine: null, slots: new Set(), slotsReady: false
   };
   const byId = id => document.getElementById(id);
   const accounts = () => global.APaccounts;
+  const today = () => new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  const myPostId = () => active.session.uid + "_" + today();
+  const hasPostToday = () => active.session?.role === "student" && active.posts.has(myPostId());
   const isStudent = () => accounts()?.context()?.role === "student" && !accounts()?.isTeacher();
   let dialog;
 
@@ -35,10 +39,21 @@
 
   function controls() {
     const canWrite = active.ready && !active.busy && active.session?.role === "student";
-    byId("apMuralNew").hidden = active.session?.role !== "student";
-    for (const id of ["apMuralNew", "apMuralSend", "apMuralCommentSend"]) {
-      byId(id).disabled = !canWrite;
-    }
+    const student = active.session?.role === "student";
+    const posted = hasPostToday();
+    const credit = canWrite && posted && active.slotsReady && active.slots.size < dailyComments;
+    byId("apMuralNew").hidden = !student;
+    byId("apMuralNew").disabled = !canWrite || posted;
+    byId("apMuralSend").disabled = !canWrite || posted;
+    byId("apMuralCommentSend").disabled = !credit;
+    byId("apMuralDaily").textContent = !student || !active.ready ? ""
+      : posted ? "Você já publicou hoje. É uma publicação por dia." : "Você pode publicar uma vez por dia.";
+    byId("apMuralAudience").textContent = posted ? "Você já publicou hoje. É uma publicação por dia." : "Visível para sua turma";
+    byId("apMuralCredit").textContent = !student || !active.ready ? ""
+      : !posted ? "Publique o treino de hoje para comentar."
+      : !active.slotsReady ? ""
+      : active.slots.size >= dailyComments ? "Limite de " + dailyComments + " comentários por dia atingido."
+      : "Comentários de hoje: " + active.slots.size + "/" + dailyComments;
     byId("apMuralLike").disabled = !canWrite || !active.likesReady;
     for (const id of ["apMuralText", "apMuralComment", "apMuralCancel", "apMuralReturn"]) {
       byId(id).disabled = active.busy;
@@ -61,6 +76,10 @@
     active.revision++;
     active.feed?.();
     active.feed = null;
+    active.mine?.();
+    active.mine = null;
+    active.slots = new Set();
+    active.slotsReady = false;
     unsubscribeDetail();
     active.session = null;
     active.posts = new Map();
@@ -109,14 +128,14 @@
     dialog.setAttribute("aria-labelledby", "apMuralTitle");
     dialog.innerHTML = '<header class="ap-mural-head"><h2 id="apMuralTitle">Mural da turma</h2><button type="button" class="ap-mural-button ap-mural-close" id="apMuralClose" aria-label="Fechar mural">×</button></header>'
       + '<p id="apMuralStatus" class="ap-mural-status" role="status"></p>'
-      + '<section id="apMuralFeed"><button type="button" id="apMuralNew" class="ap-mural-button ap-mural-primary">Nova publicação</button><div id="apMuralPosts"></div></section>'
-      + '<section id="apMuralComposer" hidden><h3>Compartilhar no Mural</h3><p class="ap-mural-audience">Visível para sua turma</p>'
+      + '<section id="apMuralFeed"><p id="apMuralDaily" class="ap-mural-audience"></p><button type="button" id="apMuralNew" class="ap-mural-button ap-mural-primary">Nova publicação</button><div id="apMuralPosts"></div></section>'
+      + '<section id="apMuralComposer" hidden><h3>Compartilhar no Mural</h3><p id="apMuralAudience" class="ap-mural-audience">Visível para sua turma</p>'
       + '<form id="apMuralPublish"><label for="apMuralText">O que você quer compartilhar?</label>'
       + '<textarea id="apMuralText" rows="5" maxlength="2000" required placeholder="Escreva sobre seu treino."></textarea>'
       + '<div class="ap-mural-actions"><button type="button" class="ap-mural-button" id="apMuralCancel">Cancelar</button><button type="submit" class="ap-mural-button ap-mural-primary" id="apMuralSend">Publicar</button></div></form></section>'
       + '<section id="apMuralDetail" hidden><button type="button" id="apMuralReturn" class="ap-mural-button">Voltar ao mural</button><div id="apMuralPostContent"></div>'
       + '<div class="ap-mural-actions"><button type="button" id="apMuralLike" class="ap-mural-button" aria-pressed="false">Curtir</button><span id="apMuralLikeCount"></span></div>'
-      + '<h3>Comentários</h3><div id="apMuralComments"></div><form id="apMuralReply"><label for="apMuralComment">Seu comentário</label>'
+      + '<h3>Comentários</h3><div id="apMuralComments"></div><p id="apMuralCredit" class="ap-mural-audience"></p><form id="apMuralReply"><label for="apMuralComment">Seu comentário</label>'
       + '<textarea id="apMuralComment" rows="3" maxlength="500" required></textarea><button type="submit" id="apMuralCommentSend" class="ap-mural-button ap-mural-primary">Comentar</button></form></section>';
     document.body.appendChild(dialog);
 
@@ -134,6 +153,29 @@
   function visibleContent(...tail) {
     const {sdk, professorId} = active.session;
     return sdk.query(sdk.collection(sdk.db, "muralTurmas", professorId, "publicacoes", ...tail), sdk.where("visivel", "==", true));
+  }
+
+  function commentsOf(postId) {
+    const {sdk, professorId} = active.session;
+    return sdk.query(sdk.collection(sdk.db, "muralTurmas", professorId, "comentarios"),
+      sdk.where("publicacaoId", "==", postId), sdk.where("visivel", "==", true));
+  }
+
+  function commentRef(id) {
+    const {sdk, professorId} = active.session;
+    return sdk.doc(sdk.db, "muralTurmas", professorId, "comentarios", id);
+  }
+
+  function watchMyComments(valid) {
+    const {sdk, professorId, uid} = active.session;
+    const mine = sdk.query(sdk.collection(sdk.db, "muralTurmas", professorId, "comentarios"),
+      sdk.where("autorId", "==", uid), sdk.where("dia", "==", today()));
+    active.mine = sdk.onSnapshot(mine, {includeMetadataChanges: true}, snapshot => {
+      if (!valid() || snapshot.metadata.fromCache) return;
+      active.slots = new Set(snapshot.docs.map(doc => doc.id));
+      active.slotsReady = true;
+      controls();
+    }, () => { if (valid()) { active.slotsReady = false; controls(); } });
   }
 
   function ref(...tail) {
@@ -206,6 +248,7 @@
       const session = await accounts().muralSdk();
       if (!valid()) return false;
       active.session = session;
+      if (session.role === "student") watchMyComments(valid);
       active.feed = session.sdk.onSnapshot(visibleContent(), {includeMetadataChanges: true}, snapshot => {
         if (!valid()) return;
         if (snapshot.metadata.fromCache) {
@@ -247,7 +290,7 @@
     controls();
     status();
     byId("apMuralReturn").focus();
-    active.detail.push(sdk.onSnapshot(visibleContent(id, "comentarios"), {includeMetadataChanges: true}, snapshot => {
+    active.detail.push(sdk.onSnapshot(commentsOf(id), {includeMetadataChanges: true}, snapshot => {
       if (!valid() || snapshot.metadata.fromCache) return;
       const rows = list(snapshot, false);
       byId("apMuralComments").replaceChildren(...(rows.length ? rows.map(entry => card(entry, id))
@@ -273,7 +316,7 @@
     }));
   }
 
-  async function write(operation, success, studentOnly = true) {
+  async function write(operation, success, studentOnly = true, denied) {
     if (!active.ready || active.busy || (studentOnly && active.session.role !== "student")) return;
     if (global.navigator?.onLine === false) { status("Conecte-se para enviar."); return; }
     const revision = active.revision;
@@ -284,7 +327,9 @@
       await operation(active.session.sdk);
       if (revision === active.revision) success();
     } catch (error) {
-      if (revision === active.revision) status(messageFor(error));
+      if (revision === active.revision) {
+        status(denied && String(error?.code || "").endsWith("permission-denied") ? denied : messageFor(error));
+      }
     } finally {
       if (revision === active.revision) {
         active.busy = false;
@@ -301,12 +346,12 @@
     event.preventDefault();
     const text = byId("apMuralText").value.trim();
     if (!text || text.length > postLimit) { status("Confira o texto da publicação."); return; }
-    const target = global.crypto.randomUUID();
-    return write(sdk => sdk.setDoc(ref(target), payload(sdk, text)), () => {
+    if (hasPostToday()) { status("Você já publicou hoje."); return; }
+    return write(sdk => sdk.setDoc(ref(myPostId()), payload(sdk, text)), () => {
       byId("apMuralText").value = "";
       backToFeed();
       status("Publicado para sua turma.");
-    });
+    }, true, "Não foi possível publicar. Só é permitida uma publicação por dia.");
   }
 
   function reply(event) {
@@ -314,11 +359,15 @@
     const text = byId("apMuralComment").value.trim();
     const post = active.post;
     if (!post || !text || text.length > commentLimit) { status("Confira o comentário."); return; }
-    const id = global.crypto.randomUUID();
-    return write(sdk => sdk.setDoc(ref(post, "comentarios", id), payload(sdk, text)), () => {
+    if (!hasPostToday()) { status("Publique o treino de hoje para comentar."); return; }
+    let slot = 1;
+    while (slot <= dailyComments && active.slots.has(active.session.uid + "_" + today() + "_" + slot)) slot++;
+    if (slot > dailyComments) { status("Limite de " + dailyComments + " comentários por dia atingido."); return; }
+    const id = active.session.uid + "_" + today() + "_" + slot;
+    return write(sdk => sdk.setDoc(commentRef(id), {...payload(sdk, text), publicacaoId: post, dia: today()}), () => {
       if (post === active.post) byId("apMuralComment").value = "";
       status("Comentário enviado.");
-    });
+    }, true, "Não foi possível comentar. Publique o treino de hoje e respeite o limite diário.");
   }
 
   function toggleLike() {
@@ -331,8 +380,7 @@
   }
 
   function remove(id, postId) {
-    const path = postId ? [postId, "comentarios", id] : [id];
-    return write(sdk => sdk.updateDoc(ref(...path), {visivel: false, texto: ""}), () => {
+    return write(sdk => sdk.updateDoc(postId ? commentRef(id) : ref(id), {visivel: false, texto: ""}), () => {
       if (!postId && active.post === id) backToFeed();
       status(postId ? "Comentário removido." : "Publicação removida.");
     }, false);
