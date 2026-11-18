@@ -91,7 +91,7 @@ function boot(area, {android} = {}) {
 }
 const area = {enabled: true, trainer: {groupLink: FAKE, name: 'Tiago Lima', subtitle: 'Personal Trainer', cref: '123', photo: ''}};
 let a = boot(area, {android: true});
-t('Aluno aprovado: botão "Grupo da turma" aparece no cartão do profissional', () => { const b = a.q('#apHomeProfessional .ap-group-button'); assert(b); assert.equal(b.textContent, 'Grupo da turma'); assert.equal(b.type, 'button'); });
+t('Aluno aprovado: botão "Grupo da turma" aparece no cartão do profissional', () => { const b = a.q('#apHomeProfessional .ap-group-button'); assert(b); assert.equal(b.getAttribute('aria-label'), 'Grupo da turma'); assert.equal(b.textContent, ''); assert(b.querySelector('svg')); assert.equal(b.type, 'button'); });
 a.q('#apHomeProfessional .ap-group-button').click();
 t('Android: abre pelo sistema (Android.openExternal) com o link exato, sem window.open', () => { assert.deepEqual(a.log.ext, [FAKE]); assert.equal(a.log.open.length, 0); });
 const w2 = boot(area); w2.q('#apHomeProfessional .ap-group-button').click();
@@ -99,6 +99,19 @@ t('Navegador (iPhone/web): window.open em nova aba com noopener,noreferrer', () 
 t('Também aparece na tela de perfil', () => assert(w2.q('#apProfileProfessional .ap-group-button')));
 t('Acesso bloqueado (enabled=false): cartão oculto e sem botão', () => { const x = boot({...area, enabled: false}); assert.equal(x.q('.ap-group-button'), null); assert.equal(x.q('#apHomeProfessional').hidden, true); });
 t('Sem groupLink (ou inválido) não aparece botão', () => { for (const gl of [undefined, '', 'https://evil.com/AbCdEfGhIjKlMn12', 'javascript:alert(1)']) { const z = boot({enabled: true, trainer: {groupLink: gl, name: 'T', subtitle: '', cref: '', photo: ''}}); assert.equal(z.q('.ap-group-button'), null); assert(z.q('#apHomeProfessional')); } });
+t('Menu do professor: cartão Grupo da turma na seção Agenda, ícone próprio e abre pelo handler', () => {
+  assert(P.includes('id="moreGroupLink"') && P.includes('onclick="openGroupFromMenu()"'));
+  assert(P.includes("moreGroupLink:['agenda',4,'menu-group']"));
+  assert(P.includes('window.APMoreMenuGlyphs=Object.freeze({"menu-group":'));
+  assert(P.indexOf('id="moreGroupLink"') < P.indexOf('data-screen="makeup"', P.indexOf('id="moreGroupLink"')) );
+});
+t('openGroupFromMenu: com link abre o grupo; sem link abre a aba Grupo', () => {
+  const y = bootProf({groupLink: {version: 1, url: FAKE}}, {android: true});
+  y.w.eval('window.__tab=[];function L(){window.__tab.push("L")}function D(x){window.__tab.push(x)}' + P.slice(P.indexOf('function openGroupFromMenu() {'), P.indexOf('c("groupUrlForm").onsubmit')) + ';window.__m=openGroupFromMenu;');
+  y.w.__m(); assert.deepEqual(y.log.ext, [FAKE]); assert.deepEqual(y.w.__tab, []);
+  const z = bootProf({}); z.w.eval('window.__tab=[];function L(){window.__tab.push("L")}function D(x){window.__tab.push(x)}' + P.slice(P.indexOf('function openGroupFromMenu() {'), P.indexOf('c("groupUrlForm").onsubmit')) + ';window.__m=openGroupFromMenu;');
+  z.w.__m(); assert.deepEqual(z.w.__tab, ['L', 'group']); assert.equal(z.log.ext.length + z.log.open.length, 0);
+});
 t('O link nunca aparece como texto na tela', () => assert(!a.q('#apHomeProfessional').textContent.includes('whatsapp')));
 
 const undo = (page, edits) => [...edits].reverse().reduce((cur, [prev, next]) => { assert.equal(cur.split(next).length - 1, 1, 'trecho novo duplicado/ausente'); return cur.replace(next, () => prev); }, page);

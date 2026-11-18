@@ -35,6 +35,10 @@ function normalizeGroupLink(raw) {
 // Mesma regra de normalizeGroupLink, em uma linha, para dentro do app.
 const inviteFn = 'function groupInviteUrl(raw){try{const u=new URL(String(raw||"").trim());if(u.protocol!=="https:"||u.hostname!=="chat.whatsapp.com"||u.username||u.password||u.port)return"";const k=u.pathname.replace(/^\\/+|\\/+$/g,"");return /^[A-Za-z0-9]{10,40}$/.test(k)?"https://chat.whatsapp.com/"+k:""}catch(_){return""}}';
 
+// Ícone cheio (24x24) no mesmo formato dos demais ícones do menu Mais: balão de conversa com três pessoas.
+const groupGlyph = '<path fill-rule="evenodd" d="M5 2.5h14A3.5 3.5 0 0 1 22.5 6v8.5A3.5 3.5 0 0 1 19 18h-6.3L8 21.8V18H5a3.5 3.5 0 0 1-3.5-3.5V6A3.5 3.5 0 0 1 5 2.5ZM12 5.6a2.1 2.1 0 1 0 0 4.2 2.1 2.1 0 0 0 0-4.2ZM7.3 7.9a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2Zm9.4 0a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2ZM12 11.3c-2.1 0-3.7 1.2-3.7 2.9h7.4c0-1.7-1.6-2.9-3.7-2.9Zm-4.8 1c-1.4.2-2.4 1-2.4 2.1h2.6c0-.8.3-1.5.8-2.1Zm9.6 0c.5.6.8 1.3.8 2.1h2.6c0-1.1-1-1.9-2.4-2.1Z"/>';
+const menuCard = '<button class="more-function more-function-compact" id="moreGroupLink" type="button" onclick="openGroupFromMenu()"><span class="more-function-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12h-7l-5 4v-4H4Z"/></svg></span><span class="more-function-copy"><strong>Grupo da turma</strong><small>Abra o grupo do WhatsApp.</small></span><span class="more-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></span></button>';
+
 const tabButton = '<button id="groupLinkTab" type="button" role="tab" aria-selected="false" aria-controls="groupLinkPanel" onclick="setRegistrationTab(\'group\')">Grupo</button>\n      ';
 const tabPanel = `<div id="groupLinkPanel" role="tabpanel" aria-labelledby="groupLinkTab" hidden>
       <div class="registration-intro"><h4>Grupo do WhatsApp</h4><p>Cole o link do grupo da turma. Os alunos veem o botão Grupo da turma na agenda e entram direto.<br>Você pode trocar o link quando quiser.</p></div>
@@ -121,7 +125,13 @@ function copyGroupLink() {
   if (!url) { l("Vincule o link do grupo primeiro.", true); return; }
   return copyPublicLink(url, "groupPublicUrl");
 }
+function openGroupFromMenu() {
+  if (getGroupLink()) { openGroupLink(); return; }
+  L();
+  D("group");
+}
 c("groupUrlForm").onsubmit = saveGroupLink;
+window.openGroupFromMenu = openGroupFromMenu;
 window.editGroupLink = editGroupLink;
 window.cancelGroupLinkEdit = cancelGroupLinkEdit;
 window.removeGroupLink = removeGroupLink;
@@ -138,6 +148,9 @@ function professorEdits() {
     ['n = tab === "installation" || tab === "contacts" ? tab : "link";', 'n = tab === "installation" || tab === "group" || tab === "contacts" ? tab : "link";'],
     ['  else if (n === "contacts") U();', '  else if (n === "group") renderGroupLink();\n  else if (n === "contacts") U();'],
     ['function shareInstallationLink() { sharePublicLink(getInstallationLink()); }', 'function shareInstallationLink() { sharePublicLink(getInstallationLink()); }' + groupFns],
+    ['<button class="more-function more-function-compact" type="button" data-screen="makeup">', menuCard + '<button class="more-function more-function-compact" type="button" data-screen="makeup">'],
+    ['window.APMoreMenuGlyphs=Object.freeze({', 'window.APMoreMenuGlyphs=Object.freeze({"menu-group":' + JSON.stringify(groupGlyph) + ','],
+    ["moreRegistrationLink:['students',3,'menu-link'],", "moreGroupLink:['agenda',4,'menu-group'],moreRegistrationLink:['students',3,'menu-link'],"],
     [
       'function makeArea(state,student,helpers={}){',
       inviteFn + 'function makeArea(state,student,helpers={}){'
@@ -150,16 +163,17 @@ function professorEdits() {
 }
 
 function studentEdits() {
+  const glyph = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + groupGlyph + '</svg>';
   const button = [
     'const ap_g=o&&o.groupLink;if(/^https:\\/\\/chat\\.whatsapp\\.com\\/[A-Za-z0-9]{10,40}$/.test(ap_g||"")){',
-    'const b=document.createElement("button");b.type="button";b.className="ap-group-button";b.textContent="Grupo da turma";',
+    'const b=document.createElement("button");b.type="button";b.className="ap-group-button";b.setAttribute("aria-label","Grupo da turma");b.title="Grupo da turma";b.innerHTML=' + JSON.stringify(glyph) + ';',
     'b.addEventListener("click",()=>{try{if(window.Android?.openExternal){Android.openExternal(ap_g);return}}catch(t){}window.open(ap_g,"_blank","noopener,noreferrer")});i.append(b)}'
   ].join('');
   return [
     ['i.append(s,l)}}removeProfilePhoto=function(){', 'i.append(s,l);' + button + '}}removeProfilePhoto=function(){'],
     [
       '.ap-professional-info{min-width:0;flex:1}',
-      '.ap-professional-info{min-width:0;flex:1}.ap-professional-bar:has(.ap-group-button){flex-wrap:wrap}.ap-group-button{flex:1 0 100%;min-height:44px;padding:8px 12px;border:1px solid var(--home-accent,var(--prof-accent,#c8b4dd));border-radius:11px;background:transparent;color:var(--home-accent,var(--prof-accent,#c8b4dd));font:inherit;font-size:14px;font-weight:650;text-align:center}'
+      '.ap-professional-info{min-width:0;flex:1}.ap-group-button{flex:none;display:grid;place-items:center;width:44px;height:44px;margin-left:8px;padding:0;border:1px solid var(--home-accent,var(--prof-accent,#c8b4dd));border-radius:50%;background:transparent;color:var(--home-accent,var(--prof-accent,#c8b4dd))}.ap-group-button svg{width:23px;height:23px}'
     ]
   ];
 }
