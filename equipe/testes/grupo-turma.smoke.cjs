@@ -78,27 +78,32 @@ t('makeArea: com link válido entra só groupLink normalizado', () => { assert.e
 t('makeArea: link adulterado no armazenamento é ignorado', () => { for (const u of ['https://evil.com/AbCdEfGhIjKlMn12', 'javascript:alert(1)', 'http://chat.whatsapp.com/AbCdEfGhIjKlMn12']) assert.equal('groupLink' in trainerFor({trainerProfile: {name: 'T'}, groupLink: {version: 1, url: u}}), false); });
 
 // ---------- Aluno: botão ----------
-const f0 = I.indexOf('function y(){const e=window.__AP_STUDENT_CONTEXT,o=e?.area?.trainer;');
+const f0 = I.indexOf('function ap_groupButton(e,o){');
+const fy0 = I.indexOf('function y(){const e=window.__AP_STUDENT_CONTEXT,o=e?.area?.trainer;');
 const fy = I.slice(f0, I.indexOf('removeProfilePhoto=function(){', f0));
+const fnG = fy.slice(0, fy.indexOf('function y(){'));
 function boot(area, {android} = {}) {
-  const dom = new JSDOM('<!doctype html><body><div id="homeScroll"><header></header></div><div id="profileScroll"></div></body>', {runScripts: 'outside-only', url: 'https://appassets.androidplatform.net/assets/index.html'});
+  const dom = new JSDOM('<!doctype html><body><div id="homeScroll"><header class="home-header"><div class="home-actions"><button class="home-bell" id="bell"></button></div></header></div><div id="profileScroll"></div></body>', {runScripts: 'outside-only', url: 'https://appassets.androidplatform.net/assets/index.html'});
   const w = dom.window; const log = {ext: [], open: []};
   w.open = (...a) => { log.open.push(a); };
   if (android) w.Android = {openExternal: u => log.ext.push(u)};
   w.__AP_STUDENT_CONTEXT = {area};
-  w.eval('const t=i=>document.getElementById(i);' + fy.replace(/^function y\(\)/, 'window.__y=function()') + ';window.__y();');
+  w.eval('const t=i=>document.getElementById(i);' + fy.replace(/function y\(\)/, 'window.__y=function()') + ';window.__y();window.__run=()=>window.__y();');
   return {w, log, q: s => w.document.querySelector(s)};
 }
 const area = {enabled: true, trainer: {groupLink: FAKE, name: 'Tiago Lima', subtitle: 'Personal Trainer', cref: '123', photo: ''}};
 let a = boot(area, {android: true});
-t('Aluno aprovado: botão "Grupo da turma" aparece no cartão do profissional', () => { const b = a.q('#apHomeProfessional .ap-group-button'); assert(b); assert.equal(b.getAttribute('aria-label'), 'Grupo da turma'); assert.equal(b.textContent, ''); assert(b.querySelector('svg')); assert.equal(b.type, 'button'); });
-a.q('#apHomeProfessional .ap-group-button').click();
+t('Aluno liberado: ícone do WhatsApp aparece na tela inicial, ao lado do sininho, sem texto', () => { const b = a.q('#homeScroll .home-actions #apGroupButton'); assert(b); assert.equal(b.getAttribute('aria-label'), 'Grupo da turma'); assert.equal(b.textContent, ''); assert(b.querySelector('svg')); assert.equal(b.type, 'button'); assert.equal(b.nextElementSibling.id, 'bell'); });
+t('Cartão "Seu profissional" continua igual (sem botão dentro)', () => { assert(a.q('#apHomeProfessional')); assert.equal(a.q('#apHomeProfessional button'), null); assert(a.q('#apHomeProfessional').textContent.includes('Tiago Lima')); });
+a.q('#apGroupButton').click();
 t('Android: abre pelo sistema (Android.openExternal) com o link exato, sem window.open', () => { assert.deepEqual(a.log.ext, [FAKE]); assert.equal(a.log.open.length, 0); });
-const w2 = boot(area); w2.q('#apHomeProfessional .ap-group-button').click();
+const w2 = boot(area); w2.q('#apGroupButton').click();
 t('Navegador (iPhone/web): window.open em nova aba com noopener,noreferrer', () => assert.deepEqual(w2.log.open, [[FAKE, '_blank', 'noopener,noreferrer']]));
-t('Também aparece na tela de perfil', () => assert(w2.q('#apProfileProfessional .ap-group-button')));
-t('Acesso bloqueado (enabled=false): cartão oculto e sem botão', () => { const x = boot({...area, enabled: false}); assert.equal(x.q('.ap-group-button'), null); assert.equal(x.q('#apHomeProfessional').hidden, true); });
-t('Sem groupLink (ou inválido) não aparece botão', () => { for (const gl of [undefined, '', 'https://evil.com/AbCdEfGhIjKlMn12', 'javascript:alert(1)']) { const z = boot({enabled: true, trainer: {groupLink: gl, name: 'T', subtitle: '', cref: '', photo: ''}}); assert.equal(z.q('.ap-group-button'), null); assert(z.q('#apHomeProfessional')); } });
+t('Atualizar a tela não duplica o ícone', () => { w2.w.__run(); w2.w.__run(); assert.equal(w2.w.document.querySelectorAll('#apGroupButton').length, 1); });
+t('Aluno bloqueado (enabled=false): ícone não aparece', () => { const x = boot({...area, enabled: false}); assert.equal(x.q('#apGroupButton'), null); });
+t('Bloqueio depois de liberado: ícone é removido', () => { const x = boot(area); assert(x.q('#apGroupButton')); x.w.__AP_STUDENT_CONTEXT = {area: {...area, enabled: false}}; x.w.__run(); assert.equal(x.q('#apGroupButton'), null); });
+t('Link removido pelo professor: ícone some', () => { const x = boot(area); x.w.__AP_STUDENT_CONTEXT = {area: {enabled: true, trainer: {...area.trainer, groupLink: undefined}}}; x.w.__run(); assert.equal(x.q('#apGroupButton'), null); });
+t('Sem groupLink (ou inválido) não aparece botão', () => { for (const gl of [undefined, '', 'https://evil.com/AbCdEfGhIjKlMn12', 'javascript:alert(1)']) { const z = boot({enabled: true, trainer: {groupLink: gl, name: 'T', subtitle: '', cref: '', photo: ''}}); assert.equal(z.q('#apGroupButton'), null); assert(z.q('#apHomeProfessional')); } });
 t('Menu do professor: cartão Grupo da turma na seção Agenda, ícone próprio e abre pelo handler', () => {
   assert(P.includes('id="moreGroupLink"') && P.includes('onclick="openGroupFromMenu()"'));
   assert(P.includes("moreGroupLink:['agenda',4,'menu-group']"));
@@ -112,7 +117,7 @@ t('openGroupFromMenu: com link abre o grupo; sem link abre a aba Grupo', () => {
   const z = bootProf({}); z.w.eval('window.__tab=[];function L(){window.__tab.push("L")}function D(x){window.__tab.push(x)}' + P.slice(P.indexOf('function openGroupFromMenu() {'), P.indexOf('c("groupUrlForm").onsubmit')) + ';window.__m=openGroupFromMenu;');
   z.w.__m(); assert.deepEqual(z.w.__tab, ['L', 'group']); assert.equal(z.log.ext.length + z.log.open.length, 0);
 });
-t('O link nunca aparece como texto na tela', () => assert(!a.q('#apHomeProfessional').textContent.includes('whatsapp')));
+t('O link nunca aparece como texto na tela', () => assert(!a.w.document.body.textContent.includes('whatsapp')));
 
 const undo = (page, edits) => [...edits].reverse().reduce((cur, [prev, next]) => { assert.equal(cur.split(next).length - 1, 1, 'trecho novo duplicado/ausente'); return cur.replace(next, () => prev); }, page);
 t('Prova de reversão: desfazendo só as edições previstas, index.html e professor.html voltam byte a byte ao 1.12.276', () => { assert.equal(undo(I, G.studentEdits()), o.files['index.html']); assert.equal(undo(P, G.professorEdits()), o.files['professor.html']); });

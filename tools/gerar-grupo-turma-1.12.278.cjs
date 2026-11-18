@@ -3,7 +3,7 @@
 // Gera o pacote 1.12.278 (sem assinatura) a partir do pacote 1.12.276:
 //  - professor.html: nova aba "Grupo" em "Cadastro por link" (colar, trocar, copiar, testar e remover o link do grupo do WhatsApp);
 //  - professor.html: o link salvo segue dentro da ficha do aluno já existente (area.trainer.groupLink), só quando houver link válido;
-//  - index.html (aluno): botão "Grupo da turma" no cartão "Seu profissional", que abre o grupo direto.
+//  - index.html (aluno): ícone do WhatsApp ao lado do sininho, na tela inicial; abre o grupo direto (cartão "Seu profissional" intacto).
 // Nenhum link fica neste arquivo nem no pacote: o personal digita o link dentro do app.
 
 const { readFileSync, writeFileSync } = require('node:fs');
@@ -164,17 +164,17 @@ function professorEdits() {
 
 function studentEdits() {
   const glyph = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + groupGlyph + '</svg>';
-  const button = [
-    'const ap_g=o&&o.groupLink;if(/^https:\\/\\/chat\\.whatsapp\\.com\\/[A-Za-z0-9]{10,40}$/.test(ap_g||"")){',
-    'const b=document.createElement("button");b.type="button";b.className="ap-group-button";b.setAttribute("aria-label","Grupo da turma");b.title="Grupo da turma";b.innerHTML=' + JSON.stringify(glyph) + ';',
-    'b.addEventListener("click",()=>{try{if(window.Android?.openExternal){Android.openExternal(ap_g);return}}catch(t){}window.open(ap_g,"_blank","noopener,noreferrer")});i.append(b)}'
+  const fn = [
+    'function ap_groupButton(e,o){const h=document.querySelector("#homeScroll .home-actions");if(!h)return;let b=document.getElementById("apGroupButton");const g=o&&o.groupLink;',
+    'if(!/^https:\\/\\/chat\\.whatsapp\\.com\\/[A-Za-z0-9]{10,40}$/.test(g||"")||!1===e?.area?.enabled){b&&b.remove();return}',
+    'if(!b){b=document.createElement("button");b.id="apGroupButton";b.type="button";b.className="home-bell ap-group-button";b.setAttribute("aria-label","Grupo da turma");b.title="Grupo da turma";b.innerHTML=' + JSON.stringify(glyph) + ';h.prepend(b)}',
+    'b.onclick=()=>{try{if(window.Android?.openExternal){Android.openExternal(g);return}}catch(t){}window.open(g,"_blank","noopener,noreferrer")}}'
   ].join('');
+  const head = 'function y(){const e=window.__AP_STUDENT_CONTEXT,o=e?.area?.trainer;';
   return [
-    ['i.append(s,l)}}removeProfilePhoto=function(){', 'i.append(s,l);' + button + '}}removeProfilePhoto=function(){'],
-    [
-      '.ap-professional-info{min-width:0;flex:1}',
-      '.ap-professional-info{min-width:0;flex:1}.ap-group-button{flex:none;display:grid;place-items:center;width:44px;height:44px;margin-left:8px;padding:0;border:1px solid var(--home-accent,var(--prof-accent,#c8b4dd));border-radius:50%;background:transparent;color:var(--home-accent,var(--prof-accent,#c8b4dd))}.ap-group-button svg{width:23px;height:23px}'
-    ]
+    [head, fn + head],
+    ['i.append(s,l)}}removeProfilePhoto=function(){', 'i.append(s,l)}ap_groupButton(e,o)}removeProfilePhoto=function(){'],
+    ['.ap-professional-info{min-width:0;flex:1}', '.ap-professional-info{min-width:0;flex:1}.ap-group-button svg{width:24px;height:24px}']
   ];
 }
 
