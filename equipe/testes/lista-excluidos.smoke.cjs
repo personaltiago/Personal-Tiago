@@ -1,6 +1,7 @@
 'use strict';
-// Confere o pacote 1.12.285 (Lista de alunos: Mostrar excluídos / Voltar para a lista) contra o pacote 1.12.284 que
-// está na raiz do repositório. Não precisa de navegador nem de internet:
+// Confere o pacote 1.12.285 (Lista de alunos: Mostrar excluídos / Voltar para a lista) contra o pacote 1.12.284 original
+// (o da raiz do repositório ou, se aquele arquivo foi substituído pelo 1.12.285, o do histórico do git). Não precisa de
+// navegador nem de internet:
 //   node equipe/testes/lista-excluidos.smoke.cjs
 // O teste confere: escopo (só professor.html), prova de reversão byte a byte, determinismo, e, rodando o módulo REAL de
 // cadastro em vm com um DOM estrito (id que não existe devolve null, como no navegador) e com os botões ligados de
@@ -22,7 +23,28 @@ const {execFileSync} = require('child_process');
 
 const ROOT = path.join(__dirname, '../..');
 const GENERATOR = path.join(ROOT, 'tools/gerar-lista-excluidos-1.12.285.cjs');
-const SOURCE = path.join(ROOT, 'AgendaPersonal-1.12.284-Lista-De-Alunos-Para-Assinar.agenda.json');
+// O pacote-base é o 1.12.284 ORIGINAL (SHA-256 abaixo). Em 19/11 o Tiago subiu o 1.12.285 na main com o nome do arquivo do
+// 1.12.284 (commit b4b6072), então o arquivo com esse nome na raiz pode já ser o 1.12.285. Por isso o teste usa o arquivo da
+// raiz só se ele for mesmo o 1.12.284 e, senão, busca o original no histórico do git (commit 9d5e2de).
+const SOURCE_NAME = 'AgendaPersonal-1.12.284-Lista-De-Alunos-Para-Assinar.agenda.json';
+const SOURCE_COMMIT = '9d5e2de6f5cab6c4c51f73a11a8ca1d6bc5d32d3';
+const SOURCE_SHA256 = '08d42338e76fc011234dfb78b5ac937fcfe43728667247778e2cea765481a5a8';
+const SOURCE = (() => {
+  const digest = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
+  const inRoot = path.join(ROOT, SOURCE_NAME);
+  if (fs.existsSync(inRoot) && digest(fs.readFileSync(inRoot)) === SOURCE_SHA256) return inRoot;
+  let fromHistory;
+  try {
+    fromHistory = execFileSync('git', ['show', SOURCE_COMMIT + ':' + SOURCE_NAME], {cwd: ROOT, maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe']});
+  } catch (problem) {
+    throw new Error('Não achei o pacote 1.12.284 original (SHA-256 ' + SOURCE_SHA256 + '): o arquivo da raiz é outro e o commit ' +
+      SOURCE_COMMIT.slice(0, 7) + ' não está neste clone (se o clone é raso, rode: git fetch --unshallow).');
+  }
+  assert.equal(digest(fromHistory), SOURCE_SHA256, 'o 1.12.284 do histórico do git não é o original esperado');
+  const copy = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'base-284-')), SOURCE_NAME);
+  fs.writeFileSync(copy, fromHistory);
+  return copy;
+})();
 const G = require(GENERATOR);
 const o = JSON.parse(fs.readFileSync(SOURCE, 'utf8'));
 const p = G.makeUpdate(o);
