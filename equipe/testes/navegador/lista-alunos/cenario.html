@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}iframe{border:0;width:100%;height:100%;display:block}</style></head>
+<body><iframe id="app"></iframe>
+<script>
+'use strict';
+const Q = new URLSearchParams(location.search);
+const APP = Q.get('app') || 'prof-284.html';
+const MODE = Q.get('mode') || 'func';          // func | shot
+const THEME = Q.get('theme') || '';            // '' | metal | deep
+const VIEW = Q.get('view') || 'mais';          // mais | cards | approvals | list | confirm | links | empty
+const SEED = Q.get('seed') || 'normal';        // normal | allin | none
+const TEACHER = 'R2EmnDVcvMWt7TjPxOP6DjW1VOn1';
+const log = (kind, name, extra) => console.log('AUDIT ' + kind + ' ' + name + (extra ? ' | ' + extra : ''));
+let ok = 0, bad = 0;
+const check = (name, cond, extra) => { if (cond) { ok++; log('OK', name); } else { bad++; log('FALHA', name, extra); } };
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+async function until(fn, ms = 9000, step = 40) { const t0 = Date.now(); for (;;) { let v; try { v = fn(); } catch (e) { v = null; } if (v) return v; if (Date.now() - t0 > ms) return null; await sleep(step); } }
+
+// ---------- Firestore simulado ----------
+const docs = new Map();
+function seedDocs() {
+  docs.clear();
+  const base = {perfil: 'aluno', professorId: TEACHER, nascimento: '2000-05-12', genero: 'Prefiro não informar'};
+  const add = (id, nome, ativo, extra = {}) => docs.set(id, {...base, nome, email: nome.split(' ')[0].toLowerCase() + '@exemplo.com', whatsapp: '(69) 99999-' + String(1000 + docs.size), ativo, ...extra});
+  add('u_ana', 'Ana Pendente', false);
+  add('u_bruno', 'Bruno Aguardando', false);
+  add('u_carla', 'Carla Aprovada', true);                 // aprovada, mas ainda não está na agenda
+  add('u_diego', 'Diego Na Agenda', true);                // já está na agenda
+  add('u_elisa', 'Elisa Na Agenda Sem Aprovar', false);   // está na agenda, ativo=false no Firebase
+  add('u_outro', 'Fabio De Outro Professor', false, {professorId: 'OUTRO'});
+}
+const calls = {updateDoc: [], getDocs: 0, other: []};
+const liveListeners = new Set();
+const sdk = {
+  auth: {currentUser: {uid: TEACHER, getIdToken: async () => 'token'}},
+  db: {},
+  collection: (db, name) => ({name}),
+  where: (field, op, val) => ({field, op, val}),
+  query: (col, ...cons) => ({col, cons}),
+  getDocs: async q => { calls.getDocs++; await sleep(25); return {docs: [...docs.entries()].filter(([id, d]) => q.cons.every(c => c.op === '==' ? d[c.field] === c.val : true)).map(([id, d]) => ({id, data: () => ({...d})}))}; },
+  onSnapshot: (q, onNext) => {
+    const run = () => onNext({docs: [...docs.entries()].filter(([id, d]) => q.cons.every(c => c.op === '==' ? d[c.field] === c.val : true)).map(([id, d]) => ({id, data: () => ({...d})}))});
+    liveListeners.add(run); setTimeout(run, 0); return () => liveListeners.delete(run);
+  },
+  doc: (db, col, uid) => ({col, uid}),
+  updateDoc: async (ref, ...fields) => {
+    const data = {}; for (let i = 0; i < fields.length; i += 2) data[fields[i]] = fields[i + 1];
+    calls.updateDoc.push({uid: ref.uid, data}); await sleep(25);
+    docs.set(ref.uid, {...docs.get(ref.uid), ...data});
+    liveListeners.forEach(fn => fn());
+  },
+  serverTimestamp: () => 'server-time',
+  onAuthStateChanged: (auth, cb) => { setTimeout(() => cb(auth.currentUser), 0); return () => {}; },
+  signInWithEmailAndPassword: async () => { throw {code: 'auth/invalid-credential'}; },
+  signOut: async () => { sdk.auth.currentUser = null; }
+};
+window.APaccounts = {registrationSdk: async () => sdk, isTeacher: () => true, teacherUid: () => TEACHER, logout() {}, retry() {}};
+
+// ---------- helpers do aplicativo ----------
+let W, D;
+const $ = (sel, root = D) => root.querySelector(sel);
+const $$ = (sel, root = D) => [...root.querySelectorAll(sel)];
+const visible = el => !!el && !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length) && getComputedStyle(el).visibility !== 'hidden';
+const text = el => (el ? el.textContent.replace(/\s+/g, ' ').trim() : '');
+async function boot() {
+  if (THEME === 'metal') localStorage.setItem('agendaPersonalTL_design_v1', JSON.stringify({version: 1, id: 'metal-tl'}));
+  if (THEME === 'deep') localStorage.setItem('agendaPersonalTL_design_v1', JSON.stringify({version: 1, id: 'deep-tl'}));
+  seedDocs();
+  const frame = document.getElementById('app');
+  frame.src = APP;
+  await new Promise(r => frame.addEventListener('load', r, {once: true}));
+  W = frame.contentWindow; D = W.document;
+  await until(() => typeof W.openRegistrationLink === 'function' && $('[data-screen="more"]'), 15000);
+  // alunos que já estão na agenda (firebaseUid igual ao cadastro)
+  if (SEED !== 'none') {
+    const mk = (id, name, uid) => ({id, name, phone: '55699999' + id.slice(-4).padStart(4, '0'), studentType: 'presencial', financeEnabled: false, firebaseUid: uid, createdAt: '2026-11-01'});
+    W.eval("state.students.push(" + JSON.stringify(mk('stu_diego', 'Diego Na Agenda', 'u_diego')) + ", " + JSON.stringify(mk('stu_elisa', 'Elisa Na Agenda Sem Aprovar', 'u_elisa')) + ", " + JSON.stringify({id: 'stu_livre', name: 'Gil Sem Conta', phone: '5569999990099', studentType: 'online', financeEnabled: false, createdAt: '2026-11-02'}) + ")");
+    if (SEED === 'allin') {
+      W.eval("state.students.push(" + JSON.stringify(mk('stu_ana', 'Ana Pendente', 'u_ana')) + ", " + JSON.stringify(mk('stu_bruno', 'Bruno Aguardando', 'u_bruno')) + ", " + JSON.stringify(mk('stu_carla', 'Carla Aprovada', 'u_carla')) + ")");
+    }
+    try { W.eval('renderAll()'); } catch (e) { log('AVISO', 'renderAll', String(e)); }
+  }
+  await sleep(THEME ? 1800 : 500);
+}
+const goMais = async () => { await tap($('[data-screen="more"]')); await until(() => visible($('#moreRegistrationLink')), 6000); await sleep(THEME ? 1400 : 900); };
+const dialog = () => $('#registrationLinkDialog');
+const isOpen = () => dialog().classList.contains('open');
+const cards = () => $$('#registrationContactsList [data-registration-uid]');
+const names = () => cards().map(c => text($('strong', c)));
+const statusOf = c => text($('.registration-contact-status', c));
+const removeButtons = () => $$('#registrationContactsList [data-registration-remove]');
+const waitList = async (count) => until(() => $('#registrationContactsList') && !$('#registrationContactsList').textContent.includes('Buscando') && (count === undefined ? $('#registrationContactsList').children.length : cards().length === count), 6000);
+const fire = (el, type) => el.dispatchEvent(new W.Event(type, {bubbles: true}));
+async function tap(el) {
+  if (!el) throw new Error('tap em elemento inexistente');
+  el.scrollIntoView({block: 'center'});
+  let last = '';
+  for (let k = 0; k < 40; k++) { await sleep(60); const q = el.getBoundingClientRect(); const now = [q.x, q.y, q.width, q.height].map(Math.round).join(','); if (now === last) break; last = now; }
+  const r = el.getBoundingClientRect();
+  const x = Math.round(r.x + r.width / 2), y = Math.round(r.y + r.height / 2);
+  const top = D.elementFromPoint(x, y) || el;
+  const o = {bubbles: true, cancelable: true, clientX: x, clientY: y, pointerId: 1, pointerType: 'touch', isPrimary: true, view: W};
+  let seen = [];
+  const spy = e => seen.push(e.type + (e.defaultPrevented ? '!' : ''));
+  for (const t of ['pointerdown', 'mousedown', 'pointerup', 'mouseup', 'click']) D.addEventListener(t, spy, true);
+  for (const [T, t] of [[W.PointerEvent, 'pointerdown'], [W.MouseEvent, 'mousedown'], [W.PointerEvent, 'pointerup'], [W.MouseEvent, 'mouseup'], [W.MouseEvent, 'click']]) top.dispatchEvent(new T(t, o));
+  for (const t of ['pointerdown', 'mousedown', 'pointerup', 'mouseup', 'click']) D.removeEventListener(t, spy, true);
+  if (Q.get('tapdebug')) log('TAP', (el.id || el.className || el.tagName) + ' -> ' + top.tagName + '#' + top.id + '.' + String(top.className).slice(0, 30), 'xy=' + x + ',' + y + ' eventos=' + seen.join(','));
+  return top;
+}
+async function tapCard(el) {
+  await tap(el); await sleep(150);
+  if (!isOpen()) { await tap(el); await sleep(150); }
+}
+const byName = n => cards().find(c => text($('strong', c)) === n);
+
+async function openBellCard() {
+  if (!visible($('.registration-notification-card'))) { await tap($('.header-notifications')); await until(() => visible($('.registration-notification-card')), 4000); }
+  return $('.registration-notification-card');
+}
+async function openApprovals() { await tapCard($('#moreStudentApprovals')); await until(isOpen, 4000); await waitList(); await sleep(150); }
+async function openList() { await tapCard($('#moreStudentList')); await until(isOpen, 4000); await waitList(); await sleep(150); }
+async function closeWindow() { W.closeDialog('registrationLinkDialog'); await sleep(200); }
+async function exclude(name) {
+  const card = byName(name);
+  if (!card) return false;
+  await tap($('[data-registration-remove]', card)); await sleep(150);
+  const confirm = $('[data-registration-remove-confirm]');
+  if (!confirm) return false;
+  await tap(confirm); await sleep(250);
+  return !byName(name);
+}
+
+// o que cada janela mostra (título, ícones, atalhos, botão fechar)
+const windowState = () => ({
+  title: text($('#registrationLinkTitle')),
+  tabs: visible($('#registrationTabs')),
+  link: visible($('#registrationLinkIcon')),
+  approvals: visible($('#registrationApprovalsIcon')),
+  roster: visible($('#registrationRosterIcon')),
+  close: $('#registrationLinkClose').getAttribute('aria-label')
+});
+const sameWindow = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const APPROVALS_WINDOW = {title: 'Alunos para aprovar', tabs: false, link: false, approvals: true, roster: false, close: 'Fechar alunos para aprovar'};
+const LIST_WINDOW = {title: 'Lista de alunos', tabs: false, link: false, approvals: false, roster: true, close: 'Fechar lista de alunos'};
+const LINKS_WINDOW = {title: 'Cadastro por link', tabs: true, link: true, approvals: false, roster: false, close: 'Fechar cadastro por link'};
+
+async function functional() {
+  const isNew = typeof W.openStudentList === 'function' && typeof W.openStudentApprovals === 'function';
+  check('versão carregada: ' + (isNew ? '284 (novo)' : 'anterior'), isNew, 'esperava o pacote 1.12.284');
+  await sleep(500);
+
+  // ---- sininho (código real do aviso, com o Firestore simulado): continua abrindo Alunos para aprovar ----
+  const badge = $('.registration-notification-count');
+  check('sininho: contador 3 (Ana, Bruno e Elisa aguardam aprovação)', badge && !badge.hidden && text(badge) === '3', badge && text(badge));
+  const notice = await openBellCard();
+  check('avisos: card com 3 alunos aguardando aprovação', visible(notice) && /3 alunos aguardando aprovação/.test(text($('h3', notice))), notice && text(notice));
+  await tap($('button', notice)); await until(isOpen, 3000); await waitList(); await sleep(250);
+  check('Ver cadastros abre a janela Alunos para aprovar', isOpen() && sameWindow(windowState(), APPROVALS_WINDOW), JSON.stringify(windowState()));
+  check('pelo sininho a lista tem os 4 cartões de quem falta', names().join('|') === 'Ana Pendente|Bruno Aguardando|Elisa Na Agenda Sem Aprovar|Carla Aprovada', names().join('|'));
+  check('pelo sininho não há botão Excluir da lista', removeButtons().length === 0 && !/Excluir da lista/.test(text($('#registrationContactsList'))), String(removeButtons().length));
+  await closeWindow();
+  await goMais();
+
+  // ---- Mais: os dois cartões ----
+  const card = $('#moreStudentList'), cardApprove = $('#moreStudentApprovals');
+  check('cartão Lista de alunos existe uma vez', $$('#moreStudentList').length === 1);
+  check('cartão Alunos para aprovar continua uma vez', $$('#moreStudentApprovals').length === 1);
+  check('os dois cartões visíveis no Mais', visible(card) && visible(cardApprove));
+  check('título do cartão novo', text($('strong', card)) === 'Lista de alunos', text($('strong', card)));
+  check('subtítulo do cartão novo', text($('small', card)) === 'Todos os cadastros recebidos.', text($('small', card)));
+  check('cartão Alunos para aprovar sem mudança de texto', text($('strong', cardApprove)) === 'Alunos para aprovar' && text($('small', cardApprove)) === 'Aprove os cadastros recebidos.', text(cardApprove));
+  const group = card && card.closest('[data-more-group]');
+  check('cartão no grupo Alunos e financeiro', group && group.dataset.moreGroup === 'students', group && group.dataset.moreGroup);
+  const order = group ? $$('button.more-function', group).map(b => b.id || text($('strong', b))) : [];
+  const iLink = order.indexOf('moreRegistrationLink'), iApp = order.indexOf('moreStudentApprovals'), iList = order.indexOf('moreStudentList'), iFol = order.indexOf('moreFollowup');
+  check('ordem: Cadastro por link, Alunos para aprovar, Lista de alunos, Acompanhamento', iLink >= 0 && iApp === iLink + 1 && iList === iApp + 1 && iFol === iList + 1, order.join(' > '));
+  const svg = card && $('.more-function-icon svg', card);
+  check('ícone do cartão novo é o glifo menu-roster', svg && (svg.dataset.apMenuIcon === 'menu-roster' || card.dataset.apMenuIcon === 'menu-roster'), svg && svg.outerHTML.slice(0, 120));
+  const svgApprove = $('.more-function-icon svg', cardApprove);
+  check('ícone do cartão Alunos para aprovar continua menu-approve', svgApprove && (svgApprove.dataset.apMenuIcon === 'menu-approve' || cardApprove.dataset.apMenuIcon === 'menu-approve'));
+  const box = svg && svg.getBoundingClientRect(), boxApprove = svgApprove && svgApprove.getBoundingClientRect();
+  check('ícones dos dois cartões com o mesmo tamanho', box && boxApprove && Math.abs(box.width - boxApprove.width) < 0.6 && Math.abs(box.height - boxApprove.height) < 0.6, box && (box.width + 'x' + box.height + ' / ' + boxApprove.width + 'x' + boxApprove.height));
+  const smallBox = $('small', card).getBoundingClientRect();
+  check('subtítulo do cartão novo cabe em uma linha', smallBox.height < 20, String(smallBox.height));
+  check('subtítulo de Cadastro por link', text($('#moreRegistrationLink small')) === 'Convide novos alunos pelo link.', text($('#moreRegistrationLink small')));
+
+  // ---- Cadastro por link continua só com os links ----
+  await tapCard($('#moreRegistrationLink')); await until(isOpen, 4000); await sleep(200);
+  check('Cadastro por link abre no modo de links', isOpen() && sameWindow(windowState(), LINKS_WINDOW), JSON.stringify(windowState()));
+  const tabs = $$('#registrationTabs button');
+  check('atalhos: Cadastro, Instalação, Grupo, Anamnese, Planos', tabs.map(b => text(b)).join(',') === 'Cadastro,Instalação,Grupo,Anamnese,Planos', tabs.map(b => text(b)).join(','));
+  check('painel Cadastro visível e lista oculta', visible($('#registrationLinkPanel')) && !visible($('#registrationContactsPanel')));
+  const panelOf = {installation: 'installationLinkPanel', group: 'groupLinkPanel', anamnesis: 'anamnesisLinkPanel', plans: 'plansLinkPanel'};
+  for (const t of ['installation', 'group', 'anamnesis', 'plans']) {
+    await tap($('#' + {installation: 'installationLinkTab', group: 'groupLinkTab', anamnesis: 'anamnesisLinkTab', plans: 'plansLinkTab'}[t])); await sleep(80);
+    check('atalho ' + t + ' abre o seu painel', visible($('#' + panelOf[t])) && sameWindow(windowState(), LINKS_WINDOW) && !visible($('#registrationContactsPanel')));
+  }
+  await closeWindow();
+
+  // ---- Alunos para aprovar: só quem falta, sem Excluir ----
+  await openApprovals();
+  check('Alunos para aprovar abre pelo cartão', isOpen() && sameWindow(windowState(), APPROVALS_WINDOW), JSON.stringify(windowState()));
+  check('painéis de links ocultos e lista visível', !visible($('#registrationLinkPanel')) && !visible($('#installationLinkPanel')) && !visible($('#groupLinkPanel')) && visible($('#registrationContactsPanel')));
+  check('aprovar: quem falta (Diego e outro professor ficam de fora)', names().join('|') === 'Ana Pendente|Bruno Aguardando|Elisa Na Agenda Sem Aprovar|Carla Aprovada', names().join('|'));
+  check('aprovar: status Ana', statusOf(byName('Ana Pendente')) === 'Aguardando aprovação', statusOf(byName('Ana Pendente')));
+  check('aprovar: status Elisa (na agenda, mas sem aprovação no Firebase)', statusOf(byName('Elisa Na Agenda Sem Aprovar')) === 'Na agenda', statusOf(byName('Elisa Na Agenda Sem Aprovar')));
+  check('aprovar: status Carla', statusOf(byName('Carla Aprovada')) === 'Aprovado · adicionar à agenda', statusOf(byName('Carla Aprovada')));
+  check('aprovar: botão da Ana Aprovar aluno e da Carla Adicionar à agenda', text($('[data-registration-approve]', byName('Ana Pendente'))) === 'Aprovar aluno' && text($('[data-registration-approve]', byName('Carla Aprovada'))) === 'Adicionar à agenda');
+  check('aprovar: Elisa só tem Ver aluno na agenda', text($('[data-registration-edit]', byName('Elisa Na Agenda Sem Aprovar'))) === 'Ver aluno na agenda' && !$('[data-registration-approve]', byName('Elisa Na Agenda Sem Aprovar')));
+  check('aprovar: nenhum botão Excluir da lista, nem o texto', removeButtons().length === 0 && !/Excluir/.test(text($('#registrationLinkDialog'))), String(removeButtons().length));
+  check('aprovar: botão Atualizar lista', text($('#registrationRefresh')) === 'Atualizar lista', text($('#registrationRefresh')));
+  check('nada gravado só por abrir', calls.updateDoc.length === 0, JSON.stringify(calls.updateDoc));
+
+  // ---- aprovar a Ana (online) ----
+  const ana = byName('Ana Pendente');
+  const sel = $('[data-registration-type]', ana); sel.value = 'online'; fire(sel, 'change');
+  const before = W.eval('state.students.length');
+  await tap($('[data-registration-approve]', ana));
+  await until(() => calls.updateDoc.length >= 1 && /está na sua agenda/.test(text($('[data-registration-message]', byName('Ana Pendente') || ana))), 6000);
+  check('uma gravação no Firebase, a mesma de antes', calls.updateDoc.length === 1 && calls.updateDoc[0].uid === 'u_ana' && JSON.stringify(calls.updateDoc[0].data) === JSON.stringify({ativo: true, tipoAluno: 'online', aprovadoEm: 'server-time'}), JSON.stringify(calls.updateDoc));
+  check('aluno entrou na agenda', W.eval('state.students.length') === before + 1 && W.eval("state.students.some(s=>s.firebaseUid==='u_ana'&&s.studentType==='online')"));
+  const ana2 = byName('Ana Pendente');
+  check('cartão da Ana continua na tela, como Na agenda, com a confirmação e Ver aluno na agenda', !!ana2 && statusOf(ana2) === 'Na agenda' && /Ana Pendente está na sua agenda\./.test(text($('[data-registration-message]', ana2))) && text($('[data-registration-edit]', ana2)) === 'Ver aluno na agenda', ana2 ? text(ana2) : 'sumiu');
+  check('lista segue com 4 cartões até atualizar e continua sem Excluir', cards().length === 4 && removeButtons().length === 0, names().join(' | '));
+  await sleep(200);
+  const badge2 = $('.registration-notification-count');
+  check('sininho cai para 2 (Bruno e Elisa)', badge2 && !badge2.hidden && text(badge2) === '2', badge2 && text(badge2));
+  await tap($('#registrationRefresh'));
+  await until(() => cards().length === 3, 5000);
+  check('depois de Atualizar lista, Ana sai de Alunos para aprovar; sobram Bruno, Elisa e Carla', names().join('|') === 'Bruno Aguardando|Elisa Na Agenda Sem Aprovar|Carla Aprovada', names().join('|'));
+
+  // ---- adicionar a Carla (já aprovada): não grava no Firebase de novo ----
+  const carla = byName('Carla Aprovada');
+  const sel2 = $('[data-registration-type]', carla); sel2.value = 'presencial'; fire(sel2, 'change');
+  await tap($('[data-registration-approve]', carla));
+  await until(() => /está na sua agenda/.test(text($('[data-registration-message]', byName('Carla Aprovada') || carla))), 6000);
+  check('Carla entra na agenda sem nova gravação no Firebase', calls.updateDoc.length === 1 && W.eval("state.students.some(s=>s.firebaseUid==='u_carla')"), JSON.stringify(calls.updateDoc.map(c => c.uid)));
+  await tap($('#registrationRefresh')); await until(() => cards().length === 2, 5000);
+  check('depois de atualizar, Carla sai de Alunos para aprovar', names().join('|') === 'Bruno Aguardando|Elisa Na Agenda Sem Aprovar', names().join('|'));
+  await closeWindow();
+  check('fechar Alunos para aprovar', !isOpen());
+
+  // ---- Lista de alunos: todos os cadastros, com Excluir da lista ----
+  await goMais(); await openList();
+  check('Lista de alunos abre pelo cartão, com título, ícone e botão fechar próprios', isOpen() && sameWindow(windowState(), LIST_WINDOW), JSON.stringify(windowState()));
+  check('painéis de links ocultos e lista visível', !visible($('#registrationLinkPanel')) && !visible($('#groupLinkPanel')) && visible($('#registrationContactsPanel')));
+  check('lista: todos os cadastros do professor, quem aguarda primeiro (outro professor fica de fora)', names().join('|') === 'Bruno Aguardando|Elisa Na Agenda Sem Aprovar|Ana Pendente|Carla Aprovada|Diego Na Agenda', names().join('|'));
+  check('lista: status de cada um', ['Aguardando aprovação', 'Na agenda', 'Na agenda', 'Na agenda', 'Na agenda'].join('|') === cards().map(statusOf).join('|'), cards().map(statusOf).join('|'));
+  check('lista: um Excluir da lista em cada cadastro', removeButtons().length === 5 && removeButtons().every(b => text(b) === 'Excluir da lista' && /^Excluir .+ da lista$/.test(b.getAttribute('aria-label'))), String(removeButtons().length));
+  check('lista: Bruno ainda pode ser aprovado aqui (mesmos botões da lista antiga)', text($('[data-registration-approve]', byName('Bruno Aguardando'))) === 'Aprovar aluno' && !!$('[data-registration-type]', byName('Bruno Aguardando')));
+  check('lista: quem está na agenda tem Ver aluno na agenda', ['Elisa Na Agenda Sem Aprovar', 'Ana Pendente', 'Carla Aprovada', 'Diego Na Agenda'].every(n => text($('[data-registration-edit]', byName(n))) === 'Ver aluno na agenda'));
+  check('lista: botão Atualizar lista e ajuda', text($('#registrationRefresh')) === 'Atualizar lista' && /Escolha o tipo de aluno antes de aprovar/.test(text($('#registrationContactsPanel'))));
+  check('nada gravado só por abrir a lista', calls.updateDoc.length === 1, JSON.stringify(calls.updateDoc));
+  check('lista: não há texto de Contatos na janela', !/[Cc]ontatos/.test(text($('#registrationLinkDialog'))), (text($('#registrationLinkDialog')).match(/.{30}[Cc]ontatos.{30}/) || [''])[0]);
+
+  // ---- Excluir da lista: confirmar, cancelar; só esconde ----
+  const diego = byName('Diego Na Agenda');
+  await tap($('[data-registration-remove]', diego)); await sleep(150);
+  const prompt = $('#registrationRemovalPrompt');
+  check('Excluir pede confirmação com o nome e a garantia de que a conta e os dados ficam', prompt && text(prompt) === 'Excluir Diego Na Agenda desta lista?' && /A conta e os dados do aluno serão mantidos\./.test(text($('[data-registration-remove-confirm]').closest('.registration-removal-confirm'))), prompt && text(prompt));
+  const cancelBtn = $('[data-registration-remove-cancel]');
+  cancelBtn && await tap(cancelBtn); await sleep(200);
+  check('Cancelar mantém o cadastro na lista', !!byName('Diego Na Agenda') && !$('[data-registration-remove-confirm]') && cards().length === 5, names().join(' | '));
+  const exBruno = await exclude('Bruno Aguardando');
+  check('Excluir da lista tira Bruno da Lista de alunos', exBruno && !names().includes('Bruno Aguardando') && cards().length === 4, names().join(' | '));
+  check('exclusão não toca no cadastro do aluno no Firebase', calls.updateDoc.length === 1 && docs.has('u_bruno') && docs.get('u_bruno').ativo === false, JSON.stringify(calls.updateDoc.map(c => c.uid)));
+  check('a exclusão é guardada na agenda do professor', W.eval("state.registrationContactsHidden && state.registrationContactsHidden['" + TEACHER + ":u_bruno']") === true);
+  check('aluno e dados continuam na agenda', W.eval("state.students.length") === before + 2 && W.eval("state.students.some(s=>s.firebaseUid==='u_diego')"));
+  await sleep(200);
+  const badge3 = $('.registration-notification-count');
+  check('sininho cai para 1 (só Elisa)', badge3 && !badge3.hidden && text(badge3) === '1', badge3 && text(badge3));
+  await tap($('#registrationRefresh')); await waitList(4); await sleep(150);
+  check('atualizar lembra a exclusão', names().join('|') === 'Elisa Na Agenda Sem Aprovar|Ana Pendente|Carla Aprovada|Diego Na Agenda', names().join('|'));
+  await closeWindow();
+
+  // ---- o sininho e o menu "Alunos e convites" (mesmas duas chamadas) caem em Alunos para aprovar, mesmo depois da lista ----
+  const notice2 = await openBellCard();
+  check('avisos: card com 1 aluno aguardando aprovação', visible(notice2) && /1 aluno aguardando aprovação/.test(text($('h3', notice2))), notice2 && text(notice2));
+  await tap($('button', notice2)); await until(isOpen, 3000); await waitList(); await sleep(250);
+  check('Ver cadastros, depois da Lista de alunos, abre Alunos para aprovar e sem Excluir', isOpen() && sameWindow(windowState(), APPROVALS_WINDOW) && names().join('|') === 'Elisa Na Agenda Sem Aprovar' && removeButtons().length === 0, JSON.stringify(windowState()) + ' ' + names().join('|'));
+  await closeWindow();
+  await openListFromShellPath();
+
+  // ---- Voltar fecha a janela, nos dois modos ----
+  await goMais(); await openList();
+  let handled = null; try { handled = W.handleAgendaSystemBack ? W.handleAgendaSystemBack() : null; } catch (e) { handled = 'erro ' + e; }
+  await sleep(300);
+  check('Voltar do sistema fecha a Lista de alunos', !isOpen(), 'handled=' + handled);
+  await goMais(); await openApprovals();
+  try { handled = W.handleAgendaSystemBack ? W.handleAgendaSystemBack() : null; } catch (e) { handled = 'erro ' + e; }
+  await sleep(300);
+  check('Voltar do sistema fecha Alunos para aprovar', !isOpen(), 'handled=' + handled);
+
+  // ---- esvaziar a lista: texto próprio e exclusões lembradas ----
+  await goMais(); await openList();
+  for (const n of ['Elisa Na Agenda Sem Aprovar', 'Ana Pendente', 'Carla Aprovada', 'Diego Na Agenda']) await exclude(n);
+  check('lista vazia depois de excluir tudo', cards().length === 0, names().join(' | '));
+  check('texto da lista vazia na Lista de alunos', /Nenhum aluno na lista\./.test(text($('#registrationContactsList'))), text($('#registrationContactsList')));
+  await tap($('#registrationRefresh')); await until(() => $('#registrationContactsList') && !$('#registrationContactsList').textContent.includes('Buscando'), 5000); await sleep(150);
+  check('atualizar mantém a lista vazia (exclusões lembradas)', cards().length === 0 && /Nenhum aluno na lista\./.test(text($('#registrationContactsList'))), text($('#registrationContactsList')));
+  await closeWindow();
+  await goMais(); await openApprovals();
+  check('Alunos para aprovar sem ninguém para aprovar', cards().length === 0 && /Nenhum aluno aguardando aprovação\./.test(text($('#registrationContactsList'))), text($('#registrationContactsList')));
+  await closeWindow();
+  await sleep(500);
+  const badgeEnd = $('.registration-notification-count'), cardEnd = $('.registration-notification-card');
+  check('sem pendentes: contador e card do sininho ocultos', (!badgeEnd || badgeEnd.hidden) && (!cardEnd || cardEnd.hidden) && !visible(cardEnd), badgeEnd && (badgeEnd.hidden + ':' + text(badgeEnd) + ' card.hidden=' + (cardEnd && cardEnd.hidden)));
+
+  // ---- botão × fecha; Cadastro por link volta ao modo de links ----
+  await goMais(); await openList();
+  await tap($('#registrationLinkClose')); await sleep(250);
+  check('botão × fecha a Lista de alunos', !isOpen());
+  await goMais(); await tapCard($('#moreRegistrationLink')); await until(isOpen, 3000); await sleep(150);
+  check('Cadastro por link volta ao modo de links depois da lista', sameWindow(windowState(), LINKS_WINDOW), JSON.stringify(windowState()));
+  await closeWindow();
+
+  log('INFO', 'chamadas ao Firebase simulado', 'getDocs=' + calls.getDocs + ' updateDoc=' + calls.updateDoc.length);
+  log('RESUMO', 'ok=' + ok + ' falhas=' + bad);
+}
+
+// as duas chamadas que o sininho e o menu "Alunos e convites" fazem (código real do aplicativo, sem passar pela tela)
+async function openListFromShellPath() {
+  W.openRegistrationLink(); W.setRegistrationTab('contacts');
+  await until(isOpen, 3000); await waitList(); await sleep(250);
+  check('menu Alunos e convites (openRegistrationLink + setRegistrationTab) abre Alunos para aprovar', isOpen() && sameWindow(windowState(), APPROVALS_WINDOW) && removeButtons().length === 0, JSON.stringify(windowState()));
+  await closeWindow();
+}
+
+async function shot() {
+  await goMais();
+  if (VIEW === 'mais') {
+    const grp = $('[data-more-group="students"]'); grp && grp.scrollIntoView({block: 'start'}); await sleep(THEME ? 900 : 300);
+  } else if (VIEW === 'cards') {
+    const lista = $('#moreStudentList'); lista && lista.scrollIntoView({block: 'center'}); await sleep(THEME ? 900 : 300);
+  } else if (VIEW === 'links') {
+    await tapCard($('#moreRegistrationLink')); await until(isOpen, 4000); await sleep(THEME ? 1200 : 500);
+  } else if (VIEW === 'approvals' || VIEW === 'empty') {
+    await openApprovals(); await sleep(THEME ? 1200 : 400);
+  } else if (VIEW === 'list' || VIEW === 'confirm') {
+    await openList(); await sleep(THEME ? 1200 : 400);
+    if (VIEW === 'confirm') {
+      const c = byName('Elisa Na Agenda Sem Aprovar'); await tap($('[data-registration-remove]', c)); await sleep(400);
+      const p = $('#registrationRemovalPrompt'); p && p.scrollIntoView({block: 'center'}); await sleep(300);
+    }
+  }
+  log('SHOT', 'pronto ' + VIEW + ' ' + (THEME || 'padrão'));
+}
+
+(async () => {
+  try {
+    await boot();
+    if (MODE === 'func') await functional(); else await shot();
+  } catch (e) {
+    log('EXCECAO', 'driver', (e && e.stack) || String(e));
+    log('RESUMO', 'ok=' + ok + ' falhas=' + (bad + 1));
+    log('SHOT', 'erro');
+  }
+})();
+</script></body></html>
