@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cenário: Recados do dia no modo claro</title>
+<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}iframe{border:0;width:100%;height:100%;display:block}</style></head>
+<body><iframe id="app"></iframe>
+<script>
+'use strict';
+// Abre o professor.html verdadeiro do pacote em um iframe e confere o cartão "Recados do dia" do Painel (professor com o
+// mascote desligado) nos modos claro e escuro. Não usa Firebase nem a casca do aplicativo: o cartão é montado do mesmo jeito
+// que o módulo do mascote (index.html, ap-teacher-mascot + ap-mascot-daily-message) faz: classes home-card ap-teacher-mascot
+// ap-habitat ap-recado-only, fundo sem imagem e o bloco .ap-mascot-recados com o título e o texto do recado.
+// Parâmetros (todos opcionais):
+//   app=prof-286.html          página testada (o professor.html do pacote, dentro da pasta servida)
+//   mode=light|dark            modo de cor do aplicativo (AgendaAppearance.setMode)
+//   design=current|neon|metal|pro|deep   tema visual (Configurações > Aparência)
+//   preset=none|purple-white|purple-black|custom   tema de cores salvo antes de abrir; custom usa primary, secondary, background
+//   view=check|toggle|shot|dump   check: mede e confere o contraste; toggle: alterna claro/escuro/claro na mesma tela;
+//                                 shot: só prepara a tela para a captura; dump: assinatura do estilo de todos os elementos
+//   paleta=1                   imprime as variáveis --ac-* do tema
+// Cada verificação imprime "AUDIT OK ..." ou "AUDIT FALHA ..."; o fim é "AUDIT RESUMO ok=N falhas=M".
+const Q = new URLSearchParams(location.search);
+const APP = Q.get('app') || 'prof-286.html';
+const MODE = Q.get('mode') || 'light';
+const DESIGN = Q.get('design') || 'current';
+const PRESET = Q.get('preset') || 'none';
+const VIEW = Q.get('view') || 'check';
+const TEACHER = 'R2EmnDVcvMWt7TjPxOP6DjW1VOn1';
+const MESSAGE = 'A próxima aula começa às 16:45. Hoje são 2 aulas na agenda; lembre de reservar suas pausas.';
+const DESIGN_ID = {current: null, neon: 'neon-tl', metal: 'metal-tl', pro: 'pro-tl', deep: 'deep-tl'}[DESIGN];
+const PRESETS = {
+  'purple-white': {version: 1, id: 'purple-white', name: 'Roxo + Branco + Preto', primary: '#9634cf', secondary: '#ffffff', background: '#f6f3f9'},
+  'purple-black': {version: 1, id: 'purple-black', name: 'Roxo + Preto', primary: '#a12cff', secondary: '#08070c', background: '#08070c'}
+};
+const DARK_CARD = '#191b1f'; // fundo fixo do cartão no modo escuro (regra original, que não muda)
+const log = (kind, name, extra) => console.log('AUDIT ' + kind + ' ' + name + (extra ? ' | ' + extra : ''));
+let ok = 0, bad = 0;
+const check = (name, cond, extra) => { if (cond) { ok++; log('OK', name, extra); } else { bad++; log('FALHA', name, extra); } };
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+async function until(fn, ms = 9000, step = 40) { const t0 = Date.now(); for (;;) { let v; try { v = fn(); } catch (e) { v = null; } if (v) return v; if (Date.now() - t0 > ms) return null; await sleep(step); } }
+
+// WCAG 2.x: razão de contraste entre duas cores
+const parse = c => { const m = String(c).match(/rgba?\(([^)]+)\)/); if (!m) return null; const p = m[1].split(/[ ,/]+/).filter(Boolean).map(Number); return {r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1}; };
+const lin = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+const lum = c => 0.2126 * lin(c.r) + 0.7152 * lin(c.g) + 0.0722 * lin(c.b);
+const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+const over = (top, base) => ({r: top.r * top.a + base.r * (1 - top.a), g: top.g * top.a + base.g * (1 - top.a), b: top.b * top.a + base.b * (1 - top.a), a: 1});
+const hex = c => '#' + [c.r, c.g, c.b].map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
+let W, D;
+function effectiveBackground(el) {            // cor de fundo opaca que o leitor realmente vê atrás do texto
+  const chain = [];
+  for (let n = el; n && n.nodeType === 1; n = n.parentElement) chain.push(parse(W.getComputedStyle(n).backgroundColor));
+  let base = {r: 255, g: 255, b: 255, a: 1};
+  for (let i = chain.length - 1; i >= 0; i--) if (chain[i] && chain[i].a > 0) base = over(chain[i], base);
+  return base;
+}
+
+async function boot() {
+  if (DESIGN_ID) localStorage.setItem('agendaPersonalTL_design_v1', JSON.stringify({version: 1, id: DESIGN_ID}));
+  if (PRESET === 'custom') localStorage.setItem('agendaPersonalTL_theme_v1', JSON.stringify({version: 1, id: 'custom', name: 'Teste', primary: Q.get('primary') || '#9634cf', secondary: Q.get('secondary') || '#ffffff', background: Q.get('background') || '#f6f3f9'}));
+  else if (PRESET !== 'none') localStorage.setItem('agendaPersonalTL_theme_v1', JSON.stringify(PRESETS[PRESET]));
+  window.APaccounts = {registrationSdk: async () => ({}), isTeacher: () => true, teacherUid: () => TEACHER, logout() {}, retry() {}};
+  const frame = document.getElementById('app');
+  frame.src = APP;
+  await new Promise(r => frame.addEventListener('load', r, {once: true}));
+  W = frame.contentWindow; D = W.document;
+  await until(() => W.AgendaAppearance && W.AgendaColors && D.getElementById('apTeacherMascotOpen'), 15000);
+  if (Q.get('anim') !== '1') { const st = D.createElement('style'); st.textContent = '*,*::before,*::after{transition:none!important;animation:none!important;caret-color:transparent!important}'; D.head.appendChild(st); }
+  if (PRESET === 'none' && MODE === 'light') {
+    const r = W.AgendaAppearance.setMode('light');
+    if (!r || r.ok === false) log('AVISO', 'setMode(light) recusado', JSON.stringify(r));
+  }
+  await sleep(DESIGN_ID ? 1500 : 700);
+}
+
+function presentRecado() {
+  const card = D.getElementById('apTeacherMascotOpen');
+  card.className = 'home-card ap-teacher-mascot ap-habitat ap-recado-only';
+  card.hidden = false;
+  card.style.backgroundImage = 'none';
+  card.dataset.dayType = 'soon';
+  card.insertAdjacentHTML('beforeend', '<div class="ap-mascot-recados" role="status" aria-live="polite" aria-atomic="true"><strong>Recados do dia</strong><p></p></div>');
+  card.querySelector('.ap-mascot-recados p').textContent = MESSAGE;
+  return card;
+}
+
+(async () => {
+  await boot();
+  const card = presentRecado();
+  const strong = card.querySelector('.ap-mascot-recados strong'), p = card.querySelector('.ap-mascot-recados p');
+  card.scrollIntoView({block: 'center'});
+  await sleep(400);
+  const root = D.documentElement;
+  const cs = n => W.getComputedStyle(n);
+  const read = () => {
+    const bg = effectiveBackground(card), text = parse(cs(p).color), title = parse(cs(strong).color);
+    return {bg, text, title, rText: ratio(text, bg), rTitle: ratio(title, bg), mode: W.AgendaAppearance.getMode(), attr: root.dataset.agendaColorMode};
+  };
+  const info = (r, extra = '') => {
+    log('INFO', 'estado', extra + 'design=' + DESIGN + ' modo-pedido=' + MODE + ' modo-do-app=' + r.mode + ' data-agenda-color-mode=' + r.attr + ' data-agenda-colors=' + root.dataset.agendaColors);
+    log('INFO', 'cores', extra + 'fundo=' + hex(r.bg) + ' texto=' + hex(r.text) + ' titulo=' + hex(r.title) + ' borda=' + cs(card).borderTopColor + ' imagem-de-fundo=' + cs(card).backgroundImage);
+    log('INFO', 'contraste', extra + 'texto=' + r.rText.toFixed(2) + ' titulo=' + r.rTitle.toFixed(2));
+  };
+  const now = read();
+  info(now);
+  if (Q.get('paleta') === '1') {
+    const names = []; for (let i = 0; i < root.style.length; i++) { const n = root.style[i]; if (n.startsWith('--ac-') && !n.endsWith('-rgb')) names.push(n); }
+    log('INFO', 'paleta', names.map(n => n + '=' + root.style.getPropertyValue(n).trim()).join(' '));
+  }
+  const readable = (r, quando) => {
+    check('texto do recado com contraste mínimo de 4,5:1 (' + quando + ')', r.rText >= 4.5, 'texto=' + hex(r.text) + ' fundo=' + hex(r.bg) + ' razão=' + r.rText.toFixed(2));
+    check('título "Recados do dia" com contraste mínimo de 4,5:1 (' + quando + ')', r.rTitle >= 4.5, 'titulo=' + hex(r.title) + ' fundo=' + hex(r.bg) + ' razão=' + r.rTitle.toFixed(2));
+  };
+  if (VIEW === 'dump') {
+    // assinatura do estilo computado (propriedades em ordem alfabética) de todos os elementos, para comparar duas versões da página
+    const all = [...D.querySelectorAll('*')];
+    const sig = el => { const c = W.getComputedStyle(el); const names = []; for (let i = 0; i < c.length; i++) names.push(c[i]); names.sort(); let h = 2166136261 >>> 0; for (const n of names) { const t = n + ':' + c.getPropertyValue(n) + ';'; for (let k = 0; k < t.length; k++) { h ^= t.charCodeAt(k); h = Math.imul(h, 16777619) >>> 0; } } return h.toString(16); };
+    const rows = all.map((el, i) => i + '|' + el.tagName + (el.id ? '#' + el.id : '') + '|' + sig(el));
+    log('DUMP', 'modo=' + MODE + ' design=' + DESIGN + ' preset=' + PRESET + ' n=' + all.length, '');
+    console.log('AUDIT ROWS ' + rows.join('\n'));
+    const want = (Q.get('detail') || '').split(',').filter(Boolean).map(Number);
+    for (const i of want) { const c = W.getComputedStyle(all[i]); const o = {}; for (let k = 0; k < c.length; k++) o[c[k]] = c.getPropertyValue(c[k]); console.log('AUDIT DETAIL ' + i + ' ' + JSON.stringify(o)); }
+    log('RESUMO', 'dump ok=1 falhas=0');
+  } else if (VIEW === 'toggle') {
+    // alterna o modo na mesma tela: o cartão precisa acompanhar na hora e voltar exatamente ao que era
+    const step = async mode => { const r = W.AgendaAppearance.setMode(mode); if (!r || r.ok === false) log('AVISO', 'setMode(' + mode + ') recusado', JSON.stringify(r)); await sleep(700); return read(); };
+    const light1 = await step('light'); info(light1, '[claro 1] ');
+    const dark = await step('dark'); info(dark, '[escuro] ');
+    const light2 = await step('light'); info(light2, '[claro 2] ');
+    check('claro 1: modo do app é claro', light1.mode === 'light' && light1.attr === 'light', light1.mode + '/' + light1.attr);
+    check('claro 1: o cartão deixou de ser escuro', hex(light1.bg) !== DARK_CARD, 'fundo=' + hex(light1.bg));
+    readable(light1, 'claro 1');
+    check('escuro: modo do app é escuro', dark.mode === 'dark' && dark.attr !== 'light', dark.mode + '/' + dark.attr);
+    check('escuro: o cartão continua com o fundo escuro original ' + DARK_CARD, hex(dark.bg) === DARK_CARD, 'fundo=' + hex(dark.bg));
+    check('escuro: o título continua verde-limão #b5ed43 (cor original)', hex(dark.title) === '#b5ed43', 'titulo=' + hex(dark.title));
+    readable(dark, 'escuro');
+    check('claro 2: modo do app é claro', light2.mode === 'light' && light2.attr === 'light', light2.mode + '/' + light2.attr);
+    check('claro 2: as cores voltam exatamente às do claro 1', hex(light2.bg) === hex(light1.bg) && hex(light2.text) === hex(light1.text) && hex(light2.title) === hex(light1.title), hex(light2.bg) + ' ' + hex(light2.text) + ' ' + hex(light2.title));
+    log('RESUMO', 'ok=' + ok + ' falhas=' + bad);
+  } else if (VIEW === 'check') {
+    check('o aplicativo está no modo pedido (' + MODE + ')', now.mode === MODE, 'modo-do-app=' + now.mode);
+    check('o cartão está visível e mostra o recado', !!(card.offsetWidth && card.offsetHeight) && p.textContent === MESSAGE && cs(p).visibility === 'visible');
+    readable(now, MODE);
+    if (MODE === 'dark') check('no escuro o cartão segue com o fundo escuro original ' + DARK_CARD, hex(now.bg) === DARK_CARD, 'fundo=' + hex(now.bg));
+    check('o fundo do cartão é opaco (sem imagem por trás do texto)', cs(card).backgroundImage === 'none' && parse(cs(card).backgroundColor).a === 1, cs(card).backgroundImage + ' ' + cs(card).backgroundColor);
+    const widths = [card.getBoundingClientRect().width, D.querySelector('.home-quick-grid')?.getBoundingClientRect().width];
+    check('o cartão ocupa a mesma largura da grade de atalhos (sem estourar a tela)', Math.abs(widths[0] - widths[1]) < 1.5, widths.map(v => Math.round(v)).join(' x '));
+    check('sem rolagem horizontal na tela do Painel', D.scrollingElement.scrollWidth <= D.documentElement.clientWidth + 1, D.scrollingElement.scrollWidth + ' > ' + D.documentElement.clientWidth);
+    log('RESUMO', 'ok=' + ok + ' falhas=' + bad);
+  } else {
+    D.scrollingElement.scrollTop = 0;
+    await sleep(300);
+    log('SHOT', 'pronto');
+  }
+})().catch(e => { log('EXCECAO', String(e && e.stack || e)); log('RESUMO', 'ok=' + ok + ' falhas=' + (bad + 1)); });
+</script></body></html>
