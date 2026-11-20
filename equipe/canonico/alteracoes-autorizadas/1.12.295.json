@@ -1,0 +1,15 @@
+{
+ "versao": "1.12.295",
+ "sequencia": 401,
+ "titulo": "Feedback pelo ícone do topo",
+ "base": {"versao": "1.12.294", "sha256": "2bf38cc59b48a663e00da9faf8d2feb7ca48ae186ff833500c0a0e68fea230e9"},
+ "pedido": "Tiago, 20/11/2026 11:38 (ditado, fotos do aparelho): o ícone do feedback não aparecia no topo sem pendência e o feedback continuava no pet; quer o ícone sempre no topo e o feedback fora do pet.",
+ "aprovado_por": "Tiago: subiu o arquivo na raiz da main em 20/11/2026 12:00 (commit 7a41338), assinado na execução 44769018803. Ainda não instalado.",
+ "pr": 24,
+ "gerador": "tools/gerar-feedback-topo-1.12.295.cjs (branch claude/feedback-topo)",
+ "alteracoes": [
+  {"pagina": "index.html", "id": "ap-feedback-student", "antes": "716376dbdf9c59c9b8c350e813fd801c7503c47b9ccc8932cd5b472490852121", "depois": "cf666ed2b6103ab4c9cde9fa3051ca0c5e39e02afd41da037b4a852638fb2cd3", "motivo": "botão do topo sempre visível para o aluno; aviso e botão do feedback saem do pet"}
+ ],
+ "remocoes": [],
+ "reversoes": []
+}

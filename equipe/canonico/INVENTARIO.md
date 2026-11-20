@@ -1,0 +1,125 @@
+# Inventário do conteúdo do Agenda Personal (gerado)
+
+Gerado por `equipe/canonico/relatorio.cjs` a partir de `equipe/canonico/manifesto.json`. Não editar à mão. **Canônico: 1.12.294** (sequência 400, `AgendaPersonal-1.12.294-Icone-Feedback-Para-Assinar.agenda.json`, SHA-256 `2bf38cc59b48a663e00da9faf8d2feb7ca48ae186ff833500c0a0e68fea230e9`). Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago (20/11). O 1.12.295 está assinado (20/11 12:00) mas ainda não instalado: é o próximo canônico depois de instalado e conferido.
+
+## 1. Pacotes completos da cadeia (seis estados independentes)
+
+| Versão | Seq | Arquivo (SHA-256) | Origem | Proposto | Aprovado | Assinado | Publicado | Instalado | Validado |
+|---|---|---|---|---|---|---|---|---|---|
+| 1.12.273 | 379 | 1.12.273-Modo-Telefone-Para-Assinar (`8aa7535dd99f`) | main | sim | não confirmado | sim: execução 43878193013 do workflow de assinatura (commit 0c84a3d, sucesso) | não confirmado | não confirmado | não confirmado |
+| 1.12.274 | 380 | 1.12.274-Aviso-Recuperacao-Para-Assinar (`c897216aed77`) | main | sim | não confirmado | sim: execução 43889346602 do workflow de assinatura (commit 0e6d2b0, sucesso) | não confirmado | não confirmado | não confirmado |
+| 1.12.276 | 382 | 1.12.276-Links-Cadastro-Instalacao-Para-Assinar (`3f0d4cc0b312`) | main | sim | não confirmado | sim: execução 43973147490 do workflow de assinatura (commit 4b4cca2, sucesso) | não confirmado | não confirmado | não confirmado |
+| 1.12.278 | 384 | 1.12.278-Grupo-Turma-Para-Assinar (`eb97ba3c234e`) | main | sim | não confirmado | sim: execução 44302669368 do workflow de assinatura (commit 8c3ab3e, sucesso) | não confirmado | não confirmado | não confirmado |
+| 1.12.281 | 387 | 1.12.281-Links-Visual-Anamnese-Planos-Para-Assinar (`643f5f9b6713`) | main | sim | sim: o Tiago aprovou os Links dos alunos (registro do projeto, 18/11) | sim: execução 44364022013 do workflow de assinatura (commit f13b535, sucesso) | não confirmado | não confirmado | não confirmado |
+| 1.12.282 | 388 | 1.12.282-Feedback-Aluno-Para-Assinar (`f505ad6ad109`) | main | sim | não confirmado | sim: execução 44439322147 do workflow de assinatura (commit 5aa5329, sucesso) | não confirmado | não confirmado | não confirmado |
+| 1.12.283 | 389 | 1.12.283-Alunos-Para-Aprovar-Para-Assinar (`1fe1c35fa54a`) | main | sim | não confirmado | sim: execução 44451268909 do workflow de assinatura (commit a52b794, sucesso) | não confirmado | não confirmado | não confirmado |
+| 1.12.285 | 391 | 1.12.284-Lista-De-Alunos-Para-Assinar (`87d7fd05c2fc`) | main | sim | não confirmado | sim: execução 44509174519 do workflow de assinatura (commit b4b6072, sucesso) | não confirmado | não confirmado | não confirmado |
+| 1.12.286 | 392 | 1.12.286-Recados-Modo-Claro-Para-Assinar (`7de8a60cdbba`) | main | sim | não confirmado | sim: execução 44524800329 do workflow de assinatura (commit c3e8d57, sucesso) | não confirmado | não confirmado | não confirmado |
+| 1.12.288 | 394 | 1.12.288-Janelas-Como-Pagina-Para-Assinar (`1f9b66c8cb8a`) | main | sim | não confirmado | sim: execução 44560172256 do workflow de assinatura (commit 176f8d7, sucesso) | não confirmado | não confirmado | não confirmado |
+| 1.12.291 | 397 | 1.12.291-Exercicios-Incluidos-Para-Assinar (`7153e570e9d7`) | gerador | sim: entregue sem assinatura e nunca subido na main | não (substituído pelo 1.12.294, que o contém) | não | não | não | não |
+| 1.12.292 | 398 | 1.12.292-Sino-Feedback-Para-Assinar (`82f41147ea8b`) | gerador | sim: entregue sem assinatura e nunca subido na main | não (substituído pelo 1.12.294, que o contém) | não | não | não | não |
+| 1.12.294 | 400 | 1.12.294-Icone-Feedback-Para-Assinar (`2bf38cc59b48`) | main | sim | sim, em parte: o Tiago subiu o arquivo na main (20/11 05:03) e instalou; pediu mudança no botão do topo (gerou o 1.12.295) | sim: execução 44707518866 do workflow de assinatura (commit f7ea686, sucesso) | não confirmado | sim: relato do Tiago com fotos do aparelho, 20/11 11:38 (escolha do ícone em Meu perfil funcionou) | em parte: só a escolha do ícone foi vista no aparelho; nada em iPhone |
+| 1.12.295 | 401 | 1.12.295-Feedback-Topo-Para-Assinar (`031b8a550100`) | main | sim | sim, para assinatura: o Tiago subiu o arquivo na main (20/11 12:00); ainda não instalado | sim: execução 44769018803 do workflow de assinatura (commit 7a41338, sucesso) | não confirmado | não confirmado | não confirmado |
+
+"publicado" = distribuído ao app web dos alunos ou ao repositório de distribuição; nenhuma evidência disso foi verificada pelo Claude.
+
+## 2. Funcionalidades por versão: incorporada, evoluída ou ausente
+
+Cada funcionalidade é o conjunto de blocos que a versão mudou em relação à anterior da cadeia (identificador estável `pacote-<versão>-<título>`). "evoluída" = uma versão posterior continuou o mesmo bloco; "AUSENTE" = o bloco não está como nenhuma versão posterior o deixou.
+
+| Funcionalidade | Versão | Blocos | Depende de | 1.12.294 | 1.12.295 |
+|---|---|---|---|---|---|
+| `pacote-1-12-274-aviso-de-recuperacao-da-agenda` | 1.12.274 | professor:#fora-dos-blocos | `base-1.12.273` | ok (1 evoluído) | ok (1 evoluído) |
+| `pacote-1-12-276-cadastro-e-instalacao-dos-alunos` | 1.12.276 | professor:ap-registration-link-editor-css, professor:#fora-dos-blocos | `base-1.12.273`, `pacote-1-12-274-aviso-de-recuperacao-da-agenda` | ok (1 evoluído) | ok (1 evoluído) |
+| `pacote-1-12-278-grupo-da-turma` | 1.12.278 | index:ap-student-identity-css, index:ap-student-identity-controls, professor:ap-more-menu-glyphs, professor:ap-more-organization, professor:#fora-dos-blocos | `base-1.12.273`, `pacote-1-12-276-cadastro-e-instalacao-dos-alunos` | ok (3 evoluídos) | ok (3 evoluídos) |
+| `pacote-1-12-281-links-dos-alunos` | 1.12.281 | index:ap-single-navigation, professor:ap-registration-hub-css, professor:#fora-dos-blocos | `base-1.12.273`, `pacote-1-12-278-grupo-da-turma` | ok (2 evoluídos) | ok (2 evoluídos) |
+| `pacote-1-12-282-feedback-do-aluno` | 1.12.282 | index:ap-feedback-sync, index:ap-feedback-card, index:ap-feedback-student, index:#fora-dos-blocos | `base-1.12.273` | ok (1 evoluído) | ok (1 evoluído) |
+| `pacote-1-12-283-alunos-para-aprovar` | 1.12.283 | index:ap-student-accounts, professor:ap-registration-hub-css, professor:ap-more-menu-glyphs, professor:ap-more-organization, professor:#fora-dos-blocos | `base-1.12.273`, `pacote-1-12-278-grupo-da-turma`, `pacote-1-12-281-links-dos-alunos` | ok (3 evoluídos) | ok (3 evoluídos) |
+| `pacote-1-12-285-excluidos-da-lista` | 1.12.285 | professor:ap-more-menu-glyphs, professor:ap-more-organization, professor:#fora-dos-blocos | `pacote-1-12-283-alunos-para-aprovar` | ok (1 evoluído) | ok (1 evoluído) |
+| `pacote-1-12-286-recados-no-modo-claro` | 1.12.286 | professor:ap-teacher-mascot-card-css | `base-1.12.273` | incorporada | incorporada |
+| `pacote-1-12-288-janelas-como-pagina` | 1.12.288 | professor:dialog-scroll-lock-pages, professor:#fora-dos-blocos | `pacote-1-12-285-excluidos-da-lista` | incorporada | incorporada |
+| `pacote-1-12-291-correcoes-de-exercicios-incluidas` | 1.12.291 | professor:ap-workout-instructions, professor:ap-workout-corrections, professor:ap-workout-export | `base-1.12.273` | incorporada | incorporada |
+| `pacote-1-12-292-sino-do-feedback-no-topo-do-aluno` | 1.12.292 | index:ap-feedback-css, index:ap-feedback-student, professor:ap-feedback-css | `base-1.12.273`, `pacote-1-12-282-feedback-do-aluno` | ok (3 evoluídos) | ok (3 evoluídos) |
+| `pacote-1-12-294-icone-do-feedback-personalizavel` | 1.12.294 | index:ap-feedback-css, index:ap-feedback-student, professor:ap-feedback-css | `pacote-1-12-292-sino-do-feedback-no-topo-do-aluno` | incorporada | ok (1 evoluído) |
+| `pacote-1-12-295-feedback-pelo-icone-do-topo` | 1.12.295 | index:ap-feedback-student | `pacote-1-12-294-icone-do-feedback-personalizavel` | posterior | incorporada |
+
+## 3. Correções por área da raiz da main
+
+| Correção (id) | Arquivo | Área/módulo | Blocos | 1.12.294 | 1.12.295 |
+|---|---|---|---|---|---|
+| `correcao-professor-catalogo-exercicios-unificado` | 01-Catalogo-Unificado-Para-Assinar | professor/exercicios | professor:ap-workout-instructions | presente | presente |
+| `correcao-professor-baixar-catalogo-exercicios` | 02-Baixar-Catalogo-Para-Assinar | professor/exercicios | professor:ap-workout-export | presente | presente |
+| `correcao-professor-catalogo-exercicios-duplicatas` | 03-Corrigir-Duplicatas-Catalogo-Para-Assinar | professor/exercicios | professor:ap-workout-corrections | presente | presente |
+| `correcao-professor-apagar-exercicio-do-catalogo` | Apagar-Exercicio-do-Catalogo-Assinado | professor/exercicios | professor:ap-workout-previous-series | presente | presente |
+| `correcao-professor-apagar-exercicio-do-catalogo` | Apagar-Exercicio-do-Catalogo | professor/exercicios | professor:ap-workout-previous-series | presente | presente |
+| `correcao-raposinha-tres-fases` | Pets-Raposinha | pets/geral | index:ap-student-mascot-model, index:ap-student-mascot-art, index:ap-mascot-homes, cadastro:ap-mascot-home-assets | conflito+aplicável | conflito+aplicável |
+| `correcao-pix-historico-mensal` | Pix-Comprovantes-Sem-Arquivos | pagamentos/recibos | professor:ap-pix-receipt-model, professor:ap-pix-receipt, professor:ap-pix-receipt-css | presente | presente |
+| `correcao-professor-ficha-selecionada-recolhivel-v2` | Professor-Ficha-Recolhivel-253 | professor/exercicios | professor:ap-workout-export, professor:ap-workout-export-css | evoluída+presente | evoluída+presente |
+| `correcao-professor-avisos-cadastros-pendentes` | Sininho-Cadastro-Professor-para-assinar | professor/painel | professor:ap-teacher-features | presente | presente |
+| `correcao-restaurar-testar-e-enviar-sons-do-treino` | Testar-Enviar-Sons-Treino-para-assinar | sons/audios | index:ap-workout-audio, professor:ap-workout-audio | presente | presente |
+
+## 4. Pull Requests
+
+Nenhum PR foi juntado à `main` (conferido pela API em 20/11): o conteúdo chegou ao aparelho pelos pacotes subidos à mão. A coluna diz se o que o PR entregou está no canônico.
+
+| PR | Branch | Pacote | No canônico 1.12.294 |
+|---|---|---|---|
+| #4 | `chatgpt/modo-telefone` | 1.12.273 | Modo telefone e "Guardar a agenda no telefone" (ChatGPT): incorporado (base da cadeia) |
+| #5 | `chatgpt/mural-feedback-turma` | — | Mural da turma (engavetado; nunca virou pacote): não virou pacote |
+| #6 | `claude/testar-regras-mural` | — | Testes das regras do mural (sem pacote): não virou pacote |
+| #7 | `claude/mural-limite-diario` | — | Limite diário do mural (sem pacote): não virou pacote |
+| #8 | `claude/grupo-turma-whatsapp` | 1.12.278 | Grupo da turma: incorporado (ver seção 2: `pacote-1-12-278-grupo-da-turma`) |
+| #9 | `claude/voltar-cadastrar-aluno` | — | Voltar em Cadastrar aluno (PR fechado; substituído pelo #10): não virou pacote |
+| #10 | `claude/voltar-passo-a-passo` | 1.12.281 | Voltar passo a passo (1.12.280 nunca subiu; entrou junto no 1.12.281): incorporado (ver seção 2: `pacote-1-12-281-links-dos-alunos`) |
+| #11 | `claude/links-visual-anamnese-planos` | 1.12.281 | Links dos alunos: incorporado (ver seção 2: `pacote-1-12-281-links-dos-alunos`) |
+| #12 | `claude/feedback-aluno-7-compartilhar` | 1.12.282 | Feedback do aluno: incorporado (ver seção 2: `pacote-1-12-282-feedback-do-aluno`) |
+| #13 | `claude/alunos-para-aprovar` | 1.12.283 | Alunos para aprovar: incorporado (ver seção 2: `pacote-1-12-283-alunos-para-aprovar`) |
+| #14 | `claude/lista-de-alunos` | 1.12.285 | Lista de alunos (o 1.12.284 foi substituído pelo 1.12.285 com o mesmo nome de arquivo): incorporado (ver seção 2: `pacote-1-12-285-excluidos-da-lista`) |
+| #15 | `claude/lista-alunos-excluidos` | 1.12.285 | Excluídos da lista: incorporado (ver seção 2: `pacote-1-12-285-excluidos-da-lista`) |
+| #16 | `claude/recados-modo-claro` | 1.12.286 | Recados no modo claro: incorporado (ver seção 2: `pacote-1-12-286-recados-no-modo-claro`) |
+| #17 | `claude/catalogo-janela-pagina` | 1.12.288 | Catálogo como página (1.12.287 nunca subiu; entrou no 1.12.288): incorporado (ver seção 2: `pacote-1-12-288-janelas-como-pagina`) |
+| #18 | `claude/janelas-como-pagina` | 1.12.288 | Janelas como página: incorporado (ver seção 2: `pacote-1-12-288-janelas-como-pagina`) |
+| #19 | `claude/correcoes-exercicios` | 1.12.291 | Correções de exercícios 01/02/03 dentro do pacote completo: incorporado (ver seção 2: `pacote-1-12-291-correcoes-de-exercicios-incluidas`) |
+| #20 | `claude/sininho-feedback` | 1.12.292 | Sino do feedback no topo: incorporado (ver seção 2: `pacote-1-12-292-sino-do-feedback-no-topo-do-aluno`) |
+| #21 | `claude/icone-feedback` | 1.12.294 | Ícone do feedback personalizável: incorporado (ver seção 2: `pacote-1-12-294-icone-do-feedback-personalizavel`) |
+| #24 | `claude/feedback-topo` | 1.12.295 | Feedback pelo ícone do topo: ainda não (é posterior ao canônico: sim assinado) |
+
+## 5. Paridade por área: canônico x pacotes posteriores
+
+### 1.12.294 → 1.12.295
+
+| Área | Iguais | Alterados | Removidos | Novos |
+|---|---|---|---|---|
+| agenda | 10 | 0 | 0 | 0 |
+| alunos | 14 | 0 | 0 | 0 |
+| avaliacoes | 8 | 0 | 0 | 0 |
+| cadastro | 5 | 0 | 0 | 0 |
+| evolucao | 14 | index.html:ap-feedback-student | 0 | 0 |
+| geral | 167 | 0 | 0 | 0 |
+| pagamentos | 14 | 0 | 0 | 0 |
+| pets | 25 | 0 | 0 | 0 |
+| professor | 20 | 0 | 0 | 0 |
+| relogio | 7 | 0 | 0 | 0 |
+| sons | 12 | 0 | 0 | 0 |
+
+## 6. Componentes compartilhados (aluno x professor)
+
+| Componente | 1.12.294 | 1.12.295 |
+|---|---|---|
+| `ap-workout-audio` | igual | igual |
+| `ap-workout-audio-options-css` | igual | igual |
+| `ap-workout-audio-options-ui` | ausente nos dois | ausente nos dois |
+| `ap-feedback-model` | igual | igual |
+| `ap-feedback-css` | igual | igual |
+
+## 7. Raposinha (`AgendaPersonal-Pets-Raposinha.agenda.json`)
+
+- `index.html ap-student-mascot-model`: a correção espera `99511d28c997` (conteúdo que nenhum pacote completo da cadeia teve) e deixa `d73afdac6c92`; no canônico é `9dd93059982a` → **conflito**. Hashes que o bloco teve na cadeia: `9dd93059` desde 1.12.273.
+- `index.html ap-student-mascot-art`: a correção espera `ac4dc6fb4eb3` (era o conteúdo desde 1.12.273) e deixa `5eb9c0bdc5f0`; no canônico é `ac4dc6fb4eb3` → **aplicavel**. Hashes que o bloco teve na cadeia: `ac4dc6fb` desde 1.12.273.
+- `index.html ap-mascot-homes`: a correção espera `55f9d7a3ec07` (era o conteúdo desde 1.12.273) e deixa `0a3745d9b4e2`; no canônico é `55f9d7a3ec07` → **aplicavel**. Hashes que o bloco teve na cadeia: `55f9d7a3` desde 1.12.273.
+- `cadastro.html ap-mascot-home-assets`: a correção espera `54af9dee5ef0` (era o conteúdo desde 1.12.273) e deixa `88304a6e054e`; no canônico é `54af9dee5ef0` → **aplicavel**. Hashes que o bloco teve na cadeia: `54af9dee` desde 1.12.273.
+
+Origem do conflito: o "antes" que a Raposinha espera em `ap-student-mascot-model` é exatamente o do pacote **1.12.255** (main, `AgendaPersonal-1.12.255-Verificar-Para-Assinar.agenda.json`), cujo modelo dos mascotes ainda cita o Galo (5 ocorrências de "rooster"/"galo"). O conteúdo-base do APK (1.12.269) e toda a cadeia 1.12.273 → 1.12.294 têm o modelo depois da retirada do Urso e do Galo (aprovada na 1.195). Por isso o app recusa.
+
+Conclusão: a Raposinha foi feita sobre um conteúdo de pets anterior à cadeia. Aplicar à força as mudanças dela trocaria o modelo dos mascotes atual pelo dela, montado sobre o modelo antigo: risco [H] de trazer de volta o que foi retirado na 1.195. O app recusa a correção inteira ("Conflito em ap-student-mascot-model") e não aplica as outras três mudanças. Ela **nunca esteve** em nenhum pacote completo da cadeia. Integrar exige refazer as quatro mudanças sobre o conteúdo atual dos mascotes, revisar os mascotes aprovados (Gato, Lobo, Capivara; Urso e Galo removidos na 1.195) e testar no aparelho: **decisão pendente do Tiago; nada foi alterado nos mascotes**.
+

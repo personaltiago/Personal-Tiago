@@ -91,6 +91,15 @@ jobs:
           with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
               output.write('assinar=true\n')
           PY
+      - name: Conferir regressão antes de assinar
+        # Reprova (e nada é assinado) se o arquivo for um pacote completo anterior ao canônico, remover ou reverter um bloco do
+        # conteúdo canônico, perder uma correção da main que está no canônico (01/02/03 etc.), quebrar a paridade aluno/professor
+        # ou for uma correção por área em conflito. Só lê arquivos; não usa a chave. Regras: equipe/canonico/ e CLAUDE.md.
+        if: steps.entrada.outputs.assinar == 'true'
+        run: |
+          set -euo pipefail
+          mapfile -t arquivos < <(node -e "for (const f of JSON.parse(require('fs').readFileSync(process.argv[1], 'utf8'))) console.log(f)" "$RUNNER_TEMP/agenda-sign/files.json")
+          node equipe/testes/regressao/verificar-pacote.cjs --modo assinatura "${arquivos[@]}"
       - name: Assinar e verificar com a chave oficial
         if: steps.entrada.outputs.assinar == 'true'
         env:

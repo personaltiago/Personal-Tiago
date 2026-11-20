@@ -1,5 +1,30 @@
 # Agenda Personal — ESTADO
 
+## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR em rascunho `claude/protecao-regressao`) — vale acima das seções antigas
+
+**Conteúdo (pacotes `.agenda.json`), conferido pela API e pelos SHA-256 em 20/11 às ~12:00 (Cuiabá), `main` em `7a41338`:**
+- **Canônico: 1.12.294 / sequência 400** (`AgendaPersonal-1.12.294-Icone-Feedback-Para-Assinar.agenda.json`, SHA-256 `2bf38cc5…30e9`). Origem: gerado pelo Claude a partir do 1.12.292 (PR #21), subido pelo Tiago em 20/11 05:03 (commit `f7ea686`, idêntico byte a byte), assinado (execução 44707518866), **instalado** no aparelho do Tiago (relato com fotos, 20/11 11:38). Validado só em parte (a escolha do ícone).
+- **1.12.295 / 401** (Feedback pelo ícone do topo, PR #24): subido em 20/11 12:00 (`7a41338`), assinado (execução 44769018803, artefato 14646008941), **não instalado** ainda. Passa no verificador com a autorização `equipe/canonico/alteracoes-autorizadas/1.12.295.json` (muda só `index.html ap-feedback-student`). É o próximo canônico depois de instalado e confirmado. **Próxima versão livre: 1.12.296 / 402.**
+- **Nenhum pacote candidato novo foi gerado** nas issues #22/#23: o 1.12.294 já contém tudo o que foi aprovado (provado por teste, abaixo) e o 1.12.295 já existe.
+- Inventário completo (pacotes, funcionalidades, correções, PRs, paridade por área, Raposinha): `equipe/canonico/INVENTARIO.md` (gerado).
+- **Correções por área da main no canônico:** 01, 02, 03, Apagar exercício (as duas), Pix sem anexos, Sininho de cadastro e Sons do treino **presentes**; Ficha recolhível 253 **evoluída** (continuada pela 02); **Raposinha em conflito** (feita sobre o modelo de mascotes do 1.12.255, que ainda tinha o Galo; nunca esteve em pacote completo; decisão do Tiago pendente; nada alterado nos mascotes).
+- A seção 4.2 abaixo ("Guardar a agenda no telefone") está **desatualizada para o conteúdo**: o texto e `nsActivate` existem no `professor.html` do 1.12.294 (vieram do 1.12.273). No ZIP do APK continuam ausentes (o `verificar_funcionalidades.py` avisa que "voltou a existir" quando lê pacotes).
+
+**Proteção nova (no PR, ainda não na main):** `CLAUDE.md` (regras permanentes), `equipe/canonico/` (manifesto canônico com hashes, histórico, funcionalidades e dependências; estados dos pacotes; autorizações), `equipe/testes/regressao/` (verificador, teste do teste, mecanismo real em Java), CI `verificar-regressao.yml` em todo PR e conferência no `assinar-atualizacoes-agenda.yml` **antes** de assinar (só lê; não toca na chave).
+
+**Testes de 20/11 (ambiente do Claude: Node 22, Java 21, Chrome 153 headless; sem celular):**
+- Verificador: 294 = canônico; 295 aprovado com a autorização; os pacotes completos antigos da raiz (1.12.255 a 1.12.288) seriam **reprovados** antes de assinar (regressivos); Raposinha e Ficha recolhível 253 reprovadas (conflito); demais correções da main aprovadas (já presentes, idempotentes).
+- Teste do teste: 27 de 27 casos com o resultado esperado (regressões propositais reprovadas pelo motivo certo, controles aprovados).
+- Mecanismo real (UpdateManager/UpdateAreaPatch do ZIP): 158 (294) e 157 (295) verificações; 291 = 288 + 01/02/03 aplicadas pelo app; candidato sobre 288, 288 + correções da main, 291, 292 e 294 sem perder nenhuma correção; 01/02/03 presentes; pacote 288 sobre o canônico = "Revisar restauração" com aviso; o app instala sem aviso um pacote mais novo que reverte a 03 (por isso a conferência antes de assinar).
+- Chrome: catálogo de exercícios (01/02/03, inclusive o TXT com grupos, nomes, "como fazer", observações e links) 51/51 no `professor.html` do 294 (= do 295).
+- Testes oficiais do Android (18 `verify_*.cjs`) com as páginas do 294 e do 295: 18/18 cada.
+- **Não testado:** Xiaomi, iPhone/Safari, distribuição ao app web dos alunos.
+
+**Limite:** a regra "Proteger main" (ruleset 27377643) só impede apagar a branch e push forçado. **Não há verificação obrigatória**: o CI vermelho não bloqueia merge até o Tiago marcar o job `regressao` como obrigatório. O upload direto na `main` pelo site não passa por PR; a única barreira nele é a conferência antes de assinar (depois que este PR entrar).
+
+---
+
+
 **Atualizado em:** 13/11/2026, pelo Claude, para revisão do ChatGPT e aprovação do Tiago.
 **Fonte:** `main` em `b10f0ddf060d73c367f30f305e881dd6bc423b60`, arquivo `AgendaPersonal_AndroidStudio_v1.65_contas_convites.zip`, extraído numa pasta temporária, sem alterar o original.
 

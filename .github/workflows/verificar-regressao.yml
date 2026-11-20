@@ -1,0 +1,81 @@
+name: Verificar regressão do conteúdo
+
+# Roda em todo Pull Request (e pelo botão). Reprova se um pacote completo ou uma correção por área tirar, reverter ou deixar
+# em conflito algo do conteúdo canônico (equipe/canonico/manifesto.json), inclusive as correções de exercícios 01/02/03.
+# Não assina, não publica e não escreve nada no repositório. Para BLOQUEAR o merge, o job "regressao" precisa estar marcado como
+# verificação obrigatória na regra da main (Settings -> Rules); sem isso, o vermelho só avisa.
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  regressao:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Main de referência
+        run: git fetch --no-tags --depth=1 origin main:refs/remotes/origin/main
+      - name: Manifesto canônico e inventário conferem com as fontes
+        run: |
+          node equipe/canonico/gerar-manifesto.cjs --conferir
+          node equipe/canonico/relatorio.cjs --conferir
+      - name: Teste do teste (regressões propositais têm de ser reprovadas)
+        run: node equipe/testes/regressao/testar-verificador.cjs
+      - name: Pacotes deste PR e pacotes posteriores ao canônico
+        id: pacotes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          : > pacotes.txt
+          if [[ -n "${PR:-}" ]]; then
+            gh api "repos/$GITHUB_REPOSITORY/pulls/$PR/files" --paginate --jq '.[] | select(.status != "removed") | .filename | select(endswith(".agenda.json"))' >> pacotes.txt
+          fi
+          node -e "const m=require('./equipe/canonico/manifesto.json');for(const p of m.pacotes)if(p.sequencia>m.canonico.sequencia&&p.origem==='main')console.log(p.arquivo)" >> pacotes.txt
+          sort -u pacotes.txt -o pacotes.txt
+          cat pacotes.txt
+      - name: Verificador de regressão (modo PR)
+        run: |
+          set -euo pipefail
+          mapfile -t arquivos < pacotes.txt
+          canon=$(node -p "require('./equipe/canonico/manifesto.json').canonico.arquivo")
+          node equipe/testes/regressao/verificar-pacote.cjs --modo pr --json relatorio-regressao.json "$canon" "${arquivos[@]}"
+      - name: Mecanismo real de atualização (UpdateManager e UpdateAreaPatch do ZIP)
+        run: |
+          set -euo pipefail
+          args=()
+          while read -r f; do args+=(--candidato "$f"); done < pacotes.txt
+          canon=$(node -p "require('./equipe/canonico/manifesto.json').canonico.arquivo")
+          python3 -I equipe/testes/regressao/mecanismo-real.py --candidato "$canon" "${args[@]}"
+      - name: Testes oficiais do Android com as páginas do canônico e dos posteriores
+        run: |
+          set -euo pipefail
+          canon=$(node -p "require('./equipe/canonico/manifesto.json').canonico.arquivo")
+          for f in "$canon" $(cat pacotes.txt); do
+            if node -e "process.exit(String(require('./'+process.argv[1]).format).startsWith('agenda-patch/')?1:0)" "$f"; then
+              echo "== $f"; python3 -I equipe/testes/testes-oficiais-android.py "$f"
+            fi
+          done
+      - name: Funcionalidades exigidas no ZIP oficial
+        run: python3 -I equipe/testes/verificar_funcionalidades.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: relatorio-regressao
+          path: relatorio-regressao.json
+          if-no-files-found: ignore

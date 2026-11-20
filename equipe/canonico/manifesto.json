@@ -1,0 +1,4327 @@
+{
+ "descricao": "Fonte canônica versionada do conteúdo do Agenda Personal e manifesto das funcionalidades. Gerado por equipe/canonico/gerar-manifesto.cjs; não editar à mão (o CI confere).",
+ "canonico": {
+  "versao": "1.12.294",
+  "sequencia": 400,
+  "arquivo": "AgendaPersonal-1.12.294-Icone-Feedback-Para-Assinar.agenda.json",
+  "sha256": "2bf38cc59b48a663e00da9faf8d2feb7ca48ae186ff833500c0a0e68fea230e9",
+  "appId": "com.tiagolima.agendapersonal",
+  "bridgeVersion": 3,
+  "dataSchema": 4,
+  "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago (20/11). O 1.12.295 está assinado (20/11 12:00) mas ainda não instalado: é o próximo canônico depois de instalado e conferido."
+ },
+ "compartilhados": [
+  "ap-workout-audio",
+  "ap-workout-audio-options-css",
+  "ap-workout-audio-options-ui",
+  "ap-feedback-model",
+  "ap-feedback-css"
+ ],
+ "pacotes": [
+  {
+   "versao": "1.12.273",
+   "sequencia": 379,
+   "arquivo": "AgendaPersonal-1.12.273-Modo-Telefone-Para-Assinar.agenda.json",
+   "sha256": "8aa7535dd99f1d982409414eebe4ff40dbec04b07218f8e3f8a4098baa833553",
+   "origem": "main",
+   "titulo": "Recuperação da agenda e modo telefone",
+   "status": {
+    "proposto": "sim",
+    "aprovado": "não confirmado",
+    "assinado": "sim: execução 43878193013 do workflow de assinatura (commit 0c84a3d, sucesso)",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado",
+    "validado": "não confirmado"
+   }
+  },
+  {
+   "versao": "1.12.274",
+   "sequencia": 380,
+   "arquivo": "AgendaPersonal-1.12.274-Aviso-Recuperacao-Para-Assinar.agenda.json",
+   "sha256": "c897216aed77dd2921c52b72d93a0971fd97c375bc95873d3b806e34479f513e",
+   "origem": "main",
+   "titulo": "Aviso de recuperação da agenda",
+   "status": {
+    "proposto": "sim",
+    "aprovado": "não confirmado",
+    "assinado": "sim: execução 43889346602 do workflow de assinatura (commit 0e6d2b0, sucesso)",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado",
+    "validado": "não confirmado"
+   }
+  },
+  {
+   "versao": "1.12.276",
+   "sequencia": 382,
+   "arquivo": "AgendaPersonal-1.12.276-Links-Cadastro-Instalacao-Para-Assinar.agenda.json",
+   "sha256": "3f0d4cc0b312c596abfe26019a6765d56e40a8270c8ee574861127b813019b65",
+   "origem": "main",
+   "titulo": "Cadastro e instalação dos alunos",
+   "status": {
+    "proposto": "sim",
+    "aprovado": "não confirmado",
+    "assinado": "sim: execução 43973147490 do workflow de assinatura (commit 4b4cca2, sucesso)",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado",
+    "validado": "não confirmado"
+   }
+  },
+  {
+   "versao": "1.12.278",
+   "sequencia": 384,
+   "arquivo": "AgendaPersonal-1.12.278-Grupo-Turma-Para-Assinar.agenda.json",
+   "sha256": "eb97ba3c234e3a70b83019b5dd23a331ecc2ec70e4ae09396b4c3db5675fd7a6",
+   "origem": "main",
+   "titulo": "Grupo da turma",
+   "status": {
+    "proposto": "sim",
+    "aprovado": "não confirmado",
+    "assinado": "sim: execução 44302669368 do workflow de assinatura (commit 8c3ab3e, sucesso)",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado",
+    "validado": "não confirmado"
+   }
+  },
+  {
+   "versao": "1.12.281",
+   "sequencia": 387,
+   "arquivo": "AgendaPersonal-1.12.281-Links-Visual-Anamnese-Planos-Para-Assinar.agenda.json",
+   "sha256": "643f5f9b6713a9b6d9240a614c11900d09c926cc25d58414664ec1d0ed47899d",
+   "origem": "main",
+   "titulo": "Links dos alunos",
+   "status": {
+    "proposto": "sim",
+    "aprovado": "sim: o Tiago aprovou os Links dos alunos (registro do projeto, 18/11)",
+    "assinado": "sim: execução 44364022013 do workflow de assinatura (commit f13b535, sucesso)",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado",
+    "validado": "não confirmado"
+   }
+  },
+  {
+   "versao": "1.12.282",
+   "sequencia": 388,
+   "arquivo": "AgendaPersonal-1.12.282-Feedback-Aluno-Para-Assinar.agenda.json",
+   "sha256": "f505ad6ad109812251a467417dd94d05ef2e7052def9d80eefc87ea34ea4e15e",
+   "origem": "main",
+   "titulo": "Feedback do aluno",
+   "status": {
+    "proposto": "sim",
+    "aprovado": "não confirmado",
+    "assinado": "sim: execução 44439322147 do workflow de assinatura (commit 5aa5329, sucesso)",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado",
+    "validado": "não confirmado"
+   }
+  },
+  {
+   "versao": "1.12.283",
+   "sequencia": 389,
+   "arquivo": "AgendaPersonal-1.12.283-Alunos-Para-Aprovar-Para-Assinar.agenda.json",
+   "sha256": "1fe1c35fa54acea352a10e688cde5345b7f9c36f30cf99cd1f8b75762c688620",
+   "origem": "main",
+   "titulo": "Alunos para aprovar",
+   "status": {
+    "proposto": "sim",
+    "aprovado": "não confirmado",
+    "assinado": "sim: execução 44451268909 do workflow de assinatura (commit a52b794, sucesso)",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado",
+    "validado": "não confirmado"
+   }
+  },
+  {
+   "versao": "1.12.285",
+   "sequencia": 391,
+   "arquivo": "AgendaPersonal-1.12.284-Lista-De-Alunos-Para-Assinar.agenda.json",
+   "sha256": "87d7fd05c2fcf33e729c332773ec65ea058f56c156894bc9a2c65a4caa9c8442",
+   "origem": "main",
+   "titulo": "Excluídos da lista",
+   "status": {
+    "proposto": "sim",
+    "aprovado": "não confirmado",
+    "assinado": "sim: execução 44509174519 do workflow de assinatura (commit b4b6072, sucesso)",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado",
+    "validado": "não confirmado"
+   }
+  },
+  {
+   "versao": "1.12.286",
+   "sequencia": 392,
+   "arquivo": "AgendaPersonal-1.12.286-Recados-Modo-Claro-Para-Assinar.agenda.json",
+   "sha256": "7de8a60cdbba5d3f17d3d4072e76bb823017ef7427edf97ff015ab22317621e8",
+   "origem": "main",
+   "titulo": "Recados no modo claro",
+   "status": {
+    "proposto": "sim",
+    "aprovado": "não confirmado",
+    "assinado": "sim: execução 44524800329 do workflow de assinatura (commit c3e8d57, sucesso)",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado",
+    "validado": "não confirmado"
+   }
+  },
+  {
+   "versao": "1.12.288",
+   "sequencia": 394,
+   "arquivo": "AgendaPersonal-1.12.288-Janelas-Como-Pagina-Para-Assinar.agenda.json",
+   "sha256": "1f9b66c8cb8af792ed661c435d46ba2ee172306e6f4b38c298e38836b2d29f15",
+   "origem": "main",
+   "titulo": "Janelas como página",
+   "status": {
+    "proposto": "sim",
+    "aprovado": "não confirmado",
+    "assinado": "sim: execução 44560172256 do workflow de assinatura (commit 176f8d7, sucesso)",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado",
+    "validado": "não confirmado"
+   }
+  },
+  {
+   "versao": "1.12.291",
+   "sequencia": 397,
+   "arquivo": "AgendaPersonal-1.12.291-Exercicios-Incluidos-Para-Assinar.agenda.json",
+   "sha256": "7153e570e9d7307536059ede5f179a2f4735ddbbee7eac9e200242a3e58a9fa0",
+   "origem": "gerador",
+   "titulo": "Correções de exercícios incluídas",
+   "status": {
+    "proposto": "sim: entregue sem assinatura e nunca subido na main",
+    "aprovado": "não (substituído pelo 1.12.294, que o contém)",
+    "assinado": "não",
+    "publicado": "não",
+    "instalado": "não",
+    "validado": "não"
+   }
+  },
+  {
+   "versao": "1.12.292",
+   "sequencia": 398,
+   "arquivo": "AgendaPersonal-1.12.292-Sino-Feedback-Para-Assinar.agenda.json",
+   "sha256": "82f41147ea8b47609483817506756ed1c1560c0dc7c718eed83b8e0224e687fb",
+   "origem": "gerador",
+   "titulo": "Sino do feedback no topo do aluno",
+   "status": {
+    "proposto": "sim: entregue sem assinatura e nunca subido na main",
+    "aprovado": "não (substituído pelo 1.12.294, que o contém)",
+    "assinado": "não",
+    "publicado": "não",
+    "instalado": "não",
+    "validado": "não"
+   }
+  },
+  {
+   "versao": "1.12.294",
+   "sequencia": 400,
+   "arquivo": "AgendaPersonal-1.12.294-Icone-Feedback-Para-Assinar.agenda.json",
+   "sha256": "2bf38cc59b48a663e00da9faf8d2feb7ca48ae186ff833500c0a0e68fea230e9",
+   "origem": "main",
+   "titulo": "Ícone do feedback personalizável",
+   "status": {
+    "proposto": "sim",
+    "aprovado": "sim, em parte: o Tiago subiu o arquivo na main (20/11 05:03) e instalou; pediu mudança no botão do topo (gerou o 1.12.295)",
+    "assinado": "sim: execução 44707518866 do workflow de assinatura (commit f7ea686, sucesso)",
+    "publicado": "não confirmado",
+    "instalado": "sim: relato do Tiago com fotos do aparelho, 20/11 11:38 (escolha do ícone em Meu perfil funcionou)",
+    "validado": "em parte: só a escolha do ícone foi vista no aparelho; nada em iPhone"
+   }
+  },
+  {
+   "versao": "1.12.295",
+   "sequencia": 401,
+   "arquivo": "AgendaPersonal-1.12.295-Feedback-Topo-Para-Assinar.agenda.json",
+   "sha256": "031b8a55010063925bc37d213ebe74d818d4c5249981f2d273a57f4ef1e20185",
+   "origem": "main",
+   "titulo": "Feedback pelo ícone do topo",
+   "status": {
+    "proposto": "sim",
+    "aprovado": "sim, para assinatura: o Tiago subiu o arquivo na main (20/11 12:00); ainda não instalado",
+    "assinado": "sim: execução 44769018803 do workflow de assinatura (commit 7a41338, sucesso)",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado",
+    "validado": "não confirmado"
+   }
+  }
+ ],
+ "blocos": {
+  "index.html": {
+   "ap-native-store": {
+    "hash": "e666831ebde1e9b141829b990c2658e258d1d706d881994500bb23a165638822",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-save-guard": {
+    "hash": "19f93661c569fe79e338597f14a6e8ddccc414412bee3ff81de0218342468f08",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-firebase-packed": {
+    "hash": "2e7b74f8b9fde8e2a23c35b27eeb9ee0e20a761965f10e85569e68fd06712b41",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-firebase-loader": {
+    "hash": "254eee60b2d1fb97a2a1bdb4c5d4d0fd79763500327de672c2d443428c190ad0",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-startup-style": {
+    "hash": "4e4d15897b3c994c4dbba14c365397281262fa2cb73dce6de4bb1d481838c1df",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-startup": {
+    "hash": "7bba98a666003b9ab9363be4bfff8e420de00811cbd40edf20311f6cb7815b33",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-legacy-storage-bootstrap": {
+    "hash": "5819ea6210744bee839dd2ff8b1fd2a44342ebbc44fce013a1c97c2c5f7c11c1",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-registration-public-boot": {
+    "hash": "6f3ecf7cf2941108ebee94f6cef6569e03b109dc2671bd33c3878a30537e3bdd",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-registration-public-css": {
+    "hash": "49788d23890e14074a771e486bf7561ed0ebcfaf5791547ca7750ee9b8e485bf",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-preview-storage-fallback": {
+    "hash": "dc05c1bea04424df76c70310d79028f13823472ac70eda8e0562820cd69f6de8",
+    "area": "geral",
+    "vezes": 1
+   },
+   "pixel-refinement": {
+    "hash": "8d602d4187f4e760b1e9aef39c9d61cdcf0891a4e5b7ee66f90871a37343a870",
+    "area": "geral",
+    "vezes": 1
+   },
+   "icons-and-two-modes": {
+    "hash": "397e94c021269e7681e0ee9390c1a963fc1ed834f44a40c08fb790cb83006da0",
+    "area": "geral",
+    "vezes": 1
+   },
+   "font-size-working-fix": {
+    "hash": "b9a40c2d3b73a3750a5b379da6558c36623e3d97c80eac3f81c125d6752bbbe8",
+    "area": "geral",
+    "vezes": 1
+   },
+   "color-picker-clean": {
+    "hash": "2f4a2a3faf5977f3bd4ebd3c9560dd98e29bccdd6031104b0d4636c3249aee20",
+    "area": "geral",
+    "vezes": 1
+   },
+   "home-refined-fidelity": {
+    "hash": "b3289fae49c4c2231c33339bc7a2763bd85c5278db2b24ec01630e37c5114e3a",
+    "area": "geral",
+    "vezes": 1
+   },
+   "home-gender-avatar-fix": {
+    "hash": "95bb85f7512f9630d1b69325769a73790a407f55c956b39b5d35d57b5ece6edd",
+    "area": "geral",
+    "vezes": 1
+   },
+   "profile-photo-custom-css": {
+    "hash": "e268f824a46ab00639ae5d50d3b4569dfd895a47d9207f2881da51550a3bc0e7",
+    "area": "geral",
+    "vezes": 1
+   },
+   "workouts-fidelity-v1": {
+    "hash": "e3c7028a1caf3ead9dab8bd5c61ead32462d695602a4586408e4a3b1619714b8",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-week-schedule-styles": {
+    "hash": "377e365daa5c052ebee6b8fd4b8aee8dbc4314ac072fdda5d8a7b8557d6b69ba",
+    "area": "agenda",
+    "vezes": 1
+   },
+   "exercise-execution-css": {
+    "hash": "b036bcff27aa6a5162a076f90b6fd2901df0184e12ba5d6ae610eeac8eecd895",
+    "area": "geral",
+    "vezes": 1
+   },
+   "flow-v2-css": {
+    "hash": "044461a3e61d033b1fab8afb8078161f88a44f27c0c45c758d51d5e4f000fbbe",
+    "area": "geral",
+    "vezes": 1
+   },
+   "biset-weight-controls-v3": {
+    "hash": "1001a2d36db54b75e5c1c9724bf073cac4bba2afb2908e35ff2316ac561e2d93",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-evolution-css": {
+    "hash": "3c612b4289e18ef32fafb71d6be2099caedc29192f52f240251d5b49ba696968",
+    "area": "evolucao",
+    "vezes": 1
+   },
+   "assessment-screen-css": {
+    "hash": "4b50b159e21f3d2bfa26e0134511d31d7c3725cfdec753f4b58a2a1cd54d8f1e",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ass-assessment-fixes": {
+    "hash": "f2797c5f55c5b308c527c2e0e882099413b05067278de916e2efdff696849fde",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ass-pdf-import-style": {
+    "hash": "08d3c013a9afb10fd9a68d9a2399d3b8d4bbec2ef0eb591d0e63b0ae9af5237e",
+    "area": "geral",
+    "vezes": 1
+   },
+   "teacher-pdf-publication-css": {
+    "hash": "c3f42f0e26e11adddd55dceb3c64a4b5198d607094da5cf95c74dfe72b82c1c4",
+    "area": "geral",
+    "vezes": 1
+   },
+   "payments-ui-css": {
+    "hash": "ddad09e02e43c95afa0d95f2582fc6328a82bd958a47711bccd28027ce6074e5",
+    "area": "pagamentos",
+    "vezes": 1
+   },
+   "agenda-profile-module-css": {
+    "hash": "e695a06fa95c4bd2aae7d3c27e48b43f4961c40e80d877ab010120f27a405e15",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-profile-photo-relocation": {
+    "hash": "0447b97295366bb9a6b7ee8d1322c7a5260dbb68920da0b7ab72630721b9a7f6",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-notificacoes-styles": {
+    "hash": "05fc4844e637346f060bb392da831871d1aac278f25aaef8833361af96a8cd8c",
+    "area": "geral",
+    "vezes": 1
+   },
+   "fix-perfil-icone-barra-20261011": {
+    "hash": "2bd15bc68b6d42e6e5fd33c37e6b8de3bced29c913fc04103f28b1bc3651c869",
+    "area": "geral",
+    "vezes": 1
+   },
+   "tp-professor-styles": {
+    "hash": "4f37d8f4dc89c9f5804a1125de0c4a27852f0ed7c9c8baa37a62780a209935dd",
+    "area": "geral",
+    "vezes": 1
+   },
+   "tp-visual-design-styles": {
+    "hash": "2207eed145bb79b4587bd91a83ef7e441b2e6e31656c0fa2a178813b45142d98",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-student-storage": {
+    "hash": "3cd3e36a64c0d7e62106131bce7598f5edc28399d82a3fc1b72f8a0fb1566ede",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-billing-model": {
+    "hash": "b1bd7d5f42586823dee59e72acf2a1441375d7ebf0142469db124e3dcaeecda6",
+    "area": "pagamentos",
+    "vezes": 1
+   },
+   "ap-cardio-core": {
+    "hash": "6f09e32302dcee3d77e8e063b414c22257cfc27581dccbe3d16c85ceead34d0c",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-cardio-sound": {
+    "hash": "be0edf400eb55a7aac9cb5fd01c1ef7276cd168b5187c495b978a52f7ae7a800",
+    "area": "sons",
+    "vezes": 1
+   },
+   "ap-workout-audio": {
+    "hash": "ce2d5c247d7fe0e554d9444b947d7c09a60dfe75d9ad159e0346bde7ac413395",
+    "area": "sons",
+    "vezes": 1
+   },
+   "ap-student-model": {
+    "hash": "b8e6c4a1c6c019e7c57fce10fb5cb9c0816a57e2e7282aa083eb9a23897b3151",
+    "area": "alunos",
+    "vezes": 1
+   },
+   "ap-student-areas-css": {
+    "hash": "a046e26e69e2f888433d31f063c7bcecd12fd700b4aeb1f925ed9e3fe2fc6fd7",
+    "area": "alunos",
+    "vezes": 1
+   },
+   "ap-external-video-links": {
+    "hash": "c99985a7edc21f7fec38c3777c0e19eba7960db162b3d18cbf98fdb75ae02814",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-external-video-css": {
+    "hash": "8f377de6158e8f923bd0a21cf5ff46998260cc727765bf88abade980c617f5ae",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-account-navigation-css": {
+    "hash": "6525d84e30966da4a444587efb52fe1146baa7edcefc10553be488f5d25b6b8b",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-login-controls-css": {
+    "hash": "c33f69440a29f8800f7a670f839794999a28fcb28f4af6c2dce2bbdc4fea2306",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-distribution-progress-css": {
+    "hash": "e587ea5f6109df41c6d6c7e73a8f3f209941d2e4ea72f1d9cdec19a150c71918",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-distribution-css": {
+    "hash": "2affc447f1eca74749070106f32013c4566ec25d621305d3d3c236a80e3f27d8",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-student-identity-css": {
+    "hash": "e460d4db0e92704b0e631e1dd8f428c817ee64180aa8a01626c82d556c53ba50",
+    "area": "alunos",
+    "vezes": 1
+   },
+   "ap-home-assessments-css": {
+    "hash": "7110638ec968a5494891816a94dddcc170440f4ef9c3fe8828116eed56b94007",
+    "area": "avaliacoes",
+    "vezes": 1
+   },
+   "ap-student-notifications-css": {
+    "hash": "8412a99fd90d8f9092ef280061837bbd0b80cc62dcd0c3be139114791c61a471",
+    "area": "alunos",
+    "vezes": 1
+   },
+   "ap-home-daily-message-css": {
+    "hash": "46acf2381cf1b134ed3399e465f859ca8506bd3de12291364ee1c31f91cdfbc3",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-student-billing-css": {
+    "hash": "05d6c16b090a6ccf972a3132ea389422126dc185d39c66fe7b107cd240a38f2c",
+    "area": "pagamentos",
+    "vezes": 1
+   },
+   "ap-workout-organization-css": {
+    "hash": "a61b7811dc277701b9415d2580fe310456eb89b7829113f63af5d8f9cfc51c7e",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-student-inline-video-css": {
+    "hash": "b6ffe13cc7317aad9d7006b0e1e6298accc03f294df17564450bfa9bd3fa1937",
+    "area": "alunos",
+    "vezes": 1
+   },
+   "ap-student-session-layout": {
+    "hash": "2fb32f1e0acbc7f562d6727d532f1e523ee663dc5b161a2bb4413327761cf5ea",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-student-mascot-css": {
+    "hash": "9749eb790d07cfd19a56159fcc1218c1a235d9ab2c3960cf5f546baa24c1b336",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-feedback-css": {
+    "hash": "583bd4ee1010be97a2a13f795222367a0b6491a880fc6335c9375f3da16baad5",
+    "area": "evolucao",
+    "vezes": 1
+   },
+   "ap-scroll-boundaries-css": {
+    "hash": "2db52c95c38264799d5e52c421b1f7ac2ad2a775616983eecd006b5aacfafda5",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-google-login-css": {
+    "hash": "0ce733743e38a0632f913900110036ffcf04cb9b299dda3734bf304b1569233d",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-release-center-css": {
+    "hash": "04f9caa986aa64279b2572b67e95210ddd5f9c024714a254a2b305ff64be1a90",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-cardio-style": {
+    "hash": "5bcad95521cda1293ec83d3604aef3a5c71d59d2494e5a5ff55fbeda7fbc8dff",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-workout-audio-options-css": {
+    "hash": "93f20ee2982ef5665a2b9697ba29d1ee5019069a14f133b4947fa2d38c3b0c82",
+    "area": "sons",
+    "vezes": 1
+   },
+   "ap-app-symbol-css": {
+    "hash": "6fab343e0c2c519285b874d3288b0b522a80c832baf09517767f2eaa8f6a5341",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-brand-logo-cleanup": {
+    "hash": "45abca98c6c23f81fdd37f0f1e5db9a639266757c5eba3b48bbb1fe1f3c254ad",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-preview-single-style": {
+    "hash": "9131a15e935fe9e35dff96a4b7e5976f5795149129f1f55537e3c636aadd0aab",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-embedded-professor": {
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-embedded-assessments": {
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-single-navigation": {
+    "hash": "05f88e62479ecf05c16d250e139644e7d45d8191d2cecaa99652649849645edf",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-prof-setup-css": {
+    "hash": "de534f6c6361f9e5b823bfa4908b034066632f4656d909d55e4d56cc56f6e184",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-setup-appearance-css": {
+    "hash": "b0ae1b41a01c3094b635820c2c13e64155e04677af27ddb586f244045656af13",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-prof-setup-script": {
+    "hash": "a727a2d7fdcb48cbd6870c7920eb6734a24aba006d1009afd09bb5102f4df36b",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-embedded-registration": {
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-registration-router": {
+    "hash": "06b964ceef111861b94a8b16cc9ddc4d41461481733bf4e1e6857adfdf50e28b",
+    "area": "cadastro",
+    "vezes": 1
+   },
+   "ap-workout-muscle-preview": {
+    "hash": "f9dc59822c5bfd3004fac16583c111d1dba308b9ce626d95feb696be692d31b7",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-cardio-student": {
+    "hash": "e971c61026c1326065ffe19e9e0f9a3ea41cbb8cc071812fc5c23f88e46d43ef",
+    "area": "alunos",
+    "vezes": 1
+   },
+   "ap-student-ui": {
+    "hash": "0eab5185ce9075abd797311f8e3a8c7c56aee0a32c104eb7332dda1ccc5d9242",
+    "area": "alunos",
+    "vezes": 1
+   },
+   "ap-student-workout-audio": {
+    "hash": "c8866f5c1a620c7160cc1edce8e4dfe5dfbdc8ffae1c7011d1ad38d780a5b201",
+    "area": "alunos",
+    "vezes": 1
+   },
+   "ap-student-finish-control": {
+    "hash": "775a2c1e1b6327783ee36f6bbc70cd9d78fb925d4e2d75f1376f2b377acb8821",
+    "area": "alunos",
+    "vezes": 1
+   },
+   "ap-workout-security-rules": {
+    "hash": "6919b49ef6a79bad02984ec7e1213957c9c1764d79f32ab53bb441b4c907ec53",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-login-session": {
+    "hash": "12c00397690ec40edc8e2be8303c88401d2770f57268111ab5ad28fc7e4ff56b",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-student-accounts": {
+    "hash": "152a450cb091114f45a75f0e943d5a32bf48b921ee784f9f934d5154d4409fd1",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-login-controls": {
+    "hash": "8ce744b66526a5dd9701d5ef5bcd2336df4348ef34d722f0d4db74b1658acf73",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-update-safety": {
+    "hash": "d3728d37c458a196052a2c48b60b86cb16d259dfee482fd76bd73ca7c41e14ac",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-distribution-controls": {
+    "hash": "7c5d5df002b0dea08e43264cf499ef443f1170891a36a65ce5e7fb92df0f5bf8",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-student-identity-controls": {
+    "hash": "abf9c332d08e37f725c061e050ebf8386dcde5895ec387f57cb1b6e3e9499aef",
+    "area": "alunos",
+    "vezes": 1
+   },
+   "ap-photo-sync": {
+    "hash": "7e7adcb2d9a1bbded2b067d50b42477ab9c1535551245a354361a322a5fa0f49",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-home-assessments": {
+    "hash": "159585ea080aad4e809fe15249af5bc844f798b9e0f8f80ac31fb608c482a827",
+    "area": "avaliacoes",
+    "vezes": 1
+   },
+   "ap-student-notifications": {
+    "hash": "5b3c739dded9bd2aa2739139fe32a88b0ed2f5942a4c34168514ca1efe76d6d5",
+    "area": "alunos",
+    "vezes": 1
+   },
+   "ap-home-daily-message": {
+    "hash": "6129c05f03d22b4be9402b02bc53f3afe139d5e5044ed81515cf9f8d7b78fdfb",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-student-billing": {
+    "hash": "213916317973a085db8d6053c46663deefa76f635b88517b55d783e9ed493661",
+    "area": "pagamentos",
+    "vezes": 1
+   },
+   "ap-student-access": {
+    "hash": "42613818b1641b5a644f49b2c8cb73e2f8e64cde7529105aa6a857b9f9920c6c",
+    "area": "alunos",
+    "vezes": 1
+   },
+   "ap-student-inline-video": {
+    "hash": "fc1c940c7e1990b77bddcfa1d2b94e64ef6e490ef3adf3c03b9bdd6ad86cd684",
+    "area": "alunos",
+    "vezes": 1
+   },
+   "ap-watch-model": {
+    "hash": "69f9747c24b51be85d77259cd3921cfc58ba4319e3326b6e1429727c77dc6abd",
+    "area": "relogio",
+    "vezes": 1
+   },
+   "ap-watch-ui": {
+    "hash": "4716e1439efb8fe11fe2b46654826042a09438634c20b9da2ccc63ea8a4d3d71",
+    "area": "relogio",
+    "vezes": 1
+   },
+   "ap-watch-history": {
+    "hash": "add7c7b4ab517ad6eb2d2a9484844a6975acdcf0d1c37594de066772596d3220",
+    "area": "relogio",
+    "vezes": 1
+   },
+   "ap-entry-artwork-loader": {
+    "hash": "7b3b28e76c75058759e6582026727cce3a6b5da2706e238e6b9c8ce436c2c410",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-student-pet-choice-css": {
+    "hash": "d913df2bbf75a5df476d01789d5c0173e3d2590b0903aa48e6e0536ae3e28bab",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-workout-motivation": {
+    "hash": "d28eabdab15660c7d468eab927e80ac2e46dfefdb77730687583d7ac6bb48ad8",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-student-mascot-model": {
+    "hash": "9dd93059982ae99e293ed74b0e7fa6c4ab5e7e3a355c49d448a7da8bc85c741d",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-mascot-homes": {
+    "hash": "55f9d7a3ec07727c1cbf45b2f48f1bee0b0157ced7d5d098675bad76bc2a3b07",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-mascot-asset-codec": {
+    "hash": "1b510352c3ca32182a66c0ccd759691350b48d73494df8a1f645a87d7b7c5fc1",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-student-mascot-art": {
+    "hash": "ac4dc6fb4eb3b0901907435bd6b0e6cd8170c8c74d69b29deddd6f767d20c5b3",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-mascot-daily-message": {
+    "hash": "c29b59dd1196c40fc6760208b331e06941908eb35beace33b2cbffe3a6395e06",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-nonbear-reactions": {
+    "hash": "2d6364683c4464557079005910407caed2e4c1610e97989454c51059f150183b",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-mascot-petting": {
+    "hash": "568032e75fa042ee2ffeb5665a0c4bfa38987e3919c55a4069e830e5af5db7a4",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-teacher-mascot": {
+    "hash": "10e358b24c3aab5813aeb0d90fa8c653bf9a68e5e979c818e58b6aa90f911be4",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-mascot-closeup": {
+    "hash": "d1dea7691ea9ad69a0238f0f656b06287289b375d76e836f8c1712f2ed4d61a7",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-student-pet-storage": {
+    "hash": "f32f5fbb07fd6c6f5965c10beeac73aef360e234e57a34476420b070fd4b7226",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-student-mascot": {
+    "hash": "73a2328cc98a101363076571a10146d76e0f25ee507f97e3138f29ef3e5550ce",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-progress-sync-source": {
+    "hash": "40f55070ee0f519c2b9566d050483f9c9d28c75b111cf56717e3417b2c77ab34",
+    "area": "evolucao",
+    "vezes": 1
+   },
+   "ap-progress-sync-loader": {
+    "hash": "e03a2046ec8a09557c6c12b1dc3b9229330df1a6e6499cad7dea8502e7117248",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-feedback-model": {
+    "hash": "24338b639500cc6e7f414b5230c20f69ccdc86e7dc8ab8a35541ab8f9eb1531e",
+    "area": "evolucao",
+    "vezes": 1
+   },
+   "ap-feedback-sync": {
+    "hash": "a68d7d530945d14aa915253e382b17ddef445720ed1c921454113f825440a0bb",
+    "area": "evolucao",
+    "vezes": 1
+   },
+   "ap-feedback-card": {
+    "hash": "3049d4feb124f63f55a33b468e3ddcef04dc0e5d1c8805cbb49448b57d217c73",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-feedback-student": {
+    "hash": "716376dbdf9c59c9b8c350e813fd801c7503c47b9ccc8932cd5b472490852121",
+    "area": "evolucao",
+    "vezes": 1
+   },
+   "ap-student-session-recovery": {
+    "hash": "09ea16154c40b47043d213f0fede4262eaaeb42fc1966ce9edc9e4648c069b81",
+    "area": "alunos",
+    "vezes": 1
+   },
+   "ap-release-center": {
+    "hash": "2ea9a2cf58fc34aff1b8c1784ea2a2a67d84d822882cdb47a974e6e54892f5d1",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-modular-packed": {
+    "hash": "e1ff9942497d6fd866593651ab4674c26329da9d7a62ed49dedac79bba765a87",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-modular-loader": {
+    "hash": "a6c6ab755ff63b7fb3f065b63126dd40509ff277aee34a8f5b5ccc18a66bfe48",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-app-symbol-enforce": {
+    "hash": "11cd197c9dc7e5d2fecdb93e010efe8517db0a8bc8d46184772db5b70ded7d35",
+    "area": "geral",
+    "vezes": 1
+   },
+   "#fora-dos-blocos": {
+    "hash": "2b2754ec52644565fb5ddccb6a807075c45703577b734cbeac748a6d65907918",
+    "area": "geral",
+    "vezes": 1
+   }
+  },
+  "professor.html": {
+   "ap-native-store": {
+    "hash": "20d8148e583bbc8cc6650bcf2e3cff20d2e8a3ca502506f4538d0b7f8e5c97a1",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-save-guard": {
+    "hash": "19f93661c569fe79e338597f14a6e8ddccc414412bee3ff81de0218342468f08",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-timer-compatibility": {
+    "hash": "b0fb33ee3fed1db1f039d1314d07234af00de0de7728c9672e4ba518dfdded6c",
+    "area": "sons",
+    "vezes": 1
+   },
+   "ap-teacher-boot-guard": {
+    "hash": "d3f9f2571e8f0f60d28c2ba4343ef5a747c7736fef5eda050587f8cfb00ed3bb",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-waitlist-model": {
+    "hash": "e8f1db8532c0a0f05d0e50ab9c80ef8add77afc02ff28ba80d93897c2365fa7a",
+    "area": "agenda",
+    "vezes": 1
+   },
+   "ap-teacher-text-size": {
+    "hash": "1c63188f6153a3037d1c612d928cedbb8b166b5587a1dd59351a249667b79e77",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-icon-finish": {
+    "hash": "fbaba888ecc22eb85af3df6a762d4a0d4328fba9d9ebe7395e61dbae919811f1",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-update-controls": {
+    "hash": "a0d5b67826a8b567ceeb144e77bb7e2d038698e4053fb7e2df28c21ebbf7ba38",
+    "area": "geral",
+    "vezes": 1
+   },
+   "panel-reference-layout": {
+    "hash": "4482d8ed6c61af9fa2679c23bbf9163cd6dc8fda72eb972119f9f74656cb0f41",
+    "area": "geral",
+    "vezes": 1
+   },
+   "mobile-viewport-fit": {
+    "hash": "cebb26c8ec6268ccbfe674286e388c523a07315ca9706ea4261558db450bbc35",
+    "area": "geral",
+    "vezes": 1
+   },
+   "weekly-availability-style": {
+    "hash": "32b451a10c61c392f834a71203841a9aa253c004403ede43726aa27cd55b221b",
+    "area": "geral",
+    "vezes": 1
+   },
+   "workout-sheet-layout": {
+    "hash": "9194a43e6920f7cf22034dedf63cfa92210c191fb24cddd37bcef2c5e812ecdc",
+    "area": "geral",
+    "vezes": 1
+   },
+   "student-workout-shortcut": {
+    "hash": "3b336aec5533df4589d3c2a36fb5be8c7c63b708a339928c8e16a873501af835",
+    "area": "geral",
+    "vezes": 1
+   },
+   "training-lesson-countdown": {
+    "hash": "cddc380ea1a425cc431d856fab8e1e48e016d7b1e373c92acc58d742b6ee8c8a",
+    "area": "geral",
+    "vezes": 1
+   },
+   "makeup-pending-actions": {
+    "hash": "f1ff95172ee2a7ef7a5b94b5f8a2c1f8cb48e9c24c85afdc4dfeb37776bc5b23",
+    "area": "geral",
+    "vezes": 1
+   },
+   "workout-import-single-scroll": {
+    "hash": "61e91de2dfb7b2828f9c4d880e66547821ae0da9b4d31f6917edd9cc9571b917",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-reference-layout": {
+    "hash": "964e4bda8e09a7338d9d60265b7873afb71032fcae474dbdc376e701753a9f56",
+    "area": "geral",
+    "vezes": 1
+   },
+   "automatic-availability-style": {
+    "hash": "01d1d4434a2a14577f5dcf4ca2e34cdf16e791be613b15712611c1e18db6767d",
+    "area": "geral",
+    "vezes": 1
+   },
+   "dialog-scroll-lock-pages": {
+    "hash": "13f1f364bfed54e239720bc67f26959ed93f6a5b2650bbfd7545e320fd4a22ba",
+    "area": "geral",
+    "vezes": 1
+   },
+   "previous-page-navigation": {
+    "hash": "48c05d508252721f196847c0f0b53094da4d6aaeb6f2277c387695f0a4e1298b",
+    "area": "geral",
+    "vezes": 1
+   },
+   "experimental-lesson-name": {
+    "hash": "fd711e3830a3a48afec59eb06c884cad41e6caf4098065f19d59e4cd24972f56",
+    "area": "geral",
+    "vezes": 1
+   },
+   "more-exercise-catalog": {
+    "hash": "f2ce51df7ba6550e619e826143a7167981572b86ad0767adced3b4121e4cb8ea",
+    "area": "geral",
+    "vezes": 1
+   },
+   "workout-student-progress": {
+    "hash": "e0f821f8fb1871586b3ac16c69ad6ffeb6d585bdc5166e4d9af1b9fb6410d182",
+    "area": "evolucao",
+    "vezes": 1
+   },
+   "workout-card-mobile-fit": {
+    "hash": "6ad954e665233100042aa9f416d5e953932581c32ff6bd69d436833602da0e5e",
+    "area": "geral",
+    "vezes": 1
+   },
+   "more-reference-layout": {
+    "hash": "e2171be2b23f7eed06263c9868a79c6b915d8304302a5edacb5b901adf29a954",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-color-theme": {
+    "hash": "557aa2d3dfb4f62bbd952b153f8f751244dbaa47a070388eed46cec3bb2c8219",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-color-panel": {
+    "hash": "d3a048c6ee68175b4c3130913e1eb8418acbb1da024dd5aeca93e25ff1c6244e",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-neon-design": {
+    "hash": "5e4b6c2cf7989c5f5e0291f68ff431f35135c10ab900c3b207a428791689ef66",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-design-panel": {
+    "hash": "37386befda356ea8603185210f57e7683d4c5db564653bb061261172fb0c5923",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-metal-theme": {
+    "hash": "2b209e0922fa2db41847f93481a30f58f7ad47cbace80a51280e8f629c68c891",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-performance-pro": {
+    "hash": "276d78b0bb4020fd8af405e52b0f1f61b1bcb75f18ffa2965852b45bded8e4b6",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-deep-purple": {
+    "hash": "9d4c50d71f939ea2547d2879ea8c325e81cd6727f1b82aa3287e765057c15c89",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-bisets": {
+    "hash": "89fc2ddb8f37309930fcf25c95c18b3b140ec79cee2d56ab6fbf49654b313e94",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-techniques": {
+    "hash": "0600f7140486248cd6d6e167d3d0954a8846ea2d54a7ba017ad881552b2828e4",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-stop-workout-css": {
+    "hash": "ca0323d5080ade6b74456a25a38103db07f18bb57afa114d9ee53070a5e5a4a1",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-workout-series": {
+    "hash": "1c2d9a5d1bc4cf6e853e03d6dc8be3c1cf1d0378692b8c153b046cb473e31a4c",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-billing-model": {
+    "hash": "35d399384fb73ad692985284f6f26f49dc0e5d7370e3ce1833c0b2a0d3040b4e",
+    "area": "pagamentos",
+    "vezes": 1
+   },
+   "ap-cardio-core": {
+    "hash": "6f09e32302dcee3d77e8e063b414c22257cfc27581dccbe3d16c85ceead34d0c",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-cardio-sound": {
+    "hash": "00ba7c5d8690abcbf00e050656322691d426f743cbab4fc836ae1ddebf130d3a",
+    "area": "sons",
+    "vezes": 1
+   },
+   "ap-workout-audio": {
+    "hash": "ce2d5c247d7fe0e554d9444b947d7c09a60dfe75d9ad159e0346bde7ac413395",
+    "area": "sons",
+    "vezes": 1
+   },
+   "trainer-profile-crop-css": {
+    "hash": "549cacb58e9cb4c4f5ef4b51d6ad62a123ac8eb66032323abc651358e8f6f852",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-student-archive-css": {
+    "hash": "c1cc9acd1740b65bf14e9b7a80b2e90f5818cd892d975b5dc146a90646434fe3",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-teacher-appearance-css": {
+    "hash": "89cf28ecf9483e64feeac22acb40aea885b7f3519fed64feb1399bf487eb7e28",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-registration-link-editor-css": {
+    "hash": "328de8048b7cd286fb7502f9a88ce2294f444e8757b54d3a2f05ebde4f886236",
+    "area": "cadastro",
+    "vezes": 1
+   },
+   "ap-registration-hub-css": {
+    "hash": "6bf5a0af3281053a9dced1a04be72098fd282bf7c63262a56d0fb9fbe596f63b",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-lesson-alarm-controls-css": {
+    "hash": "2aa76b21fd1d0da54f981144039e25871156b9e07f723cdd4139ecb217683ad4",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-compact-week-agenda": {
+    "hash": "1cb7f85ee2e7e839112e13ea75d0e702fffb630ddea98e17281d6ccaaa7d8b5d",
+    "area": "agenda",
+    "vezes": 1
+   },
+   "ap-sound-preview-css": {
+    "hash": "9cd5e1cb86860d80dc16743c74d2b7f693351c9e516aaefb517baac56cabbfe8",
+    "area": "sons",
+    "vezes": 1
+   },
+   "ap-availability-conflict-css": {
+    "hash": "0b7df595dabaa32b8fa2a85e20bd00f728e79942f7a83c3d8c8d94c689703d43",
+    "area": "agenda",
+    "vezes": 1
+   },
+   "ap-availability-order-css": {
+    "hash": "ee4a1b137d51363799bbc6d332703a6500e64930ef650191bd220a4f04e0e424",
+    "area": "agenda",
+    "vezes": 1
+   },
+   "ap-availability-compact-css": {
+    "hash": "7c487b29040ce299dc60bfe66120c70b38993497a8dea7b2181094fe3adaf829",
+    "area": "agenda",
+    "vezes": 1
+   },
+   "ap-registration-contact-photo-css": {
+    "hash": "4de1bd438960408040329b888c482df08b095e28f1aa90266387f1a0f96f9fad",
+    "area": "cadastro",
+    "vezes": 1
+   },
+   "ap-external-video-links": {
+    "hash": "d1c9fedd34b007e590c284e80b5eeb2f826a949661199d385d28e5da2d34de86",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-external-video-css": {
+    "hash": "097d07517c820c4bf4626be91d908ce98b7f9b115667baa8c3525991b80cec7f",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-finance-wallet-css": {
+    "hash": "b5a7c4d96b930c0f24b8982d839581371661eb81281210b057af66d761c6b32c",
+    "area": "pagamentos",
+    "vezes": 1
+   },
+   "ap-finance-results-css": {
+    "hash": "1510a4d3bbc0dccc48520eccfeb2b24218b047feeb5bd020f99684783567921c",
+    "area": "pagamentos",
+    "vezes": 1
+   },
+   "ap-pix-receipt-css": {
+    "hash": "4d5c9458148b565d0c16e9a05290b80b56f8fb84d5cfae1ae1603fde9753a6ce",
+    "area": "pagamentos",
+    "vezes": 1
+   },
+   "ap-teacher-mascot-card-css": {
+    "hash": "2cf2d67e7d8a5bb4c808cd7013c9e41ca456841991712b9480fd87acb293cde1",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-pet-card-css": {
+    "hash": "fcd1b2c294bb68aee8d2d02ffff0359428f11cebadbc7612838751a77e03c4c2",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-student-progress-css": {
+    "hash": "4ec40168a95a9eea714f8a26760e292bcefaf28884761b477098af05acc2bd64",
+    "area": "evolucao",
+    "vezes": 1
+   },
+   "ap-deep-icon-palette-css": {
+    "hash": "16af54d7638111f3fd1a18872703bbd9b9e13ddd895ad0f1e56e806b4d9e2d15",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-more-menu-selection-css": {
+    "hash": "0501af244aac8e277d10bd00d07455d5b40b7866944c4fdf24d28cb12614259b",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-teacher-text-size-css": {
+    "hash": "ba831e494a639047418bf83ee8f2f8097af4c8ba5149071221b058ccee77c3b9",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-teacher-sync-core-style": {
+    "hash": "2b4e322ed08b6d50ef6bcf79e5803dc2541a516d2058d36d5f3c2449e9f72609",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-profile-assessments-css": {
+    "hash": "8f145f237686b018817db25818a1f8ca95d63daf29d2de5486bca087fdbd343c",
+    "area": "avaliacoes",
+    "vezes": 1
+   },
+   "ap-rest-floating-css": {
+    "hash": "f73112f00f0ffca8530378ec8c30e5a9ac673e60583f20c3e25e9f6191bab181",
+    "area": "sons",
+    "vezes": 1
+   },
+   "ap-workout-instructions-css": {
+    "hash": "b77e9e2d8fe63ae606f5fa582e3988c18e7e64d6c7e4f03b61fcc995f0daf67f",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-student-lesson-priority-css": {
+    "hash": "801340ce2461c2011b09089d7063d7258308cc8a55f0986b3ee30bca79bc114b",
+    "area": "agenda",
+    "vezes": 1
+   },
+   "ap-followup-css": {
+    "hash": "d1061bd3a6819cbd3976538c3ba79482008dc8c79be2dcfd502bff56a137e08d",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-workout-corrections-css": {
+    "hash": "5f147052533871ece5a8651896d54fb36b3e0feb5dcce0052b25c868f6c678dd",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-workout-previous-series-css": {
+    "hash": "1baee11ff3d19e57715021a907a3ad66bc9d11891c1ddd71aeaef2225bc058f7",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-workout-timed-series-css": {
+    "hash": "94d8932770cba7482800101ff7e724eb182dc91996a0c258a1eb9b16d5fbea16",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-feedback-css": {
+    "hash": "583bd4ee1010be97a2a13f795222367a0b6491a880fc6335c9375f3da16baad5",
+    "area": "evolucao",
+    "vezes": 1
+   },
+   "ap-more-organization-css": {
+    "hash": "23aa49a55b9c0bc9116802876e8daf985b5671beab37a4324eca334749ed124b",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-student-tools-css": {
+    "hash": "7f7e5381f8b6914472fc10af1b292448715228bcfbfbb751fc324b93d52debe3",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-workout-export-css": {
+    "hash": "e1a15e475f88c3f8cb0cf5cdb505527d9b6e142d06464385bb90c1d0cb6d735c",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-scroll-boundaries-css": {
+    "hash": "2db52c95c38264799d5e52c421b1f7ac2ad2a775616983eecd006b5aacfafda5",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-cardio-style": {
+    "hash": "5bcad95521cda1293ec83d3604aef3a5c71d59d2494e5a5ff55fbeda7fbc8dff",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-video-duplicate-style": {
+    "hash": "1e00323848ef58429651b26c41d420ab8d02ac3beb50bcd0e5a4191ef3214c45",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-cardio-layout-fix": {
+    "hash": "93a8e643ff93ed2da25c99875f65bbd0952a451430d8e27fe2d81a019d1157e4",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-workout-audio-options-css": {
+    "hash": "93f20ee2982ef5665a2b9697ba29d1ee5019069a14f133b4947fa2d38c3b0c82",
+    "area": "sons",
+    "vezes": 1
+   },
+   "ap-app-symbol-css": {
+    "hash": "94930296ddd5bc7abe0344c32829140969372c4dfc4ceba6c11bf1c34379d08c",
+    "area": "geral",
+    "vezes": 1
+   },
+   "pdfjs-core-gzip": {
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "area": "geral",
+    "vezes": 1
+   },
+   "pdfjs-worker-gzip": {
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "area": "geral",
+    "vezes": 1
+   },
+   "pdfjs-license": {
+    "hash": "9860673bfd871705cf1d84c8d0a0211e205431df425f842fbfb7ea3764c28847",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-cardio-teacher": {
+    "hash": "e6202dc89f7754f232e5453156d7a93d0f20ae7c27788ba67973647f66a0e68c",
+    "area": "professor",
+    "vezes": 1
+   },
+   "agenda-drag-reorder-css": {
+    "hash": "ca96fc2c71a4111491d586abc39d238f88d405a18718322e1004cbc111d1a694",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-drag-reorder-js": {
+    "hash": "67667843d7fb4a1602196a1971b75948270ea96e94051cd89b083b638ef97f6b",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-workout-timed-series": {
+    "hash": "2df710a285bbc2cd43500646c19aa89e842010935cb9f34c4e2df858156310de",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-workout-previous-series": {
+    "hash": "6b515bd724c5e868947d0973a5d700b638c5f8a60f3536159ddaf18f49d48336",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-shared-pdf-assets": {
+    "hash": "f7cced8eb7b848a4a6b85b7603b106ee82e04a92aac40ad4244b9c33c33b1ff2",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-teacher-photo-sync": {
+    "hash": "885404f2ef8fac24362d995ba52300adc29631dfbfc244cf3f541658cc4de0bd",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-student-archive": {
+    "hash": "67dd1d52cef809d49a817fce09c1d5a779591e44dd0a55e6084531abd82a7c1d",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-teacher-appearance": {
+    "hash": "6e51760833f1cc9f4be0e52b5e9abfaef92bcbb0437422b1a3a1b5dfa0166a66",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-sound-preview-js": {
+    "hash": "2ed7783ccbde8851c6950dea51fdd2e41ff42605167d9af289095e7211bbd7fa",
+    "area": "sons",
+    "vezes": 1
+   },
+   "ap-cardio-sound-settings": {
+    "hash": "b40a3706a565dbf93a2cea82ef4896c24c9bf196929301c9505133805a2703bf",
+    "area": "sons",
+    "vezes": 1
+   },
+   "ap-workout-audio-settings": {
+    "hash": "a0edb7f9dd235461974df2055bebdaf7b4571e91f4f716102ef6e7764ecc8ac1",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-video-duplicates": {
+    "hash": "ed2f454b00964f25a53f407cf606c5eb220421eb0a5ec00a755cdf34228377b6",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-video-duplicates-ui": {
+    "hash": "3d9ac64b4d3ce1f0e46a0a8ae64d441481e09175f614aef0cde20c4e611733d2",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-teacher-external-video": {
+    "hash": "75c26bebc9e45b7aaf45723a77ec379f9ad6f88b691412d7fa4a7f59ad263f24",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-finance-wallet-model": {
+    "hash": "875dee6578f89316086d7144b6543cb43c0d0428ae1543e5f1c38b98e8975fdd",
+    "area": "pagamentos",
+    "vezes": 1
+   },
+   "ap-finance-wallet": {
+    "hash": "3e09a26bfe4b92e26ad55464e20b14dd9dfabbb32be2db52069e8cc1791a0e91",
+    "area": "pagamentos",
+    "vezes": 1
+   },
+   "ap-finance-results-model": {
+    "hash": "5624e39d3d1a5c807ba0a9564cb8e4ebe41c802fe176ffe6cff955148e66759e",
+    "area": "pagamentos",
+    "vezes": 1
+   },
+   "ap-finance-results": {
+    "hash": "5b0f07ce7207fce58dbfb8a9e05ba053440b1e6b680e452e09465f4b3fe4e44c",
+    "area": "pagamentos",
+    "vezes": 1
+   },
+   "ap-pix-receipt-model": {
+    "hash": "8b3240d692c2b8d66f3a3506910446817685fb172b9bbe98e6c2b3fef91fbe29",
+    "area": "pagamentos",
+    "vezes": 1
+   },
+   "ap-pix-receipt": {
+    "hash": "16ad7ace53445431bfe5882875be661bab17f8e41cd7f94c3d33d60b8d38dacb",
+    "area": "pagamentos",
+    "vezes": 1
+   },
+   "ap-teacher-mascot-day": {
+    "hash": "3a5bac26f73e7459efd1abd09a5920c0dd6bbcc9759a3e7b82f540233762beee",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-student-progress-model": {
+    "hash": "0489d9345b0aeef45ad9a4a48c223d0fb8eed4ffa8c86d2e5429e4304d421b55",
+    "area": "evolucao",
+    "vezes": 1
+   },
+   "ap-teacher-student-progress": {
+    "hash": "7e868a1eddd20c24546c6a42b897c4d601f583d089ee29b0a8dc40899c373864",
+    "area": "evolucao",
+    "vezes": 1
+   },
+   "ap-colored-cards-css": {
+    "hash": "98fe0f9170f6814efdfa6c760a825f9e95ff73f0aa81091a9f82751ab424520a",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-deep-icon-palette": {
+    "hash": "009a146dd10ad2359c4548e005a278d7ceb93993223ae41993e3cfac3cc76471",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-more-menu-selection": {
+    "hash": "265a80739d06fd261493e95437b8663d50bf16c6eee25bbc1248e0bd16c52910",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-teacher-sync-core": {
+    "hash": "a81d61e9e6e1dcee0487fbcc47bfe09ef5a44a0b4db87bbd8e82ddb81e7d01fb",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-waitlist-css": {
+    "hash": "f7f30703fc76a156bd51353ef87dff3235910963f85940c8fd7e9b834de1250a",
+    "area": "agenda",
+    "vezes": 1
+   },
+   "ap-waitlist": {
+    "hash": "fc3b8120a0679fb608845e6d3f9ca4b1402cb957ab80e9caf4b4ad14078b63c0",
+    "area": "agenda",
+    "vezes": 1
+   },
+   "ap-watch-model": {
+    "hash": "00c22dab2d00d0c60801a8aff7c7233ee7d5758855be89c8f8e88ab0f6a10062",
+    "area": "relogio",
+    "vezes": 1
+   },
+   "ap-watch-ui": {
+    "hash": "9fe0df28e3886ab356f5ffd0ce22148f53d22c8fc6bde3716fd26f938e29e4e4",
+    "area": "relogio",
+    "vezes": 1
+   },
+   "ap-watch-history": {
+    "hash": "91a32fe83377dfd667cb222128ed5d78942a585133538b0c062c04f2b4d03366",
+    "area": "relogio",
+    "vezes": 1
+   },
+   "ap-watch-teacher": {
+    "hash": "25dc55cea2da9f89c612f901d0d4bf2e1fdc75bb86ec3e748a19833ee0989136",
+    "area": "relogio",
+    "vezes": 1
+   },
+   "ap-rest-floating": {
+    "hash": "e4b8ab6c9fe2b46c72539fa3cb1474dfd82ff421a09a64ebdb7cadcde75d24d2",
+    "area": "sons",
+    "vezes": 1
+   },
+   "ap-workout-instructions": {
+    "hash": "f73b09e5de74b72b546e5871dc77d281d7734d6d826f3f02e10741b15d42faf0",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-student-lesson-priority": {
+    "hash": "1fc5dc5223f6fdf4b33ecea8ae2288a5c2e6c0c7ca65014a7b7ebf10d667edd0",
+    "area": "agenda",
+    "vezes": 1
+   },
+   "ap-teacher-features": {
+    "hash": "3f019731b96c22bec83ff3cf3476c874489aae34eb10406742c98fa91a010298",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-workout-corrections": {
+    "hash": "6539de12b5884d46a8f3d6851207d727b73650b5767a0392f55663216db196e6",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-feedback-model": {
+    "hash": "24338b639500cc6e7f414b5230c20f69ccdc86e7dc8ab8a35541ab8f9eb1531e",
+    "area": "evolucao",
+    "vezes": 1
+   },
+   "ap-feedback-card": {
+    "hash": "3049d4feb124f63f55a33b468e3ddcef04dc0e5d1c8805cbb49448b57d217c73",
+    "area": "evolucao",
+    "vezes": 1
+   },
+   "ap-feedback-teacher": {
+    "hash": "27fbd592dfa66598e02c87912e241a00882c4caf6c45994b3d2a7a5e8b1024ce",
+    "area": "evolucao",
+    "vezes": 1
+   },
+   "ap-more-menu-glyphs": {
+    "hash": "8cfe406c8a0623d4eab3826d799c08a5c695fe5ea95f0a0cef5c7b94e04ee912",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-native-mirror": {
+    "hash": "e48885c935b36e2ff26b40cdfa4225b47f5c17eb051b5a8c569170bf7bbd58ea",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-storage-meter": {
+    "hash": "00b5442188f8117824530321ebe99c7e697f44f4bb67bee4274c66704c5d6a9d",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-more-organization": {
+    "hash": "775f29c1096df43f5418790bb3ccef6ab2b21c12e9887e05c921e47ec20fbe85",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-workout-export-model": {
+    "hash": "d4387ea7fd10bc83a40414d90afa50ae6c5e96ffbf85daffe50480a3516bd413",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-workout-export": {
+    "hash": "540ffdbb1dd971ec5ba02856a271818fb523e8af40a84a0a9f2ef2ff26fad461",
+    "area": "professor",
+    "vezes": 1
+   },
+   "ap-workout-active-shortcut": {
+    "hash": "dbb3d50003f87cdad71fa2512755df453d3562908e61646c50d660f58d915632",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-update-safety": {
+    "hash": "b5fce21e9334084c2661fcb87295afeeed572c216a28d0573c2a6d7be4eb4620",
+    "area": "geral",
+    "vezes": 1
+   },
+   "#fora-dos-blocos": {
+    "hash": "3d41eb330bb94766931d243e3475f3a70634c733350cdb22e35ee01029413d5a",
+    "area": "geral",
+    "vezes": 1
+   }
+  },
+  "avaliacoes.html": {
+   "ap-native-store": {
+    "hash": "e666831ebde1e9b141829b990c2658e258d1d706d881994500bb23a165638822",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-save-guard": {
+    "hash": "19f93661c569fe79e338597f14a6e8ddccc414412bee3ff81de0218342468f08",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-teacher-text-size": {
+    "hash": "1c63188f6153a3037d1c612d928cedbb8b166b5587a1dd59351a249667b79e77",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-icon-finish": {
+    "hash": "fbaba888ecc22eb85af3df6a762d4a0d4328fba9d9ebe7395e61dbae919811f1",
+    "area": "geral",
+    "vezes": 1
+   },
+   "pdf-page-layout-source": {
+    "hash": "72ec4d3862afac5255056c84329b31f284c42266de19ca75ccb934279fd9ecb6",
+    "area": "avaliacoes",
+    "vezes": 1
+   },
+   "agenda-integration-style": {
+    "hash": "d0ae8dfbac8da5fcabdafe09e10562e799317e88af8bb3165c11339963a4bee9",
+    "area": "avaliacoes",
+    "vezes": 1
+   },
+   "report-preview-style": {
+    "hash": "8b175d76ebbcc8f7f9a9b24927982d56e0cf451f388eae49df1a939651f21ae2",
+    "area": "avaliacoes",
+    "vezes": 1
+   },
+   "evaluation-previous-page-navigation": {
+    "hash": "171f564bba06d1d961b1c1d11a57fe71986fe26453b9f9a1e59a6e4127cbcfeb",
+    "area": "avaliacoes",
+    "vezes": 1
+   },
+   "evaluation-agenda-student-registration": {
+    "hash": "b2859e27c571fcf970fd1ab03e4a3c2f5cd70004dc035bf808322770a35635f8",
+    "area": "avaliacoes",
+    "vezes": 1
+   },
+   "agenda-color-theme": {
+    "hash": "291197e8e2abbc4f754b25d4293436a68eb0509747a6911d4aa472fedb502fd4",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-neon-design": {
+    "hash": "9cc4f39bb3c5bf05890aa6294f9c74b71f9e1b25fa0b8a6fc7b208aa51d7b8b6",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-evaluation-icons": {
+    "hash": "3f6d79427dab98975365a15f1cfa1105fde70bb0ce908b7b2b58d62acaf743cd",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-metal-theme": {
+    "hash": "cf8a910e559ad7f7f7fe85c2ee0c01d928b2e89cbff9b2d57f259f9ad575cbe8",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-performance-pro": {
+    "hash": "67246d98e63f6b0f40ecab60c7d924cf6a4a972d656836a7c16dcd68b205571a",
+    "area": "geral",
+    "vezes": 1
+   },
+   "agenda-deep-purple": {
+    "hash": "ade9f8e22ec03bafc88fbbab523cf4e9bfa020c4ae26583a9e19277294a5cd2c",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-deep-icon-palette-css": {
+    "hash": "16af54d7638111f3fd1a18872703bbd9b9e13ddd895ad0f1e56e806b4d9e2d15",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-teacher-text-size-css": {
+    "hash": "ba831e494a639047418bf83ee8f2f8097af4c8ba5149071221b058ccee77c3b9",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-scroll-boundaries-css": {
+    "hash": "2db52c95c38264799d5e52c421b1f7ac2ad2a775616983eecd006b5aacfafda5",
+    "area": "geral",
+    "vezes": 1
+   },
+   "pdfjs-core-gzip": {
+    "hash": "d01e42ec9dea7ac1262e1f9340de350f6ebb54fea7e0e6e876e598919b8a6d21",
+    "area": "geral",
+    "vezes": 1
+   },
+   "pdfjs-worker-gzip": {
+    "hash": "6a0bf157e6dc06ff4a09290bd1a95deed474299a4b0dbb010ed49c4905d6769b",
+    "area": "geral",
+    "vezes": 1
+   },
+   "pdfjs-license": {
+    "hash": "9860673bfd871705cf1d84c8d0a0211e205431df425f842fbfb7ea3764c28847",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-colored-cards-css": {
+    "hash": "98fe0f9170f6814efdfa6c760a825f9e95ff73f0aa81091a9f82751ab424520a",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-deep-icon-palette": {
+    "hash": "009a146dd10ad2359c4548e005a278d7ceb93993223ae41993e3cfac3cc76471",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-update-safety": {
+    "hash": "b5fce21e9334084c2661fcb87295afeeed572c216a28d0573c2a6d7be4eb4620",
+    "area": "geral",
+    "vezes": 1
+   },
+   "#fora-dos-blocos": {
+    "hash": "cf4a136c2b3befd1bbde0f904a5793c50eddb9b57473bb6c6e49efd20aa210c1",
+    "area": "geral",
+    "vezes": 1
+   }
+  },
+  "cadastro.html": {
+   "ap-registration-photo-css": {
+    "hash": "154e06cca94e88c701d76dd4f05457873b6978530e1f17055f48e9df661ebe0e",
+    "area": "cadastro",
+    "vezes": 1
+   },
+   "ap-scroll-boundaries-css": {
+    "hash": "2db52c95c38264799d5e52c421b1f7ac2ad2a775616983eecd006b5aacfafda5",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-registration-photo-js": {
+    "hash": "94523883e0b15b48f9e3e8bc93b31e74239ee707ef8c1f58c0787bcc29b1a356",
+    "area": "cadastro",
+    "vezes": 1
+   },
+   "ap-kitten-face-assets": {
+    "hash": "3c0e5c3a05b589ba6f0d2ab010885459af83ebc40aad01c7c7dcd78a62ea3fe5",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-capybara-face-reaction-assets": {
+    "hash": "bdc3f9c992f2c7fee8eb39dfaea05b59164ce3500ec5ecdfb5ba7be6be18843a",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-mascot-gesture-runtime": {
+    "hash": "fb6e11a31f8c0f240af9739fb876d09ef775b8aa11f00e1d2bf35d2af575cab5",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-mascot-reaction-assets": {
+    "hash": "c87e4c4e10cbe45832262d6733faaf1d577ec32984983b68bde0bb736236a756",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-mascot-affection-assets": {
+    "hash": "d90451b0f54e2d26637bf86a6f830bb871de4c60dd07f0fc26c31d2f0bdbec9d",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-mascot-image-assets": {
+    "hash": "efafe04e8f18e1e0c0d64e493580489bbacccdbb6fb00520b556cb9e5ced73a5",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-mascot-coat-assets": {
+    "hash": "95f73fef7890b296d09603f6ee7b9dad4ec5b5680335242653d2ff290e90e7fd",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-mascot-pose-assets": {
+    "hash": "d3f4b06d38422bf4f96a59a183b1b85fff1ba5414a79ffe82d0f20a7aee43254",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-mascot-home-assets": {
+    "hash": "54af9dee5ef01edbb9300be78603a8df67781701dddb364127bc0a25fb1e13c6",
+    "area": "pets",
+    "vezes": 1
+   },
+   "ap-progress-sync-source": {
+    "hash": "cb0031fd54984ab85f9aa53c0effcc4e93cf5daf8f622d0572941b43d03ffc11",
+    "area": "evolucao",
+    "vezes": 1
+   },
+   "ap-entry-artwork": {
+    "hash": "610bee45e7cb9be33b854c458fb9118be7b93817c4248e581f418b548cc17ce3",
+    "area": "geral",
+    "vezes": 1
+   },
+   "#fora-dos-blocos": {
+    "hash": "c64db7319bbad5d0cfe1ad8eefbb6bf16f538b14c76b5b383bc8fdc4474a47f8",
+    "area": "geral",
+    "vezes": 1
+   }
+  }
+ },
+ "historico": {
+  "index.html|ap-native-store": [
+   {
+    "hash": "e666831ebde1e9b141829b990c2658e258d1d706d881994500bb23a165638822",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-save-guard": [
+   {
+    "hash": "19f93661c569fe79e338597f14a6e8ddccc414412bee3ff81de0218342468f08",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-firebase-packed": [
+   {
+    "hash": "2e7b74f8b9fde8e2a23c35b27eeb9ee0e20a761965f10e85569e68fd06712b41",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-firebase-loader": [
+   {
+    "hash": "254eee60b2d1fb97a2a1bdb4c5d4d0fd79763500327de672c2d443428c190ad0",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-startup-style": [
+   {
+    "hash": "4e4d15897b3c994c4dbba14c365397281262fa2cb73dce6de4bb1d481838c1df",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-startup": [
+   {
+    "hash": "7bba98a666003b9ab9363be4bfff8e420de00811cbd40edf20311f6cb7815b33",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-legacy-storage-bootstrap": [
+   {
+    "hash": "5819ea6210744bee839dd2ff8b1fd2a44342ebbc44fce013a1c97c2c5f7c11c1",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-registration-public-boot": [
+   {
+    "hash": "6f3ecf7cf2941108ebee94f6cef6569e03b109dc2671bd33c3878a30537e3bdd",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-registration-public-css": [
+   {
+    "hash": "49788d23890e14074a771e486bf7561ed0ebcfaf5791547ca7750ee9b8e485bf",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-preview-storage-fallback": [
+   {
+    "hash": "dc05c1bea04424df76c70310d79028f13823472ac70eda8e0562820cd69f6de8",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|pixel-refinement": [
+   {
+    "hash": "8d602d4187f4e760b1e9aef39c9d61cdcf0891a4e5b7ee66f90871a37343a870",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|icons-and-two-modes": [
+   {
+    "hash": "397e94c021269e7681e0ee9390c1a963fc1ed834f44a40c08fb790cb83006da0",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|font-size-working-fix": [
+   {
+    "hash": "b9a40c2d3b73a3750a5b379da6558c36623e3d97c80eac3f81c125d6752bbbe8",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|color-picker-clean": [
+   {
+    "hash": "2f4a2a3faf5977f3bd4ebd3c9560dd98e29bccdd6031104b0d4636c3249aee20",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|home-refined-fidelity": [
+   {
+    "hash": "b3289fae49c4c2231c33339bc7a2763bd85c5278db2b24ec01630e37c5114e3a",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|home-gender-avatar-fix": [
+   {
+    "hash": "95bb85f7512f9630d1b69325769a73790a407f55c956b39b5d35d57b5ece6edd",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|profile-photo-custom-css": [
+   {
+    "hash": "e268f824a46ab00639ae5d50d3b4569dfd895a47d9207f2881da51550a3bc0e7",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|workouts-fidelity-v1": [
+   {
+    "hash": "e3c7028a1caf3ead9dab8bd5c61ead32462d695602a4586408e4a3b1619714b8",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|agenda-week-schedule-styles": [
+   {
+    "hash": "377e365daa5c052ebee6b8fd4b8aee8dbc4314ac072fdda5d8a7b8557d6b69ba",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|exercise-execution-css": [
+   {
+    "hash": "b036bcff27aa6a5162a076f90b6fd2901df0184e12ba5d6ae610eeac8eecd895",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|flow-v2-css": [
+   {
+    "hash": "044461a3e61d033b1fab8afb8078161f88a44f27c0c45c758d51d5e4f000fbbe",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|biset-weight-controls-v3": [
+   {
+    "hash": "1001a2d36db54b75e5c1c9724bf073cac4bba2afb2908e35ff2316ac561e2d93",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-evolution-css": [
+   {
+    "hash": "3c612b4289e18ef32fafb71d6be2099caedc29192f52f240251d5b49ba696968",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|assessment-screen-css": [
+   {
+    "hash": "4b50b159e21f3d2bfa26e0134511d31d7c3725cfdec753f4b58a2a1cd54d8f1e",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ass-assessment-fixes": [
+   {
+    "hash": "f2797c5f55c5b308c527c2e0e882099413b05067278de916e2efdff696849fde",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ass-pdf-import-style": [
+   {
+    "hash": "08d3c013a9afb10fd9a68d9a2399d3b8d4bbec2ef0eb591d0e63b0ae9af5237e",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|teacher-pdf-publication-css": [
+   {
+    "hash": "c3f42f0e26e11adddd55dceb3c64a4b5198d607094da5cf95c74dfe72b82c1c4",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|payments-ui-css": [
+   {
+    "hash": "ddad09e02e43c95afa0d95f2582fc6328a82bd958a47711bccd28027ce6074e5",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|agenda-profile-module-css": [
+   {
+    "hash": "e695a06fa95c4bd2aae7d3c27e48b43f4961c40e80d877ab010120f27a405e15",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|agenda-profile-photo-relocation": [
+   {
+    "hash": "0447b97295366bb9a6b7ee8d1322c7a5260dbb68920da0b7ab72630721b9a7f6",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|agenda-notificacoes-styles": [
+   {
+    "hash": "05fc4844e637346f060bb392da831871d1aac278f25aaef8833361af96a8cd8c",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|fix-perfil-icone-barra-20261011": [
+   {
+    "hash": "2bd15bc68b6d42e6e5fd33c37e6b8de3bced29c913fc04103f28b1bc3651c869",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|tp-professor-styles": [
+   {
+    "hash": "4f37d8f4dc89c9f5804a1125de0c4a27852f0ed7c9c8baa37a62780a209935dd",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|tp-visual-design-styles": [
+   {
+    "hash": "2207eed145bb79b4587bd91a83ef7e441b2e6e31656c0fa2a178813b45142d98",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-storage": [
+   {
+    "hash": "3cd3e36a64c0d7e62106131bce7598f5edc28399d82a3fc1b72f8a0fb1566ede",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-billing-model": [
+   {
+    "hash": "b1bd7d5f42586823dee59e72acf2a1441375d7ebf0142469db124e3dcaeecda6",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-cardio-core": [
+   {
+    "hash": "6f09e32302dcee3d77e8e063b414c22257cfc27581dccbe3d16c85ceead34d0c",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-cardio-sound": [
+   {
+    "hash": "be0edf400eb55a7aac9cb5fd01c1ef7276cd168b5187c495b978a52f7ae7a800",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-workout-audio": [
+   {
+    "hash": "ce2d5c247d7fe0e554d9444b947d7c09a60dfe75d9ad159e0346bde7ac413395",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-model": [
+   {
+    "hash": "b8e6c4a1c6c019e7c57fce10fb5cb9c0816a57e2e7282aa083eb9a23897b3151",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-areas-css": [
+   {
+    "hash": "a046e26e69e2f888433d31f063c7bcecd12fd700b4aeb1f925ed9e3fe2fc6fd7",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-external-video-links": [
+   {
+    "hash": "c99985a7edc21f7fec38c3777c0e19eba7960db162b3d18cbf98fdb75ae02814",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-external-video-css": [
+   {
+    "hash": "8f377de6158e8f923bd0a21cf5ff46998260cc727765bf88abade980c617f5ae",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-account-navigation-css": [
+   {
+    "hash": "6525d84e30966da4a444587efb52fe1146baa7edcefc10553be488f5d25b6b8b",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-login-controls-css": [
+   {
+    "hash": "c33f69440a29f8800f7a670f839794999a28fcb28f4af6c2dce2bbdc4fea2306",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-distribution-progress-css": [
+   {
+    "hash": "e587ea5f6109df41c6d6c7e73a8f3f209941d2e4ea72f1d9cdec19a150c71918",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-distribution-css": [
+   {
+    "hash": "2affc447f1eca74749070106f32013c4566ec25d621305d3d3c236a80e3f27d8",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-identity-css": [
+   {
+    "hash": "61d923d9ef1759e12ce1eb1ded50366512dd53abedaf7c53d09bd2d3c5057063",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "e460d4db0e92704b0e631e1dd8f428c817ee64180aa8a01626c82d556c53ba50",
+    "desde": "1.12.278"
+   }
+  ],
+  "index.html|ap-home-assessments-css": [
+   {
+    "hash": "7110638ec968a5494891816a94dddcc170440f4ef9c3fe8828116eed56b94007",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-notifications-css": [
+   {
+    "hash": "8412a99fd90d8f9092ef280061837bbd0b80cc62dcd0c3be139114791c61a471",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-home-daily-message-css": [
+   {
+    "hash": "46acf2381cf1b134ed3399e465f859ca8506bd3de12291364ee1c31f91cdfbc3",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-billing-css": [
+   {
+    "hash": "05d6c16b090a6ccf972a3132ea389422126dc185d39c66fe7b107cd240a38f2c",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-workout-organization-css": [
+   {
+    "hash": "a61b7811dc277701b9415d2580fe310456eb89b7829113f63af5d8f9cfc51c7e",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-inline-video-css": [
+   {
+    "hash": "b6ffe13cc7317aad9d7006b0e1e6298accc03f294df17564450bfa9bd3fa1937",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-session-layout": [
+   {
+    "hash": "2fb32f1e0acbc7f562d6727d532f1e523ee663dc5b161a2bb4413327761cf5ea",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-mascot-css": [
+   {
+    "hash": "9749eb790d07cfd19a56159fcc1218c1a235d9ab2c3960cf5f546baa24c1b336",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-feedback-css": [
+   {
+    "hash": "d441d2ff79a3dfd9b2b3c0105a7841faccf0fee5835f7bf1404ea2fd74a736f1",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "e0407658139b1392b21b1994aac0e305badc2e913a4dc983e721b9fadf2a7376",
+    "desde": "1.12.292"
+   },
+   {
+    "hash": "583bd4ee1010be97a2a13f795222367a0b6491a880fc6335c9375f3da16baad5",
+    "desde": "1.12.294"
+   }
+  ],
+  "index.html|ap-scroll-boundaries-css": [
+   {
+    "hash": "2db52c95c38264799d5e52c421b1f7ac2ad2a775616983eecd006b5aacfafda5",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-google-login-css": [
+   {
+    "hash": "0ce733743e38a0632f913900110036ffcf04cb9b299dda3734bf304b1569233d",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-release-center-css": [
+   {
+    "hash": "04f9caa986aa64279b2572b67e95210ddd5f9c024714a254a2b305ff64be1a90",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-cardio-style": [
+   {
+    "hash": "5bcad95521cda1293ec83d3604aef3a5c71d59d2494e5a5ff55fbeda7fbc8dff",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-workout-audio-options-css": [
+   {
+    "hash": "93f20ee2982ef5665a2b9697ba29d1ee5019069a14f133b4947fa2d38c3b0c82",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-app-symbol-css": [
+   {
+    "hash": "6fab343e0c2c519285b874d3288b0b522a80c832baf09517767f2eaa8f6a5341",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-brand-logo-cleanup": [
+   {
+    "hash": "45abca98c6c23f81fdd37f0f1e5db9a639266757c5eba3b48bbb1fe1f3c254ad",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-preview-single-style": [
+   {
+    "hash": "9131a15e935fe9e35dff96a4b7e5976f5795149129f1f55537e3c636aadd0aab",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-embedded-professor": [
+   {
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-embedded-assessments": [
+   {
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-single-navigation": [
+   {
+    "hash": "657e31a5737ea11b2ccbfe91de765e32b03ab8df6fe60670b7faa970a698564f",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "05f88e62479ecf05c16d250e139644e7d45d8191d2cecaa99652649849645edf",
+    "desde": "1.12.281"
+   }
+  ],
+  "index.html|ap-prof-setup-css": [
+   {
+    "hash": "de534f6c6361f9e5b823bfa4908b034066632f4656d909d55e4d56cc56f6e184",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-setup-appearance-css": [
+   {
+    "hash": "b0ae1b41a01c3094b635820c2c13e64155e04677af27ddb586f244045656af13",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-prof-setup-script": [
+   {
+    "hash": "a727a2d7fdcb48cbd6870c7920eb6734a24aba006d1009afd09bb5102f4df36b",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-embedded-registration": [
+   {
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-registration-router": [
+   {
+    "hash": "06b964ceef111861b94a8b16cc9ddc4d41461481733bf4e1e6857adfdf50e28b",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-workout-muscle-preview": [
+   {
+    "hash": "f9dc59822c5bfd3004fac16583c111d1dba308b9ce626d95feb696be692d31b7",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-cardio-student": [
+   {
+    "hash": "e971c61026c1326065ffe19e9e0f9a3ea41cbb8cc071812fc5c23f88e46d43ef",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-ui": [
+   {
+    "hash": "0eab5185ce9075abd797311f8e3a8c7c56aee0a32c104eb7332dda1ccc5d9242",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-workout-audio": [
+   {
+    "hash": "c8866f5c1a620c7160cc1edce8e4dfe5dfbdc8ffae1c7011d1ad38d780a5b201",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-finish-control": [
+   {
+    "hash": "775a2c1e1b6327783ee36f6bbc70cd9d78fb925d4e2d75f1376f2b377acb8821",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-workout-security-rules": [
+   {
+    "hash": "6919b49ef6a79bad02984ec7e1213957c9c1764d79f32ab53bb441b4c907ec53",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-login-session": [
+   {
+    "hash": "12c00397690ec40edc8e2be8303c88401d2770f57268111ab5ad28fc7e4ff56b",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-accounts": [
+   {
+    "hash": "83db5c3055325322cde213175a325912023fc283241b32deebd7dc880b494456",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "152a450cb091114f45a75f0e943d5a32bf48b921ee784f9f934d5154d4409fd1",
+    "desde": "1.12.283"
+   }
+  ],
+  "index.html|ap-login-controls": [
+   {
+    "hash": "8ce744b66526a5dd9701d5ef5bcd2336df4348ef34d722f0d4db74b1658acf73",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-update-safety": [
+   {
+    "hash": "d3728d37c458a196052a2c48b60b86cb16d259dfee482fd76bd73ca7c41e14ac",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-distribution-controls": [
+   {
+    "hash": "7c5d5df002b0dea08e43264cf499ef443f1170891a36a65ce5e7fb92df0f5bf8",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-identity-controls": [
+   {
+    "hash": "30f1ddff2501ed75edc277aedb34dfca94273a929d910508daa0c075bbe8ff0d",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "abf9c332d08e37f725c061e050ebf8386dcde5895ec387f57cb1b6e3e9499aef",
+    "desde": "1.12.278"
+   }
+  ],
+  "index.html|ap-photo-sync": [
+   {
+    "hash": "7e7adcb2d9a1bbded2b067d50b42477ab9c1535551245a354361a322a5fa0f49",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-home-assessments": [
+   {
+    "hash": "159585ea080aad4e809fe15249af5bc844f798b9e0f8f80ac31fb608c482a827",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-notifications": [
+   {
+    "hash": "5b3c739dded9bd2aa2739139fe32a88b0ed2f5942a4c34168514ca1efe76d6d5",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-home-daily-message": [
+   {
+    "hash": "6129c05f03d22b4be9402b02bc53f3afe139d5e5044ed81515cf9f8d7b78fdfb",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-billing": [
+   {
+    "hash": "213916317973a085db8d6053c46663deefa76f635b88517b55d783e9ed493661",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-access": [
+   {
+    "hash": "42613818b1641b5a644f49b2c8cb73e2f8e64cde7529105aa6a857b9f9920c6c",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-inline-video": [
+   {
+    "hash": "fc1c940c7e1990b77bddcfa1d2b94e64ef6e490ef3adf3c03b9bdd6ad86cd684",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-watch-model": [
+   {
+    "hash": "69f9747c24b51be85d77259cd3921cfc58ba4319e3326b6e1429727c77dc6abd",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-watch-ui": [
+   {
+    "hash": "4716e1439efb8fe11fe2b46654826042a09438634c20b9da2ccc63ea8a4d3d71",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-watch-history": [
+   {
+    "hash": "add7c7b4ab517ad6eb2d2a9484844a6975acdcf0d1c37594de066772596d3220",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-entry-artwork-loader": [
+   {
+    "hash": "7b3b28e76c75058759e6582026727cce3a6b5da2706e238e6b9c8ce436c2c410",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-pet-choice-css": [
+   {
+    "hash": "d913df2bbf75a5df476d01789d5c0173e3d2590b0903aa48e6e0536ae3e28bab",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-workout-motivation": [
+   {
+    "hash": "d28eabdab15660c7d468eab927e80ac2e46dfefdb77730687583d7ac6bb48ad8",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-mascot-model": [
+   {
+    "hash": "9dd93059982ae99e293ed74b0e7fa6c4ab5e7e3a355c49d448a7da8bc85c741d",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-mascot-homes": [
+   {
+    "hash": "55f9d7a3ec07727c1cbf45b2f48f1bee0b0157ced7d5d098675bad76bc2a3b07",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-mascot-asset-codec": [
+   {
+    "hash": "1b510352c3ca32182a66c0ccd759691350b48d73494df8a1f645a87d7b7c5fc1",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-mascot-art": [
+   {
+    "hash": "ac4dc6fb4eb3b0901907435bd6b0e6cd8170c8c74d69b29deddd6f767d20c5b3",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-mascot-daily-message": [
+   {
+    "hash": "c29b59dd1196c40fc6760208b331e06941908eb35beace33b2cbffe3a6395e06",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-nonbear-reactions": [
+   {
+    "hash": "2d6364683c4464557079005910407caed2e4c1610e97989454c51059f150183b",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-mascot-petting": [
+   {
+    "hash": "568032e75fa042ee2ffeb5665a0c4bfa38987e3919c55a4069e830e5af5db7a4",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-teacher-mascot": [
+   {
+    "hash": "10e358b24c3aab5813aeb0d90fa8c653bf9a68e5e979c818e58b6aa90f911be4",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-mascot-closeup": [
+   {
+    "hash": "d1dea7691ea9ad69a0238f0f656b06287289b375d76e836f8c1712f2ed4d61a7",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-pet-storage": [
+   {
+    "hash": "f32f5fbb07fd6c6f5965c10beeac73aef360e234e57a34476420b070fd4b7226",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-student-mascot": [
+   {
+    "hash": "73a2328cc98a101363076571a10146d76e0f25ee507f97e3138f29ef3e5550ce",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-progress-sync-source": [
+   {
+    "hash": "40f55070ee0f519c2b9566d050483f9c9d28c75b111cf56717e3417b2c77ab34",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-progress-sync-loader": [
+   {
+    "hash": "e03a2046ec8a09557c6c12b1dc3b9229330df1a6e6499cad7dea8502e7117248",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-feedback-model": [
+   {
+    "hash": "24338b639500cc6e7f414b5230c20f69ccdc86e7dc8ab8a35541ab8f9eb1531e",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-feedback-sync": [
+   {
+    "hash": "d14db625a44952cf25ae3892074dd73e422f9113fcee657bfe60a3061ffda284",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "a68d7d530945d14aa915253e382b17ddef445720ed1c921454113f825440a0bb",
+    "desde": "1.12.282"
+   }
+  ],
+  "index.html|ap-feedback-student": [
+   {
+    "hash": "743efd88b6379196812af537511238e69835481959043d3c83974535103e0cd3",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "fc36fe708f16fb4aab7cbb667d83c8a14796c3c0fd7d8567710c914dc0a26ede",
+    "desde": "1.12.282"
+   },
+   {
+    "hash": "0730944c9db6f28900906000abeec9192bb953dc62ec0eebec18c2ba01ca3760",
+    "desde": "1.12.292"
+   },
+   {
+    "hash": "716376dbdf9c59c9b8c350e813fd801c7503c47b9ccc8932cd5b472490852121",
+    "desde": "1.12.294"
+   }
+  ],
+  "index.html|ap-student-session-recovery": [
+   {
+    "hash": "09ea16154c40b47043d213f0fede4262eaaeb42fc1966ce9edc9e4648c069b81",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-release-center": [
+   {
+    "hash": "2ea9a2cf58fc34aff1b8c1784ea2a2a67d84d822882cdb47a974e6e54892f5d1",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-modular-packed": [
+   {
+    "hash": "e1ff9942497d6fd866593651ab4674c26329da9d7a62ed49dedac79bba765a87",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-modular-loader": [
+   {
+    "hash": "a6c6ab755ff63b7fb3f065b63126dd40509ff277aee34a8f5b5ccc18a66bfe48",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|ap-app-symbol-enforce": [
+   {
+    "hash": "11cd197c9dc7e5d2fecdb93e010efe8517db0a8bc8d46184772db5b70ded7d35",
+    "desde": "1.12.273"
+   }
+  ],
+  "index.html|#fora-dos-blocos": [
+   {
+    "hash": "62975cf78c34d70f41476e31cf0d736474c9d2571c2d972681f75a69c3387b04",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "2b2754ec52644565fb5ddccb6a807075c45703577b734cbeac748a6d65907918",
+    "desde": "1.12.282"
+   }
+  ],
+  "professor.html|ap-native-store": [
+   {
+    "hash": "20d8148e583bbc8cc6650bcf2e3cff20d2e8a3ca502506f4538d0b7f8e5c97a1",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-save-guard": [
+   {
+    "hash": "19f93661c569fe79e338597f14a6e8ddccc414412bee3ff81de0218342468f08",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-timer-compatibility": [
+   {
+    "hash": "b0fb33ee3fed1db1f039d1314d07234af00de0de7728c9672e4ba518dfdded6c",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-teacher-boot-guard": [
+   {
+    "hash": "d3f9f2571e8f0f60d28c2ba4343ef5a747c7736fef5eda050587f8cfb00ed3bb",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-waitlist-model": [
+   {
+    "hash": "e8f1db8532c0a0f05d0e50ab9c80ef8add77afc02ff28ba80d93897c2365fa7a",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-teacher-text-size": [
+   {
+    "hash": "1c63188f6153a3037d1c612d928cedbb8b166b5587a1dd59351a249667b79e77",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-icon-finish": [
+   {
+    "hash": "fbaba888ecc22eb85af3df6a762d4a0d4328fba9d9ebe7395e61dbae919811f1",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|agenda-update-controls": [
+   {
+    "hash": "a0d5b67826a8b567ceeb144e77bb7e2d038698e4053fb7e2df28c21ebbf7ba38",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|panel-reference-layout": [
+   {
+    "hash": "4482d8ed6c61af9fa2679c23bbf9163cd6dc8fda72eb972119f9f74656cb0f41",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|mobile-viewport-fit": [
+   {
+    "hash": "cebb26c8ec6268ccbfe674286e388c523a07315ca9706ea4261558db450bbc35",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|weekly-availability-style": [
+   {
+    "hash": "32b451a10c61c392f834a71203841a9aa253c004403ede43726aa27cd55b221b",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|workout-sheet-layout": [
+   {
+    "hash": "9194a43e6920f7cf22034dedf63cfa92210c191fb24cddd37bcef2c5e812ecdc",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|student-workout-shortcut": [
+   {
+    "hash": "3b336aec5533df4589d3c2a36fb5be8c7c63b708a339928c8e16a873501af835",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|training-lesson-countdown": [
+   {
+    "hash": "cddc380ea1a425cc431d856fab8e1e48e016d7b1e373c92acc58d742b6ee8c8a",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|makeup-pending-actions": [
+   {
+    "hash": "f1ff95172ee2a7ef7a5b94b5f8a2c1f8cb48e9c24c85afdc4dfeb37776bc5b23",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|workout-import-single-scroll": [
+   {
+    "hash": "61e91de2dfb7b2828f9c4d880e66547821ae0da9b4d31f6917edd9cc9571b917",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|agenda-reference-layout": [
+   {
+    "hash": "964e4bda8e09a7338d9d60265b7873afb71032fcae474dbdc376e701753a9f56",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|automatic-availability-style": [
+   {
+    "hash": "01d1d4434a2a14577f5dcf4ca2e34cdf16e791be613b15712611c1e18db6767d",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|previous-page-navigation": [
+   {
+    "hash": "48c05d508252721f196847c0f0b53094da4d6aaeb6f2277c387695f0a4e1298b",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|experimental-lesson-name": [
+   {
+    "hash": "fd711e3830a3a48afec59eb06c884cad41e6caf4098065f19d59e4cd24972f56",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|more-exercise-catalog": [
+   {
+    "hash": "f2ce51df7ba6550e619e826143a7167981572b86ad0767adced3b4121e4cb8ea",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|workout-student-progress": [
+   {
+    "hash": "e0f821f8fb1871586b3ac16c69ad6ffeb6d585bdc5166e4d9af1b9fb6410d182",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|workout-card-mobile-fit": [
+   {
+    "hash": "6ad954e665233100042aa9f416d5e953932581c32ff6bd69d436833602da0e5e",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|more-reference-layout": [
+   {
+    "hash": "e2171be2b23f7eed06263c9868a79c6b915d8304302a5edacb5b901adf29a954",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|agenda-color-theme": [
+   {
+    "hash": "557aa2d3dfb4f62bbd952b153f8f751244dbaa47a070388eed46cec3bb2c8219",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|agenda-color-panel": [
+   {
+    "hash": "d3a048c6ee68175b4c3130913e1eb8418acbb1da024dd5aeca93e25ff1c6244e",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|agenda-neon-design": [
+   {
+    "hash": "5e4b6c2cf7989c5f5e0291f68ff431f35135c10ab900c3b207a428791689ef66",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|agenda-design-panel": [
+   {
+    "hash": "37386befda356ea8603185210f57e7683d4c5db564653bb061261172fb0c5923",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|agenda-metal-theme": [
+   {
+    "hash": "2b209e0922fa2db41847f93481a30f58f7ad47cbace80a51280e8f629c68c891",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|agenda-performance-pro": [
+   {
+    "hash": "276d78b0bb4020fd8af405e52b0f1f61b1bcb75f18ffa2965852b45bded8e4b6",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|agenda-deep-purple": [
+   {
+    "hash": "9d4c50d71f939ea2547d2879ea8c325e81cd6727f1b82aa3287e765057c15c89",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|agenda-bisets": [
+   {
+    "hash": "89fc2ddb8f37309930fcf25c95c18b3b140ec79cee2d56ab6fbf49654b313e94",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|agenda-techniques": [
+   {
+    "hash": "0600f7140486248cd6d6e167d3d0954a8846ea2d54a7ba017ad881552b2828e4",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|agenda-stop-workout-css": [
+   {
+    "hash": "ca0323d5080ade6b74456a25a38103db07f18bb57afa114d9ee53070a5e5a4a1",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|agenda-workout-series": [
+   {
+    "hash": "1c2d9a5d1bc4cf6e853e03d6dc8be3c1cf1d0378692b8c153b046cb473e31a4c",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-billing-model": [
+   {
+    "hash": "35d399384fb73ad692985284f6f26f49dc0e5d7370e3ce1833c0b2a0d3040b4e",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-cardio-core": [
+   {
+    "hash": "6f09e32302dcee3d77e8e063b414c22257cfc27581dccbe3d16c85ceead34d0c",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-cardio-sound": [
+   {
+    "hash": "00ba7c5d8690abcbf00e050656322691d426f743cbab4fc836ae1ddebf130d3a",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-workout-audio": [
+   {
+    "hash": "ce2d5c247d7fe0e554d9444b947d7c09a60dfe75d9ad159e0346bde7ac413395",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|trainer-profile-crop-css": [
+   {
+    "hash": "549cacb58e9cb4c4f5ef4b51d6ad62a123ac8eb66032323abc651358e8f6f852",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-student-archive-css": [
+   {
+    "hash": "c1cc9acd1740b65bf14e9b7a80b2e90f5818cd892d975b5dc146a90646434fe3",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-teacher-appearance-css": [
+   {
+    "hash": "89cf28ecf9483e64feeac22acb40aea885b7f3519fed64feb1399bf487eb7e28",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-registration-link-editor-css": [
+   {
+    "hash": "b461a3b81a3c8e7b678460a0ed9c43ffecda59e3e28f03099aa084bd037ccc9e",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "328de8048b7cd286fb7502f9a88ce2294f444e8757b54d3a2f05ebde4f886236",
+    "desde": "1.12.276"
+   }
+  ],
+  "professor.html|ap-lesson-alarm-controls-css": [
+   {
+    "hash": "2aa76b21fd1d0da54f981144039e25871156b9e07f723cdd4139ecb217683ad4",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-compact-week-agenda": [
+   {
+    "hash": "1cb7f85ee2e7e839112e13ea75d0e702fffb630ddea98e17281d6ccaaa7d8b5d",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-sound-preview-css": [
+   {
+    "hash": "9cd5e1cb86860d80dc16743c74d2b7f693351c9e516aaefb517baac56cabbfe8",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-availability-conflict-css": [
+   {
+    "hash": "0b7df595dabaa32b8fa2a85e20bd00f728e79942f7a83c3d8c8d94c689703d43",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-availability-order-css": [
+   {
+    "hash": "ee4a1b137d51363799bbc6d332703a6500e64930ef650191bd220a4f04e0e424",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-availability-compact-css": [
+   {
+    "hash": "7c487b29040ce299dc60bfe66120c70b38993497a8dea7b2181094fe3adaf829",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-registration-contact-photo-css": [
+   {
+    "hash": "4de1bd438960408040329b888c482df08b095e28f1aa90266387f1a0f96f9fad",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-external-video-links": [
+   {
+    "hash": "d1c9fedd34b007e590c284e80b5eeb2f826a949661199d385d28e5da2d34de86",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-external-video-css": [
+   {
+    "hash": "097d07517c820c4bf4626be91d908ce98b7f9b115667baa8c3525991b80cec7f",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-finance-wallet-css": [
+   {
+    "hash": "b5a7c4d96b930c0f24b8982d839581371661eb81281210b057af66d761c6b32c",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-finance-results-css": [
+   {
+    "hash": "1510a4d3bbc0dccc48520eccfeb2b24218b047feeb5bd020f99684783567921c",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-pix-receipt-css": [
+   {
+    "hash": "4d5c9458148b565d0c16e9a05290b80b56f8fb84d5cfae1ae1603fde9753a6ce",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-teacher-mascot-card-css": [
+   {
+    "hash": "03412de2d13ad858937f3648f580121e9f75d06eb82f5de690372c57410d9cd1",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "2cf2d67e7d8a5bb4c808cd7013c9e41ca456841991712b9480fd87acb293cde1",
+    "desde": "1.12.286"
+   }
+  ],
+  "professor.html|ap-pet-card-css": [
+   {
+    "hash": "fcd1b2c294bb68aee8d2d02ffff0359428f11cebadbc7612838751a77e03c4c2",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-student-progress-css": [
+   {
+    "hash": "4ec40168a95a9eea714f8a26760e292bcefaf28884761b477098af05acc2bd64",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-deep-icon-palette-css": [
+   {
+    "hash": "16af54d7638111f3fd1a18872703bbd9b9e13ddd895ad0f1e56e806b4d9e2d15",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-more-menu-selection-css": [
+   {
+    "hash": "0501af244aac8e277d10bd00d07455d5b40b7866944c4fdf24d28cb12614259b",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-teacher-text-size-css": [
+   {
+    "hash": "ba831e494a639047418bf83ee8f2f8097af4c8ba5149071221b058ccee77c3b9",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-teacher-sync-core-style": [
+   {
+    "hash": "2b4e322ed08b6d50ef6bcf79e5803dc2541a516d2058d36d5f3c2449e9f72609",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-profile-assessments-css": [
+   {
+    "hash": "8f145f237686b018817db25818a1f8ca95d63daf29d2de5486bca087fdbd343c",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-rest-floating-css": [
+   {
+    "hash": "f73112f00f0ffca8530378ec8c30e5a9ac673e60583f20c3e25e9f6191bab181",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-workout-instructions-css": [
+   {
+    "hash": "b77e9e2d8fe63ae606f5fa582e3988c18e7e64d6c7e4f03b61fcc995f0daf67f",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-student-lesson-priority-css": [
+   {
+    "hash": "801340ce2461c2011b09089d7063d7258308cc8a55f0986b3ee30bca79bc114b",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-followup-css": [
+   {
+    "hash": "d1061bd3a6819cbd3976538c3ba79482008dc8c79be2dcfd502bff56a137e08d",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-workout-corrections-css": [
+   {
+    "hash": "5f147052533871ece5a8651896d54fb36b3e0feb5dcce0052b25c868f6c678dd",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-workout-previous-series-css": [
+   {
+    "hash": "1baee11ff3d19e57715021a907a3ad66bc9d11891c1ddd71aeaef2225bc058f7",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-workout-timed-series-css": [
+   {
+    "hash": "94d8932770cba7482800101ff7e724eb182dc91996a0c258a1eb9b16d5fbea16",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-feedback-css": [
+   {
+    "hash": "d441d2ff79a3dfd9b2b3c0105a7841faccf0fee5835f7bf1404ea2fd74a736f1",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "e0407658139b1392b21b1994aac0e305badc2e913a4dc983e721b9fadf2a7376",
+    "desde": "1.12.292"
+   },
+   {
+    "hash": "583bd4ee1010be97a2a13f795222367a0b6491a880fc6335c9375f3da16baad5",
+    "desde": "1.12.294"
+   }
+  ],
+  "professor.html|ap-more-organization-css": [
+   {
+    "hash": "23aa49a55b9c0bc9116802876e8daf985b5671beab37a4324eca334749ed124b",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-student-tools-css": [
+   {
+    "hash": "7f7e5381f8b6914472fc10af1b292448715228bcfbfbb751fc324b93d52debe3",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-workout-export-css": [
+   {
+    "hash": "e1a15e475f88c3f8cb0cf5cdb505527d9b6e142d06464385bb90c1d0cb6d735c",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-scroll-boundaries-css": [
+   {
+    "hash": "2db52c95c38264799d5e52c421b1f7ac2ad2a775616983eecd006b5aacfafda5",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-cardio-style": [
+   {
+    "hash": "5bcad95521cda1293ec83d3604aef3a5c71d59d2494e5a5ff55fbeda7fbc8dff",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-video-duplicate-style": [
+   {
+    "hash": "1e00323848ef58429651b26c41d420ab8d02ac3beb50bcd0e5a4191ef3214c45",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-cardio-layout-fix": [
+   {
+    "hash": "93a8e643ff93ed2da25c99875f65bbd0952a451430d8e27fe2d81a019d1157e4",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-workout-audio-options-css": [
+   {
+    "hash": "93f20ee2982ef5665a2b9697ba29d1ee5019069a14f133b4947fa2d38c3b0c82",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-app-symbol-css": [
+   {
+    "hash": "94930296ddd5bc7abe0344c32829140969372c4dfc4ceba6c11bf1c34379d08c",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|pdfjs-core-gzip": [
+   {
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|pdfjs-worker-gzip": [
+   {
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|pdfjs-license": [
+   {
+    "hash": "9860673bfd871705cf1d84c8d0a0211e205431df425f842fbfb7ea3764c28847",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-cardio-teacher": [
+   {
+    "hash": "e6202dc89f7754f232e5453156d7a93d0f20ae7c27788ba67973647f66a0e68c",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|agenda-drag-reorder-css": [
+   {
+    "hash": "ca96fc2c71a4111491d586abc39d238f88d405a18718322e1004cbc111d1a694",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|agenda-drag-reorder-js": [
+   {
+    "hash": "67667843d7fb4a1602196a1971b75948270ea96e94051cd89b083b638ef97f6b",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-workout-timed-series": [
+   {
+    "hash": "2df710a285bbc2cd43500646c19aa89e842010935cb9f34c4e2df858156310de",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-workout-previous-series": [
+   {
+    "hash": "6b515bd724c5e868947d0973a5d700b638c5f8a60f3536159ddaf18f49d48336",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-shared-pdf-assets": [
+   {
+    "hash": "f7cced8eb7b848a4a6b85b7603b106ee82e04a92aac40ad4244b9c33c33b1ff2",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-teacher-photo-sync": [
+   {
+    "hash": "885404f2ef8fac24362d995ba52300adc29631dfbfc244cf3f541658cc4de0bd",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-student-archive": [
+   {
+    "hash": "67dd1d52cef809d49a817fce09c1d5a779591e44dd0a55e6084531abd82a7c1d",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-teacher-appearance": [
+   {
+    "hash": "6e51760833f1cc9f4be0e52b5e9abfaef92bcbb0437422b1a3a1b5dfa0166a66",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-sound-preview-js": [
+   {
+    "hash": "2ed7783ccbde8851c6950dea51fdd2e41ff42605167d9af289095e7211bbd7fa",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-cardio-sound-settings": [
+   {
+    "hash": "b40a3706a565dbf93a2cea82ef4896c24c9bf196929301c9505133805a2703bf",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-workout-audio-settings": [
+   {
+    "hash": "a0edb7f9dd235461974df2055bebdaf7b4571e91f4f716102ef6e7764ecc8ac1",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-video-duplicates": [
+   {
+    "hash": "ed2f454b00964f25a53f407cf606c5eb220421eb0a5ec00a755cdf34228377b6",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-video-duplicates-ui": [
+   {
+    "hash": "3d9ac64b4d3ce1f0e46a0a8ae64d441481e09175f614aef0cde20c4e611733d2",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-teacher-external-video": [
+   {
+    "hash": "75c26bebc9e45b7aaf45723a77ec379f9ad6f88b691412d7fa4a7f59ad263f24",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-finance-wallet-model": [
+   {
+    "hash": "875dee6578f89316086d7144b6543cb43c0d0428ae1543e5f1c38b98e8975fdd",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-finance-wallet": [
+   {
+    "hash": "3e09a26bfe4b92e26ad55464e20b14dd9dfabbb32be2db52069e8cc1791a0e91",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-finance-results-model": [
+   {
+    "hash": "5624e39d3d1a5c807ba0a9564cb8e4ebe41c802fe176ffe6cff955148e66759e",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-finance-results": [
+   {
+    "hash": "5b0f07ce7207fce58dbfb8a9e05ba053440b1e6b680e452e09465f4b3fe4e44c",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-pix-receipt-model": [
+   {
+    "hash": "8b3240d692c2b8d66f3a3506910446817685fb172b9bbe98e6c2b3fef91fbe29",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-pix-receipt": [
+   {
+    "hash": "16ad7ace53445431bfe5882875be661bab17f8e41cd7f94c3d33d60b8d38dacb",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-teacher-mascot-day": [
+   {
+    "hash": "3a5bac26f73e7459efd1abd09a5920c0dd6bbcc9759a3e7b82f540233762beee",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-student-progress-model": [
+   {
+    "hash": "0489d9345b0aeef45ad9a4a48c223d0fb8eed4ffa8c86d2e5429e4304d421b55",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-teacher-student-progress": [
+   {
+    "hash": "7e868a1eddd20c24546c6a42b897c4d601f583d089ee29b0a8dc40899c373864",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-colored-cards-css": [
+   {
+    "hash": "98fe0f9170f6814efdfa6c760a825f9e95ff73f0aa81091a9f82751ab424520a",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-deep-icon-palette": [
+   {
+    "hash": "009a146dd10ad2359c4548e005a278d7ceb93993223ae41993e3cfac3cc76471",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-more-menu-selection": [
+   {
+    "hash": "265a80739d06fd261493e95437b8663d50bf16c6eee25bbc1248e0bd16c52910",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-teacher-sync-core": [
+   {
+    "hash": "a81d61e9e6e1dcee0487fbcc47bfe09ef5a44a0b4db87bbd8e82ddb81e7d01fb",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-waitlist-css": [
+   {
+    "hash": "f7f30703fc76a156bd51353ef87dff3235910963f85940c8fd7e9b834de1250a",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-waitlist": [
+   {
+    "hash": "fc3b8120a0679fb608845e6d3f9ca4b1402cb957ab80e9caf4b4ad14078b63c0",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-watch-model": [
+   {
+    "hash": "00c22dab2d00d0c60801a8aff7c7233ee7d5758855be89c8f8e88ab0f6a10062",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-watch-ui": [
+   {
+    "hash": "9fe0df28e3886ab356f5ffd0ce22148f53d22c8fc6bde3716fd26f938e29e4e4",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-watch-history": [
+   {
+    "hash": "91a32fe83377dfd667cb222128ed5d78942a585133538b0c062c04f2b4d03366",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-watch-teacher": [
+   {
+    "hash": "25dc55cea2da9f89c612f901d0d4bf2e1fdc75bb86ec3e748a19833ee0989136",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-rest-floating": [
+   {
+    "hash": "e4b8ab6c9fe2b46c72539fa3cb1474dfd82ff421a09a64ebdb7cadcde75d24d2",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-workout-instructions": [
+   {
+    "hash": "21a679a78157dfc6332cbd9f4e269db20b104400941a1532630a055f9ab1e13e",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "f73b09e5de74b72b546e5871dc77d281d7734d6d826f3f02e10741b15d42faf0",
+    "desde": "1.12.291"
+   }
+  ],
+  "professor.html|ap-student-lesson-priority": [
+   {
+    "hash": "1fc5dc5223f6fdf4b33ecea8ae2288a5c2e6c0c7ca65014a7b7ebf10d667edd0",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-teacher-features": [
+   {
+    "hash": "3f019731b96c22bec83ff3cf3476c874489aae34eb10406742c98fa91a010298",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-workout-corrections": [
+   {
+    "hash": "64a9cffc6ecaa83ce37abdf784eb7e6ce271ffa5ff5360501834d5e0390f9ba8",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "6539de12b5884d46a8f3d6851207d727b73650b5767a0392f55663216db196e6",
+    "desde": "1.12.291"
+   }
+  ],
+  "professor.html|ap-feedback-model": [
+   {
+    "hash": "24338b639500cc6e7f414b5230c20f69ccdc86e7dc8ab8a35541ab8f9eb1531e",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-feedback-card": [
+   {
+    "hash": "3049d4feb124f63f55a33b468e3ddcef04dc0e5d1c8805cbb49448b57d217c73",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-feedback-teacher": [
+   {
+    "hash": "27fbd592dfa66598e02c87912e241a00882c4caf6c45994b3d2a7a5e8b1024ce",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-more-menu-glyphs": [
+   {
+    "hash": "3fcd8aa9d053a6a52249e81fe995066bba3ce05e38bf6883b590005e1795fc28",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "146be3f1224fc976b2ba826232141e11a74f2ceee1658ce83ba9257a85d5a49d",
+    "desde": "1.12.278"
+   },
+   {
+    "hash": "c70590743d4715a59ab59b02362dc0c6cae8d181928e1cb5e6a3d67d0ac90b13",
+    "desde": "1.12.283"
+   },
+   {
+    "hash": "8cfe406c8a0623d4eab3826d799c08a5c695fe5ea95f0a0cef5c7b94e04ee912",
+    "desde": "1.12.285"
+   }
+  ],
+  "professor.html|ap-native-mirror": [
+   {
+    "hash": "e48885c935b36e2ff26b40cdfa4225b47f5c17eb051b5a8c569170bf7bbd58ea",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-storage-meter": [
+   {
+    "hash": "00b5442188f8117824530321ebe99c7e697f44f4bb67bee4274c66704c5d6a9d",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-more-organization": [
+   {
+    "hash": "bd6ae49443109322777db7ffa38995f096698b89c351eed7b3f9dea9ee5f68de",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "2b2b0abb02bf71f35ee305f04351ec64a1f646cb5f70cc3949ddd835e0e745b9",
+    "desde": "1.12.278"
+   },
+   {
+    "hash": "d03349d03a2ff0825e53cb6a79ad838bbc6ac4ede08bf78feb0abdfffaca5ba3",
+    "desde": "1.12.283"
+   },
+   {
+    "hash": "775f29c1096df43f5418790bb3ccef6ab2b21c12e9887e05c921e47ec20fbe85",
+    "desde": "1.12.285"
+   }
+  ],
+  "professor.html|ap-workout-export-model": [
+   {
+    "hash": "d4387ea7fd10bc83a40414d90afa50ae6c5e96ffbf85daffe50480a3516bd413",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-workout-export": [
+   {
+    "hash": "cae6e09f16482a55c125b7fa7403e14ef726c123e8c9e411009d51e6ac1c5665",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "540ffdbb1dd971ec5ba02856a271818fb523e8af40a84a0a9f2ef2ff26fad461",
+    "desde": "1.12.291"
+   }
+  ],
+  "professor.html|ap-workout-active-shortcut": [
+   {
+    "hash": "dbb3d50003f87cdad71fa2512755df453d3562908e61646c50d660f58d915632",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-update-safety": [
+   {
+    "hash": "b5fce21e9334084c2661fcb87295afeeed572c216a28d0573c2a6d7be4eb4620",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|#fora-dos-blocos": [
+   {
+    "hash": "5e2b338248113fdb26cadaa9e98560f9afcd325ed51a0c29f7ab86c606c87f6d",
+    "desde": "1.12.273"
+   },
+   {
+    "hash": "c82c4953348ac03e471b3524016876a52b8e5315c197b97839c49cd89b3602fe",
+    "desde": "1.12.274"
+   },
+   {
+    "hash": "72dacbfde3988e82a62daecd4dd6369a8c7254e6e5195934ea58ac35b4af2e62",
+    "desde": "1.12.276"
+   },
+   {
+    "hash": "b3ce1614e06e1ed7ecb444d0e14eb3aca5bdbf1f53101d6cb83baea0615ab4a5",
+    "desde": "1.12.278"
+   },
+   {
+    "hash": "caee77357eb60a453a091e526c7c2b02c36dbb021e38603f75893623d6812146",
+    "desde": "1.12.281"
+   },
+   {
+    "hash": "efd7eda9eeca21a37097852f07b5f6f00b59318262b0cde057da036278ce1554",
+    "desde": "1.12.283"
+   },
+   {
+    "hash": "10dede00ac9a251d261cadc91501cf04e86ea582f7c9367a8d578cd78fc77523",
+    "desde": "1.12.285"
+   },
+   {
+    "hash": "3d41eb330bb94766931d243e3475f3a70634c733350cdb22e35ee01029413d5a",
+    "desde": "1.12.288"
+   }
+  ],
+  "avaliacoes.html|ap-native-store": [
+   {
+    "hash": "e666831ebde1e9b141829b990c2658e258d1d706d881994500bb23a165638822",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|ap-save-guard": [
+   {
+    "hash": "19f93661c569fe79e338597f14a6e8ddccc414412bee3ff81de0218342468f08",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|ap-teacher-text-size": [
+   {
+    "hash": "1c63188f6153a3037d1c612d928cedbb8b166b5587a1dd59351a249667b79e77",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|ap-icon-finish": [
+   {
+    "hash": "fbaba888ecc22eb85af3df6a762d4a0d4328fba9d9ebe7395e61dbae919811f1",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|pdf-page-layout-source": [
+   {
+    "hash": "72ec4d3862afac5255056c84329b31f284c42266de19ca75ccb934279fd9ecb6",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|agenda-integration-style": [
+   {
+    "hash": "d0ae8dfbac8da5fcabdafe09e10562e799317e88af8bb3165c11339963a4bee9",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|report-preview-style": [
+   {
+    "hash": "8b175d76ebbcc8f7f9a9b24927982d56e0cf451f388eae49df1a939651f21ae2",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|evaluation-previous-page-navigation": [
+   {
+    "hash": "171f564bba06d1d961b1c1d11a57fe71986fe26453b9f9a1e59a6e4127cbcfeb",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|evaluation-agenda-student-registration": [
+   {
+    "hash": "b2859e27c571fcf970fd1ab03e4a3c2f5cd70004dc035bf808322770a35635f8",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|agenda-color-theme": [
+   {
+    "hash": "291197e8e2abbc4f754b25d4293436a68eb0509747a6911d4aa472fedb502fd4",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|agenda-neon-design": [
+   {
+    "hash": "9cc4f39bb3c5bf05890aa6294f9c74b71f9e1b25fa0b8a6fc7b208aa51d7b8b6",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|agenda-evaluation-icons": [
+   {
+    "hash": "3f6d79427dab98975365a15f1cfa1105fde70bb0ce908b7b2b58d62acaf743cd",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|agenda-metal-theme": [
+   {
+    "hash": "cf8a910e559ad7f7f7fe85c2ee0c01d928b2e89cbff9b2d57f259f9ad575cbe8",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|agenda-performance-pro": [
+   {
+    "hash": "67246d98e63f6b0f40ecab60c7d924cf6a4a972d656836a7c16dcd68b205571a",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|agenda-deep-purple": [
+   {
+    "hash": "ade9f8e22ec03bafc88fbbab523cf4e9bfa020c4ae26583a9e19277294a5cd2c",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|ap-deep-icon-palette-css": [
+   {
+    "hash": "16af54d7638111f3fd1a18872703bbd9b9e13ddd895ad0f1e56e806b4d9e2d15",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|ap-teacher-text-size-css": [
+   {
+    "hash": "ba831e494a639047418bf83ee8f2f8097af4c8ba5149071221b058ccee77c3b9",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|ap-scroll-boundaries-css": [
+   {
+    "hash": "2db52c95c38264799d5e52c421b1f7ac2ad2a775616983eecd006b5aacfafda5",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|pdfjs-core-gzip": [
+   {
+    "hash": "d01e42ec9dea7ac1262e1f9340de350f6ebb54fea7e0e6e876e598919b8a6d21",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|pdfjs-worker-gzip": [
+   {
+    "hash": "6a0bf157e6dc06ff4a09290bd1a95deed474299a4b0dbb010ed49c4905d6769b",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|pdfjs-license": [
+   {
+    "hash": "9860673bfd871705cf1d84c8d0a0211e205431df425f842fbfb7ea3764c28847",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|ap-colored-cards-css": [
+   {
+    "hash": "98fe0f9170f6814efdfa6c760a825f9e95ff73f0aa81091a9f82751ab424520a",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|ap-deep-icon-palette": [
+   {
+    "hash": "009a146dd10ad2359c4548e005a278d7ceb93993223ae41993e3cfac3cc76471",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|ap-update-safety": [
+   {
+    "hash": "b5fce21e9334084c2661fcb87295afeeed572c216a28d0573c2a6d7be4eb4620",
+    "desde": "1.12.273"
+   }
+  ],
+  "avaliacoes.html|#fora-dos-blocos": [
+   {
+    "hash": "cf4a136c2b3befd1bbde0f904a5793c50eddb9b57473bb6c6e49efd20aa210c1",
+    "desde": "1.12.273"
+   }
+  ],
+  "cadastro.html|ap-registration-photo-css": [
+   {
+    "hash": "154e06cca94e88c701d76dd4f05457873b6978530e1f17055f48e9df661ebe0e",
+    "desde": "1.12.273"
+   }
+  ],
+  "cadastro.html|ap-scroll-boundaries-css": [
+   {
+    "hash": "2db52c95c38264799d5e52c421b1f7ac2ad2a775616983eecd006b5aacfafda5",
+    "desde": "1.12.273"
+   }
+  ],
+  "cadastro.html|ap-registration-photo-js": [
+   {
+    "hash": "94523883e0b15b48f9e3e8bc93b31e74239ee707ef8c1f58c0787bcc29b1a356",
+    "desde": "1.12.273"
+   }
+  ],
+  "cadastro.html|ap-kitten-face-assets": [
+   {
+    "hash": "3c0e5c3a05b589ba6f0d2ab010885459af83ebc40aad01c7c7dcd78a62ea3fe5",
+    "desde": "1.12.273"
+   }
+  ],
+  "cadastro.html|ap-capybara-face-reaction-assets": [
+   {
+    "hash": "bdc3f9c992f2c7fee8eb39dfaea05b59164ce3500ec5ecdfb5ba7be6be18843a",
+    "desde": "1.12.273"
+   }
+  ],
+  "cadastro.html|ap-mascot-gesture-runtime": [
+   {
+    "hash": "fb6e11a31f8c0f240af9739fb876d09ef775b8aa11f00e1d2bf35d2af575cab5",
+    "desde": "1.12.273"
+   }
+  ],
+  "cadastro.html|ap-mascot-reaction-assets": [
+   {
+    "hash": "c87e4c4e10cbe45832262d6733faaf1d577ec32984983b68bde0bb736236a756",
+    "desde": "1.12.273"
+   }
+  ],
+  "cadastro.html|ap-mascot-affection-assets": [
+   {
+    "hash": "d90451b0f54e2d26637bf86a6f830bb871de4c60dd07f0fc26c31d2f0bdbec9d",
+    "desde": "1.12.273"
+   }
+  ],
+  "cadastro.html|ap-mascot-image-assets": [
+   {
+    "hash": "efafe04e8f18e1e0c0d64e493580489bbacccdbb6fb00520b556cb9e5ced73a5",
+    "desde": "1.12.273"
+   }
+  ],
+  "cadastro.html|ap-mascot-coat-assets": [
+   {
+    "hash": "95f73fef7890b296d09603f6ee7b9dad4ec5b5680335242653d2ff290e90e7fd",
+    "desde": "1.12.273"
+   }
+  ],
+  "cadastro.html|ap-mascot-pose-assets": [
+   {
+    "hash": "d3f4b06d38422bf4f96a59a183b1b85fff1ba5414a79ffe82d0f20a7aee43254",
+    "desde": "1.12.273"
+   }
+  ],
+  "cadastro.html|ap-mascot-home-assets": [
+   {
+    "hash": "54af9dee5ef01edbb9300be78603a8df67781701dddb364127bc0a25fb1e13c6",
+    "desde": "1.12.273"
+   }
+  ],
+  "cadastro.html|ap-progress-sync-source": [
+   {
+    "hash": "cb0031fd54984ab85f9aa53c0effcc4e93cf5daf8f622d0572941b43d03ffc11",
+    "desde": "1.12.273"
+   }
+  ],
+  "cadastro.html|ap-entry-artwork": [
+   {
+    "hash": "610bee45e7cb9be33b854c458fb9118be7b93817c4248e581f418b548cc17ce3",
+    "desde": "1.12.273"
+   }
+  ],
+  "cadastro.html|#fora-dos-blocos": [
+   {
+    "hash": "c64db7319bbad5d0cfe1ad8eefbb6bf16f538b14c76b5b383bc8fdc4474a47f8",
+    "desde": "1.12.273"
+   }
+  ],
+  "professor.html|ap-registration-hub-css": [
+   {
+    "hash": "909c4e5aa8cdfe94e409df64a34577f54f65186bd9ae8b94fbe037117aa1da67",
+    "desde": "1.12.281"
+   },
+   {
+    "hash": "6bf5a0af3281053a9dced1a04be72098fd282bf7c63262a56d0fb9fbe596f63b",
+    "desde": "1.12.283"
+   }
+  ],
+  "index.html|ap-feedback-card": [
+   {
+    "hash": "3049d4feb124f63f55a33b468e3ddcef04dc0e5d1c8805cbb49448b57d217c73",
+    "desde": "1.12.282"
+   }
+  ],
+  "professor.html|dialog-scroll-lock-pages": [
+   {
+    "hash": "13f1f364bfed54e239720bc67f26959ed93f6a5b2650bbfd7545e320fd4a22ba",
+    "desde": "1.12.288"
+   }
+  ]
+ },
+ "funcionalidades": [
+  {
+   "id": "pacote-1-12-274-aviso-de-recuperacao-da-agenda",
+   "titulo": "Aviso de recuperação da agenda",
+   "tipo": "pacote-completo",
+   "versao": "1.12.274",
+   "sequencia": 380,
+   "blocos": [
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "5e2b338248113fdb26cadaa9e98560f9afcd325ed51a0c29f7ab86c606c87f6d",
+     "depois": "c82c4953348ac03e471b3524016876a52b8e5315c197b97839c49cd89b3602fe"
+    }
+   ],
+   "depende_de": [
+    "base-1.12.273"
+   ]
+  },
+  {
+   "id": "pacote-1-12-276-cadastro-e-instalacao-dos-alunos",
+   "titulo": "Cadastro e instalação dos alunos",
+   "tipo": "pacote-completo",
+   "versao": "1.12.276",
+   "sequencia": 382,
+   "blocos": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-registration-link-editor-css",
+     "area": "cadastro",
+     "antes": "b461a3b81a3c8e7b678460a0ed9c43ffecda59e3e28f03099aa084bd037ccc9e",
+     "depois": "328de8048b7cd286fb7502f9a88ce2294f444e8757b54d3a2f05ebde4f886236"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "c82c4953348ac03e471b3524016876a52b8e5315c197b97839c49cd89b3602fe",
+     "depois": "72dacbfde3988e82a62daecd4dd6369a8c7254e6e5195934ea58ac35b4af2e62"
+    }
+   ],
+   "depende_de": [
+    "base-1.12.273",
+    "pacote-1-12-274-aviso-de-recuperacao-da-agenda"
+   ]
+  },
+  {
+   "id": "pacote-1-12-278-grupo-da-turma",
+   "titulo": "Grupo da turma",
+   "tipo": "pacote-completo",
+   "versao": "1.12.278",
+   "sequencia": 384,
+   "blocos": [
+    {
+     "pagina": "index.html",
+     "id": "ap-student-identity-css",
+     "area": "alunos",
+     "antes": "61d923d9ef1759e12ce1eb1ded50366512dd53abedaf7c53d09bd2d3c5057063",
+     "depois": "e460d4db0e92704b0e631e1dd8f428c817ee64180aa8a01626c82d556c53ba50"
+    },
+    {
+     "pagina": "index.html",
+     "id": "ap-student-identity-controls",
+     "area": "alunos",
+     "antes": "30f1ddff2501ed75edc277aedb34dfca94273a929d910508daa0c075bbe8ff0d",
+     "depois": "abf9c332d08e37f725c061e050ebf8386dcde5895ec387f57cb1b6e3e9499aef"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-more-menu-glyphs",
+     "area": "geral",
+     "antes": "3fcd8aa9d053a6a52249e81fe995066bba3ce05e38bf6883b590005e1795fc28",
+     "depois": "146be3f1224fc976b2ba826232141e11a74f2ceee1658ce83ba9257a85d5a49d"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-more-organization",
+     "area": "professor",
+     "antes": "bd6ae49443109322777db7ffa38995f096698b89c351eed7b3f9dea9ee5f68de",
+     "depois": "2b2b0abb02bf71f35ee305f04351ec64a1f646cb5f70cc3949ddd835e0e745b9"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "72dacbfde3988e82a62daecd4dd6369a8c7254e6e5195934ea58ac35b4af2e62",
+     "depois": "b3ce1614e06e1ed7ecb444d0e14eb3aca5bdbf1f53101d6cb83baea0615ab4a5"
+    }
+   ],
+   "depende_de": [
+    "base-1.12.273",
+    "pacote-1-12-276-cadastro-e-instalacao-dos-alunos"
+   ]
+  },
+  {
+   "id": "pacote-1-12-281-links-dos-alunos",
+   "titulo": "Links dos alunos",
+   "tipo": "pacote-completo",
+   "versao": "1.12.281",
+   "sequencia": 387,
+   "blocos": [
+    {
+     "pagina": "index.html",
+     "id": "ap-single-navigation",
+     "area": "geral",
+     "antes": "657e31a5737ea11b2ccbfe91de765e32b03ab8df6fe60670b7faa970a698564f",
+     "depois": "05f88e62479ecf05c16d250e139644e7d45d8191d2cecaa99652649849645edf"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-registration-hub-css",
+     "area": "geral",
+     "antes": null,
+     "depois": "909c4e5aa8cdfe94e409df64a34577f54f65186bd9ae8b94fbe037117aa1da67"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "b3ce1614e06e1ed7ecb444d0e14eb3aca5bdbf1f53101d6cb83baea0615ab4a5",
+     "depois": "caee77357eb60a453a091e526c7c2b02c36dbb021e38603f75893623d6812146"
+    }
+   ],
+   "depende_de": [
+    "base-1.12.273",
+    "pacote-1-12-278-grupo-da-turma"
+   ]
+  },
+  {
+   "id": "pacote-1-12-282-feedback-do-aluno",
+   "titulo": "Feedback do aluno",
+   "tipo": "pacote-completo",
+   "versao": "1.12.282",
+   "sequencia": 388,
+   "blocos": [
+    {
+     "pagina": "index.html",
+     "id": "ap-feedback-sync",
+     "area": "evolucao",
+     "antes": "d14db625a44952cf25ae3892074dd73e422f9113fcee657bfe60a3061ffda284",
+     "depois": "a68d7d530945d14aa915253e382b17ddef445720ed1c921454113f825440a0bb"
+    },
+    {
+     "pagina": "index.html",
+     "id": "ap-feedback-card",
+     "area": "geral",
+     "antes": null,
+     "depois": "3049d4feb124f63f55a33b468e3ddcef04dc0e5d1c8805cbb49448b57d217c73"
+    },
+    {
+     "pagina": "index.html",
+     "id": "ap-feedback-student",
+     "area": "evolucao",
+     "antes": "743efd88b6379196812af537511238e69835481959043d3c83974535103e0cd3",
+     "depois": "fc36fe708f16fb4aab7cbb667d83c8a14796c3c0fd7d8567710c914dc0a26ede"
+    },
+    {
+     "pagina": "index.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "62975cf78c34d70f41476e31cf0d736474c9d2571c2d972681f75a69c3387b04",
+     "depois": "2b2754ec52644565fb5ddccb6a807075c45703577b734cbeac748a6d65907918"
+    }
+   ],
+   "depende_de": [
+    "base-1.12.273"
+   ]
+  },
+  {
+   "id": "pacote-1-12-283-alunos-para-aprovar",
+   "titulo": "Alunos para aprovar",
+   "tipo": "pacote-completo",
+   "versao": "1.12.283",
+   "sequencia": 389,
+   "blocos": [
+    {
+     "pagina": "index.html",
+     "id": "ap-student-accounts",
+     "area": "geral",
+     "antes": "83db5c3055325322cde213175a325912023fc283241b32deebd7dc880b494456",
+     "depois": "152a450cb091114f45a75f0e943d5a32bf48b921ee784f9f934d5154d4409fd1"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-registration-hub-css",
+     "area": "geral",
+     "antes": "909c4e5aa8cdfe94e409df64a34577f54f65186bd9ae8b94fbe037117aa1da67",
+     "depois": "6bf5a0af3281053a9dced1a04be72098fd282bf7c63262a56d0fb9fbe596f63b"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-more-menu-glyphs",
+     "area": "geral",
+     "antes": "146be3f1224fc976b2ba826232141e11a74f2ceee1658ce83ba9257a85d5a49d",
+     "depois": "c70590743d4715a59ab59b02362dc0c6cae8d181928e1cb5e6a3d67d0ac90b13"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-more-organization",
+     "area": "professor",
+     "antes": "2b2b0abb02bf71f35ee305f04351ec64a1f646cb5f70cc3949ddd835e0e745b9",
+     "depois": "d03349d03a2ff0825e53cb6a79ad838bbc6ac4ede08bf78feb0abdfffaca5ba3"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "caee77357eb60a453a091e526c7c2b02c36dbb021e38603f75893623d6812146",
+     "depois": "efd7eda9eeca21a37097852f07b5f6f00b59318262b0cde057da036278ce1554"
+    }
+   ],
+   "depende_de": [
+    "base-1.12.273",
+    "pacote-1-12-278-grupo-da-turma",
+    "pacote-1-12-281-links-dos-alunos"
+   ]
+  },
+  {
+   "id": "pacote-1-12-285-excluidos-da-lista",
+   "titulo": "Excluídos da lista",
+   "tipo": "pacote-completo",
+   "versao": "1.12.285",
+   "sequencia": 391,
+   "blocos": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-more-menu-glyphs",
+     "area": "geral",
+     "antes": "c70590743d4715a59ab59b02362dc0c6cae8d181928e1cb5e6a3d67d0ac90b13",
+     "depois": "8cfe406c8a0623d4eab3826d799c08a5c695fe5ea95f0a0cef5c7b94e04ee912"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-more-organization",
+     "area": "professor",
+     "antes": "d03349d03a2ff0825e53cb6a79ad838bbc6ac4ede08bf78feb0abdfffaca5ba3",
+     "depois": "775f29c1096df43f5418790bb3ccef6ab2b21c12e9887e05c921e47ec20fbe85"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "efd7eda9eeca21a37097852f07b5f6f00b59318262b0cde057da036278ce1554",
+     "depois": "10dede00ac9a251d261cadc91501cf04e86ea582f7c9367a8d578cd78fc77523"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-283-alunos-para-aprovar"
+   ]
+  },
+  {
+   "id": "pacote-1-12-286-recados-no-modo-claro",
+   "titulo": "Recados no modo claro",
+   "tipo": "pacote-completo",
+   "versao": "1.12.286",
+   "sequencia": 392,
+   "blocos": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-teacher-mascot-card-css",
+     "area": "pets",
+     "antes": "03412de2d13ad858937f3648f580121e9f75d06eb82f5de690372c57410d9cd1",
+     "depois": "2cf2d67e7d8a5bb4c808cd7013c9e41ca456841991712b9480fd87acb293cde1"
+    }
+   ],
+   "depende_de": [
+    "base-1.12.273"
+   ]
+  },
+  {
+   "id": "pacote-1-12-288-janelas-como-pagina",
+   "titulo": "Janelas como página",
+   "tipo": "pacote-completo",
+   "versao": "1.12.288",
+   "sequencia": 394,
+   "blocos": [
+    {
+     "pagina": "professor.html",
+     "id": "dialog-scroll-lock-pages",
+     "area": "geral",
+     "antes": null,
+     "depois": "13f1f364bfed54e239720bc67f26959ed93f6a5b2650bbfd7545e320fd4a22ba"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "10dede00ac9a251d261cadc91501cf04e86ea582f7c9367a8d578cd78fc77523",
+     "depois": "3d41eb330bb94766931d243e3475f3a70634c733350cdb22e35ee01029413d5a"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-285-excluidos-da-lista"
+   ]
+  },
+  {
+   "id": "pacote-1-12-291-correcoes-de-exercicios-incluidas",
+   "titulo": "Correções de exercícios incluídas",
+   "tipo": "pacote-completo",
+   "versao": "1.12.291",
+   "sequencia": 397,
+   "blocos": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-workout-instructions",
+     "area": "professor",
+     "antes": "21a679a78157dfc6332cbd9f4e269db20b104400941a1532630a055f9ab1e13e",
+     "depois": "f73b09e5de74b72b546e5871dc77d281d7734d6d826f3f02e10741b15d42faf0"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-workout-corrections",
+     "area": "professor",
+     "antes": "64a9cffc6ecaa83ce37abdf784eb7e6ce271ffa5ff5360501834d5e0390f9ba8",
+     "depois": "6539de12b5884d46a8f3d6851207d727b73650b5767a0392f55663216db196e6"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-workout-export",
+     "area": "professor",
+     "antes": "cae6e09f16482a55c125b7fa7403e14ef726c123e8c9e411009d51e6ac1c5665",
+     "depois": "540ffdbb1dd971ec5ba02856a271818fb523e8af40a84a0a9f2ef2ff26fad461"
+    }
+   ],
+   "depende_de": [
+    "base-1.12.273"
+   ]
+  },
+  {
+   "id": "pacote-1-12-292-sino-do-feedback-no-topo-do-aluno",
+   "titulo": "Sino do feedback no topo do aluno",
+   "tipo": "pacote-completo",
+   "versao": "1.12.292",
+   "sequencia": 398,
+   "blocos": [
+    {
+     "pagina": "index.html",
+     "id": "ap-feedback-css",
+     "area": "evolucao",
+     "antes": "d441d2ff79a3dfd9b2b3c0105a7841faccf0fee5835f7bf1404ea2fd74a736f1",
+     "depois": "e0407658139b1392b21b1994aac0e305badc2e913a4dc983e721b9fadf2a7376"
+    },
+    {
+     "pagina": "index.html",
+     "id": "ap-feedback-student",
+     "area": "evolucao",
+     "antes": "fc36fe708f16fb4aab7cbb667d83c8a14796c3c0fd7d8567710c914dc0a26ede",
+     "depois": "0730944c9db6f28900906000abeec9192bb953dc62ec0eebec18c2ba01ca3760"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-feedback-css",
+     "area": "evolucao",
+     "antes": "d441d2ff79a3dfd9b2b3c0105a7841faccf0fee5835f7bf1404ea2fd74a736f1",
+     "depois": "e0407658139b1392b21b1994aac0e305badc2e913a4dc983e721b9fadf2a7376"
+    }
+   ],
+   "depende_de": [
+    "base-1.12.273",
+    "pacote-1-12-282-feedback-do-aluno"
+   ]
+  },
+  {
+   "id": "pacote-1-12-294-icone-do-feedback-personalizavel",
+   "titulo": "Ícone do feedback personalizável",
+   "tipo": "pacote-completo",
+   "versao": "1.12.294",
+   "sequencia": 400,
+   "blocos": [
+    {
+     "pagina": "index.html",
+     "id": "ap-feedback-css",
+     "area": "evolucao",
+     "antes": "e0407658139b1392b21b1994aac0e305badc2e913a4dc983e721b9fadf2a7376",
+     "depois": "583bd4ee1010be97a2a13f795222367a0b6491a880fc6335c9375f3da16baad5"
+    },
+    {
+     "pagina": "index.html",
+     "id": "ap-feedback-student",
+     "area": "evolucao",
+     "antes": "0730944c9db6f28900906000abeec9192bb953dc62ec0eebec18c2ba01ca3760",
+     "depois": "716376dbdf9c59c9b8c350e813fd801c7503c47b9ccc8932cd5b472490852121"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-feedback-css",
+     "area": "evolucao",
+     "antes": "e0407658139b1392b21b1994aac0e305badc2e913a4dc983e721b9fadf2a7376",
+     "depois": "583bd4ee1010be97a2a13f795222367a0b6491a880fc6335c9375f3da16baad5"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-292-sino-do-feedback-no-topo-do-aluno"
+   ]
+  },
+  {
+   "id": "pacote-1-12-295-feedback-pelo-icone-do-topo",
+   "titulo": "Feedback pelo ícone do topo",
+   "tipo": "pacote-completo",
+   "versao": "1.12.295",
+   "sequencia": 401,
+   "blocos": [
+    {
+     "pagina": "index.html",
+     "id": "ap-feedback-student",
+     "area": "evolucao",
+     "antes": "716376dbdf9c59c9b8c350e813fd801c7503c47b9ccc8932cd5b472490852121",
+     "depois": "cf666ed2b6103ab4c9cde9fa3051ca0c5e39e02afd41da037b4a852638fb2cd3"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-294-icone-do-feedback-personalizavel"
+   ]
+  }
+ ],
+ "correcoes": [
+  {
+   "id": "correcao-professor-catalogo-exercicios-unificado",
+   "arquivo": "AgendaPersonal-01-Catalogo-Unificado-Para-Assinar.agenda.json",
+   "sha256": "2f35cc63a72403df04b9058ca28a42e7ad7bc685fbf1dce2277c09c4d96ea397",
+   "titulo": "Catálogo de exercícios unificado",
+   "area": "professor",
+   "modulo": "exercicios",
+   "assinada_no_arquivo": false,
+   "mudancas": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-workout-instructions",
+     "area": "professor",
+     "antes": "21a679a78157dfc6332cbd9f4e269db20b104400941a1532630a055f9ab1e13e",
+     "depois": "f73b09e5de74b72b546e5871dc77d281d7734d6d826f3f02e10741b15d42faf0",
+     "situacao_no_canonico": "presente"
+    }
+   ],
+   "situacao_no_canonico": "presente"
+  },
+  {
+   "id": "correcao-professor-baixar-catalogo-exercicios",
+   "arquivo": "AgendaPersonal-02-Baixar-Catalogo-Para-Assinar.agenda.json",
+   "sha256": "bdfef91b00e0a6699d8e460bc1804ade1b1b7a7dd76fda540f7690a166b94950",
+   "titulo": "Baixar catálogo de exercícios",
+   "area": "professor",
+   "modulo": "exercicios",
+   "assinada_no_arquivo": false,
+   "mudancas": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-workout-export",
+     "area": "professor",
+     "antes": "cae6e09f16482a55c125b7fa7403e14ef726c123e8c9e411009d51e6ac1c5665",
+     "depois": "540ffdbb1dd971ec5ba02856a271818fb523e8af40a84a0a9f2ef2ff26fad461",
+     "situacao_no_canonico": "presente"
+    }
+   ],
+   "situacao_no_canonico": "presente"
+  },
+  {
+   "id": "correcao-professor-catalogo-exercicios-duplicatas",
+   "arquivo": "AgendaPersonal-03-Corrigir-Duplicatas-Catalogo-Para-Assinar.agenda.json",
+   "sha256": "be415ec62e96d0c6a337da6b2d3153ba9a7d7b56c967b5a436fe518ee178a9cd",
+   "titulo": "Duplicatas e exclusão no catálogo",
+   "area": "professor",
+   "modulo": "exercicios",
+   "assinada_no_arquivo": false,
+   "mudancas": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-workout-corrections",
+     "area": "professor",
+     "antes": "64a9cffc6ecaa83ce37abdf784eb7e6ce271ffa5ff5360501834d5e0390f9ba8",
+     "depois": "6539de12b5884d46a8f3d6851207d727b73650b5767a0392f55663216db196e6",
+     "situacao_no_canonico": "presente"
+    }
+   ],
+   "situacao_no_canonico": "presente"
+  },
+  {
+   "id": "correcao-professor-apagar-exercicio-do-catalogo",
+   "arquivo": "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
+   "sha256": "7d3724d46ee4ba242571f1b857d0a5d47ae05a466d7063be0204541159a14375",
+   "titulo": "Apagar exercício do catálogo",
+   "area": "professor",
+   "modulo": "exercicios",
+   "assinada_no_arquivo": true,
+   "mudancas": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-workout-previous-series",
+     "area": "professor",
+     "antes": "c6db3a3869c7f5dc93cb79fce3c27b5d8640dc4598410ab613a0951750af3226",
+     "depois": "6b515bd724c5e868947d0973a5d700b638c5f8a60f3536159ddaf18f49d48336",
+     "situacao_no_canonico": "presente"
+    }
+   ],
+   "situacao_no_canonico": "presente"
+  },
+  {
+   "id": "correcao-professor-apagar-exercicio-do-catalogo",
+   "arquivo": "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
+   "sha256": "0e5b7283321675b7f5d8a00c4ffb2efa8b9fa5772b7d9ecbf1ed357f8d3609ad",
+   "titulo": "Apagar exercício do catálogo",
+   "area": "professor",
+   "modulo": "exercicios",
+   "assinada_no_arquivo": false,
+   "mudancas": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-workout-previous-series",
+     "area": "professor",
+     "antes": "c6db3a3869c7f5dc93cb79fce3c27b5d8640dc4598410ab613a0951750af3226",
+     "depois": "6b515bd724c5e868947d0973a5d700b638c5f8a60f3536159ddaf18f49d48336",
+     "situacao_no_canonico": "presente"
+    }
+   ],
+   "situacao_no_canonico": "presente"
+  },
+  {
+   "id": "correcao-raposinha-tres-fases",
+   "arquivo": "AgendaPersonal-Pets-Raposinha.agenda.json",
+   "sha256": "84b0ede80c28d44ef04ecf7ab20a19191a6fd738ad865299b611c0c6cfbf8587",
+   "titulo": "Raposinha",
+   "area": "pets",
+   "modulo": "geral",
+   "assinada_no_arquivo": false,
+   "mudancas": [
+    {
+     "pagina": "index.html",
+     "id": "ap-student-mascot-model",
+     "area": "pets",
+     "antes": "99511d28c9973c5fffb14cde4d75b47e255dbe36f922da00c9a6e3417a8b95b2",
+     "depois": "d73afdac6c92075576df18333f59e61377614a9d00c368dc54084407ffb12eba",
+     "situacao_no_canonico": "conflito"
+    },
+    {
+     "pagina": "index.html",
+     "id": "ap-student-mascot-art",
+     "area": "pets",
+     "antes": "ac4dc6fb4eb3b0901907435bd6b0e6cd8170c8c74d69b29deddd6f767d20c5b3",
+     "depois": "5eb9c0bdc5f00f335f325855c7b4aeb7c24bc6442b175c437a42c849bd282447",
+     "situacao_no_canonico": "aplicavel"
+    },
+    {
+     "pagina": "index.html",
+     "id": "ap-mascot-homes",
+     "area": "pets",
+     "antes": "55f9d7a3ec07727c1cbf45b2f48f1bee0b0157ced7d5d098675bad76bc2a3b07",
+     "depois": "0a3745d9b4e2ff720d6136ad3ae0c314e89f24c56ff621c89205bcc55b59382b",
+     "situacao_no_canonico": "aplicavel"
+    },
+    {
+     "pagina": "cadastro.html",
+     "id": "ap-mascot-home-assets",
+     "area": "pets",
+     "antes": "54af9dee5ef01edbb9300be78603a8df67781701dddb364127bc0a25fb1e13c6",
+     "depois": "88304a6e054ec3f599fcafd088abbcb18bde70f36f8ffc8ced51013fe499fe91",
+     "situacao_no_canonico": "aplicavel"
+    }
+   ],
+   "situacao_no_canonico": "conflito"
+  },
+  {
+   "id": "correcao-pix-historico-mensal",
+   "arquivo": "AgendaPersonal-Pix-Comprovantes-Sem-Arquivos.agenda.json",
+   "sha256": "2f5ad122e4fd141d0fcc9db2938057718e287f6c0b7f9233c4bb65db5ecec5bc",
+   "titulo": "Histórico mensal sem anexos",
+   "area": "pagamentos",
+   "modulo": "recibos",
+   "assinada_no_arquivo": false,
+   "mudancas": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-pix-receipt-model",
+     "area": "pagamentos",
+     "antes": "15b755e3cb6220dd0e4333543dbe0afbb5a8064c3608c4ecc66f56919f5fc340",
+     "depois": "8b3240d692c2b8d66f3a3506910446817685fb172b9bbe98e6c2b3fef91fbe29",
+     "situacao_no_canonico": "presente"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-pix-receipt",
+     "area": "pagamentos",
+     "antes": "3f025eb5e70cc3b09ccbceff7bf09907f9aeb01f6ee2f1b4666d3f38e19dba50",
+     "depois": "16ad7ace53445431bfe5882875be661bab17f8e41cd7f94c3d33d60b8d38dacb",
+     "situacao_no_canonico": "presente"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-pix-receipt-css",
+     "area": "pagamentos",
+     "antes": "7707d4a9c4eaf41dabace4260f6a9780ed79306992372bdc4d561dd42d0775b2",
+     "depois": "4d5c9458148b565d0c16e9a05290b80b56f8fb84d5cfae1ae1603fde9753a6ce",
+     "situacao_no_canonico": "presente"
+    }
+   ],
+   "situacao_no_canonico": "presente"
+  },
+  {
+   "id": "correcao-professor-ficha-selecionada-recolhivel-v2",
+   "arquivo": "AgendaPersonal-Professor-Ficha-Recolhivel-253.agenda.json",
+   "sha256": "8eb9179bdc851637f8dbecc7669eec4c0bfc67f777222a85dfc94cdc4548afd8",
+   "titulo": "Ficha selecionada recolhível",
+   "area": "professor",
+   "modulo": "exercicios",
+   "assinada_no_arquivo": false,
+   "mudancas": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-workout-export",
+     "area": "professor",
+     "antes": "5959b3cf0adc4698e250548e3b28a18f42f517eae8b68af9751cf73a82125022",
+     "depois": "cae6e09f16482a55c125b7fa7403e14ef726c123e8c9e411009d51e6ac1c5665",
+     "situacao_no_canonico": "evoluida"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-workout-export-css",
+     "area": "professor",
+     "antes": "186d196b333416a2f19b8eb38874f6d3e64288728a24d26f6f8f19c134bef4b4",
+     "depois": "e1a15e475f88c3f8cb0cf5cdb505527d9b6e142d06464385bb90c1d0cb6d735c",
+     "situacao_no_canonico": "presente"
+    }
+   ],
+   "situacao_no_canonico": "evoluida"
+  },
+  {
+   "id": "correcao-professor-avisos-cadastros-pendentes",
+   "arquivo": "AgendaPersonal-Sininho-Cadastro-Professor-para-assinar.agenda.json",
+   "sha256": "97a1f3c989d8893cb8e7b6b1e277e1a238595737db7721da92dc0c2208dee9a9",
+   "titulo": "Sininho de cadastro de aluno",
+   "area": "professor",
+   "modulo": "painel",
+   "assinada_no_arquivo": false,
+   "mudancas": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-teacher-features",
+     "area": "professor",
+     "antes": "f7c69e34fdb4535f867dba660459f437befd0c96809e8d00426e8d01373be819",
+     "depois": "3f019731b96c22bec83ff3cf3476c874489aae34eb10406742c98fa91a010298",
+     "situacao_no_canonico": "presente"
+    }
+   ],
+   "situacao_no_canonico": "presente"
+  },
+  {
+   "id": "correcao-restaurar-testar-e-enviar-sons-do-treino",
+   "arquivo": "AgendaPersonal-Testar-Enviar-Sons-Treino-para-assinar.agenda.json",
+   "sha256": "85decba4e95464299ed6243d67b04d8169287138c1bcf14bf7259f3a3fa6e93e",
+   "titulo": "Testar e enviar sons do treino",
+   "area": "sons",
+   "modulo": "audios",
+   "assinada_no_arquivo": false,
+   "mudancas": [
+    {
+     "pagina": "index.html",
+     "id": "ap-workout-audio",
+     "area": "sons",
+     "antes": "593ba7355d216b0a35c7cff05d84acf618d56f8baa3a6ab73c6b8c06b94cdb78",
+     "depois": "ce2d5c247d7fe0e554d9444b947d7c09a60dfe75d9ad159e0346bde7ac413395",
+     "situacao_no_canonico": "presente"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-workout-audio",
+     "area": "sons",
+     "antes": "593ba7355d216b0a35c7cff05d84acf618d56f8baa3a6ab73c6b8c06b94cdb78",
+     "depois": "ce2d5c247d7fe0e554d9444b947d7c09a60dfe75d9ad159e0346bde7ac413395",
+     "situacao_no_canonico": "presente"
+    }
+   ],
+   "situacao_no_canonico": "presente"
+  }
+ ]
+}
