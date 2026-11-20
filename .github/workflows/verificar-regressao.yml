@@ -56,6 +56,8 @@ jobs:
           canon=$(node -p "require('./equipe/canonico/manifesto.json').canonico.arquivo")
           node equipe/testes/regressao/verificar-pacote.cjs --modo pr --json relatorio-regressao.json "$canon" "${arquivos[@]}"
       - name: Mecanismo real de atualização (UpdateManager e UpdateAreaPatch do ZIP)
+        # roda mesmo se o verificador reprovar: cada camada tem de pegar a regressão por conta própria
+        if: success() || failure()
         run: |
           set -euo pipefail
           args=()
@@ -63,6 +65,8 @@ jobs:
           canon=$(node -p "require('./equipe/canonico/manifesto.json').canonico.arquivo")
           python3 -I equipe/testes/regressao/mecanismo-real.py --candidato "$canon" "${args[@]}"
       - name: Testes oficiais do Android com as páginas do canônico e dos posteriores
+        # roda mesmo se o verificador reprovar: cada camada tem de pegar a regressão por conta própria
+        if: success() || failure()
         run: |
           set -euo pipefail
           canon=$(node -p "require('./equipe/canonico/manifesto.json').canonico.arquivo")
@@ -72,6 +76,8 @@ jobs:
             fi
           done
       - name: Funcionalidades exigidas no ZIP oficial
+        # roda mesmo se o verificador reprovar: cada camada tem de pegar a regressão por conta própria
+        if: success() || failure()
         run: python3 -I equipe/testes/verificar_funcionalidades.py
       - uses: actions/upload-artifact@v4
         if: always()
