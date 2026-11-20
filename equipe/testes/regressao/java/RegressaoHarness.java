@@ -168,10 +168,15 @@ public final class RegressaoHarness {
         } finally { dev.manager.destroy(); }
     }
 
-    static boolean authorized(JSONObject patch) throws Exception {
-        JSONArray c = patch.getJSONArray("changes");
+    /** A correção segue valendo no conteúdo: cada mudança dela ou continua presente, ou está num bloco cuja continuação foi autorizada. */
+    static boolean authorizedOrPresent(JSONObject now, JSONObject patch) throws Exception {
         if (AUTORIZADOS.isEmpty()) return false;
-        for (int i = 0; i < c.length(); i++) if (!AUTORIZADOS.contains(c.getJSONObject(i).getString("page") + "|" + c.getJSONObject(i).getString("id"))) return false;
+        JSONArray c = patch.getJSONArray("changes");
+        for (int i = 0; i < c.length(); i++) {
+            JSONObject d = c.getJSONObject(i);
+            if (AUTORIZADOS.contains(d.getString("page") + "|" + d.getString("id"))) continue;
+            if (!RegressaoBase.PRESENT.equals(RegressaoBase.refusal(now, RegressaoBase.only(patch, i)))) return false;
+        }
         return true;
     }
 
@@ -181,10 +186,10 @@ public final class RegressaoHarness {
         for (String n : names) {
             String k = RegressaoBase.classify(now, patches.get(n));
             if (RegressaoBase.kept(k)) kept++;
-            else if (RegressaoBase.kept(onRef.get(n)) && !authorized(patches.get(n))) lostNames.add(nome(n) + " (" + k + ")");
+            else if (RegressaoBase.kept(onRef.get(n)) && !authorizedOrPresent(now, patches.get(n))) lostNames.add(nome(n) + " (" + k + ")");
         }
         check(lostNames.isEmpty(), label + ": está na referência e não está depois do candidato: " + lostNames);
-        for (String p : exercicios) check(RegressaoBase.classify(now, patches.get(p)).equals("presente") || authorized(patches.get(p)), label + ": " + nome(p) + " não está presente depois do candidato");
+        for (String p : exercicios) check(RegressaoBase.classify(now, patches.get(p)).equals("presente") || authorizedOrPresent(now, patches.get(p)), label + ": " + nome(p) + " não está presente depois do candidato");
         if (print) System.out.println(String.format("%-58s %d mantidas / 0 perdidas (01, 02 e 03 presentes)", label, kept));
     }
 
