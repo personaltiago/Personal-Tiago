@@ -1,0 +1,65 @@
+{
+ "versao": "1.12.300",
+ "sequencia": 406,
+ "titulo": "Pagamentos repetidos, mensalidade e IMC por idade",
+ "base": {
+  "referencia": "pacote-1-12-298-feedback-online-e-compartilhamento",
+  "impressao": "4b6cf649fcb5102d48796b14ab487513641e971bb40088686eb9312410b3a465"
+ },
+ "pedido": "Tiago, 20/11/2026 18:29 (avaliação do ChatGPT conferida pelo Claude) e 18:55 (\"Sim\" para substituir o registro anterior mantendo-o marcado como substituído): mensalidade corrigida somava R$ 450 + R$ 500 = R$ 950; IMC sem considerar idade (70 anos, 1,60 m, 67 kg aparecia acima da faixa). 20/11 19:52: \"tem alguma melhoria que você consiga fazer sem o chat\" -> quadro para os pagamentos repetidos já gravados.",
+ "aprovado_por": "Tiago aprovou a abordagem em 20/11/2026 18:55. Pacote ainda não aprovado para assinatura (depende do upload dele na main).",
+ "gerador": "tools/gerar-duplicados-1.12.300.cjs (sobre tools/gerar-financeiro-imc-1.12.299.cjs)",
+ "alteracoes": [
+  {
+   "pagina": "professor.html",
+   "id": "ap-finance-duplicates-css",
+   "antes": null,
+   "depois": "e4eaf3659499806091b9cc12ca238e1143f439977b47e69a05cf9b882ad0c82d",
+   "motivo": "bloco novo: estilo do quadro \"Vencimentos com pagamento repetido\""
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-finance-wallet-model",
+   "antes": "875dee6578f89316086d7144b6543cb43c0d0428ae1543e5f1c38b98e8975fdd",
+   "depois": "1809a9a55878a2454b19ae844bc9498bee464b9aa7840f747a0fa56c554bb988",
+   "motivo": "Recebido do mês: pagamento substituído por outro do mesmo vencimento sai da soma; exporta replacedIds"
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-finance-results-model",
+   "antes": "5624e39d3d1a5c807ba0a9564cb8e4ebe41c802fe176ffe6cff955148e66759e",
+   "depois": "d5811ab170ea169ef0cf2c9f9dad0943d4b4cd892ddfd07a628f6cb698752094",
+   "motivo": "resultados por mês: pagamento substituído sai da soma"
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-pix-receipt",
+   "antes": "16ad7ace53445431bfe5882875be661bab17f8e41cd7f94c3d33d60b8d38dacb",
+   "depois": "230982b8b151dd54f5581e1c2cde36af059c522e0ddef66e1a1b26edb05c0700",
+   "motivo": "continuação do \"Histórico mensal sem anexos\": a limpeza de comprovantes antigos mantém a marca replaces; histórico mostra substituído/substitui; mensagem clara quando a substituição é cancelada no comprovante"
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-finance-replacements",
+   "antes": null,
+   "depois": "54e1534923e67c733bb60e8131cdaa71698f13109529a860f5e40381909f45cc",
+   "motivo": "bloco novo: confirmação \"Substituir?\" ao quitar de novo um vencimento já quitado; quadro \"Vencimentos com pagamento repetido\" com \"Manter este\"; histórico do aluno sem o substituído"
+  },
+  {
+   "pagina": "professor.html",
+   "id": "#fora-dos-blocos",
+   "antes": "3d41eb330bb94766931d243e3475f3a70634c733350cdb22e35ee01029413d5a",
+   "depois": "8fd4422c749ce89291499f09f3846ed8c096668cfa41bc6b0931384e855adc04",
+   "motivo": "só a posição dos blocos novos ap-finance-replacements e ap-finance-duplicates-css"
+  },
+  {
+   "pagina": "avaliacoes.html",
+   "id": "#fora-dos-blocos",
+   "antes": "cf4a136c2b3befd1bbde0f904a5793c50eddb9b57473bb6c6e49efd20aa210c1",
+   "depois": "d7e829fe775428c74a417626930030423b96467cf552d3621e529b8752521795",
+   "motivo": "IMC pela idade (60 anos ou mais: 22 a 27, Ministério da Saúde) na tela, no compartilhar e no PDF; textos de ajuda"
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}

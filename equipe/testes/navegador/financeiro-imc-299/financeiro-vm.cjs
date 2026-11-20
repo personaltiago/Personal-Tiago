@@ -4,7 +4,7 @@ const pkg=require(process.argv[2]);const h=pkg.files['professor.html'];
 const blk=id=>{const i=h.indexOf('<script id="'+id+'">');assert.ok(i>=0,id);const s=h.indexOf('>',i)+1;return h.slice(s,h.indexOf('</script>',s))};
 const confirms=[],toasts=[];let answer=true;
 const c={console,Date,Set,Map,state:{students:[{id:'s1',name:'Ana',financeEnabled:true,monthlyValue:'500',dueDate:'2026-03-10'}],payments:[]},
- window:{confirm:m=>{confirms.push(m);return answer}},toast:(m)=>toasts.push(m),fmtDate:d=>d.split('-').reverse().join('/')};
+ window:{confirm:m=>{confirms.push(m);return answer}},document:{createElement:()=>({setAttribute(){},addEventListener(){},before(){}}),getElementById:()=>null},renderFinance(){},renderAll(){},save(){},toast:(m)=>toasts.push(m),fmtDate:d=>d.split('-').reverse().join('/')};
 c.globalThis=c;vm.createContext(c);
 vm.runInContext('function commitFinanceChange(student,changes,text,payment=null,ledger=null){state.payments=[payment,...state.payments];return "ok"}',c);
 for(const id of ['ap-billing-model','ap-finance-wallet-model','ap-finance-results-model'])vm.runInContext(blk(id),c);
