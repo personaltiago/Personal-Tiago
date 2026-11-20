@@ -64,6 +64,12 @@ jobs:
           while read -r f; do args+=(--candidato "$f"); done < pacotes.txt
           canon=$(node -p "require('./equipe/canonico/manifesto.json').canonico.arquivo")
           python3 -I equipe/testes/regressao/mecanismo-real.py --candidato "$canon" "${args[@]}"
+      - name: Playwright para os testes oficiais que abrem o Chromium
+        if: success() || failure()
+        run: |
+          npm install --no-save --prefix "$RUNNER_TEMP/pw" playwright@1.63.0
+          "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
+          echo "NODE_PATH=$RUNNER_TEMP/pw/node_modules" >> "$GITHUB_ENV"
       - name: Testes oficiais do Android com as páginas do canônico e dos posteriores
         # roda mesmo se o verificador reprovar: cada camada tem de pegar a regressão por conta própria
         if: success() || failure()
