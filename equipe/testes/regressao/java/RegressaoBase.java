@@ -178,7 +178,8 @@ public final class RegressaoBase {
 
     /** Cópia da correção só com a mudança de índice i (para saber, uma a uma, o que o conteúdo já tem). */
     static JSONObject only(JSONObject patch, int i) throws Exception {
-        return new JSONObject(patch.toString()).put("changes", new JSONArray().put(new JSONObject(patch.getJSONArray("changes").getJSONObject(i).toString())));
+        // id próprio: a pergunta é só se o CONTEÚDO já tem a mudança, sem o app confundir com a correção inteira já registrada no histórico
+        return new JSONObject(patch.toString()).put("id", patch.getString("id") + "-mudanca-" + i).put("changes", new JSONArray().put(new JSONObject(patch.getJSONArray("changes").getJSONObject(i).toString())));
     }
 
     /** Hashes que um bloco (página|bloco) pode ter depois do "depois" de uma mudança: segue as correções da main que continuam a partir dele. */

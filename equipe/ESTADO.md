@@ -2,6 +2,12 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**Atualização de 20/11 à noite (Claude, depois da avaliação do ChatGPT), `main` em `9a86cc9`:**
+- Dois arquivos novos na main, **não gerados pelo Claude**: a correção por área **"Feedback online e compartilhamento"** (`b7aa787`, SHA-256 `2bd0403e…c9a6`, assinada 44794359438; muda `ap-feedback-sync` e `ap-feedback-student` sobre o "Feedback somente no topo") e o pacote completo **1.12.298 / 404 "Feedback consolidado"** (`9a86cc9`, SHA-256 `602b204b…7973`, assinado 44797870274), com páginas idênticas a 295 + os dois complementos.
+- **Referência agora: 1.12.298 / 404. Próxima versão livre para pacote completo: 1.12.299 / 405.** O "Feedback somente no topo" reimportado sobre a referência dá conflito (já continuado), o que é correto. Canônico instalado continua 1.12.294 (a foto com 1.12.297 é indício, não confirmação de instalação).
+- **Erro do executor dos testes oficiais (achado do ChatGPT, confirmado):** 10 dos 18 testes liam `web/native-release.agenda.json` (1.12.269) e não o pacote; os "18/18" anteriores valiam só para 8 testes. Corrigido (`c4e233f`): 18/18 reais no 298 e na referência; o mutante do limite de histórico (200→201) agora reprova.
+- **Achados de conteúdo ainda não corrigidos (precisam de 1.12.299+ aprovado pelo Tiago):** (a) IMC na avaliação ignora a idade (`weightReferenceStatus` usa só 18,5/25; idoso 67 kg/1,60 m = 26,2 aparece acima, pela referência do Ministério da Saúde para ≥60 anos, 22–27, é adequado); (b) "Recebido" do financeiro soma todos os pagamentos do mês sem juntar os do mesmo aluno e vencimento (deduplica só pelo id): dois registros para o mesmo vencimento somam os dois (fluxo de tela não reproduzido); (c) a importação nativa do Android mostra só texto, sem barra de progresso.
+
 **Conteúdo (pacotes `.agenda.json`), conferido pela API e pelos SHA-256 em 20/11, `main` em `3ab3556`:**
 - **Canônico instalado: 1.12.294 / 400** (SHA-256 `2bf38cc5…30e9`; upload `f7ea686`; assinado 44707518866; instalado no aparelho do Tiago, relato com fotos de 20/11 11:38; validado só em parte).
 - **1.12.295 / 401** (Feedback pelo ícone do topo, PR #24): upload `7a41338`, assinado 44769018803 (artefato 14646008941). **Não instalado** (sem confirmação).

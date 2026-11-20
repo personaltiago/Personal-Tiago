@@ -13,9 +13,9 @@ import org.json.JSONObject;
 /**
  * Teste de regressão com o MECANISMO REAL de atualização do aplicativo (UpdateManager e UpdateAreaPatch do ZIP oficial, com a janela de
  * revisão de importação de verdade). Argumentos:
- *   projeto 1.12.288 1.12.291 1.12.292 1.12.294 1.12.295 referencia-node candidato pasta-das-correcoes complemento autorizados
- * A pasta tem as correções por área da raiz da main e esperado.json (situação de cada uma na referência). "complemento" é o arquivo da
- * correção "Feedback somente no topo" (passo da cadeia depois do 1.12.295); "referencia-node" é o estado consolidado montado pelo
+ *   projeto 1.12.288 1.12.291 1.12.292 1.12.294 1.12.295 referencia-node candidato pasta-das-correcoes complementos autorizados
+ * A pasta tem as correções por área da raiz da main e esperado.json (situação de cada uma na referência). "complementos" são os nomes, separados
+ * por vírgula e na ordem da cadeia, das correções que seguem o 1.12.295 ("Feedback somente no topo", "Feedback online"); "referencia-node" é o estado consolidado montado pelo
  * gerador do manifesto; "autorizados" é a lista pagina|id (separada por vírgula, ou "-") de blocos com continuação autorizada.
  * O que prova:
  *  A. 1.12.291 = 1.12.288 + 01/02/03 pelo app; a REFERÊNCIA = 1.12.295 + complemento pelo app, igual à montada pelo manifesto;
@@ -26,7 +26,7 @@ import org.json.JSONObject;
  *     1.12.294, 1.12.295 e a referência; 01/02/03 seguem presentes;
  *  D. pacotes antigos (1.12.288 e o 1.12.295 sem o complemento) sobre a referência: "Revisar restauração" com aviso; cancelado, nada muda;
  *  E-G. sensibilidade: o app ACEITA sem aviso (E) um pacote novo com a 03 do 1.12.288, (F) a correção por área disfarçada da revisão
- *     (a 03 do 1.12.288 + um comentário) e (G) um 1.12.297 montado do 295 sem o complemento; o teste tem de perceber as três perdas.
+ *     (a 03 do 1.12.288 + um comentário) e (G) um 1.12.299 montado do 295 sem os complementos; o teste tem de perceber as três perdas.
  */
 public final class RegressaoHarness {
     static final String APP = RegressaoBase.APP;
@@ -40,7 +40,9 @@ public final class RegressaoHarness {
         JSONObject s288 = RegressaoBase.read(args[1]), s291 = RegressaoBase.read(args[2]), s292 = RegressaoBase.read(args[3]);
         JSONObject s294 = RegressaoBase.read(args[4]), s295 = RegressaoBase.read(args[5]), refNode = RegressaoBase.read(args[6]), cand = RegressaoBase.read(args[7]);
         Path folder = Path.of(args[8]);
-        String COMP = Path.of(args[9]).getFileName().toString();
+        // complementos do 1.12.295, na ordem da cadeia ("Feedback somente no topo", depois "Feedback online")
+        String[] COMPS = args[9].split(",");
+        String COMP = COMPS[0], ULTIMO = COMPS[COMPS.length - 1];
         if (!args[10].equals("-")) for (String a : args[10].split(",")) AUTORIZADOS.add(a.trim());
         JSONObject expected = RegressaoBase.read(folder.resolve("esperado.json").toString());
         List<String> names = new ArrayList<>();
@@ -48,7 +50,7 @@ public final class RegressaoHarness {
         check(names.size() == expected.length(), "A pasta das correções não corresponde ao esperado.json");
         TreeMap<String, JSONObject> patches = RegressaoBase.ALL;
         for (String n : names) patches.put(n, RegressaoBase.read(folder.resolve(n).toString()));
-        check(patches.containsKey(COMP), "O complemento não está na pasta das correções");
+        for (String c : COMPS) check(patches.containsKey(c), "O complemento não está na pasta das correções: " + c);
         String P01 = "AgendaPersonal-01-Catalogo-Unificado-Para-Assinar.agenda.json", P02 = "AgendaPersonal-02-Baixar-Catalogo-Para-Assinar.agenda.json",
                P03 = "AgendaPersonal-03-Corrigir-Duplicatas-Catalogo-Para-Assinar.agenda.json", RAPOSA = "AgendaPersonal-Pets-Raposinha.agenda.json";
         String[] EXERCICIOS = {P01, P02, P03};
@@ -57,11 +59,12 @@ public final class RegressaoHarness {
         JSONObject chain = s288;
         for (String p : EXERCICIOS) chain = UpdateAreaPatch.apply(chain, patches.get(p), APP, LIMIT);
         RegressaoBase.samePages(chain, s291, "1.12.288 + 01 + 02 + 03 (UpdateAreaPatch real) x pacote 1.12.291");
-        JSONObject ref = UpdateAreaPatch.apply(s295, patches.get(COMP), APP, LIMIT);
-        RegressaoBase.samePages(ref, refNode, "1.12.295 + complemento pelo app x referência do manifesto");
+        JSONObject ref = s295;
+        for (String c : COMPS) ref = UpdateAreaPatch.apply(ref, patches.get(c), APP, LIMIT);
+        RegressaoBase.samePages(ref, refNode, "1.12.295 + complementos pelo app x referência do manifesto (= 1.12.298)");
         String sobre294 = RegressaoBase.refusal(s294, patches.get(COMP));
         check(sobre294 != null && sobre294.contains("ap-feedback-student"), "O complemento devia ser recusado sobre o 1.12.294 (depende do 295), mas: " + sobre294);
-        System.out.println("A. 1.12.291 = 1.12.288 + 01/02/03 pelo app; referência = 1.12.295 + complemento pelo app (" + ref.getString("version") + "/" + ref.getInt("sequence") + "), igual à do manifesto; complemento sobre o 1.12.294: recusado (" + sobre294 + ")");
+        System.out.println("A. 1.12.291 = 1.12.288 + 01/02/03 pelo app; referência = 1.12.295 + " + COMPS.length + " complemento(s) pelo app (" + ref.getString("version") + "/" + ref.getInt("sequence") + "), igual à do manifesto; complemento sobre o 1.12.294: recusado (" + sobre294 + ")");
         if (cand.optString("format").startsWith("agenda-patch/")) System.out.println("Candidato: correção por área " + cand.optString("id"));
         else System.out.println("Candidato: pacote completo " + cand.getString("version") + "/" + cand.getInt("sequence"));
 
@@ -79,7 +82,11 @@ public final class RegressaoHarness {
             check(RegressaoBase.PRESENT.equals(RegressaoBase.refusal(after, patches.get(p))), nome(p) + ": reimportar devia ser recusado como já presente");
             before = after;
         }
-        check(RegressaoBase.PRESENT.equals(RegressaoBase.refusal(ref, patches.get(COMP))), "Reimportar o complemento na referência devia dar 'já presente'");
+        check(RegressaoBase.PRESENT.equals(RegressaoBase.refusal(ref, patches.get(ULTIMO))), "Reimportar o último complemento na referência devia dar 'já presente'");
+        if (COMPS.length > 1) {
+            String primeiro = RegressaoBase.refusal(ref, patches.get(COMP));
+            check(primeiro != null && !RegressaoBase.PRESENT.equals(primeiro) && primeiro.contains("ap-feedback-student"), "O primeiro complemento, já continuado pelo seguinte, devia ser recusado por conflito na referência, mas: " + primeiro);
+        }
         String raposa = RegressaoBase.refusal(ref, patches.get(RAPOSA));
         check(raposa != null && raposa.contains("ap-student-mascot-model"), "A Raposinha devia ser recusada por conflito em ap-student-mascot-model, mas: " + raposa);
         JSONObject stale = new JSONObject(patches.get(P01).toString());
@@ -89,7 +96,7 @@ public final class RegressaoHarness {
         String cssAluno = ref.getJSONObject("files").getString("index.html");
         String paridade = RegressaoBase.refusal(ref, patch("teste-paridade", "evolucao", "feedback", "index.html", "ap-feedback-css", blockHash(cssAluno, "ap-feedback-css"), blockText(cssAluno, "ap-feedback-css") + ".x{}"));
         check(paridade != null && paridade.contains("aluno e no professor"), "Mudança do compartilhado só no aluno devia ser recusada, mas: " + paridade);
-        System.out.println("B. desinstalar 01/02/03 devolve o anterior; reimportar = já presente (também o complemento); Raposinha, hash divergente e ap-feedback-css só no aluno: recusados pelo app");
+        System.out.println("B. desinstalar 01/02/03 devolve o anterior; reimportar = já presente (também o último complemento; o primeiro, já continuado, é recusado); Raposinha, hash divergente e ap-feedback-css só no aluno: recusados pelo app");
 
         TreeMap<String, String> onRef = new TreeMap<>();
         for (String n : names) {
@@ -129,14 +136,15 @@ public final class RegressaoHarness {
 
         // ---------- E, F, G. sensibilidade: o app aceita, o teste tem de perceber ----------
         String antiga03 = blockText(s288.getJSONObject("files").getString("professor.html"), "ap-workout-corrections");
-        JSONObject e = new JSONObject(ref.toString()).put("version", "1.12.297").put("sequence", 403);
+        // a próxima versão livre depois da referência (1.12.298/404) é 1.12.299/405
+        JSONObject e = new JSONObject(ref.toString()).put("version", "1.12.299").put("sequence", 405);
         e.getJSONObject("files").put("professor.html", replaceBlock(e.getJSONObject("files").getString("professor.html"), "ap-workout-corrections", antiga03));
-        sensibilidade(project, "E. 1.12.297 com a 03 do 1.12.288", ref, e, P03, patches);
+        sensibilidade(project, "E. 1.12.299 com a 03 do 1.12.288", ref, e, P03, patches);
         String prof = ref.getJSONObject("files").getString("professor.html");
         JSONObject f = patch("review-only-revert-03-newline", "professor", "exercicios", "professor.html", "ap-workout-corrections", blockHash(prof, "ap-workout-corrections"), antiga03 + "\n/* review: harmless formatting */\n");
         sensibilidade(project, "F. correção disfarçada (03 do 1.12.288 + comentário)", ref, f, P03, patches);
-        JSONObject g = new JSONObject(s295.toString()).put("version", "1.12.297").put("sequence", 403);
-        sensibilidade(project, "G. 1.12.297 montado do 295 sem o complemento", ref, g, COMP, patches);
+        JSONObject g = new JSONObject(s295.toString()).put("version", "1.12.299").put("sequence", 405);
+        sensibilidade(project, "G. 1.12.299 montado do 295 sem os complementos", ref, g, ULTIMO, patches);
 
         System.out.println(RegressaoBase.checks + " verificações com o código real do aplicativo passaram; sem rede, APK assinado ou aparelho físico.");
         System.exit(0);

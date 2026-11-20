@@ -75,7 +75,7 @@ jobs:
         if: success() || failure()
         run: |
           set -euo pipefail
-          node -e "const L=require('./equipe/canonico/lib.cjs'),M=L.lerJson('equipe/canonico/manifesto.json');const c=M.pacotes.find(p=>p.tipo==='complemento'),b=M.pacotes.find(p=>p.tipo==='pacote-completo'&&p.versao===c.base);require('fs').writeFileSync(process.argv[1],JSON.stringify(L.aplicarCorrecao(L.lerJson(b.arquivo),L.lerJson(c.arquivo))))" "$RUNNER_TEMP/referencia.agenda.json"
+          node -e "const L=require('./equipe/canonico/lib.cjs'),M=L.lerJson('equipe/canonico/manifesto.json');const fim=M.pacotes.findIndex(x=>x.arquivo===M.referencia.arquivo);let ini=fim;while(M.pacotes[ini].tipo!=='pacote-completo')ini--;let p=null;for(const x of M.pacotes.slice(ini,fim+1))p=x.tipo==='complemento'?L.aplicarCorrecao(p,L.lerJson(x.arquivo)):L.lerJson(x.arquivo);require('fs').writeFileSync(process.argv[1],JSON.stringify(p))" "$RUNNER_TEMP/referencia.agenda.json"
           for f in "$RUNNER_TEMP/referencia.agenda.json" $(cat pacotes.txt); do
             if node -e "process.exit(String(JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')).format).startsWith('agenda-patch/')?1:0)" "$f"; then
               echo "== $f"; python3 -I equipe/testes/testes-oficiais-android.py "$f"

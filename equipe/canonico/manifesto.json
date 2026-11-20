@@ -11,15 +11,15 @@
   "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago (20/11). O 1.12.295 (assinado 20/11 12:00) e o complemento \"Feedback somente no topo\" (assinado 20/11 12:34) ainda não foram instalados; mesmo assim entram na REFERÊNCIA (o que nenhuma atualização nova pode perder), que é o último passo assinado."
  },
  "referencia": {
-  "id": "complemento-feedback-somente-no-topo",
+  "id": "pacote-1-12-298-feedback-online-e-compartilhamento",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-Feedback-Somente-No-Topo-Para-Assinar.agenda.json",
-  "sha256": "17894274d08ac990c5761235cae408fb56ad5758fc4270daf3bd90a11aee252d",
-  "versao_efetiva": "1.12.296",
-  "sequencia_efetiva": 402,
-  "proxima_versao_livre": "1.12.297",
-  "proxima_sequencia_livre": 403,
-  "impressao": "08f7b2428caf00f5adb1e7ac1182a7a1d6b37551256fb56fc438e3c9ccdadcff"
+  "arquivo": "AgendaPersonal-1.12.298-Feedback-Consolidado-Para-Assinar.agenda.json",
+  "sha256": "602b204bd7d93b460e4b9e9d1f8f12d89da18ffc6c5b7959105f6af778c87973",
+  "versao_efetiva": "1.12.298",
+  "sequencia_efetiva": 404,
+  "proxima_versao_livre": "1.12.299",
+  "proxima_sequencia_livre": 405,
+  "impressao": "4b6cf649fcb5102d48796b14ab487513641e971bb40088686eb9312410b3a465"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -45,8 +45,10 @@
   "AgendaPersonal-1.12.288-Janelas-Como-Pagina-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.294-Icone-Feedback-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.295-Feedback-Topo-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.298-Feedback-Consolidado-Para-Assinar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
+  "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
   "AgendaPersonal-Feedback-Somente-No-Topo-Para-Assinar.agenda.json",
   "AgendaPersonal-Pets-Raposinha.agenda.json",
   "AgendaPersonal-Pix-Comprovantes-Sem-Arquivos.agenda.json",
@@ -314,6 +316,42 @@
     "proposto": "sim: correção por área subida na main em 20/11/2026 12:34 (commit 3ab3556); não foi gerada pelo Claude (origem a confirmar com o Tiago)",
     "aprovado": "sim, para assinatura: o Tiago subiu o arquivo na main",
     "assinado": "sim: execução 44774714035 do workflow de assinatura (commit 3ab3556, sucesso), artefato 14648119398",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado",
+    "validado": "não confirmado"
+   }
+  },
+  {
+   "tipo": "complemento",
+   "versao": "1.12.297",
+   "sequencia": 403,
+   "numeracao": "a do app ao instalar a correção sobre o 1.12.295 (instalada + 1)",
+   "arquivo": "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
+   "sha256": "2bd0403e274c0f071fdcd11512b03162b029a476b25598076267d8fbd494c9a6",
+   "origem": "main",
+   "base": "1.12.295",
+   "titulo": "Feedback online e compartilhamento",
+   "status": {
+    "proposto": "sim: correção por área subida na main em 20/11/2026 (commit b7aa787); não foi gerada pelo Claude (origem a confirmar com o Tiago)",
+    "aprovado": "sim, para assinatura: o Tiago subiu o arquivo na main",
+    "assinado": "sim: execução 44794359438 do workflow de assinatura (commit b7aa787, sucesso)",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado (foto do Tiago mostra 1.12.297 instalada, compatível com 294 + 295 + 2 complementos; sem registro de instalação confirmado)",
+    "validado": "não confirmado"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.298",
+   "sequencia": 404,
+   "arquivo": "AgendaPersonal-1.12.298-Feedback-Consolidado-Para-Assinar.agenda.json",
+   "sha256": "602b204bd7d93b460e4b9e9d1f8f12d89da18ffc6c5b7959105f6af778c87973",
+   "origem": "main",
+   "titulo": "Feedback online e compartilhamento",
+   "status": {
+    "proposto": "sim: pacote completo subido na main em 20/11/2026 (commit 9a86cc9); não foi gerado pelo Claude",
+    "aprovado": "sim, para assinatura: o Tiago subiu o arquivo na main",
+    "assinado": "sim: execução 44797870274 do workflow de assinatura (commit 9a86cc9, sucesso)",
     "publicado": "não confirmado",
     "instalado": "não confirmado",
     "validado": "não confirmado"
@@ -883,7 +921,7 @@
     "vezes": 1
    },
    "ap-feedback-sync": {
-    "hash": "a68d7d530945d14aa915253e382b17ddef445720ed1c921454113f825440a0bb",
+    "hash": "87f3490b47ebe918d3cedffb8b08a9fe5bfc635c40ea57de85b96d07f17ea8e5",
     "area": "evolucao",
     "vezes": 1
    },
@@ -893,7 +931,7 @@
     "vezes": 1
    },
    "ap-feedback-student": {
-    "hash": "f538a26d6c96490bcde72b4aaaf82ea3a877e1619ec45341578808ac10ee40c3",
+    "hash": "8da53613d598b6e459f2de5f63019c6dcfcc5c9da209903c923ff954db217ecd",
     "area": "evolucao",
     "vezes": 1
    },
@@ -2520,6 +2558,10 @@
    {
     "hash": "a68d7d530945d14aa915253e382b17ddef445720ed1c921454113f825440a0bb",
     "desde": "1.12.282"
+   },
+   {
+    "hash": "87f3490b47ebe918d3cedffb8b08a9fe5bfc635c40ea57de85b96d07f17ea8e5",
+    "desde": "Feedback-Online-Compartilhar-Para-Assinar"
    }
   ],
   "index.html|ap-feedback-student": [
@@ -2546,6 +2588,10 @@
    {
     "hash": "f538a26d6c96490bcde72b4aaaf82ea3a877e1619ec45341578808ac10ee40c3",
     "desde": "Feedback-Somente-No-Topo-Para-Assinar"
+   },
+   {
+    "hash": "8da53613d598b6e459f2de5f63019c6dcfcc5c9da209903c923ff954db217ecd",
+    "desde": "Feedback-Online-Compartilhar-Para-Assinar"
    }
   ],
   "index.html|ap-student-session-recovery": [
@@ -4182,6 +4228,44 @@
    "depende_de": [
     "pacote-1-12-295-feedback-pelo-icone-do-topo"
    ]
+  },
+  {
+   "id": "complemento-feedback-online-compartilhar",
+   "titulo": "Feedback online e compartilhamento",
+   "tipo": "complemento",
+   "versao": "1.12.297",
+   "sequencia": 403,
+   "arquivo": "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "index.html",
+     "id": "ap-feedback-sync",
+     "area": "evolucao",
+     "antes": "a68d7d530945d14aa915253e382b17ddef445720ed1c921454113f825440a0bb",
+     "depois": "87f3490b47ebe918d3cedffb8b08a9fe5bfc635c40ea57de85b96d07f17ea8e5"
+    },
+    {
+     "pagina": "index.html",
+     "id": "ap-feedback-student",
+     "area": "evolucao",
+     "antes": "f538a26d6c96490bcde72b4aaaf82ea3a877e1619ec45341578808ac10ee40c3",
+     "depois": "8da53613d598b6e459f2de5f63019c6dcfcc5c9da209903c923ff954db217ecd"
+    }
+   ],
+   "depende_de": [
+    "complemento-feedback-somente-no-topo",
+    "pacote-1-12-282-feedback-do-aluno"
+   ]
+  },
+  {
+   "id": "pacote-1-12-298-feedback-online-e-compartilhamento",
+   "titulo": "Feedback online e compartilhamento",
+   "tipo": "pacote-completo",
+   "versao": "1.12.298",
+   "sequencia": 404,
+   "arquivo": "AgendaPersonal-1.12.298-Feedback-Consolidado-Para-Assinar.agenda.json",
+   "blocos": [],
+   "depende_de": []
   }
  ],
  "correcoes": [
@@ -4456,6 +4540,34 @@
      "area": "evolucao",
      "antes": "cf666ed2b6103ab4c9cde9fa3051ca0c5e39e02afd41da037b4a852638fb2cd3",
      "depois": "f538a26d6c96490bcde72b4aaaf82ea3a877e1619ec45341578808ac10ee40c3",
+     "situacao_no_canonico": "evoluida"
+    }
+   ],
+   "situacao_no_canonico": "evoluida"
+  },
+  {
+   "id": "correcao-feedback-online-compartilhar",
+   "arquivo": "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
+   "sha256": "2bd0403e274c0f071fdcd11512b03162b029a476b25598076267d8fbd494c9a6",
+   "titulo": "Feedback online e compartilhamento",
+   "area": "evolucao",
+   "modulo": "feedback",
+   "assinada_no_arquivo": false,
+   "mudancas": [
+    {
+     "pagina": "index.html",
+     "id": "ap-feedback-sync",
+     "area": "evolucao",
+     "antes": "a68d7d530945d14aa915253e382b17ddef445720ed1c921454113f825440a0bb",
+     "depois": "87f3490b47ebe918d3cedffb8b08a9fe5bfc635c40ea57de85b96d07f17ea8e5",
+     "situacao_no_canonico": "presente"
+    },
+    {
+     "pagina": "index.html",
+     "id": "ap-feedback-student",
+     "area": "evolucao",
+     "antes": "f538a26d6c96490bcde72b4aaaf82ea3a877e1619ec45341578808ac10ee40c3",
+     "depois": "8da53613d598b6e459f2de5f63019c6dcfcc5c9da209903c923ff954db217ecd",
      "situacao_no_canonico": "presente"
     }
    ],

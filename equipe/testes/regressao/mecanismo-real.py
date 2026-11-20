@@ -5,7 +5,7 @@ do teste oficial tests/verify_native_updates.py) e roda equipe/testes/regressao/
 
 Uso (da raiz do repositório):
   python3 -I equipe/testes/regressao/mecanismo-real.py [--candidato ARQUIVO ...] [--zip ZIP]
-Sem --candidato, testa a própria REFERÊNCIA do manifesto (1.12.295 + complemento) sobre todos os estados.
+Sem --candidato, testa a própria REFERÊNCIA do manifesto (1.12.295 + os complementos dele, igual ao 1.12.298) sobre todos os estados.
 Os pacotes (1.12.288, 1.12.294, 1.12.295), o complemento e as correções da main são achados na raiz/histórico da main pelo SHA-256; o 1.12.291 e o
 1.12.292 são refeitos pelos geradores (tools/) e conferidos pelo SHA-256.
 """
@@ -44,7 +44,8 @@ def main():
     with tempfile.TemporaryDirectory(prefix='agenda-regressao-java-') as temporario:
         trabalho = Path(temporario)
         pac = {p['versao']: p for p in manifesto['pacotes'] if p['tipo'] == 'pacote-completo'}
-        comp = next(p for p in manifesto['pacotes'] if p['tipo'] == 'complemento')
+        # complementos do 1.12.295, na ordem da cadeia (a referência = 295 + todos eles)
+        comps = [p for p in manifesto['pacotes'] if p['tipo'] == 'complemento' and p['base'] == '1.12.295']
         pares = ['%s=%s' % (pac[v]['arquivo'], pac[v]['sha256']) for v in ('1.12.288', '1.12.294', '1.12.295')]
         pares += ['%s=%s' % (c['arquivo'], c['sha256']) for c in manifesto['correcoes']]
         achados = node(TESTES / 'arquivos-da-main.cjs', trabalho / 'main', *pares)
@@ -53,15 +54,15 @@ def main():
         pasta.mkdir()
         for caminho in achados[3:]:
             shutil.copy(caminho, pasta / Path(caminho).name)
-        pcomp = pasta / comp['arquivo']
+        pcomps = [pasta / c['arquivo'] for c in comps]
         esperado = {c['arquivo']: {'presente': 'presente', 'evoluida': 'evoluída', 'aplicavel': 'aplicável', 'conflito': 'conflito'}[c['situacao_no_canonico']] for c in manifesto['correcoes']}
         (pasta / 'esperado.json').write_text(json.dumps(esperado, ensure_ascii=False, indent=1), encoding='utf-8')
         p292 = Path(node(TESTES / 'pacote-292.cjs', trabalho / 'p292')[-1])
         p291 = next((trabalho / 'p292' / 'p291').glob('*1.12.291*.agenda.json'), None) or Path(node(TESTES / 'pacote-291.cjs', trabalho / 'p291')[-1])
         # a referência montada pelo mesmo código do manifesto (o Java confere que é igual à do app)
         referencia = trabalho / 'referencia.agenda.json'
-        subprocess.run(['node', '-e', "const L=require(process.argv[1]),fs=require('fs');fs.writeFileSync(process.argv[4],JSON.stringify(L.aplicarCorrecao(L.lerJson(process.argv[2]),L.lerJson(process.argv[3]))))",
-                        str(RAIZ / 'equipe' / 'canonico' / 'lib.cjs'), str(p295), str(pcomp), str(referencia)], check=True)
+        subprocess.run(['node', '-e', "const L=require(process.argv[1]),fs=require('fs');let p=L.lerJson(process.argv[2]);for(const c of process.argv.slice(4))p=L.aplicarCorrecao(p,L.lerJson(c));fs.writeFileSync(process.argv[3],JSON.stringify(p))",
+                        str(RAIZ / 'equipe' / 'canonico' / 'lib.cjs'), str(p295), str(referencia), *map(str, pcomps)], check=True)
         candidatos = [Path(c).resolve() for c in opcoes.candidato] or [referencia]
 
         with zipfile.ZipFile(opcoes.zip) as zip_:
@@ -94,7 +95,7 @@ def main():
                 continue
             autorizados = node(Path(__file__).resolve().parent / 'autorizados.cjs', candidato)[-1]
             r = subprocess.run([java, '-Xmx3g', '-cp', str(classes), 'com.tiagolima.agendapersonal.RegressaoHarness',
-                                str(projeto), str(p288), str(p291), str(p292), str(p294), str(p295), str(referencia), str(candidato), str(pasta), str(pcomp), autorizados])
+                                str(projeto), str(p288), str(p291), str(p292), str(p294), str(p295), str(referencia), str(candidato), str(pasta), ','.join(c.name for c in pcomps), autorizados])
             if r.returncode:
                 falhas.append(candidato.name)
         if falhas:

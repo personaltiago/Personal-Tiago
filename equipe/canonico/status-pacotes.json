@@ -122,6 +122,22 @@
    "publicado": "não confirmado",
    "instalado": "não confirmado",
    "validado": "não confirmado"
+  },
+  "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json": {
+   "proposto": "sim: correção por área subida na main em 20/11/2026 (commit b7aa787); não foi gerada pelo Claude (origem a confirmar com o Tiago)",
+   "aprovado": "sim, para assinatura: o Tiago subiu o arquivo na main",
+   "assinado": "sim: execução 44794359438 do workflow de assinatura (commit b7aa787, sucesso)",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado (foto do Tiago mostra 1.12.297 instalada, compatível com 294 + 295 + 2 complementos; sem registro de instalação confirmado)",
+   "validado": "não confirmado"
+  },
+  "1.12.298": {
+   "proposto": "sim: pacote completo subido na main em 20/11/2026 (commit 9a86cc9); não foi gerado pelo Claude",
+   "aprovado": "sim, para assinatura: o Tiago subiu o arquivo na main",
+   "assinado": "sim: execução 44797870274 do workflow de assinatura (commit 9a86cc9, sucesso)",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
   }
  }
 }

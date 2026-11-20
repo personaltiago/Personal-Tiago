@@ -36,6 +36,8 @@ const CADEIA = [
   ['1.12.292', 'AgendaPersonal-1.12.292-Sino-Feedback-Para-Assinar.agenda.json', '82f41147ea8b47609483817506756ed1c1560c0dc7c718eed83b8e0224e687fb', 'gerador'],
   ['1.12.294', 'AgendaPersonal-1.12.294-Icone-Feedback-Para-Assinar.agenda.json', '2bf38cc59b48a663e00da9faf8d2feb7ca48ae186ff833500c0a0e68fea230e9', 'main'],
   ['1.12.295', 'AgendaPersonal-1.12.295-Feedback-Topo-Para-Assinar.agenda.json', '031b8a55010063925bc37d213ebe74d818d4c5249981f2d273a57f4ef1e20185', 'main'],
+  // Subido na main em 20/11 (commit 9a86cc9; não gerado pelo Claude). Páginas idênticas a 295 + os dois complementos abaixo.
+  ['1.12.298', 'AgendaPersonal-1.12.298-Feedback-Consolidado-Para-Assinar.agenda.json', '602b204bd7d93b460e4b9e9d1f8f12d89da18ffc6c5b7959105f6af778c87973', 'main'],
 ];
 // Correções por área da raiz da main. "esperado": a situação no canônico que o Tiago já conhece (presente, evoluída ou conflito).
 const CORRECOES = [
@@ -51,11 +53,14 @@ const CORRECOES = [
   ['AgendaPersonal-Testar-Enviar-Sons-Treino-para-assinar.agenda.json', '85decba4e95464299ed6243d67b04d8169287138c1bcf14bf7259f3a3fa6e93e'],
   // Complemento do 1.12.295 (subido na main em 20/11 12:34, commit 3ab3556; não foi gerado pelo Claude). Também é um passo da cadeia.
   ['AgendaPersonal-Feedback-Somente-No-Topo-Para-Assinar.agenda.json', '17894274d08ac990c5761235cae408fb56ad5758fc4270daf3bd90a11aee252d'],
+  // Segundo complemento do 1.12.295, aplicado depois do anterior (main 20/11, commit b7aa787; não gerado pelo Claude).
+  ['AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json', '2bd0403e274c0f071fdcd11512b03162b029a476b25598076267d8fbd494c9a6'],
 ];
 // Correções por área que entram NA CADEIA depois de um pacote completo (complementos assinados): [arquivo, pacote-base].
 // A REFERÊNCIA (o que nenhuma atualização nova pode perder) é o último passo assinado da cadeia, completo ou complemento.
 const COMPLEMENTOS = [
   ['AgendaPersonal-Feedback-Somente-No-Topo-Para-Assinar.agenda.json', '1.12.295'],
+  ['AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json', '1.12.295'],
 ];
 // Arquivos da raiz da main que são anteriores à cadeia (não entram na referência, mas estão classificados).
 const ANTERIORES = [
