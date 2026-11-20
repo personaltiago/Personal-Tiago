@@ -1,0 +1,11 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cenário: janelas do professor</title>
+<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}iframe{border:0;width:100%;height:100%;display:block}</style></head>
+<body><iframe id="app"></iframe>
+<script>
+'use strict';
+const Q = new URLSearchParams(location.search);
+window.APaccounts = {registrationSdk: async () => ({}), isTeacher: () => true, teacherUid: () => 'R2EmnDVcvMWt7TjPxOP6DjW1VOn1', logout() {}, retry() {}};
+const frame = document.getElementById('app');
+frame.src = Q.get('app') || 'prof-286.html';
+</script></body></html>
