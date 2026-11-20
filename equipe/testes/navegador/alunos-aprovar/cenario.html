@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}iframe{border:0;width:100%;height:100%;display:block}</style></head>
+<body><iframe id="app"></iframe>
+<script>
+'use strict';
+const Q = new URLSearchParams(location.search);
+const APP = Q.get('app') || 'prof-283.html';
+const MODE = Q.get('mode') || 'func';          // func | shot
+const THEME = Q.get('theme') || '';            // '' | metal | deep
+const VIEW = Q.get('view') || 'mais';          // mais | approvals | approved | links | empty | top
+const SEED = Q.get('seed') || 'normal';        // normal | allin | none
+const TEACHER = 'R2EmnDVcvMWt7TjPxOP6DjW1VOn1';
+const log = (kind, name, extra) => console.log('AUDIT ' + kind + ' ' + name + (extra ? ' | ' + extra : ''));
+let ok = 0, bad = 0;
+const check = (name, cond, extra) => { if (cond) { ok++; log('OK', name); } else { bad++; log('FALHA', name, extra); } };
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+async function until(fn, ms = 9000, step = 40) { const t0 = Date.now(); for (;;) { let v; try { v = fn(); } catch (e) { v = null; } if (v) return v; if (Date.now() - t0 > ms) return null; await sleep(step); } }
+
+// ---------- Firestore simulado ----------
+const docs = new Map();
+function seedDocs() {
+  docs.clear();
+  const base = {perfil: 'aluno', professorId: TEACHER, nascimento: '2000-05-12', genero: 'Prefiro não informar'};
+  const add = (id, nome, ativo, extra = {}) => docs.set(id, {...base, nome, email: nome.split(' ')[0].toLowerCase() + '@exemplo.com', whatsapp: '(69) 99999-' + String(1000 + docs.size), ativo, ...extra});
+  add('u_ana', 'Ana Pendente', false);
+  add('u_bruno', 'Bruno Aguardando', false);
+  add('u_carla', 'Carla Aprovada', true);                 // aprovada, mas ainda não está na agenda
+  add('u_diego', 'Diego Na Agenda', true);                // já está na agenda
+  add('u_elisa', 'Elisa Na Agenda Sem Aprovar', false);   // está na agenda, ativo=false no Firebase
+  add('u_outro', 'Fabio De Outro Professor', false, {professorId: 'OUTRO'});
+}
+const calls = {updateDoc: [], getDocs: 0, other: []};
+const liveListeners = new Set();
+const sdk = {
+  auth: {currentUser: {uid: TEACHER, getIdToken: async () => 'token'}},
+  db: {},
+  collection: (db, name) => ({name}),
+  where: (field, op, val) => ({field, op, val}),
+  query: (col, ...cons) => ({col, cons}),
+  getDocs: async q => { calls.getDocs++; await sleep(25); return {docs: [...docs.entries()].filter(([id, d]) => q.cons.every(c => c.op === '==' ? d[c.field] === c.val : true)).map(([id, d]) => ({id, data: () => ({...d})}))}; },
+  onSnapshot: (q, onNext) => {
+    const run = () => onNext({docs: [...docs.entries()].filter(([id, d]) => q.cons.every(c => c.op === '==' ? d[c.field] === c.val : true)).map(([id, d]) => ({id, data: () => ({...d})}))});
+    liveListeners.add(run); setTimeout(run, 0); return () => liveListeners.delete(run);
+  },
+  doc: (db, col, uid) => ({col, uid}),
+  updateDoc: async (ref, ...fields) => {
+    const data = {}; for (let i = 0; i < fields.length; i += 2) data[fields[i]] = fields[i + 1];
+    calls.updateDoc.push({uid: ref.uid, data}); await sleep(25);
+    docs.set(ref.uid, {...docs.get(ref.uid), ...data});
+    liveListeners.forEach(fn => fn());
+  },
+  serverTimestamp: () => 'server-time',
+  onAuthStateChanged: (auth, cb) => { setTimeout(() => cb(auth.currentUser), 0); return () => {}; },
+  signInWithEmailAndPassword: async () => { throw {code: 'auth/invalid-credential'}; },
+  signOut: async () => { sdk.auth.currentUser = null; }
+};
+window.APaccounts = {registrationSdk: async () => sdk, isTeacher: () => true, teacherUid: () => TEACHER, logout() {}, retry() {}};
+
+// ---------- helpers do aplicativo ----------
+let W, D;
+const $ = (sel, root = D) => root.querySelector(sel);
+const $$ = (sel, root = D) => [...root.querySelectorAll(sel)];
+const visible = el => !!el && !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length) && getComputedStyle(el).visibility !== 'hidden';
+const text = el => (el ? el.textContent.replace(/\s+/g, ' ').trim() : '');
+async function boot() {
+  if (THEME === 'metal') localStorage.setItem('agendaPersonalTL_design_v1', JSON.stringify({version: 1, id: 'metal-tl'}));
+  if (THEME === 'deep') localStorage.setItem('agendaPersonalTL_design_v1', JSON.stringify({version: 1, id: 'deep-tl'}));
+  seedDocs();
+  const frame = document.getElementById('app');
+  frame.src = APP;
+  await new Promise(r => frame.addEventListener('load', r, {once: true}));
+  W = frame.contentWindow; D = W.document;
+  await until(() => typeof W.openRegistrationLink === 'function' && $('[data-screen="more"]'), 15000);
+  // alunos que já estão na agenda (firebaseUid igual ao cadastro)
+  if (SEED !== 'none') {
+    const mk = (id, name, uid) => ({id, name, phone: '55699999' + id.slice(-4).padStart(4, '0'), studentType: 'presencial', financeEnabled: false, firebaseUid: uid, createdAt: '2026-11-01'});
+    W.eval("state.students.push(" + JSON.stringify(mk('stu_diego', 'Diego Na Agenda', 'u_diego')) + ", " + JSON.stringify(mk('stu_elisa', 'Elisa Na Agenda Sem Aprovar', 'u_elisa')) + ", " + JSON.stringify({id: 'stu_livre', name: 'Gil Sem Conta', phone: '5569999990099', studentType: 'online', financeEnabled: false, createdAt: '2026-11-02'}) + ")");
+    if (SEED === 'allin') {
+      W.eval("state.students.push(" + JSON.stringify(mk('stu_ana', 'Ana Pendente', 'u_ana')) + ", " + JSON.stringify(mk('stu_bruno', 'Bruno Aguardando', 'u_bruno')) + ", " + JSON.stringify(mk('stu_carla', 'Carla Aprovada', 'u_carla')) + ")");
+    }
+    try { W.eval('renderAll()'); } catch (e) { log('AVISO', 'renderAll', String(e)); }
+  }
+  await sleep(THEME ? 1800 : 500);
+}
+const goMais = async () => { await tap($('[data-screen="more"]')); await until(() => visible($('#moreRegistrationLink')), 6000); await sleep(THEME ? 1400 : 900); };
+const dialog = () => $('#registrationLinkDialog');
+const isOpen = () => dialog().classList.contains('open');
+const cards = () => $$('#registrationContactsList [data-registration-uid]');
+const names = () => cards().map(c => text($('strong', c)));
+const statusOf = c => text($('.registration-contact-status', c));
+const waitList = async (count) => until(() => $('#registrationContactsList') && (count === undefined ? $('#registrationContactsList').children.length : cards().length === count), 6000);
+const fire = (el, type) => el.dispatchEvent(new W.Event(type, {bubbles: true}));
+async function tap(el) {
+  if (!el) throw new Error('tap em elemento inexistente');
+  el.scrollIntoView({block: 'center'});
+  let last = '';
+  for (let k = 0; k < 40; k++) { await sleep(60); const q = el.getBoundingClientRect(); const now = [q.x, q.y, q.width, q.height].map(Math.round).join(','); if (now === last) break; last = now; }
+  const r = el.getBoundingClientRect();
+  const x = Math.round(r.x + r.width / 2), y = Math.round(r.y + r.height / 2);
+  const top = D.elementFromPoint(x, y) || el;
+  const o = {bubbles: true, cancelable: true, clientX: x, clientY: y, pointerId: 1, pointerType: 'touch', isPrimary: true, view: W};
+  let seen = [];
+  const spy = e => seen.push(e.type + (e.defaultPrevented ? '!' : ''));
+  for (const t of ['pointerdown', 'mousedown', 'pointerup', 'mouseup', 'click']) D.addEventListener(t, spy, true);
+  for (const [T, t] of [[W.PointerEvent, 'pointerdown'], [W.MouseEvent, 'mousedown'], [W.PointerEvent, 'pointerup'], [W.MouseEvent, 'mouseup'], [W.MouseEvent, 'click']]) top.dispatchEvent(new T(t, o));
+  for (const t of ['pointerdown', 'mousedown', 'pointerup', 'mouseup', 'click']) D.removeEventListener(t, spy, true);
+  if (Q.get('tapdebug')) log('TAP', (el.id || el.className || el.tagName) + ' -> ' + top.tagName + '#' + top.id + '.' + String(top.className).slice(0, 30), 'xy=' + x + ',' + y + ' eventos=' + seen.join(','));
+  return top;
+}
+async function tapCard(el) {
+  await tap(el); await sleep(150);
+  if (!isOpen()) { await tap(el); await sleep(150); }
+}
+const byName = n => cards().find(c => text($('strong', c)) === n);
+
+async function openApprovals() { await tapCard($('#moreStudentApprovals')); await until(isOpen, 4000); await waitList(); await sleep(150); }
+
+async function functional() {
+  const isNew = typeof W.openStudentApprovals === 'function';
+  check('versão carregada: ' + (isNew ? '283 (novo)' : '282 (antigo)'), isNew, 'esperava o pacote novo');
+  await sleep(500);
+  // ---- sininho (código real do aviso, com o Firestore simulado) ----
+  const badge = $('.registration-notification-count');
+  check('sininho: contador 3 (Ana, Bruno e Elisa aguardam aprovação)', badge && !badge.hidden && text(badge) === '3', badge && text(badge));
+  // ---- sininho: tocar no sino e em Ver cadastros (código real do aviso) ----
+  await tap($('.header-notifications')); await until(() => visible($('.registration-notification-card')), 4000);
+  const notice = $('.registration-notification-card');
+  check('avisos: card com 3 alunos aguardando aprovação', visible(notice) && /3 alunos aguardando aprovação/.test(text($('h3', notice))), notice && text(notice));
+  await tap($('button', notice)); await until(isOpen, 3000); await waitList(); await sleep(250);
+  check('Ver cadastros abre a janela Alunos para aprovar', isOpen() && text($('#registrationLinkTitle')) === 'Alunos para aprovar' && !visible($('#registrationTabs')) && visible($('#registrationContactsPanel')) && visible($('#registrationApprovalsIcon')) && !visible($('#registrationLinkIcon')));
+  check('pelo sininho a lista tem os mesmos 4 cartões', names().join('|') === 'Ana Pendente|Bruno Aguardando|Elisa Na Agenda Sem Aprovar|Carla Aprovada', names().join('|'));
+  W.closeDialog('registrationLinkDialog'); await sleep(200);
+  await goMais();
+  // ---- cartão no Mais ----
+  const card = $('#moreStudentApprovals');
+  check('cartão Alunos para aprovar existe uma vez', $$('#moreStudentApprovals').length === 1);
+  check('cartão visível no Mais', visible(card));
+  check('título do cartão', text($('strong', card)) === 'Alunos para aprovar', text($('strong', card)));
+  check('subtítulo do cartão', text($('small', card)) === 'Aprove os cadastros recebidos.', text($('small', card)));
+  const group = card && card.closest('[data-more-group]');
+  check('cartão no grupo Alunos e financeiro', group && group.dataset.moreGroup === 'students', group && group.dataset.moreGroup);
+  const order = group ? $$('button.more-function', group).map(b => b.id || text($('strong', b))) : [];
+  const iLink = order.indexOf('moreRegistrationLink'), iApp = order.indexOf('moreStudentApprovals'), iFol = order.indexOf('moreFollowup');
+  check('ordem: Cadastro por link, Alunos para aprovar, Acompanhamento', iLink >= 0 && iApp === iLink + 1 && iFol === iApp + 1, order.join(' > '));
+  const svg = card && $('.more-function-icon svg', card);
+  check('ícone do cartão é o glifo menu-approve', svg && (svg.dataset.apMenuIcon === 'menu-approve' || card.dataset.apMenuIcon === 'menu-approve'), svg && svg.outerHTML.slice(0, 120));
+  check('subtítulo de Cadastro por link', text($('#moreRegistrationLink small')) === 'Convide novos alunos pelo link.', text($('#moreRegistrationLink small')));
+
+  // ---- Cadastro por link: sem Contatos ----
+  await tapCard($('#moreRegistrationLink')); await until(isOpen, 4000); await sleep(200);
+  check('Cadastro por link abre', isOpen());
+  check('título Cadastro por link', text($('#registrationLinkTitle')) === 'Cadastro por link', text($('#registrationLinkTitle')));
+  const tabs = $$('#registrationTabs button');
+  check('atalhos: Cadastro, Instalação, Grupo, Anamnese, Planos', tabs.map(b => text(b)).join(',') === 'Cadastro,Instalação,Grupo,Anamnese,Planos', tabs.map(b => text(b)).join(','));
+  check('sem atalho Contatos', !$('#registrationContactsTab') && !tabs.some(b => /Contatos/.test(text(b))));
+  check('atalhos visíveis', visible($('#registrationTabs')));
+  check('ícone de link visível e de aprovação oculto', visible($('#registrationLinkIcon')) && !visible($('#registrationApprovalsIcon')));
+  check('painel Cadastro visível e lista oculta', visible($('#registrationLinkPanel')) && !visible($('#registrationContactsPanel')));
+  check('texto do painel Cadastro aponta para Mais', /Mais → Alunos para aprovar/.test(text($('#registrationLinkPanel'))) && !/aba Contatos/.test(text($('#registrationLinkPanel'))), text($('#registrationLinkPanel')).slice(0, 200));
+  const panelOf = {installation: 'installationLinkPanel', group: 'groupLinkPanel', anamnesis: 'anamnesisLinkPanel', plans: 'plansLinkPanel'};
+  for (const t of ['installation', 'group', 'anamnesis', 'plans']) {
+    await tap($('#' + {installation: 'installationLinkTab', group: 'groupLinkTab', anamnesis: 'anamnesisLinkTab', plans: 'plansLinkTab'}[t])); await sleep(80);
+    check('atalho ' + t + ' abre o seu painel', visible($('#' + panelOf[t])) && visible($('#registrationTabs')) && text($('#registrationLinkTitle')) === 'Cadastro por link' && !visible($('#registrationContactsPanel')));
+  }
+  check('aria-selected acompanha o atalho', $$('#registrationTabs button[aria-selected="true"]').length === 1 && $('#plansLinkTab').getAttribute('aria-selected') === 'true');
+  W.closeDialog('registrationLinkDialog'); await sleep(150);
+  check('fechar Cadastro por link', !isOpen());
+
+  // ---- Alunos para aprovar ----
+  await openApprovals();
+  check('janela abre pelo cartão', isOpen());
+  check('título Alunos para aprovar', text($('#registrationLinkTitle')) === 'Alunos para aprovar', text($('#registrationLinkTitle')));
+  check('atalhos de links ocultos', !visible($('#registrationTabs')));
+  check('ícone de aprovação visível e de link oculto', visible($('#registrationApprovalsIcon')) && !visible($('#registrationLinkIcon')));
+  check('botão fechar com nome certo', $('#registrationLinkClose').getAttribute('aria-label') === 'Fechar alunos para aprovar', $('#registrationLinkClose').getAttribute('aria-label'));
+  check('painéis de links ocultos', !visible($('#registrationLinkPanel')) && !visible($('#installationLinkPanel')) && !visible($('#groupLinkPanel')) && visible($('#registrationContactsPanel')));
+  const expected1 = 'Ana Pendente|Bruno Aguardando|Elisa Na Agenda Sem Aprovar|Carla Aprovada';
+  check('lista: quem aguarda aprovação e quem falta entrar na agenda (Diego e outro professor ficam de fora)', names().join('|') === expected1, names().join('|'));
+  check('status Ana', statusOf(byName('Ana Pendente')) === 'Aguardando aprovação', statusOf(byName('Ana Pendente')));
+  check('status Elisa (na agenda, mas sem aprovação no Firebase)', statusOf(byName('Elisa Na Agenda Sem Aprovar')) === 'Na agenda', statusOf(byName('Elisa Na Agenda Sem Aprovar')));
+  check('status Carla', statusOf(byName('Carla Aprovada')) === 'Aprovado · adicionar à agenda', statusOf(byName('Carla Aprovada')));
+  check('botão da Ana: Aprovar aluno', text($('[data-registration-approve]', byName('Ana Pendente'))) === 'Aprovar aluno');
+  check('botão da Carla: Adicionar à agenda', text($('[data-registration-approve]', byName('Carla Aprovada'))) === 'Adicionar à agenda');
+  check('Elisa: só Ver aluno na agenda', text($('[data-registration-edit]', byName('Elisa Na Agenda Sem Aprovar'))) === 'Ver aluno na agenda' && !$('[data-registration-approve]', byName('Elisa Na Agenda Sem Aprovar')));
+  check('botão Atualizar lista', text($('#registrationRefresh')) === 'Atualizar lista', text($('#registrationRefresh')));
+  check('não há texto de Contatos na janela', !/[Cc]ontatos/.test(text($('#registrationLinkDialog'))), (text($('#registrationLinkDialog')).match(/.{30}[Cc]ontatos.{30}/) || [''])[0]);
+  check('nada gravado só por abrir a lista', calls.updateDoc.length === 0, JSON.stringify(calls.updateDoc));
+
+  // ---- aprovar a Ana (online) ----
+  const ana = byName('Ana Pendente');
+  const sel = $('[data-registration-type]', ana); sel.value = 'online'; fire(sel, 'change');
+  const before = W.eval('state.students.length');
+  await tap($('[data-registration-approve]', ana));
+  await until(() => calls.updateDoc.length >= 1 && /está na sua agenda/.test(text($('[data-registration-message]', byName('Ana Pendente') || ana))), 6000);
+  check('uma gravação no Firebase, a mesma de antes', calls.updateDoc.length === 1 && calls.updateDoc[0].uid === 'u_ana' && JSON.stringify(calls.updateDoc[0].data) === JSON.stringify({ativo: true, tipoAluno: 'online', aprovadoEm: 'server-time'}), JSON.stringify(calls.updateDoc));
+  check('aluno entrou na agenda', W.eval('state.students.length') === before + 1 && W.eval("state.students.some(s=>s.firebaseUid==='u_ana'&&s.studentType==='online')"));
+  const ana2 = byName('Ana Pendente');
+  check('cartão da Ana continua na tela, como Na agenda', !!ana2 && statusOf(ana2) === 'Na agenda', ana2 ? statusOf(ana2) : 'sumiu');
+  check('confirmação visível no cartão', ana2 && /Ana Pendente está na sua agenda\./.test(text($('[data-registration-message]', ana2))), ana2 && text(ana2));
+  check('botão Ver aluno na agenda', ana2 && text($('[data-registration-edit]', ana2)) === 'Ver aluno na agenda');
+  check('lista segue com 4 cartões até atualizar', cards().length === 4, names().join(' | '));
+  await sleep(200);
+  const badge2 = $('.registration-notification-count');
+  check('sininho cai para 2 (Bruno e Elisa)', badge2 && !badge2.hidden && text(badge2) === '2', badge2 && text(badge2));
+
+  // ---- atualizar: Ana sai da lista ----
+  await tap($('#registrationRefresh'));
+  await until(() => cards().length === 3, 5000);
+  check('depois de Atualizar lista, Ana sai (aprovada e na agenda)', !names().includes('Ana Pendente') && cards().length === 3, names().join(' | '));
+  check('sobram Bruno, Elisa e Carla', names().join('|') === 'Bruno Aguardando|Elisa Na Agenda Sem Aprovar|Carla Aprovada', names().join('|'));
+
+  // ---- adicionar a Carla (já aprovada): não grava no Firebase de novo ----
+  const carla = byName('Carla Aprovada');
+  const sel2 = $('[data-registration-type]', carla); sel2.value = 'presencial'; fire(sel2, 'change');
+  await tap($('[data-registration-approve]', carla));
+  await until(() => /está na sua agenda/.test(text($('[data-registration-message]', byName('Carla Aprovada') || carla))), 6000);
+  check('Carla entra na agenda sem nova gravação no Firebase', calls.updateDoc.length === 1 && W.eval("state.students.some(s=>s.firebaseUid==='u_carla')"), JSON.stringify(calls.updateDoc.map(c => c.uid)));
+  check('cartão da Carla fica como Na agenda', statusOf(byName('Carla Aprovada')) === 'Na agenda');
+  await tap($('#registrationRefresh')); await until(() => cards().length === 2, 5000);
+  check('depois de atualizar, Carla sai', names().join('|') === 'Bruno Aguardando|Elisa Na Agenda Sem Aprovar', names().join('|'));
+
+  // ---- Excluir da lista (só esconde) ----
+  const bruno = byName('Bruno Aguardando');
+  await tap($('[data-registration-remove]', bruno)); await sleep(150);
+  const conf = $('[data-registration-remove-confirm]'); check('pede confirmação para excluir da lista', !!conf);
+  conf && await tap(conf); await sleep(250);
+  check('Bruno some da lista', !names().includes('Bruno Aguardando'), names().join(' | '));
+  check('exclusão não toca no Firebase', calls.updateDoc.length === 1 && docs.has('u_bruno'));
+  await sleep(200);
+  const badge3 = $('.registration-notification-count');
+  check('sininho cai para 1 (só Elisa)', badge3 && !badge3.hidden && text(badge3) === '1', badge3 && text(badge3));
+  const elisa = byName('Elisa Na Agenda Sem Aprovar');
+  await tap($('[data-registration-remove]', elisa)); await sleep(150);
+  const conf2 = $('[data-registration-remove-confirm]'); conf2 && await tap(conf2); await sleep(250);
+  check('lista vazia depois de tudo tratado', cards().length === 0, names().join(' | '));
+  check('texto de lista vazia', /Nenhum aluno aguardando aprovação\./.test(text($('#registrationContactsList'))), text($('#registrationContactsList')));
+  await tap($('#registrationRefresh')); await until(() => $('#registrationContactsList') && !$('#registrationContactsList').textContent.includes('Buscando'), 5000); await sleep(150);
+  check('atualizar mantém a lista vazia (exclusões são lembradas)', cards().length === 0 && /Nenhum aluno aguardando aprovação\./.test(text($('#registrationContactsList'))), text($('#registrationContactsList')));
+
+  // ---- Fechar e reabrir ----
+  await tap($('#registrationLinkClose')); await sleep(250);
+  check('botão × fecha a janela', !isOpen());
+  await goMais(); await tapCard($('#moreRegistrationLink')); await until(isOpen, 3000); await sleep(150);
+  check('Cadastro por link volta ao modo de links', text($('#registrationLinkTitle')) === 'Cadastro por link' && visible($('#registrationTabs')) && visible($('#registrationLinkIcon')) && !visible($('#registrationApprovalsIcon')) && $('#registrationLinkClose').getAttribute('aria-label') === 'Fechar cadastro por link');
+  W.closeDialog('registrationLinkDialog'); await sleep(150);
+
+  // ---- sem pendentes, o aviso do sininho some ----
+  await tap($('.header-notifications')); await sleep(500);
+  const badgeEnd = $('.registration-notification-count');
+  check('sem pendentes: contador e card do sininho ocultos', (!badgeEnd || badgeEnd.hidden) && !visible($('.registration-notification-card')), badgeEnd && (badgeEnd.hidden + ':' + text(badgeEnd)));
+
+  // ---- Voltar fecha a janela ----
+  await goMais(); await openApprovals();
+  const backBefore = isOpen();
+  let handled = null; try { handled = W.handleAgendaSystemBack ? W.handleAgendaSystemBack() : null; } catch (e) { handled = 'erro ' + e; }
+  await sleep(300);
+  check('Voltar do sistema fecha a janela', backBefore && !isOpen(), 'handled=' + handled);
+
+  log('INFO', 'chamadas ao Firebase simulado', 'getDocs=' + calls.getDocs + ' updateDoc=' + calls.updateDoc.length);
+  log('RESUMO', 'ok=' + ok + ' falhas=' + bad);
+}
+
+async function shot() {
+  await goMais();
+  if (VIEW === 'mais') {
+    const grp = $('[data-more-group="students"]'); grp && grp.scrollIntoView({block: 'start'}); await sleep(THEME ? 900 : 300);
+  } else if (VIEW === 'links') {
+    await tapCard($('#moreRegistrationLink')); await until(isOpen, 4000); await sleep(THEME ? 1200 : 500);
+  } else if (VIEW === 'approvals' || VIEW === 'approved' || VIEW === 'empty') {
+    await openApprovals(); await sleep(THEME ? 1200 : 400);
+    if (VIEW === 'approved') {
+      const ana = byName('Ana Pendente'); const sel = $('[data-registration-type]', ana); sel.value = 'online'; fire(sel, 'change');
+      await tap($('[data-registration-approve]', ana)); await until(() => /está na sua agenda/.test(text($('[data-registration-message]', byName('Ana Pendente') || ana))), 6000); await sleep(500);
+      const c = byName('Ana Pendente'); c && c.scrollIntoView({block: 'center'}); await sleep(300);
+    }
+  }
+  log('SHOT', 'pronto ' + VIEW + ' ' + (THEME || 'padrão'));
+}
+
+(async () => {
+  try {
+    await boot();
+    if (MODE === 'func') await functional(); else await shot();
+  } catch (e) {
+    log('EXCECAO', 'driver', (e && e.stack) || String(e));
+    log('RESUMO', 'ok=' + ok + ' falhas=' + (bad + 1));
+    log('SHOT', 'erro');
+  }
+})();
+</script></body></html>
