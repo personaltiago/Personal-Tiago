@@ -116,4 +116,29 @@ function situacaoMudanca(pacote, mudanca, cache = new Map()) {
   return 'conflito';
 }
 
-module.exports = {FORA, RAIZ, ZIP, PAGINAS, sha256, sha256Bytes, blocos, regrasDoApp, areaDoBloco, lerJson, situacaoMudanca};
+// Aplica uma correção por área (agenda-patch) ao conteúdo de um pacote, como o UpdateAreaPatch: cada mudança exige o bloco único com o
+// hash "antes" e um conteúdo cujo hash é o "depois". Devolve um pacote novo (versão e sequência +1, como o app numera). Erro = recusa.
+function aplicarCorrecao(pacote, patch) {
+  const novo = JSON.parse(JSON.stringify(pacote));
+  for (const m of patch.changes || []) {
+    if (sha256(m.content || '') !== m.after) throw new Error(`conteúdo de ${m.page} ${m.id} não tem o hash "depois" declarado`);
+    const html = novo.files[m.page];
+    const b = html !== undefined && blocos(html).get(m.id);
+    if (!b || b.vezes !== 1) throw new Error(`componente ausente ou repetido: ${m.page} ${m.id}`);
+    if (b.hash !== m.before) throw new Error(`conflito em ${m.id}: o bloco não está como a correção espera`);
+    novo.files[m.page] = html.slice(0, b.inicio) + m.content + html.slice(b.fim);
+  }
+  const v = /^(\d+)\.(\d+)\.(\d+)$/.exec(novo.version);
+  if (v) novo.version = v[1] + '.' + v[2] + '.' + (Number(v[3]) + 1);
+  novo.sequence = novo.sequence + 1;
+  return novo;
+}
+
+// Hashes de todos os blocos de um pacote: {pagina: Map(id -> hash)}.
+function hashesDoPacote(pacote) {
+  const out = {};
+  for (const p of PAGINAS) out[p] = new Map([...blocos(pacote.files?.[p] || '')].map(([id, b]) => [id, b.hash]));
+  return out;
+}
+
+module.exports = {aplicarCorrecao, hashesDoPacote, FORA, RAIZ, ZIP, PAGINAS, sha256, sha256Bytes, blocos, regrasDoApp, areaDoBloco, lerJson, situacaoMudanca};

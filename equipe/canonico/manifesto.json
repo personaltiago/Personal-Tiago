@@ -8,7 +8,18 @@
   "appId": "com.tiagolima.agendapersonal",
   "bridgeVersion": 3,
   "dataSchema": 4,
-  "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago (20/11). O 1.12.295 está assinado (20/11 12:00) mas ainda não instalado: é o próximo canônico depois de instalado e conferido."
+  "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago (20/11). O 1.12.295 (assinado 20/11 12:00) e o complemento \"Feedback somente no topo\" (assinado 20/11 12:34) ainda não foram instalados; mesmo assim entram na REFERÊNCIA (o que nenhuma atualização nova pode perder), que é o último passo assinado."
+ },
+ "referencia": {
+  "id": "complemento-feedback-somente-no-topo",
+  "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
+  "arquivo": "AgendaPersonal-Feedback-Somente-No-Topo-Para-Assinar.agenda.json",
+  "sha256": "17894274d08ac990c5761235cae408fb56ad5758fc4270daf3bd90a11aee252d",
+  "versao_efetiva": "1.12.296",
+  "sequencia_efetiva": 402,
+  "proxima_versao_livre": "1.12.297",
+  "proxima_sequencia_livre": 403,
+  "impressao": "08f7b2428caf00f5adb1e7ac1182a7a1d6b37551256fb56fc438e3c9ccdadcff"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -17,8 +28,42 @@
   "ap-feedback-model",
   "ap-feedback-css"
  ],
+ "classificados": [
+  "AgendaPersonal-01-Catalogo-Unificado-Para-Assinar.agenda.json",
+  "AgendaPersonal-02-Baixar-Catalogo-Para-Assinar.agenda.json",
+  "AgendaPersonal-03-Corrigir-Duplicatas-Catalogo-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.255-Verificar-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.273-Modo-Telefone-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.274-Aviso-Recuperacao-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.276-Links-Cadastro-Instalacao-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.278-Grupo-Turma-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.281-Links-Visual-Anamnese-Planos-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.282-Feedback-Aluno-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.283-Alunos-Para-Aprovar-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.284-Lista-De-Alunos-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.286-Recados-Modo-Claro-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.288-Janelas-Como-Pagina-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.294-Icone-Feedback-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.295-Feedback-Topo-Para-Assinar.agenda.json",
+  "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
+  "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
+  "AgendaPersonal-Feedback-Somente-No-Topo-Para-Assinar.agenda.json",
+  "AgendaPersonal-Pets-Raposinha.agenda.json",
+  "AgendaPersonal-Pix-Comprovantes-Sem-Arquivos.agenda.json",
+  "AgendaPersonal-Professor-Ficha-Recolhivel-253.agenda.json",
+  "AgendaPersonal-Sininho-Cadastro-Professor-para-assinar.agenda.json",
+  "AgendaPersonal-Testar-Enviar-Sons-Treino-para-assinar.agenda.json"
+ ],
+ "anteriores_a_cadeia": [
+  {
+   "arquivo": "AgendaPersonal-1.12.255-Verificar-Para-Assinar.agenda.json",
+   "sha256": "0cdb38d1d776a86794f884048eb2ae4373c01304df3a73582ba2660736136bc3",
+   "motivo": "pacote completo anterior à cadeia (conteúdo-base do APK é 1.12.269)"
+  }
+ ],
  "pacotes": [
   {
+   "tipo": "pacote-completo",
    "versao": "1.12.273",
    "sequencia": 379,
    "arquivo": "AgendaPersonal-1.12.273-Modo-Telefone-Para-Assinar.agenda.json",
@@ -35,6 +80,7 @@
    }
   },
   {
+   "tipo": "pacote-completo",
    "versao": "1.12.274",
    "sequencia": 380,
    "arquivo": "AgendaPersonal-1.12.274-Aviso-Recuperacao-Para-Assinar.agenda.json",
@@ -51,6 +97,7 @@
    }
   },
   {
+   "tipo": "pacote-completo",
    "versao": "1.12.276",
    "sequencia": 382,
    "arquivo": "AgendaPersonal-1.12.276-Links-Cadastro-Instalacao-Para-Assinar.agenda.json",
@@ -67,6 +114,7 @@
    }
   },
   {
+   "tipo": "pacote-completo",
    "versao": "1.12.278",
    "sequencia": 384,
    "arquivo": "AgendaPersonal-1.12.278-Grupo-Turma-Para-Assinar.agenda.json",
@@ -83,6 +131,7 @@
    }
   },
   {
+   "tipo": "pacote-completo",
    "versao": "1.12.281",
    "sequencia": 387,
    "arquivo": "AgendaPersonal-1.12.281-Links-Visual-Anamnese-Planos-Para-Assinar.agenda.json",
@@ -99,6 +148,7 @@
    }
   },
   {
+   "tipo": "pacote-completo",
    "versao": "1.12.282",
    "sequencia": 388,
    "arquivo": "AgendaPersonal-1.12.282-Feedback-Aluno-Para-Assinar.agenda.json",
@@ -115,6 +165,7 @@
    }
   },
   {
+   "tipo": "pacote-completo",
    "versao": "1.12.283",
    "sequencia": 389,
    "arquivo": "AgendaPersonal-1.12.283-Alunos-Para-Aprovar-Para-Assinar.agenda.json",
@@ -131,6 +182,7 @@
    }
   },
   {
+   "tipo": "pacote-completo",
    "versao": "1.12.285",
    "sequencia": 391,
    "arquivo": "AgendaPersonal-1.12.284-Lista-De-Alunos-Para-Assinar.agenda.json",
@@ -147,6 +199,7 @@
    }
   },
   {
+   "tipo": "pacote-completo",
    "versao": "1.12.286",
    "sequencia": 392,
    "arquivo": "AgendaPersonal-1.12.286-Recados-Modo-Claro-Para-Assinar.agenda.json",
@@ -163,6 +216,7 @@
    }
   },
   {
+   "tipo": "pacote-completo",
    "versao": "1.12.288",
    "sequencia": 394,
    "arquivo": "AgendaPersonal-1.12.288-Janelas-Como-Pagina-Para-Assinar.agenda.json",
@@ -179,6 +233,7 @@
    }
   },
   {
+   "tipo": "pacote-completo",
    "versao": "1.12.291",
    "sequencia": 397,
    "arquivo": "AgendaPersonal-1.12.291-Exercicios-Incluidos-Para-Assinar.agenda.json",
@@ -195,6 +250,7 @@
    }
   },
   {
+   "tipo": "pacote-completo",
    "versao": "1.12.292",
    "sequencia": 398,
    "arquivo": "AgendaPersonal-1.12.292-Sino-Feedback-Para-Assinar.agenda.json",
@@ -211,6 +267,7 @@
    }
   },
   {
+   "tipo": "pacote-completo",
    "versao": "1.12.294",
    "sequencia": 400,
    "arquivo": "AgendaPersonal-1.12.294-Icone-Feedback-Para-Assinar.agenda.json",
@@ -227,6 +284,7 @@
    }
   },
   {
+   "tipo": "pacote-completo",
    "versao": "1.12.295",
    "sequencia": 401,
    "arquivo": "AgendaPersonal-1.12.295-Feedback-Topo-Para-Assinar.agenda.json",
@@ -237,6 +295,25 @@
     "proposto": "sim",
     "aprovado": "sim, para assinatura: o Tiago subiu o arquivo na main (20/11 12:00); ainda não instalado",
     "assinado": "sim: execução 44769018803 do workflow de assinatura (commit 7a41338, sucesso)",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado",
+    "validado": "não confirmado"
+   }
+  },
+  {
+   "tipo": "complemento",
+   "versao": "1.12.296",
+   "sequencia": 402,
+   "numeracao": "a do app ao instalar a correção sobre o 1.12.295 (instalada + 1)",
+   "arquivo": "AgendaPersonal-Feedback-Somente-No-Topo-Para-Assinar.agenda.json",
+   "sha256": "17894274d08ac990c5761235cae408fb56ad5758fc4270daf3bd90a11aee252d",
+   "origem": "main",
+   "base": "1.12.295",
+   "titulo": "Feedback somente no ícone do topo",
+   "status": {
+    "proposto": "sim: correção por área subida na main em 20/11/2026 12:34 (commit 3ab3556); não foi gerada pelo Claude (origem a confirmar com o Tiago)",
+    "aprovado": "sim, para assinatura: o Tiago subiu o arquivo na main",
+    "assinado": "sim: execução 44774714035 do workflow de assinatura (commit 3ab3556, sucesso), artefato 14648119398",
     "publicado": "não confirmado",
     "instalado": "não confirmado",
     "validado": "não confirmado"
@@ -816,7 +893,7 @@
     "vezes": 1
    },
    "ap-feedback-student": {
-    "hash": "716376dbdf9c59c9b8c350e813fd801c7503c47b9ccc8932cd5b472490852121",
+    "hash": "f538a26d6c96490bcde72b4aaaf82ea3a877e1619ec45341578808ac10ee40c3",
     "area": "evolucao",
     "vezes": 1
    },
@@ -2461,6 +2538,14 @@
    {
     "hash": "716376dbdf9c59c9b8c350e813fd801c7503c47b9ccc8932cd5b472490852121",
     "desde": "1.12.294"
+   },
+   {
+    "hash": "cf666ed2b6103ab4c9cde9fa3051ca0c5e39e02afd41da037b4a852638fb2cd3",
+    "desde": "1.12.295"
+   },
+   {
+    "hash": "f538a26d6c96490bcde72b4aaaf82ea3a877e1619ec45341578808ac10ee40c3",
+    "desde": "Feedback-Somente-No-Topo-Para-Assinar"
    }
   ],
   "index.html|ap-student-session-recovery": [
@@ -3657,6 +3742,7 @@
    "tipo": "pacote-completo",
    "versao": "1.12.274",
    "sequencia": 380,
+   "arquivo": "AgendaPersonal-1.12.274-Aviso-Recuperacao-Para-Assinar.agenda.json",
    "blocos": [
     {
      "pagina": "professor.html",
@@ -3676,6 +3762,7 @@
    "tipo": "pacote-completo",
    "versao": "1.12.276",
    "sequencia": 382,
+   "arquivo": "AgendaPersonal-1.12.276-Links-Cadastro-Instalacao-Para-Assinar.agenda.json",
    "blocos": [
     {
      "pagina": "professor.html",
@@ -3703,6 +3790,7 @@
    "tipo": "pacote-completo",
    "versao": "1.12.278",
    "sequencia": 384,
+   "arquivo": "AgendaPersonal-1.12.278-Grupo-Turma-Para-Assinar.agenda.json",
    "blocos": [
     {
      "pagina": "index.html",
@@ -3751,6 +3839,7 @@
    "tipo": "pacote-completo",
    "versao": "1.12.281",
    "sequencia": 387,
+   "arquivo": "AgendaPersonal-1.12.281-Links-Visual-Anamnese-Planos-Para-Assinar.agenda.json",
    "blocos": [
     {
      "pagina": "index.html",
@@ -3785,6 +3874,7 @@
    "tipo": "pacote-completo",
    "versao": "1.12.282",
    "sequencia": 388,
+   "arquivo": "AgendaPersonal-1.12.282-Feedback-Aluno-Para-Assinar.agenda.json",
    "blocos": [
     {
      "pagina": "index.html",
@@ -3825,6 +3915,7 @@
    "tipo": "pacote-completo",
    "versao": "1.12.283",
    "sequencia": 389,
+   "arquivo": "AgendaPersonal-1.12.283-Alunos-Para-Aprovar-Para-Assinar.agenda.json",
    "blocos": [
     {
      "pagina": "index.html",
@@ -3874,6 +3965,7 @@
    "tipo": "pacote-completo",
    "versao": "1.12.285",
    "sequencia": 391,
+   "arquivo": "AgendaPersonal-1.12.284-Lista-De-Alunos-Para-Assinar.agenda.json",
    "blocos": [
     {
      "pagina": "professor.html",
@@ -3907,6 +3999,7 @@
    "tipo": "pacote-completo",
    "versao": "1.12.286",
    "sequencia": 392,
+   "arquivo": "AgendaPersonal-1.12.286-Recados-Modo-Claro-Para-Assinar.agenda.json",
    "blocos": [
     {
      "pagina": "professor.html",
@@ -3926,6 +4019,7 @@
    "tipo": "pacote-completo",
    "versao": "1.12.288",
    "sequencia": 394,
+   "arquivo": "AgendaPersonal-1.12.288-Janelas-Como-Pagina-Para-Assinar.agenda.json",
    "blocos": [
     {
      "pagina": "professor.html",
@@ -3952,6 +4046,7 @@
    "tipo": "pacote-completo",
    "versao": "1.12.291",
    "sequencia": 397,
+   "arquivo": "AgendaPersonal-1.12.291-Exercicios-Incluidos-Para-Assinar.agenda.json",
    "blocos": [
     {
      "pagina": "professor.html",
@@ -3985,6 +4080,7 @@
    "tipo": "pacote-completo",
    "versao": "1.12.292",
    "sequencia": 398,
+   "arquivo": "AgendaPersonal-1.12.292-Sino-Feedback-Para-Assinar.agenda.json",
    "blocos": [
     {
      "pagina": "index.html",
@@ -4019,6 +4115,7 @@
    "tipo": "pacote-completo",
    "versao": "1.12.294",
    "sequencia": 400,
+   "arquivo": "AgendaPersonal-1.12.294-Icone-Feedback-Para-Assinar.agenda.json",
    "blocos": [
     {
      "pagina": "index.html",
@@ -4052,6 +4149,7 @@
    "tipo": "pacote-completo",
    "versao": "1.12.295",
    "sequencia": 401,
+   "arquivo": "AgendaPersonal-1.12.295-Feedback-Topo-Para-Assinar.agenda.json",
    "blocos": [
     {
      "pagina": "index.html",
@@ -4063,6 +4161,26 @@
    ],
    "depende_de": [
     "pacote-1-12-294-icone-do-feedback-personalizavel"
+   ]
+  },
+  {
+   "id": "complemento-feedback-somente-no-topo",
+   "titulo": "Feedback somente no ícone do topo",
+   "tipo": "complemento",
+   "versao": "1.12.296",
+   "sequencia": 402,
+   "arquivo": "AgendaPersonal-Feedback-Somente-No-Topo-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "index.html",
+     "id": "ap-feedback-student",
+     "area": "evolucao",
+     "antes": "cf666ed2b6103ab4c9cde9fa3051ca0c5e39e02afd41da037b4a852638fb2cd3",
+     "depois": "f538a26d6c96490bcde72b4aaaf82ea3a877e1619ec45341578808ac10ee40c3"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-295-feedback-pelo-icone-do-topo"
    ]
   }
  ],
@@ -4318,6 +4436,26 @@
      "area": "sons",
      "antes": "593ba7355d216b0a35c7cff05d84acf618d56f8baa3a6ab73c6b8c06b94cdb78",
      "depois": "ce2d5c247d7fe0e554d9444b947d7c09a60dfe75d9ad159e0346bde7ac413395",
+     "situacao_no_canonico": "presente"
+    }
+   ],
+   "situacao_no_canonico": "presente"
+  },
+  {
+   "id": "correcao-feedback-somente-no-topo",
+   "arquivo": "AgendaPersonal-Feedback-Somente-No-Topo-Para-Assinar.agenda.json",
+   "sha256": "17894274d08ac990c5761235cae408fb56ad5758fc4270daf3bd90a11aee252d",
+   "titulo": "Feedback somente no ícone do topo",
+   "area": "evolucao",
+   "modulo": "feedback",
+   "assinada_no_arquivo": false,
+   "mudancas": [
+    {
+     "pagina": "index.html",
+     "id": "ap-feedback-student",
+     "area": "evolucao",
+     "antes": "cf666ed2b6103ab4c9cde9fa3051ca0c5e39e02afd41da037b4a852638fb2cd3",
+     "depois": "f538a26d6c96490bcde72b4aaaf82ea3a877e1619ec45341578808ac10ee40c3",
      "situacao_no_canonico": "presente"
     }
    ],

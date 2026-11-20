@@ -1,26 +1,21 @@
 # Agenda Personal — ESTADO
 
-## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR em rascunho `claude/protecao-regressao`) — vale acima das seções antigas
+## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
-**Conteúdo (pacotes `.agenda.json`), conferido pela API e pelos SHA-256 em 20/11 às ~12:00 (Cuiabá), `main` em `7a41338`:**
-- **Canônico: 1.12.294 / sequência 400** (`AgendaPersonal-1.12.294-Icone-Feedback-Para-Assinar.agenda.json`, SHA-256 `2bf38cc5…30e9`). Origem: gerado pelo Claude a partir do 1.12.292 (PR #21), subido pelo Tiago em 20/11 05:03 (commit `f7ea686`, idêntico byte a byte), assinado (execução 44707518866), **instalado** no aparelho do Tiago (relato com fotos, 20/11 11:38). Validado só em parte (a escolha do ícone).
-- **1.12.295 / 401** (Feedback pelo ícone do topo, PR #24): subido em 20/11 12:00 (`7a41338`), assinado (execução 44769018803, artefato 14646008941), **não instalado** ainda. Passa no verificador com a autorização `equipe/canonico/alteracoes-autorizadas/1.12.295.json` (muda só `index.html ap-feedback-student`). É o próximo canônico depois de instalado e confirmado. **Próxima versão livre: 1.12.296 / 402.**
-- **Nenhum pacote candidato novo foi gerado** nas issues #22/#23: o 1.12.294 já contém tudo o que foi aprovado (provado por teste, abaixo) e o 1.12.295 já existe.
-- Inventário completo (pacotes, funcionalidades, correções, PRs, paridade por área, Raposinha): `equipe/canonico/INVENTARIO.md` (gerado).
-- **Correções por área da main no canônico:** 01, 02, 03, Apagar exercício (as duas), Pix sem anexos, Sininho de cadastro e Sons do treino **presentes**; Ficha recolhível 253 **evoluída** (continuada pela 02); **Raposinha em conflito** (feita sobre o modelo de mascotes do 1.12.255, que ainda tinha o Galo; nunca esteve em pacote completo; decisão do Tiago pendente; nada alterado nos mascotes).
-- A seção 4.2 abaixo ("Guardar a agenda no telefone") está **desatualizada para o conteúdo**: o texto e `nsActivate` existem no `professor.html` do 1.12.294 (vieram do 1.12.273). No ZIP do APK continuam ausentes (o `verificar_funcionalidades.py` avisa que "voltou a existir" quando lê pacotes).
+**Conteúdo (pacotes `.agenda.json`), conferido pela API e pelos SHA-256 em 20/11, `main` em `3ab3556`:**
+- **Canônico instalado: 1.12.294 / 400** (SHA-256 `2bf38cc5…30e9`; upload `f7ea686`; assinado 44707518866; instalado no aparelho do Tiago, relato com fotos de 20/11 11:38; validado só em parte).
+- **1.12.295 / 401** (Feedback pelo ícone do topo, PR #24): upload `7a41338`, assinado 44769018803 (artefato 14646008941). **Não instalado** (sem confirmação).
+- **"Feedback somente no topo"** (`AgendaPersonal-Feedback-Somente-No-Topo-Para-Assinar.agenda.json`, correção por área, SHA-256 `17894274…252d`): upload `3ab3556` (20/11 12:34; não foi gerada pelo Claude), assinada 44774714035 (artefato 14648119398). **Depende do 1.12.295** (o app a recusa sobre o 1.12.294). Completa o 295: retira o toque no pet que ainda abria o feedback e o acompanhamento da janela do pet (o 295 do Claude não tinha tirado esse toque). **Não instalada** (sem confirmação).
+- **Referência (o que nenhuma atualização nova pode perder): 1.12.295 + "Feedback somente no topo"**, que o app numera **1.12.296 / 402** ao instalar a correção. **Próxima versão livre para pacote completo: 1.12.297 / 403.** Um 1.12.296/402 completo seria recusado (sequência igual à da referência).
+- Inventário (passos, funcionalidades, correções, PRs, paridade por área, Raposinha): `equipe/canonico/INVENTARIO.md` (gerado).
+- **Correções da main na referência:** 01, 02, 03, Apagar exercício (as duas), Pix sem anexos, Sininho de cadastro, Sons do treino e "Feedback somente no topo" **presentes**; Ficha recolhível 253 **evoluída**; **Raposinha em conflito** (feita sobre o modelo de mascotes do 1.12.255, que ainda citava o Galo; nunca esteve em pacote completo; nada alterado nos mascotes; decisão do Tiago).
+- A seção 4.2 abaixo está desatualizada para o conteúdo: "Guardar a agenda no telefone" e `nsActivate` existem no `professor.html` desde o 1.12.273.
 
-**Proteção nova (no PR, ainda não na main):** `CLAUDE.md` (regras permanentes), `equipe/canonico/` (manifesto canônico com hashes, histórico, funcionalidades e dependências; estados dos pacotes; autorizações), `equipe/testes/regressao/` (verificador, teste do teste, mecanismo real em Java), CI `verificar-regressao.yml` em todo PR e conferência no `assinar-atualizacoes-agenda.yml` **antes** de assinar (só lê; não toca na chave).
+**Proteção (no PR #25, ainda não na main):** `CLAUDE.md`; `equipe/canonico/` (referência e canônico, hashes, histórico, funcionalidades, estados, autorizações, conferência da raiz); `equipe/testes/regressao/` (verificador, 40 casos propositais, mecanismo real em Java, `conferir-antes-de-assinar.sh`); CI `verificar-regressao.yml` em todo PR; os **três** fluxos de assinatura de conteúdo rodam a conferência (verificador + mecanismo real) antes de ler a chave. `android-apk.yml` (APK) não é coberto.
 
-**Testes de 20/11 (ambiente do Claude: Node 22, Java 21, Chrome 153 headless; sem celular):**
-- Verificador: 294 = canônico; 295 aprovado com a autorização; os pacotes completos antigos da raiz (1.12.255 a 1.12.288) seriam **reprovados** antes de assinar (regressivos); Raposinha e Ficha recolhível 253 reprovadas (conflito); demais correções da main aprovadas (já presentes, idempotentes).
-- Teste do teste: 27 de 27 casos com o resultado esperado (regressões propositais reprovadas pelo motivo certo, controles aprovados).
-- Mecanismo real (UpdateManager/UpdateAreaPatch do ZIP): 158 (294) e 157 (295) verificações; 291 = 288 + 01/02/03 aplicadas pelo app; candidato sobre 288, 288 + correções da main, 291, 292 e 294 sem perder nenhuma correção; 01/02/03 presentes; pacote 288 sobre o canônico = "Revisar restauração" com aviso; o app instala sem aviso um pacote mais novo que reverte a 03 (por isso a conferência antes de assinar).
-- Chrome: catálogo de exercícios (01/02/03, inclusive o TXT com grupos, nomes, "como fazer", observações e links) 51/51 no `professor.html` do 294 (= do 295).
-- Testes oficiais do Android (18 `verify_*.cjs`) com as páginas do 294 e do 295: 18/18 cada.
-- **Não testado:** Xiaomi, iPhone/Safari, distribuição ao app web dos alunos.
+**Correções da revisão independente (20/11 12:47):** (1) mudar o bloco de uma correção protegida passa a exigir autorização, qualquer que seja o conteúdo novo — a 03 do 1.12.288 com um comentário é reprovada pelo verificador e pelo mecanismo real, e o mecanismo real roda também antes de assinar; (2) referência inclui o complemento e o protege; envio novo na raiz fora do manifesto reprova o CI; (3) a conferência cobre `assinar-ficha-recolhivel.yml` (o conteúdo dele é reprovado: conflito) e `assinar-descanso-aluno.yml` (passa: já presente; descanso intacto); (4) passos para tornar `regressao` obrigatório em `equipe/canonico/LEIA-ME.md`.
 
-**Limite:** a regra "Proteger main" (ruleset 27377643) só impede apagar a branch e push forçado. **Não há verificação obrigatória**: o CI vermelho não bloqueia merge até o Tiago marcar o job `regressao` como obrigatório. O upload direto na `main` pelo site não passa por PR; a única barreira nele é a conferência antes de assinar (depois que este PR entrar).
+**Limite:** o ruleset "Proteger main" (27377643) só bloqueia apagar a branch e push forçado. **Não há verificação obrigatória** até o Tiago configurar (LEIA-ME). Não testado em Xiaomi nem iPhone/Safari.
 
 ---
 

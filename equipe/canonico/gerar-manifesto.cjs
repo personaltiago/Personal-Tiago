@@ -49,6 +49,17 @@ const CORRECOES = [
   ['AgendaPersonal-Professor-Ficha-Recolhivel-253.agenda.json', '8eb9179bdc851637f8dbecc7669eec4c0bfc67f777222a85dfc94cdc4548afd8'],
   ['AgendaPersonal-Sininho-Cadastro-Professor-para-assinar.agenda.json', '97a1f3c989d8893cb8e7b6b1e277e1a238595737db7721da92dc0c2208dee9a9'],
   ['AgendaPersonal-Testar-Enviar-Sons-Treino-para-assinar.agenda.json', '85decba4e95464299ed6243d67b04d8169287138c1bcf14bf7259f3a3fa6e93e'],
+  // Complemento do 1.12.295 (subido na main em 20/11 12:34, commit 3ab3556; não foi gerado pelo Claude). Também é um passo da cadeia.
+  ['AgendaPersonal-Feedback-Somente-No-Topo-Para-Assinar.agenda.json', '17894274d08ac990c5761235cae408fb56ad5758fc4270daf3bd90a11aee252d'],
+];
+// Correções por área que entram NA CADEIA depois de um pacote completo (complementos assinados): [arquivo, pacote-base].
+// A REFERÊNCIA (o que nenhuma atualização nova pode perder) é o último passo assinado da cadeia, completo ou complemento.
+const COMPLEMENTOS = [
+  ['AgendaPersonal-Feedback-Somente-No-Topo-Para-Assinar.agenda.json', '1.12.295'],
+];
+// Arquivos da raiz da main que são anteriores à cadeia (não entram na referência, mas estão classificados).
+const ANTERIORES = [
+  ['AgendaPersonal-1.12.255-Verificar-Para-Assinar.agenda.json', '0cdb38d1d776a86794f884048eb2ae4373c01304df3a73582ba2660736136bc3', 'pacote completo anterior à cadeia (conteúdo-base do APK é 1.12.269)'],
 ];
 
 const slug = t => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -79,55 +90,77 @@ function gerar() {
 
     const pacotes = [], funcionalidades = [], historico = {};
     const dono = {}; // pagina|id|hash -> funcionalidade que deixou o bloco com esse hash
-    let anterior = null;
-    const seqCanonico = L.lerJson(caminho[canonicoVersao]).sequence;
-    for (const [versao, nome, sha, origem] of CADEIA) {
-      const p = L.lerJson(caminho[versao]);
-      if (p.version !== versao) throw new Error('Versão do arquivo ' + nome + ' é ' + p.version + ', não ' + versao);
-      const st = status.pacotes[versao];
-      if (!st) throw new Error('status-pacotes.json não tem o ' + versao);
-      pacotes.push({versao, sequencia: p.sequence, arquivo: nome, sha256: sha, origem, titulo: p.update?.title || '', status: st});
+    // passos da cadeia: cada pacote completo e, logo depois do seu pacote-base, os complementos dele
+    const passos = [];
+    for (const c of CADEIA) {
+      passos.push({tipo: 'pacote', versao: c[0], arquivo: c[1], sha256: c[2], origem: c[3]});
+      for (const [arquivo, base] of COMPLEMENTOS) if (base === c[0]) passos.push({tipo: 'complemento', arquivo, base, sha256: CORRECOES.find(x => x[0] === arquivo)[1], origem: 'main'});
+    }
+    let anterior = null, conteudo = null, referencia = null;
+    for (const passo of passos) {
+      const st = status.pacotes[passo.tipo === 'pacote' ? passo.versao : passo.arquivo];
+      if (!st) throw new Error('status-pacotes.json não tem ' + (passo.versao || passo.arquivo));
+      let p, titulo, id;
+      if (passo.tipo === 'pacote') {
+        p = L.lerJson(caminho[passo.versao]);
+        if (p.version !== passo.versao) throw new Error('Versão do arquivo ' + passo.arquivo + ' é ' + p.version + ', não ' + passo.versao);
+        titulo = p.update?.title || '';
+        id = 'pacote-' + passo.versao.replace(/\./g, '-') + '-' + slug(titulo || 'sem-titulo');
+        pacotes.push({tipo: 'pacote-completo', versao: passo.versao, sequencia: p.sequence, arquivo: passo.arquivo, sha256: passo.sha256, origem: passo.origem, titulo, status: st});
+      } else {
+        const patch = L.lerJson(caminho[passo.arquivo]);
+        p = L.aplicarCorrecao(conteudo, patch); // recusa se o complemento não casar com o pacote-base
+        titulo = patch.title;
+        id = 'complemento-' + patch.id;
+        pacotes.push({tipo: 'complemento', versao: p.version, sequencia: p.sequence, numeracao: 'a do app ao instalar a correção sobre o ' + passo.base + ' (instalada + 1)', arquivo: passo.arquivo, sha256: passo.sha256, origem: passo.origem, base: passo.base, titulo, status: st});
+      }
       const atual = {};
       for (const pagina of L.PAGINAS) atual[pagina] = L.blocos(p.files[pagina]);
-      const id = 'pacote-' + versao.replace(/\./g, '-') + '-' + slug(p.update?.title || 'sem-titulo');
       const mudou = [];
-      for (const pagina of L.PAGINAS) {
-        const antes = anterior ? anterior[pagina] : new Map();
-        for (const [bid, b] of atual[pagina]) {
-          const chave = pagina + '|' + bid;
-          // o histórico só guarda o que veio ATÉ o canônico: voltar a um desses hashes é reversão; o que veio depois é candidato
-          if (p.sequence <= seqCanonico) {
-            (historico[chave] ||= []);
-            if (!historico[chave].some(h => h.hash === b.hash)) historico[chave].push({hash: b.hash, desde: versao});
-          }
-          const a = antes.get(bid);
-          if (anterior && (!a || a.hash !== b.hash)) mudou.push({pagina, id: bid, area: L.areaDoBloco(regras, pagina, bid), antes: a ? a.hash : null, depois: b.hash});
-        }
-        if (anterior) for (const [bid, a] of antes) if (!atual[pagina].has(bid)) mudou.push({pagina, id: bid, area: L.areaDoBloco(regras, pagina, bid), antes: a.hash, depois: null});
+      if (anterior) for (const pagina of L.PAGINAS) {
+        for (const [bid, b] of atual[pagina]) { const a = anterior[pagina].get(bid); if (!a || a.hash !== b.hash) mudou.push({pagina, id: bid, area: L.areaDoBloco(regras, pagina, bid), antes: a ? a.hash : null, depois: b.hash}); }
+        for (const [bid, a] of anterior[pagina]) if (!atual[pagina].has(bid)) mudou.push({pagina, id: bid, area: L.areaDoBloco(regras, pagina, bid), antes: a.hash, depois: null});
       }
       if (anterior) {
         const depende = new Set();
         for (const m of mudou) { const d = m.antes && dono[m.pagina + '|' + m.id + '|' + m.antes]; if (d && d !== id) depende.add(d); }
-        funcionalidades.push({id, titulo: p.update?.title || '', tipo: 'pacote-completo', versao, sequencia: p.sequence, blocos: mudou, depende_de: [...depende].sort()});
+        funcionalidades.push({id, titulo, tipo: passo.tipo === 'pacote' ? 'pacote-completo' : 'complemento', versao: p.version, sequencia: p.sequence, arquivo: passo.arquivo, blocos: mudou, depende_de: [...depende].sort()});
       }
       for (const pagina of L.PAGINAS) for (const [bid, b] of atual[pagina]) { const k = pagina + '|' + bid + '|' + b.hash; if (!dono[k]) dono[k] = anterior ? id : 'base-1.12.273'; }
-      anterior = atual;
+      anterior = atual; conteudo = p;
+      // a referência é o último passo ASSINADO; o que vem depois dela (proposto, ainda não assinado) não entra
+      if (/^sim/.test(st.assinado)) referencia = {passo, pacote: p, id, ate: pacotes.length};
     }
-
+    if (!referencia) throw new Error('Nenhum passo assinado na cadeia');
+    // histórico: todo hash que cada bloco teve na cadeia ATÉ a referência; voltar a um deles (sem ser o atual) é reversão
+    let ref = null;
+    {
+      let estado = null;
+      for (const passo of passos.slice(0, referencia.ate)) {
+        estado = passo.tipo === 'pacote' ? L.lerJson(caminho[passo.versao]) : L.aplicarCorrecao(estado, L.lerJson(caminho[passo.arquivo]));
+        const rotulo = passo.tipo === 'pacote' ? passo.versao : passo.arquivo.replace('AgendaPersonal-', '').replace('.agenda.json', '');
+        for (const pagina of L.PAGINAS) for (const [bid, b] of L.blocos(estado.files[pagina])) {
+          const chave = pagina + '|' + bid;
+          (historico[chave] ||= []);
+          if (!historico[chave].some(h => h.hash === b.hash)) historico[chave].push({hash: b.hash, desde: rotulo});
+        }
+      }
+      ref = estado;
+    }
     const canonico = L.lerJson(caminho[canonicoVersao]);
     const canonicoBlocos = {};
     for (const pagina of L.PAGINAS) {
       canonicoBlocos[pagina] = {};
-      for (const [bid, b] of L.blocos(canonico.files[pagina])) canonicoBlocos[pagina][bid] = {hash: b.hash, area: L.areaDoBloco(regras, pagina, bid), vezes: b.vezes};
+      for (const [bid, b] of L.blocos(ref.files[pagina])) canonicoBlocos[pagina][bid] = {hash: b.hash, area: L.areaDoBloco(regras, pagina, bid), vezes: b.vezes};
     }
-
+    const impressao = L.sha256(JSON.stringify(L.PAGINAS.map(pg => [pg, Object.entries(canonicoBlocos[pg]).map(([i, v]) => [i, v.hash])])));
     const correcoes = [];
     const todas = CORRECOES.map(([nome, sha]) => ({nome, sha, p: L.lerJson(caminho[nome])}));
     for (const {nome, sha, p} of todas) {
       const mudancas = p.changes.map(c => ({pagina: c.page, id: c.id, area: L.areaDoBloco(regras, c.page, c.id), antes: c.before, depois: c.after}));
       // situação no canônico, por mudança: presente, aplicável, evoluída (outra correção da main continuou a partir do "depois") ou conflito
       const porMudanca = p.changes.map(c => {
-        const s = L.situacaoMudanca(canonico, c);
+        const s = L.situacaoMudanca(ref, c);
         if (s !== 'conflito') return s;
         const atual = canonicoBlocos[c.page][c.id]?.hash;
         const segue = todas.some(o => o.nome !== nome && o.p.changes.some(d => d.page === c.page && d.id === c.id && d.before === c.after && d.after === atual));
@@ -144,7 +177,12 @@ function gerar() {
       descricao: 'Fonte canônica versionada do conteúdo do Agenda Personal e manifesto das funcionalidades. Gerado por equipe/canonico/gerar-manifesto.cjs; não editar à mão (o CI confere).',
       canonico: {versao: canonicoVersao, sequencia: canonico.sequence, arquivo: CADEIA.find(c => c[0] === canonicoVersao)[1], sha256: CADEIA.find(c => c[0] === canonicoVersao)[2],
         appId: canonico.appId, bridgeVersion: canonico.bridgeVersion, dataSchema: canonico.dataSchema, motivo: status.motivo_canonico},
+      referencia: {id: referencia.id, descricao: 'Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.',
+        arquivo: referencia.passo.arquivo, sha256: referencia.passo.sha256, versao_efetiva: ref.version, sequencia_efetiva: ref.sequence,
+        proxima_versao_livre: '1.12.' + (Number(ref.version.split('.')[2]) + 1), proxima_sequencia_livre: ref.sequence + 1, impressao},
       compartilhados: regras.compartilhados,
+      classificados: [...CADEIA.filter(c => c[3] === 'main').map(c => c[1]), ...CORRECOES.map(c => c[0]), ...ANTERIORES.map(c => c[0])].sort(),
+      anteriores_a_cadeia: ANTERIORES.map(([arquivo, sha256, motivo]) => ({arquivo, sha256, motivo})),
       pacotes, blocos: canonicoBlocos, historico, funcionalidades, correcoes
     };
   } finally { fs.rmSync(trabalho, {recursive: true, force: true}); }
@@ -158,4 +196,4 @@ if (require.main === module) {
     console.log('manifesto.json confere com as fontes (SHA-256 ' + L.sha256(texto) + ')');
   } else { fs.writeFileSync(SAIDA, texto); console.log(SAIDA + ' (SHA-256 ' + L.sha256(texto) + ')'); }
 }
-module.exports = {gerar, CADEIA, CORRECOES};
+module.exports = {gerar, CADEIA, CORRECOES, COMPLEMENTOS, ANTERIORES};

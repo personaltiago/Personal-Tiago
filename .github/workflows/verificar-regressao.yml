@@ -29,14 +29,16 @@ jobs:
           java-version: '17'
       - name: Main de referência
         run: git fetch --no-tags --depth=1 origin main:refs/remotes/origin/main
-      - name: Manifesto canônico e inventário conferem com as fontes
+      - name: Manifesto, inventário e arquivos da raiz conferem
         run: |
           node equipe/canonico/gerar-manifesto.cjs --conferir
           node equipe/canonico/relatorio.cjs --conferir
-      - name: Teste do teste (regressões propositais têm de ser reprovadas)
+          node equipe/canonico/conferir-raiz.cjs
+      - name: Teste do teste (regressões propositais têm de ser reprovadas, inclusive as disfarçadas)
+        if: success() || failure()
         run: node equipe/testes/regressao/testar-verificador.cjs
-      - name: Pacotes deste PR e pacotes posteriores ao canônico
-        id: pacotes
+      - name: Pacotes e correções deste PR
+        if: success() || failure()
         env:
           GH_TOKEN: ${{ github.token }}
           PR: ${{ github.event.pull_request.number }}
@@ -46,43 +48,40 @@ jobs:
           if [[ -n "${PR:-}" ]]; then
             gh api "repos/$GITHUB_REPOSITORY/pulls/$PR/files" --paginate --jq '.[] | select(.status != "removed") | .filename | select(endswith(".agenda.json"))' >> pacotes.txt
           fi
-          node -e "const m=require('./equipe/canonico/manifesto.json');for(const p of m.pacotes)if(p.sequencia>m.canonico.sequencia&&p.origem==='main')console.log(p.arquivo)" >> pacotes.txt
           sort -u pacotes.txt -o pacotes.txt
-          cat pacotes.txt
+          echo "Arquivos .agenda.json deste PR:"; cat pacotes.txt
       - name: Verificador de regressão (modo PR)
-        run: |
-          set -euo pipefail
-          mapfile -t arquivos < pacotes.txt
-          canon=$(node -p "require('./equipe/canonico/manifesto.json').canonico.arquivo")
-          node equipe/testes/regressao/verificar-pacote.cjs --modo pr --json relatorio-regressao.json "$canon" "${arquivos[@]}"
-      - name: Mecanismo real de atualização (UpdateManager e UpdateAreaPatch do ZIP)
-        # roda mesmo se o verificador reprovar: cada camada tem de pegar a regressão por conta própria
         if: success() || failure()
         run: |
           set -euo pipefail
+          mapfile -t arquivos < pacotes.txt
+          if [[ ${#arquivos[@]} -gt 0 ]]; then node equipe/testes/regressao/verificar-pacote.cjs --modo pr --json relatorio-regressao.json "${arquivos[@]}"; else echo "Nenhum pacote neste PR."; fi
+      - name: Mecanismo real de atualização (UpdateManager e UpdateAreaPatch do ZIP)
+        # sem argumentos testa a referência sobre todos os estados (e os casos E, F e G de sensibilidade); depois, cada arquivo do PR
+        if: success() || failure()
+        run: |
+          set -euo pipefail
+          python3 -I equipe/testes/regressao/mecanismo-real.py
           args=()
-          while read -r f; do args+=(--candidato "$f"); done < pacotes.txt
-          canon=$(node -p "require('./equipe/canonico/manifesto.json').canonico.arquivo")
-          python3 -I equipe/testes/regressao/mecanismo-real.py --candidato "$canon" "${args[@]}"
+          while read -r f; do [[ -n "$f" ]] && args+=(--candidato "$f"); done < pacotes.txt
+          if [[ ${#args[@]} -gt 0 ]]; then python3 -I equipe/testes/regressao/mecanismo-real.py "${args[@]}"; fi
       - name: Playwright para os testes oficiais que abrem o Chromium
         if: success() || failure()
         run: |
           npm install --no-save --prefix "$RUNNER_TEMP/pw" playwright@1.63.0
           "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
           echo "NODE_PATH=$RUNNER_TEMP/pw/node_modules" >> "$GITHUB_ENV"
-      - name: Testes oficiais do Android com as páginas do canônico e dos posteriores
-        # roda mesmo se o verificador reprovar: cada camada tem de pegar a regressão por conta própria
+      - name: Testes oficiais do Android com as páginas da referência e dos pacotes completos do PR
         if: success() || failure()
         run: |
           set -euo pipefail
-          canon=$(node -p "require('./equipe/canonico/manifesto.json').canonico.arquivo")
-          for f in "$canon" $(cat pacotes.txt); do
-            if node -e "process.exit(String(require('./'+process.argv[1]).format).startsWith('agenda-patch/')?1:0)" "$f"; then
+          node -e "const L=require('./equipe/canonico/lib.cjs'),M=L.lerJson('equipe/canonico/manifesto.json');const c=M.pacotes.find(p=>p.tipo==='complemento'),b=M.pacotes.find(p=>p.tipo==='pacote-completo'&&p.versao===c.base);require('fs').writeFileSync(process.argv[1],JSON.stringify(L.aplicarCorrecao(L.lerJson(b.arquivo),L.lerJson(c.arquivo))))" "$RUNNER_TEMP/referencia.agenda.json"
+          for f in "$RUNNER_TEMP/referencia.agenda.json" $(cat pacotes.txt); do
+            if node -e "process.exit(String(JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')).format).startsWith('agenda-patch/')?1:0)" "$f"; then
               echo "== $f"; python3 -I equipe/testes/testes-oficiais-android.py "$f"
             fi
           done
       - name: Funcionalidades exigidas no ZIP oficial
-        # roda mesmo se o verificador reprovar: cada camada tem de pegar a regressão por conta própria
         if: success() || failure()
         run: python3 -I equipe/testes/verificar_funcionalidades.py
       - uses: actions/upload-artifact@v4

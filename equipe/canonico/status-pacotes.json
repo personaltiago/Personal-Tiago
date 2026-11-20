@@ -1,7 +1,7 @@
 {
  "descricao": "Situação de cada pacote completo da cadeia, escrita à mão com a evidência. Os estados são independentes: proposto, aprovado, assinado, publicado, instalado, validado. Não presumir nenhum estado pelo nome do arquivo ou pelo número da versão. Mudar o canônico só por PR aprovado pelo Tiago, depois de o pacote estar assinado e instalado.",
  "canonico": "1.12.294",
- "motivo_canonico": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago (20/11). O 1.12.295 está assinado (20/11 12:00) mas ainda não instalado: é o próximo canônico depois de instalado e conferido.",
+ "motivo_canonico": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago (20/11). O 1.12.295 (assinado 20/11 12:00) e o complemento \"Feedback somente no topo\" (assinado 20/11 12:34) ainda não foram instalados; mesmo assim entram na REFERÊNCIA (o que nenhuma atualização nova pode perder), que é o último passo assinado.",
  "pacotes": {
   "1.12.273": {
    "proposto": "sim",
@@ -114,6 +114,14 @@
    "publicado": "não",
    "instalado": "não",
    "validado": "não"
+  },
+  "AgendaPersonal-Feedback-Somente-No-Topo-Para-Assinar.agenda.json": {
+   "proposto": "sim: correção por área subida na main em 20/11/2026 12:34 (commit 3ab3556); não foi gerada pelo Claude (origem a confirmar com o Tiago)",
+   "aprovado": "sim, para assinatura: o Tiago subiu o arquivo na main",
+   "assinado": "sim: execução 44774714035 do workflow de assinatura (commit 3ab3556, sucesso), artefato 14648119398",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
   }
  }
 }

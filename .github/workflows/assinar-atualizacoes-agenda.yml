@@ -19,7 +19,7 @@ jobs:
   assinar:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
@@ -92,14 +92,14 @@ jobs:
               output.write('assinar=true\n')
           PY
       - name: Conferir regressão antes de assinar
-        # Reprova (e nada é assinado) se o arquivo for um pacote completo anterior ao canônico, remover ou reverter um bloco do
-        # conteúdo canônico, perder uma correção da main que está no canônico (01/02/03 etc.), quebrar a paridade aluno/professor
-        # ou for uma correção por área em conflito. Só lê arquivos; não usa a chave. Regras: equipe/canonico/ e CLAUDE.md.
+        # Reprova (e nada é assinado) se o arquivo for um pacote completo anterior à referência, remover ou reverter um bloco, mudar
+        # o bloco de uma correção protegida (01/02/03, complemento etc.) sem autorização, quebrar a paridade aluno/professor ou for
+        # uma correção em conflito; e roda o teste com o mecanismo real do app. Só lê arquivos; não usa a chave. Regras: CLAUDE.md.
         if: steps.entrada.outputs.assinar == 'true'
         run: |
           set -euo pipefail
           mapfile -t arquivos < <(node -e "for (const f of JSON.parse(require('fs').readFileSync(process.argv[1], 'utf8'))) console.log(f)" "$RUNNER_TEMP/agenda-sign/files.json")
-          node equipe/testes/regressao/verificar-pacote.cjs --modo assinatura "${arquivos[@]}"
+          bash equipe/testes/regressao/conferir-antes-de-assinar.sh "${arquivos[@]}"
       - name: Assinar e verificar com a chave oficial
         if: steps.entrada.outputs.assinar == 'true'
         env:

@@ -5,8 +5,8 @@ do teste oficial tests/verify_native_updates.py) e roda equipe/testes/regressao/
 
 Uso (da raiz do repositório):
   python3 -I equipe/testes/regressao/mecanismo-real.py [--candidato ARQUIVO ...] [--zip ZIP]
-Sem --candidato, testa o canônico de equipe/canonico/manifesto.json e todos os pacotes da cadeia posteriores a ele.
-Os pacotes (1.12.288, canônico e posteriores) e as correções da main são achados na raiz/histórico da main pelo SHA-256; o 1.12.291 e o
+Sem --candidato, testa a própria REFERÊNCIA do manifesto (1.12.295 + complemento) sobre todos os estados.
+Os pacotes (1.12.288, 1.12.294, 1.12.295), o complemento e as correções da main são achados na raiz/histórico da main pelo SHA-256; o 1.12.291 e o
 1.12.292 são refeitos pelos geradores (tools/) e conferidos pelo SHA-256.
 """
 import argparse
@@ -43,24 +43,26 @@ def main():
     compilador = [shutil.which('javac')] if shutil.which('javac') else [java, 'com.sun.tools.javac.Main']
     with tempfile.TemporaryDirectory(prefix='agenda-regressao-java-') as temporario:
         trabalho = Path(temporario)
-        pac = {p['versao']: p for p in manifesto['pacotes']}
-        canon = manifesto['canonico']
-        posteriores = [p for p in manifesto['pacotes'] if p['sequencia'] > canon['sequencia'] and p['origem'] == 'main']
-        pares = ['%s=%s' % (pac['1.12.288']['arquivo'], pac['1.12.288']['sha256']), '%s=%s' % (canon['arquivo'], canon['sha256'])]
-        pares += ['%s=%s' % (p['arquivo'], p['sha256']) for p in posteriores]
+        pac = {p['versao']: p for p in manifesto['pacotes'] if p['tipo'] == 'pacote-completo'}
+        comp = next(p for p in manifesto['pacotes'] if p['tipo'] == 'complemento')
+        pares = ['%s=%s' % (pac[v]['arquivo'], pac[v]['sha256']) for v in ('1.12.288', '1.12.294', '1.12.295')]
         pares += ['%s=%s' % (c['arquivo'], c['sha256']) for c in manifesto['correcoes']]
         achados = node(TESTES / 'arquivos-da-main.cjs', trabalho / 'main', *pares)
-        p288, pcanon = Path(achados[0]), Path(achados[1])
-        pposteriores = [Path(a) for a in achados[2:2 + len(posteriores)]]
+        p288, p294, p295 = (Path(a) for a in achados[:3])
         pasta = trabalho / 'correcoes'
         pasta.mkdir()
-        for caminho in achados[2 + len(posteriores):]:
+        for caminho in achados[3:]:
             shutil.copy(caminho, pasta / Path(caminho).name)
+        pcomp = pasta / comp['arquivo']
         esperado = {c['arquivo']: {'presente': 'presente', 'evoluida': 'evoluída', 'aplicavel': 'aplicável', 'conflito': 'conflito'}[c['situacao_no_canonico']] for c in manifesto['correcoes']}
         (pasta / 'esperado.json').write_text(json.dumps(esperado, ensure_ascii=False, indent=1), encoding='utf-8')
         p292 = Path(node(TESTES / 'pacote-292.cjs', trabalho / 'p292')[-1])
         p291 = next((trabalho / 'p292' / 'p291').glob('*1.12.291*.agenda.json'), None) or Path(node(TESTES / 'pacote-291.cjs', trabalho / 'p291')[-1])
-        candidatos = [Path(c).resolve() for c in opcoes.candidato] or [pcanon, *pposteriores]
+        # a referência montada pelo mesmo código do manifesto (o Java confere que é igual à do app)
+        referencia = trabalho / 'referencia.agenda.json'
+        subprocess.run(['node', '-e', "const L=require(process.argv[1]),fs=require('fs');fs.writeFileSync(process.argv[4],JSON.stringify(L.aplicarCorrecao(L.lerJson(process.argv[2]),L.lerJson(process.argv[3]))))",
+                        str(RAIZ / 'equipe' / 'canonico' / 'lib.cjs'), str(p295), str(pcomp), str(referencia)], check=True)
+        candidatos = [Path(c).resolve() for c in opcoes.candidato] or [referencia]
 
         with zipfile.ZipFile(opcoes.zip) as zip_:
             zip_.extractall(trabalho / 'projeto')
@@ -79,10 +81,27 @@ def main():
             fontes.append(str(alvo))
         classes = trabalho / 'classes'
         subprocess.run(compilador + ['-nowarn', '-encoding', 'UTF-8', '-d', str(classes)] + fontes, check=True)
+        falhas = []
+        import hashlib
+        passos = {p['sha256']: p for p in manifesto['pacotes'] if p['tipo'] == 'pacote-completo' and p['sequencia'] >= manifesto['canonico']['sequencia']}
         for candidato in candidatos:
             print('\n=== Candidato: %s' % candidato.name, flush=True)
-            subprocess.run([java, '-Xmx3g', '-cp', str(classes), 'com.tiagolima.agendapersonal.RegressaoHarness',
-                            str(projeto), str(p288), str(p291), str(p292), str(pcanon), str(candidato), str(pasta)], check=True)
+            passo = passos.get(hashlib.sha256(candidato.read_bytes()).hexdigest())
+            if passo:
+                # reassinatura de um passo aprovado da cadeia (idêntico byte a byte): ele já é testado aqui como estado (seção C) e a
+                # referência é testada sobre ele; instalado sobre a referência, o app avisa "Revisar restauração" (seção D).
+                print('Passo conhecido da cadeia %s, idêntico byte a byte: já coberto pelo teste da referência; nada a instalar por cima dela.' % passo['versao'])
+                continue
+            autorizados = node(Path(__file__).resolve().parent / 'autorizados.cjs', candidato)[-1]
+            r = subprocess.run([java, '-Xmx3g', '-cp', str(classes), 'com.tiagolima.agendapersonal.RegressaoHarness',
+                                str(projeto), str(p288), str(p291), str(p292), str(p294), str(p295), str(referencia), str(candidato), str(pasta), str(pcomp), autorizados])
+            if r.returncode:
+                falhas.append(candidato.name)
+        if falhas:
+            print('\nREPROVADO pelo teste com o mecanismo real: ' + ', '.join(falhas))
+            return 1
+        print('\nAprovado pelo teste com o mecanismo real: ' + ', '.join(c.name for c in candidatos))
+        return 0
 
 
 if __name__ == '__main__':

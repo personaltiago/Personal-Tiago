@@ -31,13 +31,18 @@ const PRS = [
   [19, 'claude/correcoes-exercicios', '1.12.291', 'Correções de exercícios 01/02/03 dentro do pacote completo'],
   [20, 'claude/sininho-feedback', '1.12.292', 'Sino do feedback no topo'],
   [21, 'claude/icone-feedback', '1.12.294', 'Ícone do feedback personalizável'],
-  [24, 'claude/feedback-topo', '1.12.295', 'Feedback pelo ícone do topo'],
+  [24, 'claude/feedback-topo', '1.12.295', 'Feedback pelo ícone do topo (o complemento "Feedback somente no topo", subido em 3ab3556, não veio de PR)'],
 ];
 
 function carregar() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'agenda-inventario-'));
   const out = {};
-  for (const p of M.pacotes.filter(p => p.origem === 'main' && p.sequencia >= M.canonico.sequencia)) out[p.versao] = L.lerJson(locateMain(p.arquivo, p.sha256, tmp));
+  // colunas: o canônico instalado, os pacotes completos posteriores e a referência (último passo assinado, completo ou complemento)
+  let ultimo = null;
+  for (const p of M.pacotes.filter(p => p.sequencia >= M.canonico.sequencia)) {
+    if (p.tipo === 'pacote-completo') out[p.versao] = ultimo = L.lerJson(locateMain(p.arquivo, p.sha256, tmp));
+    else out['referência ' + p.versao] = ultimo = L.aplicarCorrecao(ultimo, L.lerJson(locateMain(p.arquivo, p.sha256, tmp)));
+  }
   const cor = {};
   for (const c of M.correcoes) cor[c.arquivo] = L.lerJson(locateMain(c.arquivo, c.sha256, tmp));
   fs.rmSync(tmp, {recursive: true, force: true});
@@ -53,25 +58,28 @@ function relatorio() {
   const w = s => linhas.push(s);
   w('# Inventário do conteúdo do Agenda Personal (gerado)');
   w('');
-  w('Gerado por `equipe/canonico/relatorio.cjs` a partir de `equipe/canonico/manifesto.json`. Não editar à mão. **Canônico: ' + M.canonico.versao + '** (sequência ' + M.canonico.sequencia + ', `' + M.canonico.arquivo + '`, SHA-256 `' + M.canonico.sha256 + '`). ' + M.canonico.motivo);
+  w('Gerado por `equipe/canonico/relatorio.cjs` a partir de `equipe/canonico/manifesto.json`. Não editar à mão. **Canônico instalado: ' + M.canonico.versao + '** (sequência ' + M.canonico.sequencia + ', `' + M.canonico.arquivo + '`, SHA-256 `' + M.canonico.sha256 + '`). ' + M.canonico.motivo);
   w('');
-  w('## 1. Pacotes completos da cadeia (seis estados independentes)');
+  w('**Referência (o que nenhuma atualização nova pode perder): `' + M.referencia.id + '`** = último passo assinado (`' + M.referencia.arquivo + '`, SHA-256 `' + M.referencia.sha256 + '`), numeração efetiva no aparelho ' + M.referencia.versao_efetiva + '/' + M.referencia.sequencia_efetiva + '. **Próxima versão livre para pacote completo: ' + M.referencia.proxima_versao_livre + ' / sequência ' + M.referencia.proxima_sequencia_livre + '.**');
   w('');
-  w('| Versão | Seq | Arquivo (SHA-256) | Origem | Proposto | Aprovado | Assinado | Publicado | Instalado | Validado |');
-  w('|---|---|---|---|---|---|---|---|---|---|');
-  for (const p of M.pacotes) w(`| ${p.versao} | ${p.sequencia} | ${p.arquivo.replace('AgendaPersonal-', '').replace('.agenda.json', '')} (\`${p.sha256.slice(0, 12)}\`) | ${p.origem} | ${p.status.proposto} | ${p.status.aprovado} | ${p.status.assinado} | ${p.status.publicado} | ${p.status.instalado} | ${p.status.validado} |`);
+  w('## 1. Passos da cadeia: pacotes completos e complementos (seis estados independentes)');
+  w('');
+  w('| Versão | Seq | Tipo | Arquivo (SHA-256) | Origem | Proposto | Aprovado | Assinado | Publicado | Instalado | Validado |');
+  w('|---|---|---|---|---|---|---|---|---|---|---|');
+  for (const p of M.pacotes) w(`| ${p.versao} | ${p.sequencia} | ${p.tipo === 'complemento' ? 'complemento sobre o ' + p.base + ' (numeração do app)' : 'completo'} | ${p.arquivo.replace('AgendaPersonal-', '').replace('.agenda.json', '')} (\`${p.sha256.slice(0, 12)}\`) | ${p.origem} | ${p.status.proposto} | ${p.status.aprovado} | ${p.status.assinado} | ${p.status.publicado} | ${p.status.instalado} | ${p.status.validado} |`);
   w('');
   w('"publicado" = distribuído ao app web dos alunos ou ao repositório de distribuição; nenhuma evidência disso foi verificada pelo Claude.');
   w('');
   w('## 2. Funcionalidades por versão: incorporada, evoluída ou ausente');
   w('');
-  w('Cada funcionalidade é o conjunto de blocos que a versão mudou em relação à anterior da cadeia (identificador estável `pacote-<versão>-<título>`). "evoluída" = uma versão posterior continuou o mesmo bloco; "AUSENTE" = o bloco não está como nenhuma versão posterior o deixou.');
+  w('Cada funcionalidade é o conjunto de blocos que o passo (pacote completo ou complemento) mudou em relação à anterior da cadeia (identificador estável `pacote-<versão>-<título>`). "evoluída" = uma versão posterior continuou o mesmo bloco; "AUSENTE" = o bloco não está como nenhuma versão posterior o deixou.');
   w('');
   w('| Funcionalidade | Versão | Blocos | Depende de | ' + alvos.join(' | ') + ' |');
   w('|---|---|---|---|' + alvos.map(() => '---').join('|') + '|');
   for (const f of M.funcionalidades) {
     const col = alvos.map(v => {
       if (pacotes[v].sequence < f.sequencia) return 'posterior';
+      if (pacotes[v].sequence === f.sequencia && !v.startsWith('referência') && f.tipo === 'complemento') return 'posterior';
       let inc = 0, evo = 0, aus = 0;
       for (const b of f.blocos) {
         const atual = blocosDe[v][b.pagina].get(b.id);
@@ -114,19 +122,21 @@ function relatorio() {
     let s = 'não virou pacote';
     if (v) {
       const p = M.pacotes.find(x => x.versao === v);
-      if (p.sequencia > M.canonico.sequencia) s = 'ainda não (é posterior ao canônico: ' + p.status.assinado.split(':')[0] + ' assinado)';
+      if (p.sequencia > M.canonico.sequencia) s = 'ainda não instalado (posterior ao canônico; assinado: ' + p.status.assinado.split(':')[0] + '); faz parte da referência';
       else { const f = M.funcionalidades.find(x => x.versao === v); s = f ? 'incorporado (ver seção 2: `' + f.id + '`)' : 'incorporado (base da cadeia)'; }
     }
     w(`| #${n} | \`${br}\` | ${v || '—'} | ${t}: ${s} |`);
   }
   w('');
-  w('## 5. Paridade por área: canônico x pacotes posteriores');
+  const canonBlocos = {};
+  for (const pg of L.PAGINAS) canonBlocos[pg] = Object.fromEntries([...blocosDe[M.canonico.versao][pg]].map(([id, b]) => [id, {hash: b.hash, area: L.areaDoBloco(L.regrasDoApp(), pg, id)}]));
+  w('## 5. Paridade por área: canônico instalado x passos posteriores');
   w('');
   const regras = L.regrasDoApp();
   for (const v of alvos.filter(v => v !== M.canonico.versao)) {
     const porArea = {};
     for (const pg of L.PAGINAS) {
-      const canon = M.blocos[pg], b = blocosDe[v][pg];
+      const canon = canonBlocos[pg], b = blocosDe[v][pg];
       for (const [id, x] of Object.entries(canon)) { const a = (porArea[x.area] ||= {iguais: 0, alterados: [], removidos: [], novos: []}); const y = b.get(id); if (!y) a.removidos.push(pg + ':' + id); else if (y.hash === x.hash) a.iguais++; else a.alterados.push(pg + ':' + id); }
       for (const [id] of b) if (!canon[id]) { const area = L.areaDoBloco(regras, pg, id); (porArea[area] ||= {iguais: 0, alterados: [], removidos: [], novos: []}).novos.push(pg + ':' + id); }
     }
