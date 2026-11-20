@@ -1,0 +1,58 @@
+{
+ "versao": "1.12.299",
+ "sequencia": 405,
+ "titulo": "Mensalidade corrigida e IMC por idade",
+ "base": {
+  "referencia": "pacote-1-12-298-feedback-online-e-compartilhamento",
+  "impressao": "4b6cf649fcb5102d48796b14ab487513641e971bb40088686eb9312410b3a465"
+ },
+ "pedido": "Tiago, 20/11/2026 18:29 (avaliação do ChatGPT conferida pelo Claude) e 18:55 (\"Sim\" para substituir o registro anterior mantendo-o marcado como substituído): mensalidade corrigida somava R$ 450 + R$ 500 = R$ 950; IMC sem considerar idade (70 anos, 1,60 m, 67 kg aparecia acima da faixa).",
+ "aprovado_por": "Tiago aprovou a abordagem em 20/11/2026 18:55. Pacote ainda não aprovado para assinatura (depende do upload dele na main).",
+ "gerador": "tools/gerar-financeiro-imc-1.12.299.cjs",
+ "alteracoes": [
+  {
+   "pagina": "professor.html",
+   "id": "ap-finance-wallet-model",
+   "antes": "875dee6578f89316086d7144b6543cb43c0d0428ae1543e5f1c38b98e8975fdd",
+   "depois": "1809a9a55878a2454b19ae844bc9498bee464b9aa7840f747a0fa56c554bb988",
+   "motivo": "Recebido do mês: pagamento substituído por outro do mesmo vencimento sai da soma; exporta replacedIds"
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-finance-results-model",
+   "antes": "5624e39d3d1a5c807ba0a9564cb8e4ebe41c802fe176ffe6cff955148e66759e",
+   "depois": "d5811ab170ea169ef0cf2c9f9dad0943d4b4cd892ddfd07a628f6cb698752094",
+   "motivo": "resultados por mês: pagamento substituído sai da soma"
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-pix-receipt",
+   "antes": "16ad7ace53445431bfe5882875be661bab17f8e41cd7f94c3d33d60b8d38dacb",
+   "depois": "a3a7091404db293ad8582445f23cb7442970b523a837ee481da68132169a850b",
+   "motivo": "continuação do \"Histórico mensal sem anexos\": a limpeza de comprovantes antigos mantém a marca replaces; histórico mostra substituído/substitui"
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-finance-replacements",
+   "antes": null,
+   "depois": "40ec6ee3d5279a8a3b166e6d969f23014e94601c34ef1982358f8ed7187727eb",
+   "motivo": "bloco novo: confirmação \"Substituir?\" ao quitar de novo um vencimento já quitado; histórico do aluno sem o substituído"
+  },
+  {
+   "pagina": "professor.html",
+   "id": "#fora-dos-blocos",
+   "antes": "3d41eb330bb94766931d243e3475f3a70634c733350cdb22e35ee01029413d5a",
+   "depois": "ad591d6da2ab8238cb94f9231064a3d0908ab38a9de832b69e912bb7a9b9cfd9",
+   "motivo": "só a posição do bloco novo ap-finance-replacements (depois do ap-pix-receipt)"
+  },
+  {
+   "pagina": "avaliacoes.html",
+   "id": "#fora-dos-blocos",
+   "antes": "cf4a136c2b3befd1bbde0f904a5793c50eddb9b57473bb6c6e49efd20aa210c1",
+   "depois": "d7e829fe775428c74a417626930030423b96467cf552d3621e529b8752521795",
+   "motivo": "IMC pela idade (60 anos ou mais: 22 a 27, Ministério da Saúde) na tela, no compartilhar e no PDF; textos de ajuda"
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}
