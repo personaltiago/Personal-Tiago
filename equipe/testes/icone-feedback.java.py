@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
-"""Confere o pacote 1.12.293 (ícone do feedback personalizável, sobre o 1.12.292) com o código Java REAL do aplicativo e confere que ele
+"""Confere o pacote 1.12.294 (ícone do feedback personalizável, sobre o 1.12.292; o 1.12.293 foi descartado) com o código Java REAL do aplicativo e confere que ele
 MANTÉM as correções por área que estão na raiz da main.
 
 Compila UpdateManager, UpdateAreaPatch, UpdateIdentity e companhia (do ZIP do projeto Android que está na raiz do repositório) com as
 mesmas imitações simples de Android dos testes oficiais (tests/verify_native_updates.py) e roda
 equipe/testes/java/IconeFeedbackHarness.java, que:
   A. aplica o mesmo conteúdo como correção por área pelo UpdateAreaPatch de verdade e exige que dê as quatro páginas do pacote;
-  B. aplica cada correção por área da main ao 1.12.288, 291, 292 e 293 e mostra a situação (presente / evoluída / aplicável / conflito); o
-     293 tem de ter a situação do esperado e IGUAL à do 292 em todas (nenhuma correção perdida);
+  B. aplica cada correção por área da main ao 1.12.288, 291, 292 e 294 e mostra a situação (presente / evoluída / aplicável / conflito); o
+     294 tem de ter a situação do esperado e IGUAL à do 292 em todas (nenhuma correção perdida);
   C. usa o importador de verdade (revisão, confirmação, "já está instalado", "restauração") em aparelhos de mentira: 292, 291, 288 e um
      288 com todas as correções da main que ainda cabem.
 Não é teste em aparelho físico nem APK assinado.
 
 Uso (da raiz do repositório):
-  python3 equipe/testes/icone-feedback.java.py [--zip ZIP] [--pacote PACOTE_293_JA_GERADO]
+  python3 equipe/testes/icone-feedback.java.py [--zip ZIP] [--pacote PACOTE_294_JA_GERADO]
 Os pacotes de partida (1.12.288 e as correções da main, na raiz da main; 1.12.291 e 1.12.292, refeitos pelos geradores) são achados e
-conferidos pelo SHA-256 (equipe/testes/arquivos-da-main.cjs, pacote-291.cjs e pacote-292.cjs). Sem --pacote, o 1.12.293 é gerado agora.
+conferidos pelo SHA-256 (equipe/testes/arquivos-da-main.cjs, pacote-291.cjs e pacote-292.cjs). Sem --pacote, o 1.12.294 é gerado agora.
 """
 import argparse
 import json
@@ -28,7 +28,7 @@ import zipfile
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[2]
-GERADOR = RAIZ / 'tools' / 'gerar-icone-feedback-1.12.293.cjs'
+GERADOR = RAIZ / 'tools' / 'gerar-icone-feedback-1.12.294.cjs'
 GERADOR_291 = RAIZ / 'tools' / 'gerar-correcoes-exercicios-1.12.291.cjs'
 LOCALIZADOR_MAIN = RAIZ / 'equipe' / 'testes' / 'arquivos-da-main.cjs'
 LOCALIZADOR_292 = RAIZ / 'equipe' / 'testes' / 'pacote-292.cjs'
@@ -38,9 +38,9 @@ FONTES = ('UpdateManager.java', 'UpdateAreaPatch.java', 'UpdateArchive.java', 'A
           'UpdateExport.java', 'UpdateDownloads.java', 'LocalPages.java', 'UpdateManifest.java', 'UpdatePackageSignature.java',
           'NativeLaunch.java', 'UpdateIdentity.java')
 PACOTE_288 = ('AgendaPersonal-1.12.288-Janelas-Como-Pagina-Para-Assinar.agenda.json', '1f9b66c8cb8af792ed661c435d46ba2ee172306e6f4b38c298e38836b2d29f15')
-# Correções por área que o Tiago subiu na raiz da main: (arquivo, SHA-256, situação esperada no 1.12.293).
-# "presente" = o conteúdo do 293 já contém a correção; "evoluída" = contém, e outra correção da main continuou o mesmo trecho a partir dela
-# (a Ficha recolhível foi seguida pelo 02, Baixar catálogo); "conflito" = o 293 NÃO a contém e ela não entraria sem refazer (Raposinha).
+# Correções por área que o Tiago subiu na raiz da main: (arquivo, SHA-256, situação esperada no 1.12.294).
+# "presente" = o conteúdo do 294 já contém a correção; "evoluída" = contém, e outra correção da main continuou o mesmo trecho a partir dela
+# (a Ficha recolhível foi seguida pelo 02, Baixar catálogo); "conflito" = o 294 NÃO a contém e ela não entraria sem refazer (Raposinha).
 CORRECOES = (
     ('AgendaPersonal-01-Catalogo-Unificado-Para-Assinar.agenda.json', '2f35cc63a72403df04b9058ca28a42e7ad7bc685fbf1dce2277c09c4d96ea397', 'presente'),
     ('AgendaPersonal-02-Baixar-Catalogo-Para-Assinar.agenda.json', 'bdfef91b00e0a6699d8e460bc1804ade1b1b7a7dd76fda540f7690a166b94950', 'presente'),
@@ -82,7 +82,7 @@ def main():
     java = shutil.which('java')
     assert java, 'Java 17 ou mais novo é necessário.'
     compilador = [shutil.which('javac')] if shutil.which('javac') else [java, 'com.sun.tools.javac.Main']
-    with tempfile.TemporaryDirectory(prefix='agenda-293-java-') as temporario:
+    with tempfile.TemporaryDirectory(prefix='agenda-294-java-') as temporario:
         trabalho = Path(temporario)
         pacote_292 = Path(node(LOCALIZADOR_292, trabalho / 'entrada')[-1])
         pacote_291 = next(p for p in (trabalho / 'entrada' / 'p291').glob('*1.12.291*.agenda.json')) if (trabalho / 'entrada' / 'p291').exists() else None

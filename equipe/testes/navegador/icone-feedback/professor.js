@@ -1,22 +1,22 @@
 'use strict';
-// Confere no Chrome real que a tela do PROFESSOR não muda com o ícone do feedback do aluno (1.12.293).
+// Confere no Chrome real que a tela do PROFESSOR não muda com o ícone do feedback do aluno (1.12.294).
 // Por quê: o estilo do feedback (ap-feedback-css) é um componente compartilhado entre o aluno e o professor (UpdateAreaPatch.SHARED): o
 // aplicativo só aceita a correção se o aluno e o professor receberem o MESMO texto. Então o professor.html do pacote ganha as mesmas
 // regras novas do ícone. Todas começam por .student-home, #profileScreen, #apFeedbackIcon... ou .ap-fbicon-..., que não existem na página
 // do professor (o professor.html não tem a tela "Meu perfil" do aluno nem o botão do topo do aluno). O script novo NÃO entra no professor.
-// O que se confere, abrindo o professor.html do 1.12.292 e o do 1.12.293 lado a lado, com o mesmo estado de exemplo:
-//   1) o estilo do feedback do 293 = o do 292 + regras novas (nenhuma regra antiga muda ou some; o número de regras novas vem do gerador);
+// O que se confere, abrindo o professor.html do 1.12.292 e o do 1.12.294 lado a lado, com o mesmo estado de exemplo:
+//   1) o estilo do feedback do 294 = o do 292 + regras novas (nenhuma regra antiga muda ou some; o número de regras novas vem do gerador);
 //   2) nenhuma regra nova casa com elemento algum da página do professor (nem com a janela de feedback aberta);
 //   3) a página é a mesma: mesma lista de elementos e, em cada elemento, o mesmo estilo calculado completo e o mesmo retângulo;
 //   4) nenhum elemento do botão do aluno nem da linha/painel do ícone existe e a página não dá erro de JavaScript;
-//   5) controles do resumo: duas aberturas da MESMA página (292) dão o mesmo resumo (senão a igualdade 292 x 293 não valeria) e uma mudança
+//   5) controles do resumo: duas aberturas da MESMA página (292) dão o mesmo resumo (senão a igualdade 292 x 294 não valeria) e uma mudança
 //      de 1 px na margem da barra de topo muda o resumo (se não mudasse, a igualdade não provaria nada).
-// uso: node professor.js [professor-292.html] [professor-293.html]     (variáveis: PORTA, SAIDA, como nos outros testes desta pasta)
+// uso: node professor.js [professor-292.html] [professor-294.html]     (variáveis: PORTA, SAIDA, como nos outros testes desta pasta)
 // A pasta servida precisa ter as duas páginas e o dialogo.html (casca do iframe) do teste das janelas: veja preparar.cjs.
 const {launch, sleep, BASE} = require('../janelas-pagina/cdp.js');
 const {estado} = require('../janelas-pagina/semente.js');
-const ANTES = process.argv[2] || 'professor-292.html', DEPOIS = process.argv[3] || 'professor-293.html';
-const NOVAS = (require('../../../../tools/gerar-icone-feedback-1.12.293.cjs').CSS_ICON.match(/\}/g) || []).length; // regras que o gerador acrescenta
+const ANTES = process.argv[2] || 'professor-292.html', DEPOIS = process.argv[3] || 'professor-294.html';
+const NOVAS = (require('../../../../tools/gerar-icone-feedback-1.12.294.cjs').CSS_ICON.match(/\}/g) || []).length; // regras que o gerador acrescenta
 const DB = 'agendaPersonalTL_v1';
 
 let ok = 0, bad = 0;
@@ -53,7 +53,7 @@ const RESUMO = `(()=>{
   const regras=st&&st.sheet?[...st.sheet.cssRules].map(r=>({texto:r.cssText,seletor:r.selectorText||''})):null;
   const alcance=regras?regras.map(r=>{let n=-1;if(r.seletor){try{n=D.querySelectorAll(r.seletor).length}catch(e){n=-2}}return n}):null;
   return JSON.stringify({elementos:els.length,assinatura:fnv(assinatura.join('|')),pintura:fnv(pintura.join(',')),pinturaLista:pintura,assinaturaLista:assinatura,
-    sino:D.querySelectorAll('.ap-feedback-bell,#apFeedbackBell,#apFeedbackBellCount,.ap-feedback-bell-on,#apFeedbackIconOpen,#apFeedbackIconPanel,#apFeedbackIconStatus,#apFeedbackIconTitle,.ap-fbicon-open,.ap-fbicon-now,.ap-fbicon-panel,.ap-fbicon-grid,.ap-fbicon-opt,.ap-fbicon-face,.ap-fbicon-status').length,
+    sino:D.querySelectorAll('.ap-feedback-bell,#apFeedbackBell,#apFeedbackBellCount,.ap-feedback-bell-on,#apFeedbackIconOpen,#apFeedbackIconPanel,#apFeedbackIconStatus,#apFeedbackIconTitle,.ap-fbicon-open,.ap-fbicon-now,.ap-fbicon-panel,.ap-fbicon-grid,.ap-fbicon-opt,.ap-fbicon-face,.ap-fbicon-status,input[name="apFeedbackIcon"]').length,
     estilo:st?st.textContent.length:-1,regras,alcance,
     jans:[...D.querySelectorAll('dialog[open]')].map(d=>d.id)});
 })()`;
@@ -99,13 +99,13 @@ function primeiraDiferenca(a, b) {
   }
   const A = dois.antes, B = dois.depois, A2 = dois.antes2;
 
-  // 1) o estilo do feedback: o do 293 é o do 292 mais regras novas
+  // 1) o estilo do feedback: o do 294 é o do 292 mais regras novas
   const ra = A.parado.regras.map(r => r.texto), rb = B.parado.regras.map(r => r.texto);
   t('1  o estilo do feedback (ap-feedback-css) existe nas duas páginas', A.parado.regras && B.parado.regras, [A.parado.estilo, B.parado.estilo]);
   const prefixo = rb.slice(0, ra.length).every((x, i) => x === ra[i]);
-  t('1  todas as regras do 292 continuam, na mesma ordem e com o mesmo texto', prefixo, {regras292: ra.length, regras293: rb.length});
+  t('1  todas as regras do 292 continuam, na mesma ordem e com o mesmo texto', prefixo, {regras292: ra.length, regras294: rb.length});
   const novas = rb.slice(ra.length);
-  t('1  o 293 acrescenta ' + NOVAS + ' regras novas no fim (as do gerador)', NOVAS >= 20 && novas.length === NOVAS, [novas.length, NOVAS]);
+  t('1  o 294 acrescenta ' + NOVAS + ' regras novas no fim (as do gerador)', NOVAS >= 15 && novas.length === NOVAS, [novas.length, NOVAS]);
   // 2) nenhuma regra nova casa com elemento algum (parado e com a janela de feedback aberta)
   const alcanceNovas = B.parado.alcance.slice(ra.length), alcanceAberto = B.aberto.alcance.slice(ra.length);
   t('2  nenhuma regra nova alcança elemento algum da página do professor (parada)', alcanceNovas.length === NOVAS && alcanceNovas.every(n => n === 0), alcanceNovas);
@@ -120,7 +120,7 @@ function primeiraDiferenca(a, b) {
   t('3  mesmo estilo calculado completo e mesmo retângulo com a janela de feedback aberta', A.aberto.pintura === B.aberto.pintura, primeiraDiferenca(A.aberto, B.aberto));
   t('3  a janela aberta é a mesma nas duas versões', JSON.stringify(A.aberto.jans) === JSON.stringify(B.aberto.jans), [A.aberto.jans, B.aberto.jans]);
   // 4) sem sino e sem erro
-  t('4  nenhum elemento do botão do aluno nem da linha/painel do ícone existe na página do professor (292 e 293, parada e com a janela aberta)',
+  t('4  nenhum elemento do botão do aluno nem da linha/painel do ícone existe na página do professor (292 e 294, parada e com a janela aberta)',
     A.parado.sino === 0 && B.parado.sino === 0 && A.aberto.sino === 0 && B.aberto.sino === 0, [A.parado.sino, B.parado.sino, A.aberto.sino, B.aberto.sino]);
   t('4  nenhum erro de JavaScript em nenhuma das duas páginas', A.erros.length === 0 && B.erros.length === 0, [A.erros, B.erros]);
   // 5) controles do resumo

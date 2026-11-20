@@ -17,20 +17,21 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Confere o pacote 1.12.293 (ícone do feedback personalizável, sobre o 1.12.292) contra o código REAL do aplicativo (UpdateAreaPatch,
+ * Confere o pacote 1.12.294 (ícone do feedback personalizável, sobre o 1.12.292) contra o código REAL do aplicativo (UpdateAreaPatch,
  * UpdateIdentity e UpdateManager, compilados com as mesmas imitações simples de Android dos testes oficiais). Não é teste em aparelho
  * nem APK assinado.
  *
- * Argumentos: <pasta do projeto Android> <pacote 288> <pacote 291> <pacote 292> <pacote 293> <correção por área equivalente> <pasta das
+ * Argumentos: <pasta do projeto Android> <pacote 288> <pacote 291> <pacote 292> <pacote 294> <correção por área equivalente> <pasta das
  * correções da main, com esperado.json>
  *
  * A. A mesma mudança como correção por área (módulo feedback da área Evolução: script e estilo do aluno e o estilo compartilhado nas DUAS
- *    páginas), aplicada pelo UpdateAreaPatch de verdade sobre o 1.12.292, dá exatamente as quatro páginas do pacote, com a numeração
- *    do pacote (1.12.293, sequência 399); a regra do componente compartilhado (aluno e professor iguais) é respeitada.
+ *    páginas), aplicada pelo UpdateAreaPatch de verdade sobre o 1.12.292, dá exatamente as quatro páginas do pacote; a regra do componente
+ *    compartilhado (aluno e professor iguais) é respeitada. A numeração é a do próprio aplicativo (instalada + 1: 1.12.293, sequência 399) e
+ *    NÃO é a do pacote completo (1.12.294, sequência 400, porque o 293 foi descartado): o conteúdo é o mesmo, o número não.
  * B. RETENÇÃO. Cada correção por área que o Tiago subiu na raiz da main é aplicada (pelo UpdateAreaPatch) ao conteúdo do 1.12.288, do
- *    1.12.291, do 1.12.292 e do 1.12.293: "presente" (já está no conteúdo), "aplicável" (ainda entraria) ou "conflito". O 293 tem de
+ *    1.12.291, do 1.12.292 e do 1.12.294: "presente" (já está no conteúdo), "aplicável" (ainda entraria) ou "conflito". O 294 tem de
  *    estar como o esperado.json diz e tem de ter EXATAMENTE a situação do 292 em cada correção (nenhuma foi perdida pelo ícone).
- * C. Aparelhos de mentira com o UpdateManager de verdade: o 293 sobre o 292, o 291, o 288 e sobre um 288 que já recebeu, pela janela
+ * C. Aparelhos de mentira com o UpdateManager de verdade: o 294 sobre o 292, o 291, o 288 e sobre um 288 que já recebeu, pela janela
  *    de revisão, todas as correções da main que ainda cabem: aparece "Revisar atualização", instala, o conteúdo é o do pacote, nenhuma
  *    correção da main que estava presente se perde, e importar de novo é ignorado ("já está instalado"); voltar ao 292 é "restauração".
  */
@@ -92,7 +93,7 @@ public final class IconeFeedbackHarness {
         final UpdateManager manager;
 
         Device(Path project, JSONObject installed) throws Exception {
-            folder = Files.createTempDirectory("agenda-293-");
+            folder = Files.createTempDirectory("agenda-294-");
             file = folder.resolve("selected.json");
             Files.createDirectories(folder.resolve("updates"));
             Files.write(folder.resolve("updates/active.json"), installed.toString().getBytes(StandardCharsets.UTF_8));
@@ -257,7 +258,7 @@ public final class IconeFeedbackHarness {
         check(s288.getString("version").equals("1.12.288"), "O ponto de partida antigo não é o 1.12.288");
         check(s291.getString("version").equals("1.12.291") && s291.getInt("sequence") == 397, "Não é o 1.12.291 (seq 397)");
         check(s292.getString("version").equals("1.12.292") && s292.getInt("sequence") == 398, "Não é o 1.12.292 (seq 398)");
-        check(mine.getString("version").equals("1.12.293") && mine.getInt("sequence") == 399, "O pacote não é o 1.12.293 (seq 399)");
+        check(mine.getString("version").equals("1.12.294") && mine.getInt("sequence") == 400, "O pacote não é o 1.12.294 (seq 400)");
         check(!mine.has("agendaSignature"), "O pacote não pode vir assinado (quem assina é o fluxo do GitHub)");
         JSONArray listed = patch.getJSONArray("changes");
         check(listed.length() == 3, "A correção equivalente devia ter 3 mudanças (script e estilo do aluno, estilo do professor)");
@@ -265,7 +266,7 @@ public final class IconeFeedbackHarness {
         // ---------- A. Montagem pelo código real do aplicativo ----------
         check(UpdateAreaPatch.inverse(s292, patch) != null, "A correção por área não tem reversão sobre o 1.12.292");
         JSONObject viaPatch = UpdateAreaPatch.apply(s292, patch, APP, LIMIT);
-        check(viaPatch.getString("version").equals("1.12.293") && viaPatch.getInt("sequence") == 399, "O app numeraria a correção como " + viaPatch.getString("version") + "/" + viaPatch.getInt("sequence"));
+        check(viaPatch.getString("version").equals("1.12.293") && viaPatch.getInt("sequence") == 399, "O app numeraria a correção por área (o número é o do próprio app: instalada + 1) como " + viaPatch.getString("version") + "/" + viaPatch.getInt("sequence"));
         samePages(viaPatch, mine, "Pacote x correção por área aplicada pelo app");
         for (String page : new String[]{"avaliacoes.html", "cadastro.html"})
             check(mine.getJSONObject("files").getString(page).equals(s292.getJSONObject("files").getString(page)), "A página " + page + " não deveria mudar");
@@ -290,58 +291,58 @@ public final class IconeFeedbackHarness {
         TreeMap<String, JSONObject> patches = ALL;
         for (String name : names) patches.put(name, read(folder.resolve(name).toString()));
         System.out.println("Situação de cada correção por área da main (presente / evoluída / aplicável / conflito) em cada pacote:");
-        System.out.println(String.format("  %-52s %-10s %-10s %-10s %s", "correção", "1.12.288", "1.12.291", "1.12.292", "1.12.293"));
-        TreeMap<String, String> on293 = new TreeMap<>();
+        System.out.println(String.format("  %-52s %-10s %-10s %-10s %s", "correção", "1.12.288", "1.12.291", "1.12.292", "1.12.294"));
+        TreeMap<String, String> on294 = new TreeMap<>();
         for (String name : names) {
             JSONObject p = patches.get(name);
             String a = classify(s288, p), b = classify(s291, p), c = classify(s292, p), d = classify(mine, p);
             System.out.println(String.format("  %-52s %-10s %-10s %-10s %s", name.replace("AgendaPersonal-", "").replace(".agenda.json", ""), shortKind(a), shortKind(b), shortKind(c), d.length() > 110 ? d.substring(0, 110) + "…" : d));
-            check(shortKind(d).equals(expected.getString(name)), name + ": no 1.12.293 devia ser '" + expected.getString(name) + "', mas é: " + d);
-            check(d.equals(c), name + ": a situação mudou do 1.12.292 para o 1.12.293 (" + c + " -> " + d + "): o ícone mexeu em algo que a correção toca");
-            on293.put(name, d);
+            check(shortKind(d).equals(expected.getString(name)), name + ": no 1.12.294 devia ser '" + expected.getString(name) + "', mas é: " + d);
+            check(d.equals(c), name + ": a situação mudou do 1.12.292 para o 1.12.294 (" + c + " -> " + d + "): o ícone mexeu em algo que a correção toca");
+            on294.put(name, d);
         }
-        long keptCount = on293.values().stream().filter(IconeFeedbackHarness::kept).count();
-        check(keptCount >= 8, "Menos de 8 correções da main mantidas no 1.12.293: " + keptCount);
+        long keptCount = on294.values().stream().filter(IconeFeedbackHarness::kept).count();
+        check(keptCount >= 8, "Menos de 8 correções da main mantidas no 1.12.294: " + keptCount);
 
         // ---------- C. Aparelhos de mentira (UpdateManager de verdade) ----------
-        // C1. 292 -> 293
+        // C1. 292 -> 294
         Device d292 = new Device(project, s292);
         try {
             String[] shown = d292.reviewAndCancel(mine);
             check(shown[0].equals("Revisar atualização"), "Título da revisão do pacote: " + shown[0]);
-            check(shown[1].contains("Versão instalada: 1.12.292") && shown[1].contains("Versão do arquivo: 1.12.293"), "Versões não apresentadas: " + shown[1].substring(0, Math.min(140, shown[1].length())));
+            check(shown[1].contains("Versão instalada: 1.12.292") && shown[1].contains("Versão do arquivo: 1.12.294"), "Versões não apresentadas: " + shown[1].substring(0, Math.min(140, shown[1].length())));
             check(shown[1].contains(mine.getString("notes")), "A janela de revisão não traz as notas do pacote");
             check(!shown[1].contains("versão anterior") && !shown[1].contains("numeração é igual"), "O aplicativo tratou o pacote como versão anterior ou de numeração igual");
             check(shown[2].equals("Sim, atualizar"), "Botão de confirmar: " + shown[2]);
             check(d292.install(mine).equals("Revisar atualização"), "Título ao instalar");
             JSONObject saved = d292.active();
-            check(saved.getString("version").equals("1.12.293") && saved.getInt("sequence") == 399, "Numeração depois de instalar");
+            check(saved.getString("version").equals("1.12.294") && saved.getInt("sequence") == 400, "Numeração depois de instalar");
             samePages(saved, mine, "Depois de instalar o pacote sobre o 292");
             check(saved.getJSONArray("modularUpdates").toString().equals(s292.getJSONArray("modularUpdates").toString()), "O histórico de correções não devia mudar ao instalar o pacote completo");
-            for (String name : names) check(classify(saved, patches.get(name)).equals(on293.get(name)), name + ": depois de instalar o 293 sobre o 292 a situação é outra");
+            for (String name : names) check(classify(saved, patches.get(name)).equals(on294.get(name)), name + ": depois de instalar o 294 sobre o 292 a situação é outra");
             d292.importIsIgnored(mine);
             check(fingerprint(d292.manager, saved).equals(fingerprint(d292.manager, mine)), "A identidade de conteúdo do aparelho difere da do pacote");
-            check(!fingerprint(d292.manager, saved).equals(fingerprint(d292.manager, s292)), "A identidade de conteúdo do 293 não pode ser a do 292");
+            check(!fingerprint(d292.manager, saved).equals(fingerprint(d292.manager, s292)), "A identidade de conteúdo do 294 não pode ser a do 292");
             String[] back = d292.reviewAndCancel(s292);
-            check(back[0].equals("Revisar restauração") && back[2].equals("Restaurar esta versão"), "O 1.12.292 sobre o 293 devia aparecer como restauração: " + back[0] + " / " + back[2]);
+            check(back[0].equals("Revisar restauração") && back[2].equals("Restaurar esta versão"), "O 1.12.292 sobre o 294 devia aparecer como restauração: " + back[0] + " / " + back[2]);
             check(back[1].contains("Este arquivo é de uma versão anterior") && back[1].contains("pode retirar funções mais recentes"), "A restauração não avisa que retira funções mais recentes");
         } finally { d292.manager.destroy(); }
 
-        // C2 e C3. 291 -> 293 e 288 -> 293 (o pacote é cumulativo: dá para pular as versões do meio)
+        // C2 e C3. 291 -> 294 e 288 -> 294 (o pacote é cumulativo: dá para pular as versões do meio)
         for (JSONObject from : new JSONObject[]{s291, s288}) {
             Device dev = new Device(project, from);
             try {
                 String[] shown = dev.reviewAndCancel(mine);
-                check(shown[0].equals("Revisar atualização") && shown[1].contains("Versão instalada: " + from.getString("version")) && shown[1].contains("Versão do arquivo: 1.12.293"), "Revisão sobre o " + from.getString("version") + ": " + shown[0]);
+                check(shown[0].equals("Revisar atualização") && shown[1].contains("Versão instalada: " + from.getString("version")) && shown[1].contains("Versão do arquivo: 1.12.294"), "Revisão sobre o " + from.getString("version") + ": " + shown[0]);
                 check(dev.install(mine).equals("Revisar atualização"), "Título ao instalar sobre o " + from.getString("version"));
                 samePages(dev.active(), mine, "Depois de instalar o pacote sobre o " + from.getString("version"));
-                for (String name : names) check(classify(dev.active(), patches.get(name)).equals(on293.get(name)), name + ": depois de instalar o 293 sobre o " + from.getString("version") + " a situação é outra");
+                for (String name : names) check(classify(dev.active(), patches.get(name)).equals(on294.get(name)), name + ": depois de instalar o 294 sobre o " + from.getString("version") + " a situação é outra");
                 dev.importIsIgnored(mine);
             } finally { dev.manager.destroy(); }
         }
 
         // C4. O aparelho do Tiago: 1.12.288 que já recebeu, pela janela de revisão, todas as correções da main que ainda cabem (em rodadas,
-        //     porque algumas dependem de outras), e depois recebe o 293. Nenhuma correção que estava presente pode sumir.
+        //     porque algumas dependem de outras), e depois recebe o 294. Nenhuma correção que estava presente pode sumir.
         Device field = new Device(project, s288);
         try {
             List<String> installed = new ArrayList<>(), pending = new ArrayList<>(names);
@@ -361,15 +362,15 @@ public final class IconeFeedbackHarness {
             String[] shown = field.reviewAndCancel(mine);
             check(shown[0].equals("Revisar atualização"), "Título da revisão sobre o aparelho com correções: " + shown[0] + " / " + shown[1].substring(0, Math.min(200, shown[1].length())));
             check(field.install(mine).equals("Revisar atualização"), "Título ao instalar sobre o aparelho com correções");
-            samePages(field.active(), mine, "Aparelho com correções da main + pacote 293");
+            samePages(field.active(), mine, "Aparelho com correções da main + pacote 294");
             List<String> lostNames = new ArrayList<>();
             for (String name : names) {
                 String now = classify(field.active(), patches.get(name));
                 if (kept(was.get(name)) && !kept(now)) lostNames.add(name.replace("AgendaPersonal-", "").replace(".agenda.json", ""));
-                check(now.equals(on293.get(name)), name + ": no aparelho com correções, depois do 293, a situação difere da do pacote: " + now);
+                check(now.equals(on294.get(name)), name + ": no aparelho com correções, depois do 294, a situação difere da do pacote: " + now);
             }
-            System.out.println("Correções da main mantidas antes do 293 e perdidas por ele: " + lostNames.size() + (lostNames.isEmpty() ? "" : " " + lostNames));
-            check(lostNames.isEmpty(), "O 293 retirou correções da main que o aparelho tinha: " + lostNames);
+            System.out.println("Correções da main mantidas antes do 294 e perdidas por ele: " + lostNames.size() + (lostNames.isEmpty() ? "" : " " + lostNames));
+            check(lostNames.isEmpty(), "O 294 retirou correções da main que o aparelho tinha: " + lostNames);
             field.importIsIgnored(mine);
         } finally { field.manager.destroy(); }
 
@@ -387,6 +388,6 @@ public final class IconeFeedbackHarness {
             filed.importIsIgnored(mine);
         } finally { filed.manager.destroy(); }
 
-        System.out.println(checks + " verificações do pacote 1.12.293 contra o código real do aplicativo passaram; sem rede, APK assinado ou aparelho físico.");
+        System.out.println(checks + " verificações do pacote 1.12.294 contra o código real do aplicativo passaram; sem rede, APK assinado ou aparelho físico.");
     }
 }
