@@ -1,14 +1,14 @@
 {
  "descricao": "Fonte canônica versionada do conteúdo do Agenda Personal e manifesto das funcionalidades. Gerado por equipe/canonico/gerar-manifesto.cjs; não editar à mão (o CI confere).",
  "canonico": {
-  "versao": "1.12.294",
-  "sequencia": 400,
-  "arquivo": "AgendaPersonal-1.12.294-Icone-Feedback-Para-Assinar.agenda.json",
-  "sha256": "2bf38cc59b48a663e00da9faf8d2feb7ca48ae186ff833500c0a0e68fea230e9",
+  "versao": "1.12.300",
+  "sequencia": 406,
+  "arquivo": "AgendaPersonal-1.12.300-Pagamentos-Repetidos-Para-Assinar.agenda.json",
+  "sha256": "c91d3a533b305c5bb518173094e93ea158f737e10b1107f23d12ee4db91496dd",
   "appId": "com.tiagolima.agendapersonal",
   "bridgeVersion": 3,
   "dataSchema": 4,
-  "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago (20/11). O 1.12.295 (assinado 20/11 12:00) e o complemento \"Feedback somente no topo\" (assinado 20/11 12:34) ainda não foram instalados; mesmo assim entram na REFERÊNCIA (o que nenhuma atualização nova pode perder), que é o último passo assinado."
+  "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: tela \"Atualizar aplicativo\" com \"Versão instalada: 1.12.300\" (print do Tiago, 21/11/2026 11:27) e confirmação dele por escrito (\"Sim\", 21/11/2026 13:03). Antes: 1.12.294 (20/11)."
  },
  "referencia": {
   "id": "pacote-1-12-300-pagamentos-repetidos-mensalidade-e-imc-por-idade",
@@ -388,9 +388,9 @@
     "proposto": "sim: gerado pelo Claude em 20/11/2026 (tools/gerar-duplicados-1.12.300.cjs, PR #28 em rascunho); inclui o 1.12.299",
     "aprovado": "sim: o Tiago subiu o arquivo na main (commit 39c35e1, byte a byte igual ao gerado)",
     "assinado": "sim: execução 44849098710 do workflow de assinatura (commit 39c35e1, \"Assinado e conferido\"), artefato 14684233109",
-    "publicado": "não confirmado",
-    "instalado": "não confirmado",
-    "validado": "não confirmado"
+    "publicado": "sim: o Tiago publicou pelo app (\"Publicar para Android e iPhone\"); a tela confirmou \"Versão 1.12.300 confirmada para professor e alunos no Android, iPhone e navegador\" (prints de 21/11/2026 11:25-11:26)",
+    "instalado": "sim: no aparelho do Tiago (Xiaomi), \"Versão instalada: 1.12.300\" (print 21/11/2026 11:27) e confirmação dele (\"Sim\", 21/11/2026 13:03)",
+    "validado": "não confirmado: nenhum teste das funções novas (mensalidade substituída, IMC por idade, quadro de pagamentos repetidos) feito no aparelho"
    }
   }
  ],
