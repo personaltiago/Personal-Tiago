@@ -22,7 +22,8 @@ const comp = L.lerJson(achar(COMP));
 const ONLINE = 'AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json';
 const ref = L.lerJson(achar(M.referencia.arquivo)); // a referência atual (último passo assinado da cadeia)
 const consolidado = L.aplicarCorrecao(L.aplicarCorrecao(p295, comp), L.lerJson(achar(ONLINE))); // 295 + os dois complementos (= 1.12.298)
-if (consolidado.files['index.html'] !== ref.files['index.html']) throw new Error('o index.html da referência mudou depois do 295 + complementos; revise os casos');
+// Os casos de feedback montam pacotes a partir da referência: os blocos de feedback dela precisam ser os de 295 + complementos.
+for (const id of ['ap-feedback-student', 'ap-feedback-sync']) if (L.blocos(consolidado.files['index.html']).get(id).hash !== L.blocos(ref.files['index.html']).get(id).hash) throw new Error(`o bloco ${id} da referência mudou depois do 295 + complementos; revise os casos`);
 const corr = nome => L.lerJson(achar(nome));
 const C01 = 'AgendaPersonal-01-Catalogo-Unificado-Para-Assinar.agenda.json';
 
