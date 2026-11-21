@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import vm from 'node:vm';
+const boot=await readFile(new URL('../web/boot.js',import.meta.url),'utf8');
+const module=(html,id)=>html.match(new RegExp('<script\\b[^>]*\\bid=["\']'+id+'["\'][^>]*>[\\s\\S]*?<\\/script>','i'))?.[0];
+const fixture='<!doctype html><html><head></head><body><input id="remember"><script id="ap-firebase-loader">oldLoader()</script><script id="ap-login-session">oldSession()</script><script id="ap-student-accounts">existingAccounts()</script></body></html>';
+const bundle=process.env.AGENDA_WEB_BUNDLE?JSON.parse(await readFile(process.env.AGENDA_WEB_BUNDLE,'utf8')):{files:{'index.html':fixture}};
+const context={current:{bundle},NAMES:['index.html','professor.html','avaliacoes.html','cadastro.html'],location:{origin:'https://agenda.example.test'},failure(message){throw Error(message)}};
+vm.runInNewContext(boot.slice(boot.indexOf('function page(name){'),boot.indexOf('function show(record){')),context);
+const html=context.page('index.html');
+assert.equal(module(html,'ap-firebase-loader'),'<script id="ap-firebase-loader" src="/app/firebase-loader.js"></script>');
+assert.equal(module(html,'ap-login-session'),'<script id="ap-login-session" src="/app/login-session.js"></script>');
+assert.equal(module(html,'ap-student-accounts'),module(bundle.files['index.html'],'ap-student-accounts'),'keep student validation, account checks, explicit logout and sign-in callbacks intact');
+assert.equal(bundle.files['index.html'].includes('/app/login-session.js'),false,'never overwrite the saved application bundle');
+const sw=await readFile(new URL('../web/sw.js',import.meta.url),'utf8');
+for(const name of ['firebase.js','firebase-loader.js','login-session.js'])assert(sw.includes('/app/'+name));
+assert.match(sw,/agenda-personal-web-shell-v\d+/);
+console.log('PASS: actual host adapter replaces the two auth modules in the installed bundle, preserves account logic and saved content, and refreshes the public shell cache.');

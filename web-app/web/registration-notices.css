@@ -1,0 +1,26 @@
+.header-notifications[data-registration-pending] .notification-dot {
+  display: none;
+}
+.registration-notification-count {
+  position: absolute;
+  inset-block-start: -3px;
+  inset-inline-end: -4px;
+  min-width: 18px;
+  padding: 0 4px;
+  border-radius: 999px;
+  border: 1px solid var(--ac-surface, #191521);
+  background: #6425a0;
+  color: #fff;
+  font: 700 10px/16px system-ui, sans-serif;
+  text-align: center;
+  pointer-events: none;
+}
+.registration-notification-card {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+}
+.registration-notification-count[hidden],
+.registration-notification-card[hidden] {
+  display: none;
+}

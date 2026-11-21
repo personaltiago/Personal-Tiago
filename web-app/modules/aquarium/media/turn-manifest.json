@@ -1,0 +1,607 @@
+{
+  "images": {
+    "fish-original-baby-turn": {
+      "id": "fish-original-baby-turn",
+      "path": "fish-original-baby-turn.webp",
+      "mime": "image/webp",
+      "width": 320,
+      "height": 240,
+      "bytes": 17714,
+      "sha256": "1759ba4b883c2d2cd94326e05333494a5353616300b1ad6ed9f96841c2eb4c97",
+      "contentBounds": [
+        0.3185238095238095,
+        0.14078499278499285,
+        0.6386904761904761,
+        0.6193362193362193
+      ],
+      "displayWidth": 0.15,
+      "rig": {
+        "head": [
+          0.8422499999999999,
+          0.5123867243867244
+        ],
+        "nose": [
+          0.8869583333333333,
+          0.5495468975468977
+        ],
+        "eye": [
+          0.8294761904761906,
+          0.4814199134199135
+        ],
+        "tailRoot": [
+          0.5612261904761905,
+          0.4194862914862915
+        ],
+        "bodyCenter": [
+          0.7208988095238095,
+          0.4442597402597403
+        ],
+        "headStart": 0.7783809523809524,
+        "finSwingStart": 0.5420654761904762,
+        "dorsal": [
+          0.6825773809523809,
+          0.2584588744588745
+        ],
+        "ventral": [
+          0.6953511904761903,
+          0.6486406926406926
+        ]
+      },
+      "source": {
+        "file": "turn-atlas.png",
+        "crop": {
+          "x": 80,
+          "y": 140,
+          "width": 242,
+          "height": 176
+        },
+        "corePixels": 25880
+      },
+      "registration": {
+        "sideImage": "fish-original-baby",
+        "headDelta": [
+          0,
+          0
+        ],
+        "scale": 0.8445493900039355,
+        "reason": "Match head and overall fin height to the approved side frame, preserving the natural shorter silhouette of three-quarter orientation."
+      }
+    },
+    "fish-original-teen-turn": {
+      "id": "fish-original-teen-turn",
+      "path": "fish-original-teen-turn.webp",
+      "mime": "image/webp",
+      "width": 448,
+      "height": 336,
+      "bytes": 38502,
+      "sha256": "012376b78b1bfc26175816e6a9300ff03349492e2c1810d12f15532630e56b9c",
+      "contentBounds": [
+        0.2783796436122018,
+        0.026212121212121225,
+        0.7003171247357294,
+        0.803030303030303
+      ],
+      "displayWidth": 0.22,
+      "rig": {
+        "head": [
+          0.8596428571428572,
+          0.5
+        ],
+        "nose": [
+          0.8946587133796436,
+          0.5481818181818182
+        ],
+        "eye": [
+          0.8386333434007854,
+          0.4598484848484849
+        ],
+        "tailRoot": [
+          0.6075286922379945,
+          0.4116666666666666
+        ],
+        "bodyCenter": [
+          0.7335857746904259,
+          0.4116666666666666
+        ],
+        "headStart": 0.7896111446692843,
+        "finSwingStart": 0.5865191784959227,
+        "dorsal": [
+          0.7055730897009967,
+          0.13863636363636367
+        ],
+        "ventral": [
+          0.7055730897009967,
+          0.7168181818181818
+        ]
+      },
+      "source": {
+        "file": "turn-atlas.png",
+        "crop": {
+          "x": 402,
+          "y": 66,
+          "width": 350,
+          "height": 301
+        },
+        "corePixels": 61898
+      },
+      "registration": {
+        "sideImage": "fish-original-teen",
+        "headDelta": [
+          0,
+          0
+        ],
+        "scale": 0.8964059196617336,
+        "reason": "Match head and overall fin height to the approved side frame, preserving the natural shorter silhouette of three-quarter orientation."
+      }
+    },
+    "fish-original-adult-turn": {
+      "id": "fish-original-adult-turn",
+      "path": "fish-original-adult-turn.webp",
+      "mime": "image/webp",
+      "width": 512,
+      "height": 384,
+      "bytes": 51206,
+      "sha256": "2f7d17261fc96a78cdf2a75c0aca24343f062e3c438689328dde3c9c486b48b8",
+      "contentBounds": [
+        0.2726135437422703,
+        0.04376087902523943,
+        0.6859959031881269,
+        0.8295256744995648
+      ],
+      "displayWidth": 0.28,
+      "rig": {
+        "head": [
+          0.866,
+          0.5165905134899913
+        ],
+        "nose": [
+          0.8968698156434658,
+          0.574657310704961
+        ],
+        "eye": [
+          0.8488501024202969,
+          0.4751142297650131
+        ],
+        "tailRoot": [
+          0.6293314134000962,
+          0.4419332027850305
+        ],
+        "bodyCenter": [
+          0.7459507169420778,
+          0.4419332027850305
+        ],
+        "headStart": 0.800830389197128,
+        "finSwingStart": 0.6087515363044524,
+        "dorsal": [
+          0.7322307988783153,
+          0.14330395996518722
+        ],
+        "ventral": [
+          0.725370839846434,
+          0.7737434725848565
+        ]
+      },
+      "source": {
+        "file": "turn-atlas.png",
+        "crop": {
+          "x": 785,
+          "y": 19,
+          "width": 419,
+          "height": 380
+        },
+        "corePixels": 105955
+      },
+      "registration": {
+        "sideImage": "fish-original-adult",
+        "headDelta": [
+          0,
+          0
+        ],
+        "scale": 0.8382575237048233,
+        "reason": "Match head and overall fin height to the approved side frame, preserving the natural shorter silhouette of three-quarter orientation."
+      }
+    },
+    "fish-blue-baby-turn": {
+      "id": "fish-blue-baby-turn",
+      "path": "fish-blue-baby-turn.webp",
+      "mime": "image/webp",
+      "width": 320,
+      "height": 240,
+      "bytes": 18164,
+      "sha256": "44d6f4ee23ce886556af24e9756cad219a0643078c93d2fb773ceb7a58eb9e2c",
+      "contentBounds": [
+        0.3095664595028067,
+        0.15158333333333326,
+        0.6496140737770649,
+        0.6007183908045978
+      ],
+      "displayWidth": 0.15,
+      "rig": {
+        "head": [
+          0.8422499999999999,
+          0.5120143678160919
+        ],
+        "nose": [
+          0.8877229851643946,
+          0.5480574712643678
+        ],
+        "eye": [
+          0.8292577185244587,
+          0.48197844827586206
+        ],
+        "tailRoot": [
+          0.5564198075380913,
+          0.42190660919540224
+        ],
+        "bodyCenter": [
+          0.7188233259823577,
+          0.4459353448275862
+        ],
+        "headStart": 0.7772885926222934,
+        "finSwingStart": 0.5369313853247795,
+        "dorsal": [
+          0.6798464815557337,
+          0.2657198275862068
+        ],
+        "ventral": [
+          0.692838763031275,
+          0.6441724137931034
+        ]
+      },
+      "source": {
+        "file": "turn-atlas.png",
+        "crop": {
+          "x": 80,
+          "y": 533,
+          "width": 248,
+          "height": 172
+        },
+        "corePixels": 25089
+      },
+      "registration": {
+        "sideImage": "fish-blue-baby",
+        "headDelta": [
+          0,
+          0
+        ],
+        "scale": 0.8382117080994387,
+        "reason": "Match head and overall fin height to the approved side frame, preserving the natural shorter silhouette of three-quarter orientation."
+      }
+    },
+    "fish-blue-teen-turn": {
+      "id": "fish-blue-teen-turn",
+      "path": "fish-blue-teen-turn.webp",
+      "mime": "image/webp",
+      "width": 448,
+      "height": 336,
+      "bytes": 35120,
+      "sha256": "1deeed681a98840c0408ee4beb07e8ef413dba7cd0636bf68d7a3767dfb52845",
+      "contentBounds": [
+        0.31621617376854294,
+        0.04233683473389361,
+        0.654730943824475,
+        0.7757002801120448
+      ],
+      "displayWidth": 0.22,
+      "rig": {
+        "head": [
+          0.8596428571428572,
+          0.5
+        ],
+        "nose": [
+          0.8923794043340809,
+          0.5465420168067228
+        ],
+        "eye": [
+          0.8400009288281229,
+          0.46121498599439786
+        ],
+        "tailRoot": [
+          0.6239397173660463,
+          0.4146729691876751
+        ],
+        "bodyCenter": [
+          0.7417912872544518,
+          0.4146729691876751
+        ],
+        "headStart": 0.7941697627604096,
+        "finSwingStart": 0.6042977890513119,
+        "dorsal": [
+          0.7156020495014727,
+          0.15093487394957988
+        ],
+        "ventral": [
+          0.7156020495014727,
+          0.7094390756302521
+        ]
+      },
+      "source": {
+        "file": "turn-atlas.png",
+        "crop": {
+          "x": 401,
+          "y": 457,
+          "width": 350,
+          "height": 311
+        },
+        "corePixels": 65317
+      },
+      "registration": {
+        "sideImage": "fish-blue-teen",
+        "headDelta": [
+          0,
+          0
+        ],
+        "scale": 0.8380556080953281,
+        "reason": "Match head and overall fin height to the approved side frame, preserving the natural shorter silhouette of three-quarter orientation."
+      }
+    },
+    "fish-blue-adult-turn": {
+      "id": "fish-blue-adult-turn",
+      "path": "fish-blue-adult-turn.webp",
+      "mime": "image/webp",
+      "width": 512,
+      "height": 384,
+      "bytes": 49410,
+      "sha256": "b2143e9de1626c5ae4b97a6e8cd14e504df0f69a9ed426a500a7abf2beb390e6",
+      "contentBounds": [
+        0.2675441864197361,
+        0.08027376465661658,
+        0.6918564318846981,
+        0.7631386097152428
+      ],
+      "displayWidth": 0.28,
+      "rig": {
+        "head": [
+          0.866,
+          0.5152627721943049
+        ],
+        "nose": [
+          0.8971335394348114,
+          0.5686824748743721
+        ],
+        "eye": [
+          0.8487035892028825,
+          0.4771058417085429
+        ],
+        "tailRoot": [
+          0.6273095309997792,
+          0.4465802973199331
+        ],
+        "bodyCenter": [
+          0.7449251244201778,
+          0.4465802973199331
+        ],
+        "headStart": 0.8002736389709537,
+        "finSwingStart": 0.6065538380432383,
+        "dorsal": [
+          0.7310879957824838,
+          0.1718503978224457
+        ],
+        "ventral": [
+          0.7241694314636369,
+          0.7518357412060303
+        ]
+      },
+      "source": {
+        "file": "turn-atlas.png",
+        "crop": {
+          "x": 771,
+          "y": 425,
+          "width": 440,
+          "height": 364
+        },
+        "corePixels": 108935
+      },
+      "registration": {
+        "sideImage": "fish-blue-adult",
+        "headDelta": [
+          0,
+          0
+        ],
+        "scale": 0.8050693025567397,
+        "reason": "Match head and overall fin height to the approved side frame, preserving the natural shorter silhouette of three-quarter orientation."
+      }
+    },
+    "fish-gold-baby-turn": {
+      "id": "fish-gold-baby-turn",
+      "path": "fish-gold-baby-turn.webp",
+      "mime": "image/webp",
+      "width": 320,
+      "height": 240,
+      "bytes": 17802,
+      "sha256": "b23fc9ca89e861789813df0fd36d3cf11c163a3cd39569efb5495ba467ebf0c1",
+      "contentBounds": [
+        0.31216653320521026,
+        0.15997608370702548,
+        0.646443252188768,
+        0.5862481315396113
+      ],
+      "displayWidth": 0.15,
+      "rig": {
+        "head": [
+          0.8422499999999999,
+          0.5117249626307923
+        ],
+        "nose": [
+          0.8875010276532137,
+          0.5468998505231689
+        ],
+        "eye": [
+          0.8293211349562245,
+          0.4824125560538118
+        ],
+        "tailRoot": [
+          0.557814969036942,
+          0.4237877428998506
+        ],
+        "bodyCenter": [
+          0.719425782084134,
+          0.447237668161435
+        ],
+        "headStart": 0.7776056747811231,
+        "finSwingStart": 0.5384216714712791,
+        "dorsal": [
+          0.6806391869528079,
+          0.27136322869955165
+        ],
+        "ventral": [
+          0.6935680519965833,
+          0.6406995515695068
+        ]
+      },
+      "source": {
+        "file": "turn-atlas.png",
+        "crop": {
+          "x": 78,
+          "y": 919,
+          "width": 247,
+          "height": 168
+        },
+        "corePixels": 25337
+      },
+      "registration": {
+        "sideImage": "fish-gold-baby",
+        "headDelta": [
+          0,
+          0
+        ],
+        "scale": 0.8374973307708734,
+        "reason": "Match head and overall fin height to the approved side frame, preserving the natural shorter silhouette of three-quarter orientation."
+      }
+    },
+    "fish-gold-teen-turn": {
+      "id": "fish-gold-teen-turn",
+      "path": "fish-gold-teen-turn.webp",
+      "mime": "image/webp",
+      "width": 448,
+      "height": 336,
+      "bytes": 39110,
+      "sha256": "5fcaaba7b264fada46388000be1f0f11deba0c662b094bbb4f315b87665390d2",
+      "contentBounds": [
+        0.2615546218487398,
+        0.037477375565610975,
+        0.7205882352941174,
+        0.7839366515837102
+      ],
+      "displayWidth": 0.22,
+      "rig": {
+        "head": [
+          0.8596428571428572,
+          0.5
+        ],
+        "nose": [
+          0.895672268907563,
+          0.5470361990950225
+        ],
+        "eye": [
+          0.8380252100840337,
+          0.4608031674208145
+        ],
+        "tailRoot": [
+          0.600231092436975,
+          0.41376696832579185
+        ],
+        "bodyCenter": [
+          0.729936974789916,
+          0.41376696832579185
+        ],
+        "headStart": 0.7875840336134454,
+        "finSwingStart": 0.5786134453781513,
+        "dorsal": [
+          0.7011134453781513,
+          0.1472285067873304
+        ],
+        "ventral": [
+          0.7011134453781513,
+          0.7116628959276018
+        ]
+      },
+      "source": {
+        "file": "turn-atlas.png",
+        "crop": {
+          "x": 388,
+          "y": 853,
+          "width": 364,
+          "height": 297
+        },
+        "corePixels": 67441
+      },
+      "registration": {
+        "sideImage": "fish-gold-teen",
+        "headDelta": [
+          0,
+          0
+        ],
+        "scale": 0.8868778280542984,
+        "reason": "Match head and overall fin height to the approved side frame, preserving the natural shorter silhouette of three-quarter orientation."
+      }
+    },
+    "fish-gold-adult-turn": {
+      "id": "fish-gold-adult-turn",
+      "path": "fish-gold-adult-turn.webp",
+      "mime": "image/webp",
+      "width": 512,
+      "height": 384,
+      "bytes": 53368,
+      "sha256": "90498d0eaa4cf34e5c2f101143123cf235dc0fbaafac817be8505cb05bd5e3ea",
+      "contentBounds": [
+        0.25009456508366146,
+        0.03948838975694461,
+        0.712029404527559,
+        0.8372938368055555
+      ],
+      "displayWidth": 0.28,
+      "rig": {
+        "head": [
+          0.866,
+          0.5167458767361112
+        ],
+        "nose": [
+          0.8980413232037402,
+          0.5753564453125001
+        ],
+        "eye": [
+          0.848199264886811,
+          0.4748811848958335
+        ],
+        "tailRoot": [
+          0.6203498554379921,
+          0.44138943142361126
+        ],
+        "bodyCenter": [
+          0.7413948542076771,
+          0.44138943142361126
+        ],
+        "headStart": 0.798357206569882,
+        "finSwingStart": 0.5989889733021654,
+        "dorsal": [
+          0.727154266117126,
+          0.13996365017361126
+        ],
+        "ventral": [
+          0.7200339720718505,
+          0.7763069661458335
+        ]
+      },
+      "source": {
+        "file": "turn-atlas.png",
+        "crop": {
+          "x": 772,
+          "y": 821,
+          "width": 432,
+          "height": 381
+        },
+        "corePixels": 112965
+      },
+      "registration": {
+        "sideImage": "fish-gold-adult",
+        "headDelta": [
+          0,
+          0
+        ],
+        "scale": 0.8438867016622922,
+        "reason": "Match head and overall fin height to the approved side frame, preserving the natural shorter silhouette of three-quarter orientation."
+      }
+    }
+  }
+}

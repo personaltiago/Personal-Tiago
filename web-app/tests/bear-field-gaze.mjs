@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import vm from 'node:vm';
+const source=await readFile(new URL('../app/bear-field-gaze.js',import.meta.url),'utf8');
+let next=0,moving=false,kind='idle',enabled=true,detached=false,release;
+const events={},documentEvents={},frames=new Map(),calls=[];
+const doc={hidden:false,defaultView:{innerHeight:800},addEventListener:(name,fn)=>(documentEvents[name]??=[]).push(fn)};
+const image={getScreenCTM:()=>({inverse:()=>({local:true})})};
+const node={ownerDocument:doc,dataset:{},hidden:false,get isConnected(){return !detached},getBoundingClientRect:()=>({top:0,bottom:260,width:360,height:260}),querySelector:()=>image,addEventListener:(name,fn)=>(events[name]??=[]).push(fn)};
+const model={species:'panda',xp:600,colors:{panda:'brown'},poses:{panda:'sit'}};
+const host={document:doc,addEventListener:(name,fn)=>(events[name]??=[]).push(fn),requestAnimationFrame:fn=>{const id=++next;frames.set(id,fn);return id},cancelAnimationFrame:id=>frames.delete(id),DOMPoint:class{constructor(x,y){this.x=x;this.y=y}matrixTransform(matrix){assert(matrix.local);return{x:this.x-100,y:this.y-50}}},APMascotCloseup:{moving:()=>moving},APMascotBear:{get:()=>({state:()=>({kind})})},APMascotPetting:{respond:async(...args)=>{calls.push(args);if(release)await new Promise(resolve=>release=resolve)}}};
+vm.runInNewContext(source,host);const api=host.APBearFieldGaze;
+api.bind(node,()=>model,()=>enabled);
+api.bind(node,()=>model,()=>enabled);
+assert.equal(documentEvents.pointermove.length,1,'rebinding must not duplicate document tracking');
+const move=(x,y,options={})=>{for(const fn of documentEvents.pointermove)fn({clientX:x,clientY:y,pointerType:'mouse',buttons:0,...options})};
+const tick=async()=>{const pending=[...frames.values()];frames.clear();for(const fn of pending)await fn();for(let i=0;i<5;i++)await Promise.resolve()};
+move(120,80);move(300,220);await tick();assert.equal(calls.length,1);assert.equal(calls[0][2],'look');assert.equal(calls[0][3].x,200/320);assert.equal(calls[0][3].y,170/320,'owner-document coordinates use the actual portrait transform');
+for(const mode of ['camera','angry','affection','petting','disabled','hidden','detached']){
+ const before=calls.length;moving=mode==='camera';kind=['angry','affection'].includes(mode)?mode:'idle';node.dataset.petReaction=mode==='petting'?'affection':'';enabled=mode!=='disabled';doc.hidden=mode==='hidden';detached=mode==='detached';move(500,60);await tick();assert.equal(calls.length,before,'gaze must not interrupt '+mode);
+}
+moving=false;kind='idle';node.dataset.petReaction='';enabled=true;doc.hidden=false;detached=false;
+move(400,200,{pointerType:'touch'});await tick();assert.equal(calls.length,1,'untracked touch moves cannot become accidental gaze or camera');
+api.follow(node,()=>model,()=>true,600,300);await tick();assert.equal(calls.length,2,'the existing scenery-drag branch can drive gaze');
+move(450,200);for(const fn of events.pointerdown)fn();await tick();assert.equal(calls.length,2,'a pet tap invalidates queued hover before gesture dispatch');
+move(450,200);api.resetAll();await tick();assert.equal(calls.length,2,'account reset invalidates queued gaze');
+move(450,200);moving=true;await tick();assert.equal(calls.length,2,'camera started between input and rAF never gets a stale look actor');
+moving=false;
+const block=api.begin(node);move(550,200);await tick();assert.equal(calls.length,2,'gaze cannot overtake an anger/affection request while its texture is loading');block();
+move(550,200);await tick();assert.equal(calls.length,3);
+const previous=api.begin(node);api.resetAll();const current=api.begin(node);previous();move(550,200);await tick();assert.equal(calls.length,3,'old account completion cannot release the new account gesture blocker');current();move(550,200);await tick();assert.equal(calls.length,4,'new account resumes once its own gesture finishes');
+console.log('PASS: field gaze coalesces pointer input, respects real iframe/portrait coordinates, follows scenery drags, preserves anger/affection/tap priority, skips camera movement, and cancels account/visibility/detachment queues.');

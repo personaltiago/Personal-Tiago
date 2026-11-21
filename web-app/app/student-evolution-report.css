@@ -1,0 +1,60 @@
+/* Keep the viewport still; only the exercise page scrolls vertically. */
+body[data-view=history]{width:100%;max-width:100%;min-width:0;height:100dvh;overflow:hidden!important;overscroll-behavior-x:none}
+#historyScreen{box-sizing:border-box;position:fixed;inset:0;margin-inline:auto;min-width:0;width:100%!important;max-width:520px!important;height:100dvh;overflow:hidden!important;overscroll-behavior-x:none}
+#historyScreen:not([hidden]){display:flex;flex-direction:column}
+#historyScreen,#historyScreen *{box-sizing:border-box}
+#historyScreen .ev-main-scroll{width:100%;min-width:0;max-width:100%;min-height:0;overflow-x:hidden!important;overflow-y:auto;overscroll-behavior-x:none;overscroll-behavior-y:contain;touch-action:pan-y pinch-zoom}
+#historyScreen .ev-content,#historyScreen .ap-evolution-workout,#historyScreen .ev-ex-list,#historyScreen .ev-chart-panel{min-width:0;max-width:100%;width:100%}
+#historyScreen .ev-content{overflow:hidden}
+#historyScreen .ap-evolution-workout label{font-size:14px}
+#historyScreen select{min-width:0;max-width:100%;font-size:16px!important}
+#historyScreen .ev-section-heading{display:grid;grid-template-columns:minmax(0,1fr);gap:9px;margin-top:18px!important}
+#historyScreen .ev-chart-select{width:100%;max-width:100%!important;min-height:44px;height:44px!important;text-overflow:ellipsis}
+#historyScreen .ev-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px!important}
+#historyScreen .ev-metric{padding:11px 8px!important;min-height:78px!important}
+#historyScreen .ev-metric small{font-size:calc(12px * var(--ev-scale,1))!important;white-space:normal}
+#historyScreen .ev-metric strong{font-size:calc(21px * var(--ev-scale,1))!important;white-space:normal;overflow-wrap:anywhere}
+#historyScreen .ev-metric .ev-metric-desc{font-size:10px;line-height:1.3;height:auto;white-space:normal;color:#aabdc9}
+#historyScreen .ev-chart-badges{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px!important}
+#historyScreen .ev-chart-badge{display:block!important;min-height:91px!important;padding:10px 9px!important}
+#historyScreen .ev-badge-text{justify-items:start!important;gap:6px!important}
+#historyScreen .ev-chart-badge small{font-size:11px!important;line-height:1.35!important;white-space:normal!important}
+#historyScreen .ev-chart-badge strong{font-size:19px!important;white-space:normal;overflow-wrap:anywhere}
+#historyScreen .ev-badge-note,#historyScreen .ev-badge-extra{font-size:10px!important;line-height:1.4!important;overflow-wrap:anywhere}
+#historyScreen .ev-chart-panel>svg{display:block;width:100%!important;max-width:100%;min-width:0;height:auto!important}
+#historyScreen .ap-ev-method,#historyScreen .ap-ev-note{color:#b6c6d0;font-size:12px;line-height:1.5;margin:8px 3px 13px;overflow-wrap:anywhere}
+#historyScreen .ev-list-toolbar{margin:20px 2px 9px!important;align-items:start;min-width:0}
+#historyScreen .ev-list-toolbar h2{font-size:19px!important;line-height:1.25;min-width:0;overflow-wrap:anywhere}
+#historyScreen .ev-list-toolbar>span{font-size:11px;color:#b6c6d0;white-space:nowrap;padding-top:4px}
+#historyScreen .ev-ex-list{gap:8px!important}
+#historyScreen .ev-ex-row{width:100%;min-width:0;max-width:100%;display:grid!important;grid-template-columns:52px minmax(0,1fr) 12px!important;grid-template-rows:auto auto;gap:9px!important;padding:10px!important;min-height:116px!important;border-radius:10px!important;touch-action:pan-y pinch-zoom}
+#historyScreen .ev-ex-row[aria-expanded=true]{border-color:var(--history-accent)}
+#historyScreen .ev-ex-img{grid-column:1;grid-row:1;width:52px!important;height:46px!important;border-radius:6px!important;object-fit:cover}
+#historyScreen .ev-ex-main{grid-column:2;grid-row:1;min-width:0;gap:5px!important}
+#historyScreen .ev-ex-main strong{font-size:calc(14px * var(--ev-scale,1))!important;line-height:1.3!important;white-space:normal;overflow-wrap:anywhere}
+#historyScreen .ap-ev-last{font-size:calc(11px * var(--ev-scale,1));line-height:1.4;white-space:normal;overflow-wrap:anywhere}
+#historyScreen .ev-ex-row-arrow{grid-column:3;grid-row:1;font-size:23px!important}
+#historyScreen .ev-ex-stats{grid-column:1/-1;grid-row:2;width:100%!important;min-width:0;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;padding-top:8px;border-top:1px solid #31434c;height:auto!important}
+#historyScreen .ev-ex-stat{min-width:0;padding:0 5px!important;gap:5px!important;align-items:start;text-align:left}
+#historyScreen .ev-ex-stat:first-child{border-left:0;padding-left:0!important}
+#historyScreen .ev-ex-stat small{font-size:calc(10px * var(--ev-scale,1))!important;line-height:1.35!important;white-space:normal;overflow-wrap:anywhere}
+#historyScreen .ev-ex-stat b{font-size:calc(14px * var(--ev-scale,1))!important;line-height:1.35;white-space:normal;overflow-wrap:anywhere}
+#historyScreen .up{color:#28d9b5!important}#historyScreen .down{color:#ff6e8c!important}#historyScreen .flat{color:#b8c5cf!important}
+#historyScreen .ev-detail{margin:0 0 7px;min-width:0;max-width:100%;scroll-margin-block:10px}
+#historyScreen .ev-detail-header{padding:12px;min-width:0}
+#historyScreen .ev-detail-header h3{font-size:15px;line-height:1.4;overflow-wrap:anywhere}
+#historyScreen .ev-detail-entry{padding:13px 12px;min-width:0;gap:9px}
+#historyScreen .ap-ev-session-heading,#historyScreen .ap-ev-session-value{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;line-height:1.4;min-width:0}
+#historyScreen .ap-ev-session-heading>span{font-size:11px;color:#b3c5d0}
+#historyScreen .ap-ev-session-value>b{font-size:18px}
+#historyScreen .ap-ev-session-value>span{font-size:13px;font-weight:700}
+#historyScreen .ap-ev-sets{list-style:none;margin:0;padding:0;display:grid;gap:6px;min-width:0}
+#historyScreen .ap-ev-sets li{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) minmax(0,.7fr);gap:8px;padding-top:7px;border-top:1px solid #29424b;font-size:11px;line-height:1.4;overflow-wrap:anywhere}
+#historyScreen .ap-ev-sets li b{font-size:11px}
+#historyScreen .ap-ev-set-load{display:grid;gap:3px;min-width:0}
+#historyScreen .ap-ev-set-load small{font-size:10px;line-height:1.4;overflow-wrap:anywhere}
+#historyScreen .ev-bottom-nav{width:100%;min-width:0;max-width:100%;overflow:hidden}
+#historyScreen.ev-light .ap-ev-method,#historyScreen.ev-light .ap-ev-note,#historyScreen.ev-light .ev-list-toolbar>span,#historyScreen.ev-light .ap-ev-session-heading>span{color:#475d70}
+#historyScreen.ev-light .ev-detail,#historyScreen.ev-light .ev-detail-header{background:#fff;color:#172839}
+#historyScreen.ev-light .ev-detail-entry small,#historyScreen.ev-light .ev-detail-entry b{color:#172839}
+#historyScreen.ev-light .up{color:#007d67!important}#historyScreen.ev-light .down{color:#ba2045!important}#historyScreen.ev-light .flat{color:#506171!important}
