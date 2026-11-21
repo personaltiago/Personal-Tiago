@@ -9,7 +9,7 @@ pare e pergunte ao Tiago antes de seguir. Detalhes e motivos: `equipe/REGRAS.md`
 2. Leia `equipe/ESTADO.md`, `equipe/REGRAS.md`, `equipe/canonico/INVENTARIO.md` e os PRs abertos relacionados ao assunto.
 3. Descubra a **referência**: `equipe/canonico/manifesto.json` → `referencia` (o último passo **assinado** da cadeia, pacote
    completo ou complemento; hoje o pacote completo 1.12.300/406). Toda atualização nova
-   parte dela e não pode perder nada dela. O `canonico` é outra coisa: o último **instalado** no aparelho do Tiago (hoje 1.12.294).
+   parte dela e não pode perder nada dela. O `canonico` é outra coisa: o último **instalado** no aparelho do Tiago (hoje 1.12.300).
    Confira os SHA-256. Veja em `equipe/canonico/status-pacotes.json` o que está só proposto, aprovado, assinado, publicado,
    instalado ou validado. Cada estado tem evidência própria; nunca registre "instalado" sem confirmação do Tiago.
 4. **Nunca** parta de um pacote só porque ele está na raiz da `main`, tem o maior número ou o nome parece certo. A raiz guarda uploads

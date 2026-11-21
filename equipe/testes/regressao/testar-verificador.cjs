@@ -78,8 +78,14 @@ const contFb = patchDe('continua-feedback', [['index.html', 'ap-feedback-student
 caso('controle: correção que continua o bloco do complemento, COM autorização de continuação', contFb, {modo: 'assinatura', autorizacoes: autorizar('cont', contFb, [declP(contFb)]), espera: 'passa'});
 
 // ---------------- regressões propositais
-caso('controle: reassinar o 1.12.295 idêntico byte a byte (passo aprovado, para aparelho ainda atrás da referência)', achar('AgendaPersonal-1.12.295-Feedback-Topo-Para-Assinar.agenda.json'), {modo: 'assinatura', espera: 'passa'});
-caso('controle: reassinar o 1.12.294 idêntico byte a byte (é o instalado no Tiago)', achar('AgendaPersonal-1.12.294-Icone-Feedback-Para-Assinar.agenda.json'), {modo: 'assinatura', espera: 'passa'});
+// Reassinar um passo da cadeia idêntico byte a byte: permitido do instalado em diante; antes do instalado é volta (regressivo).
+// Segue o canônico de status-pacotes.json (1.12.294 até 21/11; 1.12.300 desde a confirmação do Tiago em 21/11 13:03).
+const INSTALADO = L.lerJson(path.join(L.RAIZ, 'equipe/canonico/status-pacotes.json')).canonico;
+const numero = v => Number(String(v).split('.')[2]);
+for (const [versao, arquivo] of [['1.12.294', 'AgendaPersonal-1.12.294-Icone-Feedback-Para-Assinar.agenda.json'], ['1.12.295', 'AgendaPersonal-1.12.295-Feedback-Topo-Para-Assinar.agenda.json']]) {
+  if (numero(versao) >= numero(INSTALADO)) caso(`controle: reassinar o ${versao} idêntico byte a byte (passo aprovado, do instalado ${INSTALADO} em diante)`, achar(arquivo), {modo: 'assinatura', espera: 'passa'});
+  else caso(`reassinar o ${versao} idêntico byte a byte, abaixo do instalado ${INSTALADO}`, achar(arquivo), {modo: 'assinatura', espera: 'reprova', motivo: /REGRESSIVO/});
+}
 caso('pacote antigo 1.12.288 idêntico byte a byte (anterior ao instalado)', achar('AgendaPersonal-1.12.288-Janelas-Como-Pagina-Para-Assinar.agenda.json'), {modo: 'assinatura', espera: 'reprova', motivo: /REGRESSIVO/});
 for (const [rot, p] of [['1.12.288', p288], ['1.12.294 com bytes diferentes', p294], ['1.12.295 com bytes diferentes (sem o complemento)', p295]])
   caso(`pacote completo antigo ${rot} por cima da referência`, p, {modo: 'assinatura', espera: 'reprova', motivo: /REGRESSIVO/});

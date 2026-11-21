@@ -1,7 +1,7 @@
 {
  "descricao": "Situação de cada pacote completo da cadeia, escrita à mão com a evidência. Os estados são independentes: proposto, aprovado, assinado, publicado, instalado, validado. Não presumir nenhum estado pelo nome do arquivo ou pelo número da versão. Mudar o canônico só por PR aprovado pelo Tiago, depois de o pacote estar assinado e instalado.",
- "canonico": "1.12.294",
- "motivo_canonico": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago (20/11). O 1.12.295 (assinado 20/11 12:00) e o complemento \"Feedback somente no topo\" (assinado 20/11 12:34) ainda não foram instalados; mesmo assim entram na REFERÊNCIA (o que nenhuma atualização nova pode perder), que é o último passo assinado.",
+ "canonico": "1.12.300",
+ "motivo_canonico": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: tela \"Atualizar aplicativo\" com \"Versão instalada: 1.12.300\" (print do Tiago, 21/11/2026 11:27) e confirmação dele por escrito (\"Sim\", 21/11/2026 13:03). Antes: 1.12.294 (20/11).",
  "pacotes": {
   "1.12.273": {
    "proposto": "sim",
@@ -151,9 +151,9 @@
    "proposto": "sim: gerado pelo Claude em 20/11/2026 (tools/gerar-duplicados-1.12.300.cjs, PR #28 em rascunho); inclui o 1.12.299",
    "aprovado": "sim: o Tiago subiu o arquivo na main (commit 39c35e1, byte a byte igual ao gerado)",
    "assinado": "sim: execução 44849098710 do workflow de assinatura (commit 39c35e1, \"Assinado e conferido\"), artefato 14684233109",
-   "publicado": "não confirmado",
-   "instalado": "não confirmado",
-   "validado": "não confirmado"
+   "publicado": "sim: o Tiago publicou pelo app (\"Publicar para Android e iPhone\"); a tela confirmou \"Versão 1.12.300 confirmada para professor e alunos no Android, iPhone e navegador\" (prints de 21/11/2026 11:25-11:26)",
+   "instalado": "sim: no aparelho do Tiago (Xiaomi), \"Versão instalada: 1.12.300\" (print 21/11/2026 11:27) e confirmação dele (\"Sim\", 21/11/2026 13:03)",
+   "validado": "não confirmado: nenhum teste das funções novas (mensalidade substituída, IMC por idade, quadro de pagamentos repetidos) feito no aparelho"
   }
  }
 }
