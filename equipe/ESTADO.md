@@ -2,6 +2,8 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**21/11, 18h40: 1.12.301 instalada (canônico)**, por confirmação do Tiago (18:37), sem print. PR #32 do ChatGPT (barra e recibo do app web) revisado pelo Claude: testes do PR passam (8 + 7 cenários no Chrome); só vale no app web (precisa de `APWebPlatform`), não muda o Android; juntar o PR não publica o site (a publicação do chatgpt.site é feita pelo ChatGPT).
+
 **21/11, 18h20: 1.12.301 subida (`ee472a7`) e assinada (execução 44942130415, artefato 14721852272); PR #36 juntado com a aprovação do Tiago. Referência agora 1.12.301/407; próxima versão livre 1.12.302/408.** A conferência antes de assinar aprovou com aviso (a autorização do 1.12.301 ainda não estava na main; o bloco não é protegido). Instalação ainda não confirmada.
 
 **21/11, 15h40: 1.12.300 validada por relato do Tiago** ("os testes no Android e no iPhone… foi feito, deu certo", 15:38). Sem prints nem detalhe por função; registrado assim em `status-pacotes.json`. APK 1.210 instalado e validado pelo Tiago (13:27: "Ocultar" enquanto carrega, "Fechar" no erro).
