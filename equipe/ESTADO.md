@@ -1,5 +1,33 @@
 # Agenda Personal — ESTADO
 
+## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
+
+**Atualização de 20/11, 21h (Claude), `main` em `39c35e1`:** o Tiago subiu o **1.12.299/405** (`0f06f40`, assinado 44839477648) e o **1.12.300/406** (`39c35e1`, assinado 44849098710, artefato 14684233109), os dois gerados pelo Claude (PR #28) e idênticos byte a byte. **Referência agora: 1.12.300/406; próxima versão livre 1.12.301/407.** Instalação não confirmada (canônico instalado segue 1.12.294). Os testes passam a seguir a referência do manifesto (teste do teste e Java não fixam mais versões); Java: 170 verificações com o 1.12.300 como referência.
+
+**Atualização de 20/11 à noite (Claude, depois da avaliação do ChatGPT), `main` em `9a86cc9`:**
+- Dois arquivos novos na main, **não gerados pelo Claude**: a correção por área **"Feedback online e compartilhamento"** (`b7aa787`, SHA-256 `2bd0403e…c9a6`, assinada 44794359438; muda `ap-feedback-sync` e `ap-feedback-student` sobre o "Feedback somente no topo") e o pacote completo **1.12.298 / 404 "Feedback consolidado"** (`9a86cc9`, SHA-256 `602b204b…7973`, assinado 44797870274), com páginas idênticas a 295 + os dois complementos.
+- **Referência agora: 1.12.298 / 404. Próxima versão livre para pacote completo: 1.12.299 / 405.** O "Feedback somente no topo" reimportado sobre a referência dá conflito (já continuado), o que é correto. Canônico instalado continua 1.12.294 (a foto com 1.12.297 é indício, não confirmação de instalação).
+- **Erro do executor dos testes oficiais (achado do ChatGPT, confirmado):** 10 dos 18 testes liam `web/native-release.agenda.json` (1.12.269) e não o pacote; os "18/18" anteriores valiam só para 8 testes. Corrigido (`c4e233f`): 18/18 reais no 298 e na referência; o mutante do limite de histórico (200→201) agora reprova.
+- **Achados de conteúdo ainda não corrigidos (precisam de 1.12.299+ aprovado pelo Tiago):** (a) IMC na avaliação ignora a idade (`weightReferenceStatus` usa só 18,5/25; idoso 67 kg/1,60 m = 26,2 aparece acima, pela referência do Ministério da Saúde para ≥60 anos, 22–27, é adequado); (b) "Recebido" do financeiro soma todos os pagamentos do mês sem juntar os do mesmo aluno e vencimento (deduplica só pelo id): dois registros para o mesmo vencimento somam os dois (fluxo de tela não reproduzido); (c) a importação nativa do Android mostra só texto, sem barra de progresso.
+
+**Conteúdo (pacotes `.agenda.json`), conferido pela API e pelos SHA-256 em 20/11, `main` em `3ab3556`:**
+- **Canônico instalado: 1.12.294 / 400** (SHA-256 `2bf38cc5…30e9`; upload `f7ea686`; assinado 44707518866; instalado no aparelho do Tiago, relato com fotos de 20/11 11:38; validado só em parte).
+- **1.12.295 / 401** (Feedback pelo ícone do topo, PR #24): upload `7a41338`, assinado 44769018803 (artefato 14646008941). **Não instalado** (sem confirmação).
+- **"Feedback somente no topo"** (`AgendaPersonal-Feedback-Somente-No-Topo-Para-Assinar.agenda.json`, correção por área, SHA-256 `17894274…252d`): upload `3ab3556` (20/11 12:34; não foi gerada pelo Claude), assinada 44774714035 (artefato 14648119398). **Depende do 1.12.295** (o app a recusa sobre o 1.12.294). Completa o 295: retira o toque no pet que ainda abria o feedback e o acompanhamento da janela do pet (o 295 do Claude não tinha tirado esse toque). **Não instalada** (sem confirmação).
+- **Referência (o que nenhuma atualização nova pode perder): 1.12.295 + "Feedback somente no topo"**, que o app numera **1.12.296 / 402** ao instalar a correção. **Próxima versão livre para pacote completo: 1.12.297 / 403.** Um 1.12.296/402 completo seria recusado (sequência igual à da referência).
+- Inventário (passos, funcionalidades, correções, PRs, paridade por área, Raposinha): `equipe/canonico/INVENTARIO.md` (gerado).
+- **Correções da main na referência:** 01, 02, 03, Apagar exercício (as duas), Pix sem anexos, Sininho de cadastro, Sons do treino e "Feedback somente no topo" **presentes**; Ficha recolhível 253 **evoluída**; **Raposinha em conflito** (feita sobre o modelo de mascotes do 1.12.255, que ainda citava o Galo; nunca esteve em pacote completo; nada alterado nos mascotes; decisão do Tiago).
+- A seção 4.2 abaixo está desatualizada para o conteúdo: "Guardar a agenda no telefone" e `nsActivate` existem no `professor.html` desde o 1.12.273.
+
+**Proteção (no PR #25, ainda não na main):** `CLAUDE.md`; `equipe/canonico/` (referência e canônico, hashes, histórico, funcionalidades, estados, autorizações, conferência da raiz); `equipe/testes/regressao/` (verificador, 40 casos propositais, mecanismo real em Java, `conferir-antes-de-assinar.sh`); CI `verificar-regressao.yml` em todo PR; os **três** fluxos de assinatura de conteúdo rodam a conferência (verificador + mecanismo real) antes de ler a chave. `android-apk.yml` (APK) não é coberto.
+
+**Correções da revisão independente (20/11 12:47):** (1) mudar o bloco de uma correção protegida passa a exigir autorização, qualquer que seja o conteúdo novo — a 03 do 1.12.288 com um comentário é reprovada pelo verificador e pelo mecanismo real, e o mecanismo real roda também antes de assinar; (2) referência inclui o complemento e o protege; envio novo na raiz fora do manifesto reprova o CI; (3) a conferência cobre `assinar-ficha-recolhivel.yml` (o conteúdo dele é reprovado: conflito) e `assinar-descanso-aluno.yml` (passa: já presente; descanso intacto); (4) passos para tornar `regressao` obrigatório em `equipe/canonico/LEIA-ME.md`.
+
+**Limite:** o ruleset "Proteger main" (27377643) só bloqueia apagar a branch e push forçado. **Não há verificação obrigatória** até o Tiago configurar (LEIA-ME). Não testado em Xiaomi nem iPhone/Safari.
+
+---
+
+
 **Atualizado em:** 13/11/2026, pelo Claude, para revisão do ChatGPT e aprovação do Tiago.
 **Fonte:** `main` em `b10f0ddf060d73c367f30f305e881dd6bc423b60`, arquivo `AgendaPersonal_AndroidStudio_v1.65_contas_convites.zip`, extraído numa pasta temporária, sem alterar o original.
 

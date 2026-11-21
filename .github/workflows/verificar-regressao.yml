@@ -1,0 +1,92 @@
+name: Verificar regressão do conteúdo
+
+# Roda em todo Pull Request (e pelo botão). Reprova se um pacote completo ou uma correção por área tirar, reverter ou deixar
+# em conflito algo do conteúdo canônico (equipe/canonico/manifesto.json), inclusive as correções de exercícios 01/02/03.
+# Não assina, não publica e não escreve nada no repositório. Para BLOQUEAR o merge, o job "regressao" precisa estar marcado como
+# verificação obrigatória na regra da main (Settings -> Rules); sem isso, o vermelho só avisa.
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  regressao:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Main de referência
+        run: git fetch --no-tags --depth=1 origin main:refs/remotes/origin/main
+      - name: Manifesto, inventário e arquivos da raiz conferem
+        run: |
+          node equipe/canonico/gerar-manifesto.cjs --conferir
+          node equipe/canonico/relatorio.cjs --conferir
+          node equipe/canonico/conferir-raiz.cjs
+      - name: Teste do teste (regressões propositais têm de ser reprovadas, inclusive as disfarçadas)
+        if: success() || failure()
+        run: node equipe/testes/regressao/testar-verificador.cjs
+      - name: Pacotes e correções deste PR
+        if: success() || failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          : > pacotes.txt
+          if [[ -n "${PR:-}" ]]; then
+            gh api "repos/$GITHUB_REPOSITORY/pulls/$PR/files" --paginate --jq '.[] | select(.status != "removed") | .filename | select(endswith(".agenda.json"))' >> pacotes.txt
+          fi
+          sort -u pacotes.txt -o pacotes.txt
+          echo "Arquivos .agenda.json deste PR:"; cat pacotes.txt
+      - name: Verificador de regressão (modo PR)
+        if: success() || failure()
+        run: |
+          set -euo pipefail
+          mapfile -t arquivos < pacotes.txt
+          if [[ ${#arquivos[@]} -gt 0 ]]; then node equipe/testes/regressao/verificar-pacote.cjs --modo pr --json relatorio-regressao.json "${arquivos[@]}"; else echo "Nenhum pacote neste PR."; fi
+      - name: Mecanismo real de atualização (UpdateManager e UpdateAreaPatch do ZIP)
+        # sem argumentos testa a referência sobre todos os estados (e os casos E, F e G de sensibilidade); depois, cada arquivo do PR
+        if: success() || failure()
+        run: |
+          set -euo pipefail
+          python3 -I equipe/testes/regressao/mecanismo-real.py
+          args=()
+          while read -r f; do [[ -n "$f" ]] && args+=(--candidato "$f"); done < pacotes.txt
+          if [[ ${#args[@]} -gt 0 ]]; then python3 -I equipe/testes/regressao/mecanismo-real.py "${args[@]}"; fi
+      - name: Playwright para os testes oficiais que abrem o Chromium
+        if: success() || failure()
+        run: |
+          npm install --no-save --prefix "$RUNNER_TEMP/pw" playwright@1.63.0
+          "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
+          echo "NODE_PATH=$RUNNER_TEMP/pw/node_modules" >> "$GITHUB_ENV"
+      - name: Testes oficiais do Android com as páginas da referência e dos pacotes completos do PR
+        if: success() || failure()
+        run: |
+          set -euo pipefail
+          node -e "const L=require('./equipe/canonico/lib.cjs'),M=L.lerJson('equipe/canonico/manifesto.json');const fim=M.pacotes.findIndex(x=>x.arquivo===M.referencia.arquivo);let ini=fim;while(M.pacotes[ini].tipo!=='pacote-completo')ini--;let p=null;for(const x of M.pacotes.slice(ini,fim+1))p=x.tipo==='complemento'?L.aplicarCorrecao(p,L.lerJson(x.arquivo)):L.lerJson(x.arquivo);require('fs').writeFileSync(process.argv[1],JSON.stringify(p))" "$RUNNER_TEMP/referencia.agenda.json"
+          for f in "$RUNNER_TEMP/referencia.agenda.json" $(cat pacotes.txt); do
+            if node -e "process.exit(String(JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')).format).startsWith('agenda-patch/')?1:0)" "$f"; then
+              echo "== $f"; python3 -I equipe/testes/testes-oficiais-android.py "$f"
+            fi
+          done
+      - name: Funcionalidades exigidas no ZIP oficial
+        if: success() || failure()
+        run: python3 -I equipe/testes/verificar_funcionalidades.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: relatorio-regressao
+          path: relatorio-regressao.json
+          if-no-files-found: ignore

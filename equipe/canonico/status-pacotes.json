@@ -1,0 +1,159 @@
+{
+ "descricao": "Situação de cada pacote completo da cadeia, escrita à mão com a evidência. Os estados são independentes: proposto, aprovado, assinado, publicado, instalado, validado. Não presumir nenhum estado pelo nome do arquivo ou pelo número da versão. Mudar o canônico só por PR aprovado pelo Tiago, depois de o pacote estar assinado e instalado.",
+ "canonico": "1.12.294",
+ "motivo_canonico": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago (20/11). O 1.12.295 (assinado 20/11 12:00) e o complemento \"Feedback somente no topo\" (assinado 20/11 12:34) ainda não foram instalados; mesmo assim entram na REFERÊNCIA (o que nenhuma atualização nova pode perder), que é o último passo assinado.",
+ "pacotes": {
+  "1.12.273": {
+   "proposto": "sim",
+   "aprovado": "não confirmado",
+   "assinado": "sim: execução 43878193013 do workflow de assinatura (commit 0c84a3d, sucesso)",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
+  },
+  "1.12.274": {
+   "proposto": "sim",
+   "aprovado": "não confirmado",
+   "assinado": "sim: execução 43889346602 do workflow de assinatura (commit 0e6d2b0, sucesso)",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
+  },
+  "1.12.276": {
+   "proposto": "sim",
+   "aprovado": "não confirmado",
+   "assinado": "sim: execução 43973147490 do workflow de assinatura (commit 4b4cca2, sucesso)",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
+  },
+  "1.12.278": {
+   "proposto": "sim",
+   "aprovado": "não confirmado",
+   "assinado": "sim: execução 44302669368 do workflow de assinatura (commit 8c3ab3e, sucesso)",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
+  },
+  "1.12.281": {
+   "proposto": "sim",
+   "aprovado": "sim: o Tiago aprovou os Links dos alunos (registro do projeto, 18/11)",
+   "assinado": "sim: execução 44364022013 do workflow de assinatura (commit f13b535, sucesso)",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
+  },
+  "1.12.282": {
+   "proposto": "sim",
+   "aprovado": "não confirmado",
+   "assinado": "sim: execução 44439322147 do workflow de assinatura (commit 5aa5329, sucesso)",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
+  },
+  "1.12.283": {
+   "proposto": "sim",
+   "aprovado": "não confirmado",
+   "assinado": "sim: execução 44451268909 do workflow de assinatura (commit a52b794, sucesso)",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
+  },
+  "1.12.285": {
+   "proposto": "sim",
+   "aprovado": "não confirmado",
+   "assinado": "sim: execução 44509174519 do workflow de assinatura (commit b4b6072, sucesso)",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
+  },
+  "1.12.286": {
+   "proposto": "sim",
+   "aprovado": "não confirmado",
+   "assinado": "sim: execução 44524800329 do workflow de assinatura (commit c3e8d57, sucesso)",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
+  },
+  "1.12.288": {
+   "proposto": "sim",
+   "aprovado": "não confirmado",
+   "assinado": "sim: execução 44560172256 do workflow de assinatura (commit 176f8d7, sucesso)",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
+  },
+  "1.12.294": {
+   "proposto": "sim",
+   "aprovado": "sim, em parte: o Tiago subiu o arquivo na main (20/11 05:03) e instalou; pediu mudança no botão do topo (gerou o 1.12.295)",
+   "assinado": "sim: execução 44707518866 do workflow de assinatura (commit f7ea686, sucesso)",
+   "publicado": "não confirmado",
+   "instalado": "sim: relato do Tiago com fotos do aparelho, 20/11 11:38 (escolha do ícone em Meu perfil funcionou)",
+   "validado": "em parte: só a escolha do ícone foi vista no aparelho; nada em iPhone"
+  },
+  "1.12.295": {
+   "proposto": "sim",
+   "aprovado": "sim, para assinatura: o Tiago subiu o arquivo na main (20/11 12:00); ainda não instalado",
+   "assinado": "sim: execução 44769018803 do workflow de assinatura (commit 7a41338, sucesso)",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
+  },
+  "1.12.291": {
+   "proposto": "sim: entregue sem assinatura e nunca subido na main",
+   "aprovado": "não (substituído pelo 1.12.294, que o contém)",
+   "assinado": "não",
+   "publicado": "não",
+   "instalado": "não",
+   "validado": "não"
+  },
+  "1.12.292": {
+   "proposto": "sim: entregue sem assinatura e nunca subido na main",
+   "aprovado": "não (substituído pelo 1.12.294, que o contém)",
+   "assinado": "não",
+   "publicado": "não",
+   "instalado": "não",
+   "validado": "não"
+  },
+  "AgendaPersonal-Feedback-Somente-No-Topo-Para-Assinar.agenda.json": {
+   "proposto": "sim: correção por área subida na main em 20/11/2026 12:34 (commit 3ab3556); não foi gerada pelo Claude (origem a confirmar com o Tiago)",
+   "aprovado": "sim, para assinatura: o Tiago subiu o arquivo na main",
+   "assinado": "sim: execução 44774714035 do workflow de assinatura (commit 3ab3556, sucesso), artefato 14648119398",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
+  },
+  "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json": {
+   "proposto": "sim: correção por área subida na main em 20/11/2026 (commit b7aa787); não foi gerada pelo Claude (origem a confirmar com o Tiago)",
+   "aprovado": "sim, para assinatura: o Tiago subiu o arquivo na main",
+   "assinado": "sim: execução 44794359438 do workflow de assinatura (commit b7aa787, sucesso)",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado (foto do Tiago mostra 1.12.297 instalada, compatível com 294 + 295 + 2 complementos; sem registro de instalação confirmado)",
+   "validado": "não confirmado"
+  },
+  "1.12.298": {
+   "proposto": "sim: pacote completo subido na main em 20/11/2026 (commit 9a86cc9); não foi gerado pelo Claude",
+   "aprovado": "sim, para assinatura: o Tiago subiu o arquivo na main",
+   "assinado": "sim: execução 44797870274 do workflow de assinatura (commit 9a86cc9, sucesso)",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
+  },
+  "1.12.299": {
+   "proposto": "sim: gerado pelo Claude em 20/11/2026 (tools/gerar-financeiro-imc-1.12.299.cjs, PR #28 em rascunho)",
+   "aprovado": "sim: abordagem aprovada pelo Tiago às 18:55 de 20/11; ele subiu o arquivo na main (commit 0f06f40, byte a byte igual ao gerado)",
+   "assinado": "sim: execução 44839477648 do workflow de assinatura (commit 0f06f40, sucesso), artefato 14678944741",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
+  },
+  "1.12.300": {
+   "proposto": "sim: gerado pelo Claude em 20/11/2026 (tools/gerar-duplicados-1.12.300.cjs, PR #28 em rascunho); inclui o 1.12.299",
+   "aprovado": "sim: o Tiago subiu o arquivo na main (commit 39c35e1, byte a byte igual ao gerado)",
+   "assinado": "sim: execução 44849098710 do workflow de assinatura (commit 39c35e1, \"Assinado e conferido\"), artefato 14684233109",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
+  }
+ }
+}

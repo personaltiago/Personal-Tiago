@@ -12,7 +12,7 @@ permissions:
 jobs:
   sign:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -96,6 +96,11 @@ jobs:
           target.parent.mkdir(exist_ok=True)
           target.write_bytes(data)
           PY
+      - name: Conferir regressão antes de assinar
+        # Conferência comum a todos os fluxos que assinam conteúdo (CLAUDE.md, equipe/canonico/LEIA-ME.md): verificador no modo
+        # assinatura + teste com o mecanismo real do app. Só lê o arquivo preparado; se reprovar, nada é assinado (a chave nem é lida).
+        # O conteúdo embutido e os passos de assinatura deste fluxo não mudaram.
+        run: bash equipe/testes/regressao/conferir-antes-de-assinar.sh .agenda/ficha-recolhivel.agenda.json
       - name: Assinar e verificar a correção do professor
         env:
           AGENDA_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
