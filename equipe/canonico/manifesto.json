@@ -11,15 +11,15 @@
   "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago (20/11). O 1.12.295 (assinado 20/11 12:00) e o complemento \"Feedback somente no topo\" (assinado 20/11 12:34) ainda não foram instalados; mesmo assim entram na REFERÊNCIA (o que nenhuma atualização nova pode perder), que é o último passo assinado."
  },
  "referencia": {
-  "id": "pacote-1-12-298-feedback-online-e-compartilhamento",
+  "id": "pacote-1-12-300-pagamentos-repetidos-mensalidade-e-imc-por-idade",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-1.12.298-Feedback-Consolidado-Para-Assinar.agenda.json",
-  "sha256": "602b204bd7d93b460e4b9e9d1f8f12d89da18ffc6c5b7959105f6af778c87973",
-  "versao_efetiva": "1.12.298",
-  "sequencia_efetiva": 404,
-  "proxima_versao_livre": "1.12.299",
-  "proxima_sequencia_livre": 405,
-  "impressao": "4b6cf649fcb5102d48796b14ab487513641e971bb40088686eb9312410b3a465"
+  "arquivo": "AgendaPersonal-1.12.300-Pagamentos-Repetidos-Para-Assinar.agenda.json",
+  "sha256": "c91d3a533b305c5bb518173094e93ea158f737e10b1107f23d12ee4db91496dd",
+  "versao_efetiva": "1.12.300",
+  "sequencia_efetiva": 406,
+  "proxima_versao_livre": "1.12.301",
+  "proxima_sequencia_livre": 407,
+  "impressao": "19cd3747776d559336487f5f4dbd82887ec42cd6d62bddcd52ff53310989817a"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -46,6 +46,8 @@
   "AgendaPersonal-1.12.294-Icone-Feedback-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.295-Feedback-Topo-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.298-Feedback-Consolidado-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.299-Financeiro-IMC-Idade-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.300-Pagamentos-Repetidos-Para-Assinar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
   "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
@@ -352,6 +354,40 @@
     "proposto": "sim: pacote completo subido na main em 20/11/2026 (commit 9a86cc9); não foi gerado pelo Claude",
     "aprovado": "sim, para assinatura: o Tiago subiu o arquivo na main",
     "assinado": "sim: execução 44797870274 do workflow de assinatura (commit 9a86cc9, sucesso)",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado",
+    "validado": "não confirmado"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.299",
+   "sequencia": 405,
+   "arquivo": "AgendaPersonal-1.12.299-Financeiro-IMC-Idade-Para-Assinar.agenda.json",
+   "sha256": "45e86b1368c86534abe4bb3c26bf34428feed7e23b2529f050ce214c644a671e",
+   "origem": "main",
+   "titulo": "Mensalidade corrigida e IMC por idade",
+   "status": {
+    "proposto": "sim: gerado pelo Claude em 20/11/2026 (tools/gerar-financeiro-imc-1.12.299.cjs, PR #28 em rascunho)",
+    "aprovado": "sim: abordagem aprovada pelo Tiago às 18:55 de 20/11; ele subiu o arquivo na main (commit 0f06f40, byte a byte igual ao gerado)",
+    "assinado": "sim: execução 44839477648 do workflow de assinatura (commit 0f06f40, sucesso), artefato 14678944741",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado",
+    "validado": "não confirmado"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.300",
+   "sequencia": 406,
+   "arquivo": "AgendaPersonal-1.12.300-Pagamentos-Repetidos-Para-Assinar.agenda.json",
+   "sha256": "c91d3a533b305c5bb518173094e93ea158f737e10b1107f23d12ee4db91496dd",
+   "origem": "main",
+   "titulo": "Pagamentos repetidos, mensalidade e IMC por idade",
+   "status": {
+    "proposto": "sim: gerado pelo Claude em 20/11/2026 (tools/gerar-duplicados-1.12.300.cjs, PR #28 em rascunho); inclui o 1.12.299",
+    "aprovado": "sim: o Tiago subiu o arquivo na main (commit 39c35e1, byte a byte igual ao gerado)",
+    "assinado": "sim: execução 44849098710 do workflow de assinatura (commit 39c35e1, \"Assinado e conferido\"), artefato 14684233109",
     "publicado": "não confirmado",
     "instalado": "não confirmado",
     "validado": "não confirmado"
@@ -1242,6 +1278,11 @@
     "area": "pagamentos",
     "vezes": 1
    },
+   "ap-finance-duplicates-css": {
+    "hash": "e4eaf3659499806091b9cc12ca238e1143f439977b47e69a05cf9b882ad0c82d",
+    "area": "geral",
+    "vezes": 1
+   },
    "ap-finance-results-css": {
     "hash": "1510a4d3bbc0dccc48520eccfeb2b24218b047feeb5bd020f99684783567921c",
     "area": "pagamentos",
@@ -1468,7 +1509,7 @@
     "vezes": 1
    },
    "ap-finance-wallet-model": {
-    "hash": "875dee6578f89316086d7144b6543cb43c0d0428ae1543e5f1c38b98e8975fdd",
+    "hash": "1809a9a55878a2454b19ae844bc9498bee464b9aa7840f747a0fa56c554bb988",
     "area": "pagamentos",
     "vezes": 1
    },
@@ -1478,7 +1519,7 @@
     "vezes": 1
    },
    "ap-finance-results-model": {
-    "hash": "5624e39d3d1a5c807ba0a9564cb8e4ebe41c802fe176ffe6cff955148e66759e",
+    "hash": "d5811ab170ea169ef0cf2c9f9dad0943d4b4cd892ddfd07a628f6cb698752094",
     "area": "pagamentos",
     "vezes": 1
    },
@@ -1493,8 +1534,13 @@
     "vezes": 1
    },
    "ap-pix-receipt": {
-    "hash": "16ad7ace53445431bfe5882875be661bab17f8e41cd7f94c3d33d60b8d38dacb",
+    "hash": "230982b8b151dd54f5581e1c2cde36af059c522e0ddef66e1a1b26edb05c0700",
     "area": "pagamentos",
+    "vezes": 1
+   },
+   "ap-finance-replacements": {
+    "hash": "54e1534923e67c733bb60e8131cdaa71698f13109529a860f5e40381909f45cc",
+    "area": "geral",
     "vezes": 1
    },
    "ap-teacher-mascot-day": {
@@ -1643,7 +1689,7 @@
     "vezes": 1
    },
    "#fora-dos-blocos": {
-    "hash": "3d41eb330bb94766931d243e3475f3a70634c733350cdb22e35ee01029413d5a",
+    "hash": "8fd4422c749ce89291499f09f3846ed8c096668cfa41bc6b0931384e855adc04",
     "area": "geral",
     "vezes": 1
    }
@@ -1770,7 +1816,7 @@
     "vezes": 1
    },
    "#fora-dos-blocos": {
-    "hash": "cf4a136c2b3befd1bbde0f904a5793c50eddb9b57473bb6c6e49efd20aa210c1",
+    "hash": "d7e829fe775428c74a417626930030423b96467cf552d3621e529b8752521795",
     "area": "geral",
     "vezes": 1
    }
@@ -3242,6 +3288,10 @@
    {
     "hash": "875dee6578f89316086d7144b6543cb43c0d0428ae1543e5f1c38b98e8975fdd",
     "desde": "1.12.273"
+   },
+   {
+    "hash": "1809a9a55878a2454b19ae844bc9498bee464b9aa7840f747a0fa56c554bb988",
+    "desde": "1.12.299"
    }
   ],
   "professor.html|ap-finance-wallet": [
@@ -3254,6 +3304,10 @@
    {
     "hash": "5624e39d3d1a5c807ba0a9564cb8e4ebe41c802fe176ffe6cff955148e66759e",
     "desde": "1.12.273"
+   },
+   {
+    "hash": "d5811ab170ea169ef0cf2c9f9dad0943d4b4cd892ddfd07a628f6cb698752094",
+    "desde": "1.12.299"
    }
   ],
   "professor.html|ap-finance-results": [
@@ -3272,6 +3326,14 @@
    {
     "hash": "16ad7ace53445431bfe5882875be661bab17f8e41cd7f94c3d33d60b8d38dacb",
     "desde": "1.12.273"
+   },
+   {
+    "hash": "a3a7091404db293ad8582445f23cb7442970b523a837ee481da68132169a850b",
+    "desde": "1.12.299"
+   },
+   {
+    "hash": "230982b8b151dd54f5581e1c2cde36af059c522e0ddef66e1a1b26edb05c0700",
+    "desde": "1.12.300"
    }
   ],
   "professor.html|ap-teacher-mascot-day": [
@@ -3516,6 +3578,14 @@
    {
     "hash": "3d41eb330bb94766931d243e3475f3a70634c733350cdb22e35ee01029413d5a",
     "desde": "1.12.288"
+   },
+   {
+    "hash": "ad591d6da2ab8238cb94f9231064a3d0908ab38a9de832b69e912bb7a9b9cfd9",
+    "desde": "1.12.299"
+   },
+   {
+    "hash": "8fd4422c749ce89291499f09f3846ed8c096668cfa41bc6b0931384e855adc04",
+    "desde": "1.12.300"
    }
   ],
   "avaliacoes.html|ap-native-store": [
@@ -3666,6 +3736,10 @@
    {
     "hash": "cf4a136c2b3befd1bbde0f904a5793c50eddb9b57473bb6c6e49efd20aa210c1",
     "desde": "1.12.273"
+   },
+   {
+    "hash": "d7e829fe775428c74a417626930030423b96467cf552d3621e529b8752521795",
+    "desde": "1.12.299"
    }
   ],
   "cadastro.html|ap-registration-photo-css": [
@@ -3778,6 +3852,22 @@
    {
     "hash": "13f1f364bfed54e239720bc67f26959ed93f6a5b2650bbfd7545e320fd4a22ba",
     "desde": "1.12.288"
+   }
+  ],
+  "professor.html|ap-finance-replacements": [
+   {
+    "hash": "40ec6ee3d5279a8a3b166e6d969f23014e94601c34ef1982358f8ed7187727eb",
+    "desde": "1.12.299"
+   },
+   {
+    "hash": "54e1534923e67c733bb60e8131cdaa71698f13109529a860f5e40381909f45cc",
+    "desde": "1.12.300"
+   }
+  ],
+  "professor.html|ap-finance-duplicates-css": [
+   {
+    "hash": "e4eaf3659499806091b9cc12ca238e1143f439977b47e69a05cf9b882ad0c82d",
+    "desde": "1.12.300"
    }
   ]
  },
@@ -4266,6 +4356,103 @@
    "arquivo": "AgendaPersonal-1.12.298-Feedback-Consolidado-Para-Assinar.agenda.json",
    "blocos": [],
    "depende_de": []
+  },
+  {
+   "id": "pacote-1-12-299-mensalidade-corrigida-e-imc-por-idade",
+   "titulo": "Mensalidade corrigida e IMC por idade",
+   "tipo": "pacote-completo",
+   "versao": "1.12.299",
+   "sequencia": 405,
+   "arquivo": "AgendaPersonal-1.12.299-Financeiro-IMC-Idade-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-finance-wallet-model",
+     "area": "pagamentos",
+     "antes": "875dee6578f89316086d7144b6543cb43c0d0428ae1543e5f1c38b98e8975fdd",
+     "depois": "1809a9a55878a2454b19ae844bc9498bee464b9aa7840f747a0fa56c554bb988"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-finance-results-model",
+     "area": "pagamentos",
+     "antes": "5624e39d3d1a5c807ba0a9564cb8e4ebe41c802fe176ffe6cff955148e66759e",
+     "depois": "d5811ab170ea169ef0cf2c9f9dad0943d4b4cd892ddfd07a628f6cb698752094"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-pix-receipt",
+     "area": "pagamentos",
+     "antes": "16ad7ace53445431bfe5882875be661bab17f8e41cd7f94c3d33d60b8d38dacb",
+     "depois": "a3a7091404db293ad8582445f23cb7442970b523a837ee481da68132169a850b"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-finance-replacements",
+     "area": "geral",
+     "antes": null,
+     "depois": "40ec6ee3d5279a8a3b166e6d969f23014e94601c34ef1982358f8ed7187727eb"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "3d41eb330bb94766931d243e3475f3a70634c733350cdb22e35ee01029413d5a",
+     "depois": "ad591d6da2ab8238cb94f9231064a3d0908ab38a9de832b69e912bb7a9b9cfd9"
+    },
+    {
+     "pagina": "avaliacoes.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "cf4a136c2b3befd1bbde0f904a5793c50eddb9b57473bb6c6e49efd20aa210c1",
+     "depois": "d7e829fe775428c74a417626930030423b96467cf552d3621e529b8752521795"
+    }
+   ],
+   "depende_de": [
+    "base-1.12.273",
+    "pacote-1-12-288-janelas-como-pagina"
+   ]
+  },
+  {
+   "id": "pacote-1-12-300-pagamentos-repetidos-mensalidade-e-imc-por-idade",
+   "titulo": "Pagamentos repetidos, mensalidade e IMC por idade",
+   "tipo": "pacote-completo",
+   "versao": "1.12.300",
+   "sequencia": 406,
+   "arquivo": "AgendaPersonal-1.12.300-Pagamentos-Repetidos-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-finance-duplicates-css",
+     "area": "geral",
+     "antes": null,
+     "depois": "e4eaf3659499806091b9cc12ca238e1143f439977b47e69a05cf9b882ad0c82d"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-pix-receipt",
+     "area": "pagamentos",
+     "antes": "a3a7091404db293ad8582445f23cb7442970b523a837ee481da68132169a850b",
+     "depois": "230982b8b151dd54f5581e1c2cde36af059c522e0ddef66e1a1b26edb05c0700"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-finance-replacements",
+     "area": "geral",
+     "antes": "40ec6ee3d5279a8a3b166e6d969f23014e94601c34ef1982358f8ed7187727eb",
+     "depois": "54e1534923e67c733bb60e8131cdaa71698f13109529a860f5e40381909f45cc"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "ad591d6da2ab8238cb94f9231064a3d0908ab38a9de832b69e912bb7a9b9cfd9",
+     "depois": "8fd4422c749ce89291499f09f3846ed8c096668cfa41bc6b0931384e855adc04"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-299-mensalidade-corrigida-e-imc-por-idade"
+   ]
   }
  ],
  "correcoes": [
@@ -4436,7 +4623,7 @@
      "area": "pagamentos",
      "antes": "3f025eb5e70cc3b09ccbceff7bf09907f9aeb01f6ee2f1b4666d3f38e19dba50",
      "depois": "16ad7ace53445431bfe5882875be661bab17f8e41cd7f94c3d33d60b8d38dacb",
-     "situacao_no_canonico": "presente"
+     "situacao_no_canonico": "conflito"
     },
     {
      "pagina": "professor.html",
@@ -4447,7 +4634,7 @@
      "situacao_no_canonico": "presente"
     }
    ],
-   "situacao_no_canonico": "presente"
+   "situacao_no_canonico": "conflito"
   },
   {
    "id": "correcao-professor-ficha-selecionada-recolhivel-v2",

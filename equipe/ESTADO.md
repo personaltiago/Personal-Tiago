@@ -2,6 +2,8 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**Atualização de 20/11, 21h (Claude), `main` em `39c35e1`:** o Tiago subiu o **1.12.299/405** (`0f06f40`, assinado 44839477648) e o **1.12.300/406** (`39c35e1`, assinado 44849098710, artefato 14684233109), os dois gerados pelo Claude (PR #28) e idênticos byte a byte. **Referência agora: 1.12.300/406; próxima versão livre 1.12.301/407.** Instalação não confirmada (canônico instalado segue 1.12.294). Os testes passam a seguir a referência do manifesto (teste do teste e Java não fixam mais versões); Java: 170 verificações com o 1.12.300 como referência.
+
 **Atualização de 20/11 à noite (Claude, depois da avaliação do ChatGPT), `main` em `9a86cc9`:**
 - Dois arquivos novos na main, **não gerados pelo Claude**: a correção por área **"Feedback online e compartilhamento"** (`b7aa787`, SHA-256 `2bd0403e…c9a6`, assinada 44794359438; muda `ap-feedback-sync` e `ap-feedback-student` sobre o "Feedback somente no topo") e o pacote completo **1.12.298 / 404 "Feedback consolidado"** (`9a86cc9`, SHA-256 `602b204b…7973`, assinado 44797870274), com páginas idênticas a 295 + os dois complementos.
 - **Referência agora: 1.12.298 / 404. Próxima versão livre para pacote completo: 1.12.299 / 405.** O "Feedback somente no topo" reimportado sobre a referência dá conflito (já continuado), o que é correto. Canônico instalado continua 1.12.294 (a foto com 1.12.297 é indício, não confirmação de instalação).

@@ -59,12 +59,14 @@ public final class RegressaoHarness {
         JSONObject chain = s288;
         for (String p : EXERCICIOS) chain = UpdateAreaPatch.apply(chain, patches.get(p), APP, LIMIT);
         RegressaoBase.samePages(chain, s291, "1.12.288 + 01 + 02 + 03 (UpdateAreaPatch real) x pacote 1.12.291");
-        JSONObject ref = s295;
-        for (String c : COMPS) ref = UpdateAreaPatch.apply(ref, patches.get(c), APP, LIMIT);
-        RegressaoBase.samePages(ref, refNode, "1.12.295 + complementos pelo app x referência do manifesto (= 1.12.298)");
+        JSONObject consolidado = s295;
+        for (String c : COMPS) consolidado = UpdateAreaPatch.apply(consolidado, patches.get(c), APP, LIMIT);
+        RegressaoBase.samePages(consolidado, refNode, "1.12.295 + complementos pelo app x 295 + complementos do manifesto (= 1.12.298)");
+        // a referência de verdade: o último passo assinado do manifesto (pacote completo desde o 1.12.298; 1.12.300 em 20/11)
+        JSONObject ref = args.length > 11 ? RegressaoBase.read(args[11]) : consolidado;
         String sobre294 = RegressaoBase.refusal(s294, patches.get(COMP));
         check(sobre294 != null && sobre294.contains("ap-feedback-student"), "O complemento devia ser recusado sobre o 1.12.294 (depende do 295), mas: " + sobre294);
-        System.out.println("A. 1.12.291 = 1.12.288 + 01/02/03 pelo app; referência = 1.12.295 + " + COMPS.length + " complemento(s) pelo app (" + ref.getString("version") + "/" + ref.getInt("sequence") + "), igual à do manifesto; complemento sobre o 1.12.294: recusado (" + sobre294 + ")");
+        System.out.println("A. 1.12.291 = 1.12.288 + 01/02/03 pelo app; 1.12.295 + " + COMPS.length + " complemento(s) pelo app = 295 + complementos do manifesto; referência " + ref.getString("version") + "/" + ref.getInt("sequence") + "; complemento sobre o 1.12.294: recusado (" + sobre294 + ")");
         if (cand.optString("format").startsWith("agenda-patch/")) System.out.println("Candidato: correção por área " + cand.optString("id"));
         else System.out.println("Candidato: pacote completo " + cand.getString("version") + "/" + cand.getInt("sequence"));
 
@@ -117,7 +119,7 @@ public final class RegressaoHarness {
         } else {
             Map<String, JSONObject> states = new LinkedHashMap<>();
             states.put("1.12.288", s288); states.put("1.12.291", s291); states.put("1.12.292", s292);
-            states.put("1.12.294 (instalado no Tiago)", s294); states.put("1.12.295", s295); states.put("referência " + ref.getString("version"), ref);
+            states.put("1.12.294 (instalado no Tiago)", s294); states.put("1.12.295", s295); states.put("1.12.295 + complementos (" + consolidado.getString("version") + ")", consolidado); states.put("referência " + ref.getString("version"), ref);
             for (Map.Entry<String, JSONObject> e : states.entrySet()) installAndCheck(project, e.getKey(), e.getValue(), null, cand, names, patches, onRef, EXERCICIOS);
             installAndCheck(project, "1.12.288 + correções da main", s288, names, cand, names, patches, onRef, EXERCICIOS);
         }
@@ -136,15 +138,18 @@ public final class RegressaoHarness {
 
         // ---------- E, F, G. sensibilidade: o app aceita, o teste tem de perceber ----------
         String antiga03 = blockText(s288.getJSONObject("files").getString("professor.html"), "ap-workout-corrections");
-        // a próxima versão livre depois da referência (1.12.298/404) é 1.12.299/405
-        JSONObject e = new JSONObject(ref.toString()).put("version", "1.12.299").put("sequence", 405);
+        // a próxima versão livre depois da referência
+        String[] rv = ref.getString("version").split("\\.");
+        String NOVA = rv[0] + "." + rv[1] + "." + (Integer.parseInt(rv[2]) + 1);
+        int SEQ = ref.getInt("sequence") + 1;
+        JSONObject e = new JSONObject(ref.toString()).put("version", NOVA).put("sequence", SEQ);
         e.getJSONObject("files").put("professor.html", replaceBlock(e.getJSONObject("files").getString("professor.html"), "ap-workout-corrections", antiga03));
-        sensibilidade(project, "E. 1.12.299 com a 03 do 1.12.288", ref, e, P03, patches);
+        sensibilidade(project, "E. " + NOVA + " com a 03 do 1.12.288", ref, e, P03, patches);
         String prof = ref.getJSONObject("files").getString("professor.html");
         JSONObject f = patch("review-only-revert-03-newline", "professor", "exercicios", "professor.html", "ap-workout-corrections", blockHash(prof, "ap-workout-corrections"), antiga03 + "\n/* review: harmless formatting */\n");
         sensibilidade(project, "F. correção disfarçada (03 do 1.12.288 + comentário)", ref, f, P03, patches);
-        JSONObject g = new JSONObject(s295.toString()).put("version", "1.12.299").put("sequence", 405);
-        sensibilidade(project, "G. 1.12.299 montado do 295 sem os complementos", ref, g, ULTIMO, patches);
+        JSONObject g = new JSONObject(s295.toString()).put("version", NOVA).put("sequence", SEQ);
+        sensibilidade(project, "G. " + NOVA + " montado do 295 sem os complementos", ref, g, ULTIMO, patches);
 
         System.out.println(RegressaoBase.checks + " verificações com o código real do aplicativo passaram; sem rede, APK assinado ou aparelho físico.");
         System.exit(0);

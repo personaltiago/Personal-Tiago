@@ -1,8 +1,8 @@
 'use strict';
-// "Teste do teste" do verificador de regressão: monta, a partir da REFERÊNCIA de verdade (1.12.298 = 1.12.295 + "Feedback somente no topo" + "Feedback online"),
+// "Teste do teste" do verificador de regressão: monta, a partir da REFERÊNCIA de verdade (o último passo assinado do manifesto; desde 20/11 o 1.12.300),
 // pacotes e correções com regressões PROPOSITAIS e exige que cada um seja REPROVADO pelo motivo certo; e exige que os controles bons
 // passem. Inclui as regressões disfarçadas (a correção 03 do 1.12.288 com um comentário no fim, que muda o hash sem devolver nada) e a
-// perda dos complementos do 1.12.295. Os pacotes de teste usam a próxima versão livre (1.12.299/405).
+// perda dos complementos do 1.12.295. Os pacotes de teste usam a próxima versão livre do manifesto.
 // Uso (da raiz): node equipe/testes/regressao/testar-verificador.cjs
 const fs = require('node:fs');
 const os = require('node:os');
@@ -20,8 +20,9 @@ const p294 = L.lerJson(achar('AgendaPersonal-1.12.294-Icone-Feedback-Para-Assina
 const p295 = L.lerJson(achar('AgendaPersonal-1.12.295-Feedback-Topo-Para-Assinar.agenda.json'));
 const comp = L.lerJson(achar(COMP));
 const ONLINE = 'AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json';
-const ref = L.lerJson(achar(M.referencia.arquivo)); // a referência atual (1.12.298/404), igual a 295 + os dois complementos
-if (L.aplicarCorrecao(L.aplicarCorrecao(p295, comp), L.lerJson(achar(ONLINE))).files['index.html'] !== ref.files['index.html']) throw new Error('referência diferente de 295 + complementos');
+const ref = L.lerJson(achar(M.referencia.arquivo)); // a referência atual (último passo assinado da cadeia)
+const consolidado = L.aplicarCorrecao(L.aplicarCorrecao(p295, comp), L.lerJson(achar(ONLINE))); // 295 + os dois complementos (= 1.12.298)
+if (consolidado.files['index.html'] !== ref.files['index.html']) throw new Error('o index.html da referência mudou depois do 295 + complementos; revise os casos');
 const corr = nome => L.lerJson(achar(nome));
 const C01 = 'AgendaPersonal-01-Catalogo-Unificado-Para-Assinar.agenda.json';
 
@@ -30,7 +31,7 @@ function trocar(html, id, texto) { const b = L.blocos(html).get(id); if (!b || b
 function remover(html, id) { const b = L.blocos(html).get(id); const ini = html.lastIndexOf('<', b.inicio - 1), fim = html.indexOf('>', b.fim) + 1; return html.slice(0, ini) + html.slice(fim); }
 const copia = o => JSON.parse(JSON.stringify(o));
 function completo(base, versao, muda = () => {}) { const p = copia(base); delete p.modularUpdates; p.modularUpdates = copia(base.modularUpdates || []); p.version = versao; p.sequence = Number(versao.split('.')[2]) + 106; muda(p); return p; }
-const NOVA = '1.12.299'; // próxima versão livre depois da referência
+const NOVA = M.referencia.proxima_versao_livre, SEQ = M.referencia.proxima_sequencia_livre; // próxima versão livre depois da referência
 const v297 = muda => completo(ref, NOVA, muda);
 function patchDe(id, mudancas) {
   return {format: 'agenda-patch/2', appId: M.canonico.appId, bridgeVersion: 3, dataSchema: 4, id, area: 'professor', module: 'exercicios', version: '1.0', title: 'teste ' + id, notes: 'teste',
@@ -63,15 +64,15 @@ function caso(nome, dado, {modo = 'pr', autorizacoes = vazio, espera, motivo, la
 
 // ---------------- controles que precisam passar
 caso('controle: o complemento "Feedback online" reimportado (idempotente: último passo do bloco)', achar(ONLINE), {modo: 'assinatura', espera: 'passa'});
-caso('controle: reassinar o 1.12.298 idêntico byte a byte (é a referência)', achar(M.referencia.arquivo), {modo: 'assinatura', espera: 'passa'});
+caso(`controle: reassinar o ${M.referencia.versao_efetiva} idêntico byte a byte (é a referência)`, achar(M.referencia.arquivo), {modo: 'assinatura', espera: 'passa'});
 caso('controle: correção 01 (presente)', corr(C01), {modo: 'assinatura', espera: 'passa'});
 caso('controle: correção Sininho de cadastro (presente)', corr('AgendaPersonal-Sininho-Cadastro-Professor-para-assinar.agenda.json'), {espera: 'passa'});
-caso('controle: 1.12.299 com o conteúdo da referência (nada muda)', v297(), {modo: 'assinatura', espera: 'passa'});
+caso(`controle: ${NOVA} com o conteúdo da referência (nada muda)`, v297(), {modo: 'assinatura', espera: 'passa'});
 const novaCss = textoDe(ref.files['index.html'], 'ap-feedback-css') + '.x-teste{}';
 const boa = v297(p => { for (const pg of ['index.html', 'professor.html']) p.files[pg] = trocar(p.files[pg], 'ap-feedback-css', novaCss); });
-caso('controle: 1.12.299 que muda o estilo compartilhado nas duas páginas, autorizado', boa, {autorizacoes: autorizar('boa', boa, [decl(boa, 'index.html', 'ap-feedback-css'), decl(boa, 'professor.html', 'ap-feedback-css')]), espera: 'passa'});
+caso(`controle: ${NOVA} que muda o estilo compartilhado nas duas páginas, autorizado`, boa, {autorizacoes: autorizar('boa', boa, [decl(boa, 'index.html', 'ap-feedback-css'), decl(boa, 'professor.html', 'ap-feedback-css')]), espera: 'passa'});
 caso('controle: a mesma mudança sem autorização no modo assinatura (bloco não protegido: só aviso)', boa, {modo: 'assinatura', espera: 'passa'});
-caso('controle: a mesma, com a autorização AO LADO do arquivo', boa, {lado: {versao: NOVA, sequencia: 405, base: BASE, alteracoes: [decl(boa, 'index.html', 'ap-feedback-css'), decl(boa, 'professor.html', 'ap-feedback-css')]}, espera: 'passa'});
+caso('controle: a mesma, com a autorização AO LADO do arquivo', boa, {lado: {versao: NOVA, sequencia: SEQ, base: BASE, alteracoes: [decl(boa, 'index.html', 'ap-feedback-css'), decl(boa, 'professor.html', 'ap-feedback-css')]}, espera: 'passa'});
 const fbNovo = textoDe(ref.files['index.html'], 'ap-feedback-student') + '\n/*continuação*/';
 const contFb = patchDe('continua-feedback', [['index.html', 'ap-feedback-student', fbNovo]]);
 caso('controle: correção que continua o bloco do complemento, COM autorização de continuação', contFb, {modo: 'assinatura', autorizacoes: autorizar('cont', contFb, [declP(contFb)]), espera: 'passa'});
@@ -84,14 +85,14 @@ for (const [rot, p] of [['1.12.288', p288], ['1.12.294 com bytes diferentes', p2
   caso(`pacote completo antigo ${rot} por cima da referência`, p, {modo: 'assinatura', espera: 'reprova', motivo: /REGRESSIVO/});
 caso('1.12.296/402 com as páginas do 295 (caso da revisão): sequência igual e sem o complemento', completo(p295, '1.12.296'), {modo: 'assinatura', espera: 'reprova', motivo: /REGRESSIVO/});
 caso('1.12.296/402 com as páginas do 295: também acusa a perda do complemento', completo(p295, '1.12.296'), {modo: 'assinatura', espera: 'reprova', motivo: /CORREÇÃO PERDIDA/});
-caso('1.12.299 montado do 295 (sequência nova) que perde os complementos', completo(p295, NOVA), {modo: 'assinatura', espera: 'reprova', motivo: /CORREÇÃO PERDIDA/});
+caso(`${NOVA} montado do 295 (sequência nova) que perde os complementos`, completo(p295, NOVA), {modo: 'assinatura', espera: 'reprova', motivo: /CORREÇÃO PERDIDA/});
 caso('o complemento "Feedback somente no topo" reimportado sobre a referência (já continuado pelo "Feedback online")', achar(COMP), {modo: 'assinatura', espera: 'reprova', motivo: /CONFLITO/});
-caso('1.12.299 montado de 295 + só o primeiro complemento (perde o "Feedback online")', completo(L.aplicarCorrecao(p295, comp), NOVA), {modo: 'assinatura', espera: 'reprova', motivo: /CORREÇÃO PERDIDA/});
+caso(`${NOVA} montado de 295 + só o primeiro complemento (perde o "Feedback online")`, completo(L.aplicarCorrecao(p295, comp), NOVA), {modo: 'assinatura', espera: 'reprova', motivo: /CORREÇÃO PERDIDA/});
 caso('1.12.297/403 com as páginas da referência (versão já usada por 295 + 2 complementos)', completo(ref, '1.12.297'), {modo: 'assinatura', espera: 'reprova', motivo: /REGRESSIVO/});
 for (const [id, c] of [['ap-workout-instructions', '01'], ['ap-workout-export', '02'], ['ap-workout-corrections', '03']])
-  caso(`1.12.299 que volta ${id} ao 1.12.288 (perde a ${c})`, v297(p => { p.files['professor.html'] = trocar(p.files['professor.html'], id, textoDe(p288.files['professor.html'], id)); }), {modo: 'assinatura', espera: 'reprova', motivo: /CORREÇÃO PERDIDA/});
+  caso(`${NOVA} que volta ${id} ao 1.12.288 (perde a ${c})`, v297(p => { p.files['professor.html'] = trocar(p.files['professor.html'], id, textoDe(p288.files['professor.html'], id)); }), {modo: 'assinatura', espera: 'reprova', motivo: /CORREÇÃO PERDIDA/});
 const disfarce = textoDe(p288.files['professor.html'], 'ap-workout-corrections') + '\n/* review: harmless formatting */\n';
-caso('DISFARÇADA: 1.12.299 com a 03 do 1.12.288 + um comentário (hash novo)', v297(p => { p.files['professor.html'] = trocar(p.files['professor.html'], 'ap-workout-corrections', disfarce); }), {modo: 'assinatura', espera: 'reprova', motivo: /CORREÇÃO PERDIDA/});
+caso(`DISFARÇADA: ${NOVA} com a 03 do 1.12.288 + um comentário (hash novo)`, v297(p => { p.files['professor.html'] = trocar(p.files['professor.html'], 'ap-workout-corrections', disfarce); }), {modo: 'assinatura', espera: 'reprova', motivo: /CORREÇÃO PERDIDA/});
 const pDisf = patchDe('review-only-revert-03-newline', [['professor.html', 'ap-workout-corrections', disfarce]]);
 caso('DISFARÇADA (caso da revisão): correção por área com a 03 do 1.12.288 + comentário', pDisf, {modo: 'assinatura', espera: 'reprova', motivo: /CORREÇÃO PERDIDA/});
 caso('DISFARÇADA também no modo PR', pDisf, {espera: 'reprova', motivo: /CORREÇÃO PERDIDA/});
@@ -104,7 +105,7 @@ caso('remoção de bloco do aluno (ap-feedback-sync some)', v297(p => { p.files[
 caso('alteração não declarada (modo PR)', boa, {espera: 'reprova', motivo: /NÃO declarada|sem autorização/});
 const par = v297(p => { p.files['index.html'] = trocar(p.files['index.html'], 'ap-feedback-css', novaCss); });
 caso('paridade: estilo compartilhado mudado só no aluno', par, {modo: 'assinatura', espera: 'reprova', motivo: /PARIDADE/});
-caso('divergência de sequência (1.12.299 com sequência 404)', v297(p => { p.sequence = 404; }), {modo: 'assinatura', espera: 'reprova', motivo: /divergência de sequência/});
+caso(`divergência de sequência (${NOVA} com sequência ${SEQ - 1})`, v297(p => { p.sequence = SEQ - 1; }), {modo: 'assinatura', espera: 'reprova', motivo: /divergência de sequência/});
 caso('autorização com hash "antes" velho', boa, {autorizacoes: autorizar('antes', boa, [{...decl(boa, 'index.html', 'ap-feedback-css'), antes: '0'.repeat(64)}, decl(boa, 'professor.html', 'ap-feedback-css')]), espera: 'reprova', motivo: /DIVERGÊNCIA DE HASH/});
 caso('appId diferente', v297(p => { p.appId = 'com.outro.app'; }), {modo: 'assinatura', espera: 'reprova', motivo: /appId/});
 caso('correção em conflito (Raposinha)', corr('AgendaPersonal-Pets-Raposinha.agenda.json'), {modo: 'assinatura', espera: 'reprova', motivo: /CONFLITO/});

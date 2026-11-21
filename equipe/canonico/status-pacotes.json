@@ -138,6 +138,22 @@
    "publicado": "não confirmado",
    "instalado": "não confirmado",
    "validado": "não confirmado"
+  },
+  "1.12.299": {
+   "proposto": "sim: gerado pelo Claude em 20/11/2026 (tools/gerar-financeiro-imc-1.12.299.cjs, PR #28 em rascunho)",
+   "aprovado": "sim: abordagem aprovada pelo Tiago às 18:55 de 20/11; ele subiu o arquivo na main (commit 0f06f40, byte a byte igual ao gerado)",
+   "assinado": "sim: execução 44839477648 do workflow de assinatura (commit 0f06f40, sucesso), artefato 14678944741",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
+  },
+  "1.12.300": {
+   "proposto": "sim: gerado pelo Claude em 20/11/2026 (tools/gerar-duplicados-1.12.300.cjs, PR #28 em rascunho); inclui o 1.12.299",
+   "aprovado": "sim: o Tiago subiu o arquivo na main (commit 39c35e1, byte a byte igual ao gerado)",
+   "assinado": "sim: execução 44849098710 do workflow de assinatura (commit 39c35e1, \"Assinado e conferido\"), artefato 14684233109",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
   }
  }
 }

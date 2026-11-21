@@ -5,7 +5,7 @@ do teste oficial tests/verify_native_updates.py) e roda equipe/testes/regressao/
 
 Uso (da raiz do repositório):
   python3 -I equipe/testes/regressao/mecanismo-real.py [--candidato ARQUIVO ...] [--zip ZIP]
-Sem --candidato, testa a própria REFERÊNCIA do manifesto (1.12.295 + os complementos dele, igual ao 1.12.298) sobre todos os estados.
+Sem --candidato, testa a própria REFERÊNCIA do manifesto (o último passo assinado; 1.12.300 em 20/11) sobre todos os estados.
 Os pacotes (1.12.288, 1.12.294, 1.12.295), o complemento e as correções da main são achados na raiz/histórico da main pelo SHA-256; o 1.12.291 e o
 1.12.292 são refeitos pelos geradores (tools/) e conferidos pelo SHA-256.
 """
@@ -63,7 +63,9 @@ def main():
         referencia = trabalho / 'referencia.agenda.json'
         subprocess.run(['node', '-e', "const L=require(process.argv[1]),fs=require('fs');let p=L.lerJson(process.argv[2]);for(const c of process.argv.slice(4))p=L.aplicarCorrecao(p,L.lerJson(c));fs.writeFileSync(process.argv[3],JSON.stringify(p))",
                         str(RAIZ / 'equipe' / 'canonico' / 'lib.cjs'), str(p295), str(referencia), *map(str, pcomps)], check=True)
-        candidatos = [Path(c).resolve() for c in opcoes.candidato] or [referencia]
+        # a referência de verdade (último passo assinado do manifesto); a montada acima é 295 + complementos (= 1.12.298)
+        referencia_real = RAIZ / manifesto['referencia']['arquivo']
+        candidatos = [Path(c).resolve() for c in opcoes.candidato] or [referencia_real]
 
         with zipfile.ZipFile(opcoes.zip) as zip_:
             zip_.extractall(trabalho / 'projeto')
@@ -88,14 +90,14 @@ def main():
         for candidato in candidatos:
             print('\n=== Candidato: %s' % candidato.name, flush=True)
             passo = passos.get(hashlib.sha256(candidato.read_bytes()).hexdigest())
-            if passo:
+            if passo and opcoes.candidato:  # sem --candidato, a própria referência é testada sobre todos os estados
                 # reassinatura de um passo aprovado da cadeia (idêntico byte a byte): ele já é testado aqui como estado (seção C) e a
                 # referência é testada sobre ele; instalado sobre a referência, o app avisa "Revisar restauração" (seção D).
                 print('Passo conhecido da cadeia %s, idêntico byte a byte: já coberto pelo teste da referência; nada a instalar por cima dela.' % passo['versao'])
                 continue
             autorizados = node(Path(__file__).resolve().parent / 'autorizados.cjs', candidato)[-1]
             r = subprocess.run([java, '-Xmx3g', '-cp', str(classes), 'com.tiagolima.agendapersonal.RegressaoHarness',
-                                str(projeto), str(p288), str(p291), str(p292), str(p294), str(p295), str(referencia), str(candidato), str(pasta), ','.join(c.name for c in pcomps), autorizados])
+                                str(projeto), str(p288), str(p291), str(p292), str(p294), str(p295), str(referencia), str(candidato), str(pasta), ','.join(c.name for c in pcomps), autorizados, str(referencia_real)])
             if r.returncode:
                 falhas.append(candidato.name)
         if falhas:
