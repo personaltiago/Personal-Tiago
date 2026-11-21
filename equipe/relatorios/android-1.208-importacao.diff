@@ -1,0 +1,459 @@
+--- a/LEIA-ME.txt
++++ b/LEIA-ME.txt
+@@ -1,4 +1,4 @@
+-AGENDA PERSONAL — ANDROID 1.207 / CONTEÚDO 1.12.269
++AGENDA PERSONAL — ANDROID 1.208 / CONTEÚDO 1.12.269
+ 
+ 1. Envie o ZIP fechado à raiz de personaltiago/Personal-Tiago, substituindo AgendaPersonal_AndroidStudio_v1.65_contas_convites.zip.
+ 2. Gere o APK com a assinatura existente e instale por cima do atual, sem desinstalar.
+@@ -10,7 +10,7 @@
+ 
+ O Android 1.204 inicia o descanso mesmo sem a permissão Alarmes e lembretes e usa o cartão do descanso da 1.177: tempo no título ("Descanso do treino · 0:45"), atualizado a cada segundo, com a hora do início ao lado. É o formato que aparece na tela bloqueada do Xiaomi.
+ 
+-O GitHub procura o nome fixo do ZIP. A versão interna é Android 1.207. O APK só será gerado com a assinatura existente no GitHub.
++O GitHub procura o nome fixo do ZIP. A versão interna é Android 1.208. O APK só será gerado com a assinatura existente no GitHub.
+ 
+ node tools/prepare_assets.cjs gera as quatro telas exatas e inclui seus metadados originais em agenda-build.json para exportação em partes. python3 tests/run_all.py executa os testes. tools/verify_apk.py confere a identidade do APK gerado.
+ 
+--- a/app/build.gradle
++++ b/app/build.gradle
+@@ -16,8 +16,8 @@
+         applicationId 'com.tiagolima.agendapersonal'
+         minSdk 26
+         targetSdk 35
+-        versionCode ciVersionCode ? ciVersionCode.toInteger() : 207
+-        versionName '1.207'
++        versionCode ciVersionCode ? ciVersionCode.toInteger() : 1088
++        versionName '1.208'
+     }
+ 
+     sourceSets.main.java.srcDir '../watch-common/src/main/java'
+--- a/app/src/main/java/com/tiagolima/agendapersonal/UpdateManager.java
++++ b/app/src/main/java/com/tiagolima/agendapersonal/UpdateManager.java
+@@ -3,9 +3,11 @@
+ import android.app.AlertDialog;
+ import android.content.Intent;
+ import android.content.SharedPreferences;
++import android.database.Cursor;
+ import android.net.Uri;
+ import android.os.Handler;
+ import android.os.Looper;
++import android.provider.OpenableColumns;
+ import android.util.AtomicFile;
+ import android.util.Base64;
+ import android.webkit.CookieManager;
+@@ -13,6 +15,7 @@
+ import android.webkit.WebResourceResponse;
+ import android.widget.TextView;
+ import android.widget.Button;
++import android.widget.ProgressBar;
+ import android.view.View;
+ import android.widget.Toast;
+ import org.json.JSONObject;
+@@ -32,6 +35,7 @@
+ import java.util.regex.Matcher;
+ import java.util.concurrent.ExecutorService;
+ import java.util.concurrent.Executors;
++import java.util.function.IntConsumer;
+ 
+ /** Streams local pages from a private HTTPS origin, with a non-destructive legacy-data import. */
+ public final class UpdateManager {
+@@ -68,6 +72,9 @@
+     private volatile boolean checking;
+     private volatile int checkGeneration;
+     private Button restoreButton, importButton, conferenceButton, detailsButton, verifyButton, publishButton, closeButton;
++    private ProgressBar importProgress;
++    private String importStage;
++    private int importPercent;
+     private volatile boolean destroyed;
+     private final ArrayList<Uri> pageHistory = new ArrayList<>();
+     private volatile int pageGeneration;
+@@ -382,6 +389,7 @@
+             if (dialog != null && dialog.isShowing()) return;
+             final boolean teacherControls = teacherAccount;
+             View actions = activity.getLayoutInflater().inflate(R.layout.update_actions, null);
++            importProgress = actions.findViewById(R.id.update_import_progress);
+             importButton = actions.findViewById(R.id.update_import);
+             restoreButton = actions.findViewById(R.id.update_restore);
+             conferenceButton = actions.findViewById(R.id.update_conference);
+@@ -408,7 +416,7 @@
+                 .setMessage(description("Escolha uma opção."))
+                 .setView(actions).create();
+             dialog.show();
+-            display("Escolha uma opção.");
++            display(importStage == null ? "Escolha uma opção." : importStage);
+             check();
+         });
+     }
+@@ -530,6 +538,12 @@
+         activity.runOnUiThread(() -> {
+             if (dialog != null && dialog.isShowing()) {
+                 TextView text = dialog.findViewById(android.R.id.message); if (text != null) text.setText(description(message));
++                if (importProgress != null) {
++                    importProgress.setVisibility(importStage == null ? View.GONE : View.VISIBLE);
++                    importProgress.setIndeterminate(importPercent < 0);
++                    if (importPercent >= 0) importProgress.setProgress(importPercent);
++                    importProgress.setContentDescription(importStage);
++                }
+                 if (verifyButton != null) verifyButton.setEnabled(!busy && !checking);
+                 if (restoreButton != null) restoreButton.setEnabled(teacherAccount && !busy && active != null);
+                 if (importButton != null) importButton.setEnabled(teacherAccount && !busy);
+@@ -761,12 +775,35 @@
+             && !preferences.getBoolean("manualRestorePending", false);
+         reviewRequiresTeacher = true;
+         invalidateCheck(); busy = true;
+-        display("Lendo e conferindo o arquivo. A atualização ainda não será instalada…");
++        // Imports can also start directly from the web panel, with no native menu open.
++        showScreen();
++        updateImportProgress(generation, "Lendo arquivo…", -1);
+         executor.execute(() -> {
+-            try (InputStream input = activity.getContentResolver().openInputStream(uri)) {
+-                if (input == null) throw new Exception("Arquivo indisponível.");
+-                JSONObject selected = new JSONObject(new String(readLimited(input, MAX_BYTES), StandardCharsets.UTF_8));
++            try {
++                long length = importFileSize(uri);
++                if (length > 0) updateImportProgress(generation, "Lendo arquivo… 0%", 0);
++                byte[] bytes;
++                try (InputStream input = activity.getContentResolver().openInputStream(uri)) {
++                    if (input == null) throw new Exception("Arquivo indisponível.");
++                    bytes = readLimited(input, MAX_BYTES, length > 0 ? new IntConsumer() {
++                        private long lastUpdate = System.nanoTime();
++                        @Override public void accept(int count) {
++                            long now = System.nanoTime();
++                            if (now - lastUpdate < 100_000_000L) return;
++                            lastUpdate = now;
++                            if (count > length) {
++                                updateImportProgress(generation, "Lendo arquivo…", -1);
++                            } else {
++                                int percent = (int) Math.min(99, count * 100L / length);
++                                updateImportProgress(generation, "Lendo arquivo… " + percent + "%", percent);
++                            }
++                        }
++                    } : null);
++                }
++                updateImportProgress(generation, "Conferindo assinatura…", -1);
++                JSONObject selected = new JSONObject(new String(bytes, StandardCharsets.UTF_8));
+                 UpdatePackageTrust.verify(activity, selected);
++                updateImportProgress(generation, "Montando atualização…", -1);
+                 boolean modular = UpdateAreaPatch.recognizes(selected);
+                 final JSONObject bundle, inverse;
+                 if (modular) {
+@@ -804,6 +841,25 @@
+         });
+     }
+ 
++    private long importFileSize(Uri uri) {
++        try (Cursor row = activity.getContentResolver().query(uri, new String[]{OpenableColumns.SIZE}, null, null, null)) {
++            if (row != null && row.moveToFirst()) {
++                int column = row.getColumnIndex(OpenableColumns.SIZE);
++                if (column >= 0 && !row.isNull(column)) return row.getLong(column);
++            }
++        } catch (RuntimeException ignored) { /* Some file providers do not expose a length. */ }
++        return -1;
++    }
++
++    private void updateImportProgress(int generation, String stage, int percent) {
++        activity.runOnUiThread(() -> {
++            if (destroyed || generation != reviewGeneration) return;
++            importStage = stage;
++            importPercent = percent;
++            display(stage);
++        });
++    }
++
+     private JSONObject patchBase(JSONObject installed) throws Exception {
+         JSONObject current = installed == null ? null : installed.getJSONObject("files");
+         if (current != null && current.length() == 4) return installed;
+@@ -884,6 +940,7 @@
+             + "\n\nSua conta, cadastros, fichas e históricos serão mantidos."
+             + "\n\nDeseja instalar esta atualização?";
+         if (modular) message = notes + "\n\nCompatível com o conteúdo em uso.\n\nSua conta, cadastros, fichas e históricos serão mantidos.";
++        if (importStage != null) message = "Pronto para revisar.\n\n" + message;
+         AlertDialog review = new AlertDialog.Builder(activity, android.R.style.Theme_Material_Dialog_Alert)
+             .setTitle(reviewRemoval ? "Desinstalar atualização" : modular ? "Revisar atualização" : earlier ? "Revisar restauração" : sameNumber ? "Revisar reinstalação" : "Revisar atualização")
+             .setMessage(message)
+@@ -899,6 +956,7 @@
+         review.setOnShowListener(ignored -> review.getButton(AlertDialog.BUTTON_POSITIVE)
+             .setOnClickListener(v -> confirmReview(bundle, generation)));
+         review.show();
++        if (importStage != null && review.isShowing()) updateImportProgress(generation, "Pronto para revisar.", 100);
+     }
+     private void confirmReview(JSONObject bundle, int generation) {
+         if (destroyed || generation != reviewGeneration || reviewBundle != bundle || reviewConfirming) return;
+@@ -922,6 +980,7 @@
+             reviewPatch = null; reviewInverse = null; reviewRemoval = false;
+             AlertDialog approved = reviewDialog;
+             reviewBundle = null; reviewDialog = null; reviewInstalledRelease = null;
++            importStage = null;
+             reviewRequiresTeacher = false; reviewGeneration++;
+             approved.dismiss();
+             display("Atualização confirmada. Preparando a cópia dos dados…");
+@@ -930,6 +989,7 @@
+     }
+     private void cancelReview(String message) {
+         reviewGeneration++;
++        importStage = null;
+         reviewPatch = null; reviewInverse = null; reviewRemoval = false;
+         reviewBundle = null; reviewInstalledRelease = null; reviewRequiresTeacher = false; reviewConfirming = false;
+         AlertDialog canceled = reviewDialog;
+@@ -1006,8 +1066,15 @@
+         UpdateStorage.writeJson(destination, installedRelease, MAX_BYTES);
+     }
+     private static byte[] readLimited(InputStream input, int limit) throws Exception {
++        return readLimited(input, limit, null);
++    }
++    private static byte[] readLimited(InputStream input, int limit, IntConsumer progress) throws Exception {
+         ByteArrayOutputStream output = new ByteArrayOutputStream(); byte[] buffer = new byte[8192]; int count;
+-        while ((count = input.read(buffer)) != -1) { if (output.size() + count > limit) throw new Exception("Arquivo muito grande."); output.write(buffer, 0, count); }
++        while ((count = input.read(buffer)) != -1) {
++            if (output.size() + count > limit) throw new Exception("Arquivo muito grande.");
++            output.write(buffer, 0, count);
++            if (progress != null) progress.accept(output.size());
++        }
+         return output.toByteArray();
+     }
+     private static void writeAtomic(File file, byte[] bytes) throws Exception {
+--- a/app/src/main/res/layout/update_actions.xml
++++ b/app/src/main/res/layout/update_actions.xml
+@@ -9,6 +9,14 @@
+     android:paddingTop="4dp"
+     android:paddingBottom="16dp">
+     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
++        <ProgressBar
++            android:id="@+id/update_import_progress"
++            style="?android:attr/progressBarStyleHorizontal"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginBottom="8dp"
++            android:max="100"
++            android:visibility="gone" />
+         <Button android:id="@+id/update_import" style="@style/AgendaUpdateAction" android:text="@string/update_import" android:drawableStart="@drawable/update_import" />
+         <Button android:id="@+id/update_restore" style="@style/AgendaUpdateAction" android:text="@string/update_restore" android:drawableStart="@drawable/update_restore" />
+         <Button android:id="@+id/update_conference" style="@style/AgendaUpdateAction" android:text="@string/update_conference" android:drawableStart="@drawable/update_conference" />
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -1,12 +1,12 @@
+ {
+   "name": "agenda-personal-verificacoes",
+-  "version": "1.207.0",
++  "version": "1.208.0",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+       "name": "agenda-personal-verificacoes",
+-      "version": "1.207.0",
++      "version": "1.208.0",
+       "devDependencies": {
+         "clean-css": "5.3.3",
+         "esbuild": "0.25.12",
+--- a/package.json
++++ b/package.json
+@@ -1,7 +1,7 @@
+ {
+   "name": "agenda-personal-verificacoes",
+   "private": true,
+-  "version": "1.207.0",
++  "version": "1.208.0",
+   "scripts": {
+     "test": "python3 tests/run_all.py",
+     "build:assets": "node tools/prepare_assets.cjs",
+--- a/release.json
++++ b/release.json
+@@ -1,20 +1,20 @@
+ {
+   "format": 1,
+   "applicationId": "com.tiagolima.agendapersonal",
+-  "androidVersion": "1.207",
+-  "versionCode": 207,
++  "androidVersion": "1.208",
++  "versionCode": 1088,
+   "contentVersion": "1.12.269",
+   "sequence": 375,
+   "sourceHashes": {
+     "INSTALADOR_1.168.txt": "8e94807e70f4c04422f873e9ce33f7d78a2c857bc46cb32acbf23218f0c369db",
+-    "LEIA-ME.txt": "91f46d7bf94804572733a8bd12ba9eefcd0a894f88432e097b5dfd5bae72339a",
++    "LEIA-ME.txt": "74864facd743a319a4cf317124a14295b16be9933f862a5fac95458d296a6f5d",
+     "build.gradle": "c3c0cf04da0fc239f391c774554d97d890018ab6e37e87cc62f6070d0c8c9909",
+     "gradle.properties": "c2dab3d8c7e1d3962543706eb01093340cde0d326763d96da02f6fad34e67730",
+-    "package-lock.json": "5b214b8b934866a98d28b5b4f93e5adb0ae3bdc7992602fe71ed9ec5022849cd",
+-    "package.json": "a727c7e99d0559dac2d519a69adf61ad5b3c1ce86b006989e3c29b4aa140925d",
++    "package-lock.json": "677fe605e85a4b7b71e0e53154d73eff95647b16c8aefdeda987fcc49d440d9c",
++    "package.json": "91780056b215d501778d5f90574784fc7204912b20c23a2586aaa9003d35ed84",
+     "settings.gradle": "ad1836ffb30123ea8c9f4fd0aa6326f29c2d5c825d0cf7e317c6b84caf9b1306",
+     ".github/workflows/build-apk.yml": "3dd2817f828d455c8a9f1594311e9ff299b24136ff08750a44a145e922e57a84",
+-    "app/build.gradle": "d2686d023e0d665badfb286f02b834afb2de26c37cae7921a3ce097b40f721ad",
++    "app/build.gradle": "5329de732d0c9db6acba568c564acbec72765407b74ec937598ce532132ca7a7",
+     "app/src/main/AndroidManifest.xml": "f83a6a0266660f75b9d4fad289e238479dfedde7f5749c46633257ef5fcdd223",
+     "app/src/main/assets/update-catalog.js": "8720215396e92c064cab3cb892758f9468e8f20aa48d40722102b07e4c3a7c05",
+     "app/src/main/java/com/tiagolima/agendapersonal/AlarmReceiver.java": "26453f7abf75c016b85ac3db1fe48b41e1cb045b8a45cf6064cb45e885838e9c",
+@@ -51,7 +51,7 @@
+     "app/src/main/java/com/tiagolima/agendapersonal/UpdateDownloads.java": "cc30223a76fecc81eba06def6c42f1fa2c79ad1095717b0b3d9e31373b3fa528",
+     "app/src/main/java/com/tiagolima/agendapersonal/UpdateExport.java": "2457888019d82281e58d1a969062812a4bf0caf0432128f8ee36deaa54b5695b",
+     "app/src/main/java/com/tiagolima/agendapersonal/UpdateIdentity.java": "b5e5b8b4dd6da87aa9efcf3dccbb4ec6347e7ac2627a4371de08af13490a5e09",
+-    "app/src/main/java/com/tiagolima/agendapersonal/UpdateManager.java": "f7b3383a5dc7443ebd4cf8183a4429cb4430dfa12a12c3a70e2027cbc67b904f",
++    "app/src/main/java/com/tiagolima/agendapersonal/UpdateManager.java": "ea990397e1c64e846d3c43bf0d7b95e124c1bfe3cfe0a265badf07443a56574d",
+     "app/src/main/java/com/tiagolima/agendapersonal/UpdateManifest.java": "00e5694034828b1fdae6fb904f73f84863f6c0bf121ac0a962204b702f3deafc",
+     "app/src/main/java/com/tiagolima/agendapersonal/UpdatePackageSignature.java": "0098740751bb4fd79d42d0e9f1a9d477f98f35f7b0aad93093b118f5eab6c63c",
+     "app/src/main/java/com/tiagolima/agendapersonal/UpdatePackageTrust.java": "b58cea9ec6bcaa7d0b0b8460fa110e3da54e0e3b1b2d39caa71d6db1a8faadd4",
+@@ -77,7 +77,7 @@
+     "app/src/main/res/drawable/update_verify.xml": "7a6a99cc3a579fe71a747594481226b32ee6ae1f065d7b86b446c69b56fc88a6",
+     "app/src/main/res/drawable-nodpi/launch_logo.png": "dc1c16c9de15be61e6f827852f2e9e04f72c903e210ca81a89f656dce793db30",
+     "app/src/main/res/layout/notification_rest_countdown.xml": "fb87084a51e5e5534e586b0286504b90b46ea126a04c4d1292cbd33363cdf2f3",
+-    "app/src/main/res/layout/update_actions.xml": "0c6227e0b78da811aa223d9113ccb78b9fae1758519e05c35464dc670da9f6b6",
++    "app/src/main/res/layout/update_actions.xml": "7c4a3c6f2ff27acbf43b8d3737340b7b55774168c20c60ae5c8a243f49eb0a98",
+     "app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml": "aaf51346e9cac6d7fbb43e3878c23310091ae7d6055066ff891fde3fb505a5ee",
+     "app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml": "aaf51346e9cac6d7fbb43e3878c23310091ae7d6055066ff891fde3fb505a5ee",
+     "app/src/main/res/mipmap-hdpi/ic_launcher.png": "bd969f6b514728f85d3badf78d1e90aab13c87e87005e2e29f6cf33bbd34ba0e",
+@@ -115,7 +115,7 @@
+     "tests/verify_native_mirror.py": "6385664ff9ce3a3eba573254e5e977acb529ea2692611f2e188d1591f72ec431",
+     "tests/verify_native_store.cjs": "6368e3efa2ca65047667be81ff585a2d9c116a95dc389eaeff9d66daf81678cd",
+     "tests/verify_native_store.py": "816cf1b04edcd933b06b2bc79891b7717198d0ca9d6c1b386c6da80ef2a3212d",
+-    "tests/verify_native_updates.py": "c6ac6ce540efb0b2bcdeb6e1a2848b8cce93fed56d62479c2ab9a9f4cc7e3527",
++    "tests/verify_native_updates.py": "a28308e3b4bee3a29d6a81145d94ee69dcf962c6709b86322cb8b6adff1b91b1",
+     "tests/verify_panel_link.cjs": "c8900b46af33205742a720bcfeb90539fbfaf256de985be863febdb7e06c7ef6",
+     "tests/verify_pdf_roundtrip.cjs": "8439bdaf9a3c40754e2389d1c36f2c5e7c37b4d95acb7ae2afa49ffb5150687b",
+     "tests/verify_pets_removed.cjs": "df7c6f6c4e8ab7681ca41418609e36f99a4ab68b9cc7a717616b07b984356037",
+@@ -130,16 +130,16 @@
+     "tests/verify_system_back.py": "6086808d4479bab62db98e77e3eba4e274b836bd6471a200d77c4e8684e938ba",
+     "tests/verify_update_center.cjs": "edab8836476e6995a8f9c9e017a66fe77f1ced1eb4249ad658160c0b1f4a9721",
+     "tests/verify_update_downloads.py": "0a771928a1518c72301b97b19402c3d5298c8618db9282730cd36a832977bef3",
+-    "tests/verify_update_import_review.py": "254a1adeed2071e34b4b417cf4a2fbfddb5ea480cbf5ba936fe57d97c9d8494e",
++    "tests/verify_update_import_review.py": "db9f230d27e9ea646b9709728e74da94dddb95b31d301dbac331ec478ce4174a",
+     "tests/verify_update_memory.py": "4a2efae23c5fae9509a30497b77b7652271fd9cb02eae9c9dcd06fe245eccc24",
+-    "tests/verify_update_menu.py": "4c743b61eaa97029f7b0bbe602927d15e6516377fd60fbd3112f1de51d17a632",
++    "tests/verify_update_menu.py": "dd45a3b17f49b89e7fd4acf29a3c2dc2bd406b5c2e753763a6237690cc46a84f",
+     "tests/verify_update_signatures.py": "bf60917e02cca3b84f45cb6d2e09d5be2ac0cf5f558817a9c60c0b37363038a9",
+     "tests/java/com/tiagolima/agendapersonal/GoogleSignInProtocolChecks.java": "ae515a783ed069f8bed2bf8740de679643abbe3467826a0e54a862e1da9f88ac",
+     "tests/native-json/org/json/JSONArray.java": "f9337db1e8549d667f0c11105cc2a24f64c47e4fbd6bb335649e95e0d4e82bec",
+     "tests/native-json/org/json/JSONObject.java": "0b1b86089a17be499ef236d5f8f47ea50cb3bf084235466f1e6eea41657b69d1",
+     "tests/native-json/org/json/JSONTokener.java": "2c5913836536ac48e8b86b316af5b90d3699c18a5dc8bb0789692a4e45700bbb",
+     "tools/SignAgendaUpdate.java": "e9755701f52dc5cb07cc31061070424f58e06452bb25d2d7f31464d18cef3398",
+-    "tools/check_release.cjs": "f51fbb6f98d7fb7ba40b60dbbd352ece8f735ea8e253a8da8cad26d78b46be3e",
++    "tools/check_release.cjs": "a6fb2a75806d6ca213b1fc8c20df0e3b7d261004bac67187efe69db53f1a84af",
+     "tools/package_github.py": "bbb0c7006f746dbc410f30cead3e7ef1c2acad907f762403bce16c0dae1f96ba",
+     "tools/prepare_assets.cjs": "e2f115ddc05ffc465633d7a125ade9b1cc29d099bc6d4d7b937022ef78ba6223",
+     "tools/refresh_release.py": "4b471e668649e960f4101cb7fa60c1648e81df5433dea2e86c58fb7ac4b383d6",
+--- a/tests/verify_native_updates.py
++++ b/tests/verify_native_updates.py
+@@ -10,9 +10,16 @@
+ 
+ PROJECT = Path(__file__).resolve().parents[1]
+ STUBS = {
++    'android/database/Cursor.java': '''package android.database; public interface Cursor extends AutoCloseable {boolean moveToFirst(); int getColumnIndex(String name); boolean isNull(int column); long getLong(int column); void close();}''',
++    'android/provider/OpenableColumns.java': '''package android.provider; public interface OpenableColumns {String SIZE="_size";}''',
++    'android/widget/ProgressBar.java': '''package android.widget; public class ProgressBar extends android.view.View {
++ public int visibility; public boolean indeterminate;
++ public final java.util.List<String> stages = new java.util.concurrent.CopyOnWriteArrayList<>();
++ public void setVisibility(int value){visibility=value;} public void setIndeterminate(boolean value){indeterminate=value;}
++ public void setProgress(int value){} public void setContentDescription(CharSequence value){if(value!=null)stages.add(value.toString());}}''',
+     'android/view/View.java': '''package android.view;public class View {public static final int VISIBLE=0,GONE=8;public final java.util.Map<Integer,Object> nodes=new java.util.LinkedHashMap<>();@SuppressWarnings("unchecked") public <T>T findViewById(int id){return(T)nodes.get(id);}}''',
+-    'android/view/LayoutInflater.java': '''package android.view;import android.widget.Button;import com.tiagolima.agendapersonal.R;public class LayoutInflater{public View inflate(int id,Object parent){View root=new View();int[] ids={R.id.update_import,R.id.update_restore,R.id.update_conference,R.id.update_details,R.id.update_verify,R.id.update_publish,R.id.update_installer,R.id.update_installer_publish,R.id.update_close};String[] labels={"Importar arquivo baixado do painel","Restaurar versão anterior","Conferência de atualizações","Detalhes","Verificar","Publicar para os alunos","Instalador Android","Publicar instalador Android","Fechar"};for(int i=0;i<ids.length;i++){Button b=new Button(null);b.setText(labels[i]);root.nodes.put(ids[i],b);}return root;}}''',
+-    'com/tiagolima/agendapersonal/R.java': '''package com.tiagolima.agendapersonal;public class R{public static class layout{public static final int update_actions=1;}public static class id{public static final int update_import=1,update_restore=2,update_conference=3,update_details=4,update_verify=5,update_publish=6,update_close=7,update_installer=8,update_installer_publish=9;}}''',
++    'android/view/LayoutInflater.java': '''package android.view;import android.widget.Button;import com.tiagolima.agendapersonal.R;public class LayoutInflater{public View inflate(int id,Object parent){View root=new View();int[] ids={R.id.update_import,R.id.update_restore,R.id.update_conference,R.id.update_details,R.id.update_verify,R.id.update_publish,R.id.update_installer,R.id.update_installer_publish,R.id.update_close};String[] labels={"Importar arquivo baixado do painel","Restaurar versão anterior","Conferência de atualizações","Detalhes","Verificar","Publicar para os alunos","Instalador Android","Publicar instalador Android","Fechar"};for(int i=0;i<ids.length;i++){Button b=new Button(null);b.setText(labels[i]);root.nodes.put(ids[i],b);}root.nodes.put(R.id.update_import_progress,new android.widget.ProgressBar());return root;}}''',
++    'com/tiagolima/agendapersonal/R.java': '''package com.tiagolima.agendapersonal;public class R{public static class layout{public static final int update_actions=1;}public static class id{public static final int update_import=1,update_restore=2,update_conference=3,update_details=4,update_verify=5,update_publish=6,update_close=7,update_installer=8,update_installer_publish=9,update_import_progress=10;}}''',
+ 
+     'android/content/Context.java': '''package android.content; public class Context {}''',
+     'android/os/Build.java': 'package android.os; public class Build {public static class VERSION {public static int SDK_INT=35;}}',
+@@ -113,7 +120,17 @@
+ public android.view.LayoutInflater getLayoutInflater(){return new android.view.LayoutInflater();}public int filePickers;public int lastRequest;public void runOnUiThread(Runnable r){r.run();}public void startActivity(android.content.Intent i){}public void startActivityForResult(android.content.Intent i,int n){filePickers++;lastRequest=n;}
+ public Assets getAssets(){return new Assets();}public class Assets{public InputStream open(String n)throws IOException{return Files.newInputStream(assets.resolve(n));}}
+ public android.content.pm.PackageManager getPackageManager(){return new android.content.pm.PackageManager();}
+-public Resolver getContentResolver(){return new Resolver();}public class Resolver{public OutputStream openOutputStream(android.net.Uri uri)throws IOException{Path p=folder.toPath().resolve("exported.json");return Files.newOutputStream(p);}public int delete(android.net.Uri uri,String a,String[]b)throws IOException{return Files.deleteIfExists(folder.toPath().resolve("exported.json"))?1:0;}public InputStream openInputStream(android.net.Uri u)throws IOException{return Files.newInputStream(Path.of(java.net.URI.create(u.toString())));}}
++public Resolver getContentResolver(){return new Resolver();}public int inputOpens;public boolean knownSize=true;public int slowChunk;public class Resolver{
++ public android.database.Cursor query(android.net.Uri uri,String[] projection,String sel,String[] args,String order){
++  if(!knownSize)return null;
++  long length=new java.io.File(java.net.URI.create(uri.toString())).length();
++  return new android.database.Cursor(){public boolean moveToFirst(){return true;} public int getColumnIndex(String name){return 0;}public boolean isNull(int i){return false;}public long getLong(int i){return length;}public void close(){}};
++ }public OutputStream openOutputStream(android.net.Uri uri)throws IOException{Path p=folder.toPath().resolve("exported.json");return Files.newOutputStream(p);}public int delete(android.net.Uri uri,String a,String[]b)throws IOException{return Files.deleteIfExists(folder.toPath().resolve("exported.json"))?1:0;}public InputStream openInputStream(android.net.Uri u)throws IOException{inputOpens++;InputStream in=Files.newInputStream(Path.of(java.net.URI.create(u.toString())));
++  if(slowChunk==0)return in;
++  return new FilterInputStream(in){@Override public int read(byte[] b,int off,int len)throws IOException{
++   try{Thread.sleep(110);}catch(InterruptedException e){Thread.currentThread().interrupt();throw new IOException(e);}
++   return super.read(b,off,Math.min(len,slowChunk));
++  }};}}
+ public static class Prefs implements android.content.SharedPreferences {private final Map<String,Boolean> data=new java.util.concurrent.ConcurrentHashMap<>();
+ public boolean getBoolean(String k,boolean d){return data.getOrDefault(k,d);}public Editor edit(){return new E();}
+ private class E implements Editor{private final Map<String,Boolean> next=new HashMap<>();public Editor putBoolean(String k,boolean v){next.put(k,v);return this;}public boolean commit(){data.putAll(next);return true;}}}
+@@ -149,7 +166,7 @@
+ manager.setUpdateAccount("R2EmnDVcvMWt7TjPxOP6DjW1VOn1");check(!studentDialog.isShowing(),"Janela antiga ficou aberta na troca de papel");manager.showScreen();
+ android.app.AlertDialog teacherDialog=android.app.AlertDialog.lastCreated;
+ android.view.View teacherActions=(android.view.View)teacherDialog.view;
+-check(teacherActions.nodes.size()==9,"Professor perdeu opções de atualização");
++check(teacherActions.nodes.values().stream().filter(android.widget.Button.class::isInstance).count()==9,"Professor perdeu opções de atualização");
+ check(((android.widget.Button)teacherActions.nodes.get(R.id.update_publish)).visibility==android.view.View.VISIBLE,"Professor perdeu publicação");
+ check(((android.widget.Button)teacherActions.nodes.get(R.id.update_import)).text.equals("Importar arquivo baixado do painel"),"Importação do professor ausente");
+ manager.setUpdateAccount("student");check(!teacherDialog.isShowing(),"Aluno herdou janela do professor");manager.showScreen();
+--- a/tests/verify_update_import_review.py
++++ b/tests/verify_update_import_review.py
+@@ -61,10 +61,25 @@
+   check(view.html.contains("event.target?.id!=='apModFile'")&&view.html.contains("modal.close();Android.openUpdateAction('import')"),"Seleção por área não usa o importador direto");
+   manager.requestImport();check(activity.filePickers==1&&activity.lastRequest==UpdateManager.IMPORT_REQUEST,"Seletor inicial ausente");
+   JSONObject rejected=new JSONObject(patch.toString()).put("testInvalidSignature",true);
+-  Files.writeString(file,rejected.toString());manager.importUri(Uri.parse(file.toUri().toString()));waitFor(manager,false);
++  int opens=activity.inputOpens;activity.knownSize=false;Files.writeString(file,rejected.toString());manager.importUri(Uri.parse(file.toUri().toString()));waitFor(manager,false);
+   check(android.widget.Toast.shown.stream().anyMatch(s->s.contains("assinatura válida")),"Assinatura inválida não bloqueou a correção");
++  check(activity.inputOpens==opens+1&&field(manager,"importStage")==null&&(int)field(manager,"importPercent")<100,"Erro com tamanho desconhecido deve parar antes de 100");
++  AlertDialog menu=(AlertDialog)field(manager,"dialog");
++  check(menu!=null&&menu.isShowing(),"Importação direta ficou sem a tela de progresso");
++  android.widget.ProgressBar bar=(android.widget.ProgressBar)field(manager,"importProgress");
++  check(bar.visibility==android.view.View.GONE&&bar.stages.contains("Conferindo assinatura…"),"Erro não ocultou o progresso");
++  check(bar.stages.stream().noneMatch(stage->stage.contains("%")),"Tamanho desconhecido exibiu porcentagem");
++  activity.knownSize=true;
++  if(expected==null)activity.slowChunk=Math.max(1,patch.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8).length/4);
+   unchanged(folder,initial,activity,view,1);
+   AlertDialog review=select(manager,file,patch);
++  check(activity.inputOpens==opens+2&&review.isShowing()&&review.message.contains("Pronto para revisar"),"A revisão deve abrir com uma única leitura");
++  if(activity.slowChunk>0){
++   check(bar.stages.contains("Lendo arquivo… 24%")||bar.stages.contains("Lendo arquivo… 25%"),"Progresso não corresponde aos bytes recebidos: "+bar.stages);
++   activity.slowChunk=0;
++  }
++  check(bar.stages.contains("Montando atualização…")&&bar.stages.contains("Pronto para revisar."),"Etapas reais de importação ausentes");
++  check((int)field(manager,"importPercent")==100,"Conclusão ausente na revisão");
+   check(review.title.equals("Revisar atualização")&&review.message.contains("Seção: Pets · "+section),"Seção de Pets não identificada");
+   check(review.getButton(AlertDialog.BUTTON_POSITIVE).text.equals("Instalar"),"Botão Instalar ausente");
+   unchanged(folder,initial,activity,view,1);
+--- a/tests/verify_update_menu.py
++++ b/tests/verify_update_menu.py
+@@ -26,8 +26,8 @@
+  MainActivity activity=new MainActivity(folder.toFile(),root.resolve("app/src/main/assets"));WebView web=new WebView();UpdateManager manager=new UpdateManager(activity,web);
+  try{
+   manager.setUpdateAccount("R2EmnDVcvMWt7TjPxOP6DjW1VOn1");set(manager,"busy",true);manager.showScreen();AlertDialog menu=(AlertDialog)get(manager,"dialog");
+-  check(menu.title.equals("Atualizar aplicativo"),"Wrong menu title");check(((View)menu.view).nodes.size()==9,"Nine menu actions required");
+-  for(Object item:((View)menu.view).nodes.values())check(((Button)item).visibility==View.VISIBLE,"Teacher action hidden");
++  check(menu.title.equals("Atualizar aplicativo"),"Wrong menu title");check(((View)menu.view).nodes.values().stream().filter(Button.class::isInstance).count()==9,"Nine menu actions required");
++  for(Object item:((View)menu.view).nodes.values())if(item instanceof Button)check(((Button)item).visibility==View.VISIBLE,"Teacher action hidden");
+   check(!button(menu,R.id.update_import).enabled&&!button(menu,R.id.update_verify).enabled,"Busy operations enabled");
+   check(button(menu,R.id.update_close).enabled&&button(menu,R.id.update_details).enabled,"Read-only/close unnecessarily blocked");
+   int picks=activity.filePickers;manager.performMenuAction("import");check(activity.filePickers==picks,"Busy import opened picker");
+@@ -58,7 +58,10 @@
+     assert xml.tag == 'ScrollView', 'Actions must scroll on short screens or large text'
+     container = list(xml)[0]
+     assert container.attrib[ANDROID + 'orientation'] == 'vertical'
+-    assert [button.attrib[ANDROID + 'id'] for button in container] == ['@+id/update_' + name for name in ORDER]
++    actions = container.findall('Button')
++    bar = container.find('ProgressBar')
++    assert bar is not None and bar.attrib[ANDROID + 'visibility'] == 'gone' and bar.attrib[ANDROID + 'max'] == '100'
++    assert [button.attrib[ANDROID + 'id'] for button in actions] == ['@+id/update_' + name for name in ORDER]
+     values = ET.parse(PROJECT / 'app/src/main/res/values/update_menu.xml').getroot()
+     strings = {node.attrib['name']: node.text for node in values.findall('string')}
+     assert [strings['update_' + name] for name in ORDER] == LABELS
+@@ -67,7 +70,7 @@
+     assert styles['android:layout_height'] == 'wrap_content', 'Long labels must wrap rather than clip'
+     assert styles['android:background'] == '@drawable/update_action_background'
+     assert styles['android:drawablePadding'] == '12dp' and styles['android:gravity'] == 'start|center_vertical'
+-    for name, button in zip(ORDER, container):
++    for name, button in zip(ORDER, actions):
+         assert button.attrib['style'] == '@style/AgendaUpdateAction'
+         icon = {'installer': 'verify', 'installer_publish': 'publish'}.get(name, name)
+         assert button.attrib[ANDROID + 'drawableStart'] == '@drawable/update_' + icon
+--- a/tools/check_release.cjs
++++ b/tools/check_release.cjs
+@@ -4,7 +4,7 @@
+ const root=path.resolve(__dirname,'..'),read=n=>fs.readFileSync(path.join(root,n),'utf8'),fail=m=>{throw Error(m)};
+ function check(){
+  const release=JSON.parse(read('release.json')),gradle=read('app/build.gradle'),update=read('app/src/main/java/com/tiagolima/agendapersonal/UpdateManager.java');
+- if(release.format!==1||release.androidVersion!=='1.207'||release.versionCode!==207||release.contentVersion!=='1.12.269'||release.sequence!==375)fail('Identificação da atualização incompatível.');
++ if(release.format!==1||release.androidVersion!=='1.208'||release.versionCode!==1088||release.contentVersion!=='1.12.269'||release.sequence!==375)fail('Identificação da atualização incompatível.');
+  if(!gradle.includes("versionName '"+release.androidVersion+"'")||!new RegExp('versionCode[^\\n]+: '+release.versionCode+'\\s').test(gradle))fail('O projeto Android não corresponde à versão '+release.androidVersion+'.');
+  if(JSON.parse(read('package.json')).version!==release.androidVersion+'.0')fail('A versão dos arquivos web diverge do projeto.');
+  if(!update.includes('BASE_VERSION = "'+release.contentVersion+'"')||!update.includes('BASE_SEQUENCE = '+release.sequence+';'))fail('A versão de conteúdo diverge do projeto.');
