@@ -3,7 +3,7 @@
 Pedido do Tiago (20/11 15:28 e 21/11 08:04, "Pode fazer"): ao importar a atualização ele não sabia quando terminava.
 
 ## O que muda (ZIP oficial, Android 1.207 → 1.208)
-- `UpdateProgress.java` (novo): janela "Importando atualização" no formato da barra do Publicar (pedido do Tiago, 21/11 11:27: "quase igual àquela… pode ser da cor do perfil"): nome da etapa à esquerda, porcentagem à direita, barra grossa arredondada no verde dos ícones desta janela (#568900), "X de Y MB", "Etapa N de 4" e estimativa de tempo restante na leitura:
+- `UpdateProgress.java` (novo): janela "Importando atualização" no formato da barra do Publicar (pedido do Tiago, 21/11 11:27: "quase igual àquela… pode ser da cor do perfil"): nome da etapa à esquerda, porcentagem à direita, barra grossa arredondada no verde dos ícones desta janela (barra #568900; textos e botão "Ocultar" em #8DBF3A, mais legível no fundo escuro), "X de Y MB", "Etapa N de 4" e estimativa de tempo restante na leitura:
   1. Lendo o arquivo — 0 a 40% pelos bytes lidos (tamanho via `OpenableColumns.SIZE`; sem tamanho, barra indeterminada sem porcentagem);
   2. Conferindo o arquivo / a assinatura / montando — 42, 48, 55%; aguardando sua confirmação — 60% (a janela sai da frente da revisão);
   3. Copiando os dados — 70%; guardando a versão anterior — 80%; abrindo a nova versão — 90%;
