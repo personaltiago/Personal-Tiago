@@ -1,0 +1,24 @@
+const {chromium}=require('/tmp/pwc/node_modules/playwright-core');
+const v=process.argv[2]||'299';
+(async()=>{const b=await chromium.launch({executablePath:'/usr/bin/google-chrome',args:['--no-sandbox']});
+const ctx=await b.newContext({viewport:{width:412,height:900}});
+const pg=await ctx.newPage();const errs=[],dialogs=[];pg.on('pageerror',e=>errs.push(e.message));
+let resposta=true;pg.on('dialog',d=>{dialogs.push(d.message());(resposta||!/Substituir/.test(d.message()))?d.accept():d.dismiss()});
+const hoje=new Date();const iso=d=>d.toISOString().slice(0,10);
+const venc=iso(new Date(hoje.getFullYear(),hoje.getMonth(),5));
+await pg.addInitScript(([venc])=>{if(!localStorage.getItem('agendaPersonalTL_v1'))localStorage.setItem('agendaPersonalTL_v1',JSON.stringify({students:[{id:'s1',name:'Ana Teste',studentType:'presencial',financeEnabled:true,monthlyValue:'450',dueDate:venc,startDate:'2026-01-01'}],payments:[],history:[]}))},[venc]);
+await pg.goto('http://127.0.0.1:8799/'+v+'-professor.html');await pg.waitForTimeout(3000);
+const run=async(js,arg)=>pg.evaluate(js,arg).catch(e=>'ERRO '+e.message);
+const estado=async()=>JSON.parse(await pg.evaluate(()=>JSON.stringify({rec:document.getElementById('financeWalletReceived')?.textContent,n:document.getElementById('financeWalletReceipts')?.textContent,pag:JSON.parse(localStorage.getItem('agendaPersonalTL_v1')).payments.map(p=>({id:p.id.slice(0,5),amount:p.amount,due:p.dueDate,replaces:p.replaces})),hist:[...document.querySelectorAll('#paymentHistory article')].map(a=>a.innerText.replace(/\n/g,' | ')),due:JSON.parse(localStorage.getItem('agendaPersonalTL_v1')).students[0].dueDate})));
+console.log('tem markPaymentPaid',await run(()=>typeof markPaymentPaid),'scope',await run(()=>typeof APFinanceWallet));
+console.log('1 pagar 450',await run(()=>markPaymentPaid('s1')));await pg.waitForTimeout(500);console.log(JSON.stringify(await estado()));
+// corrigir: volta o vencimento e muda o valor para 500 (como editar o aluno)
+const editar=async()=>{await run(()=>openEditStudent('s1'));await run(([venc])=>{document.getElementById('studentDueDate').value=venc;document.getElementById('studentMonthlyValue').value='500';const f=document.getElementById('studentForm');f.dispatchEvent(new Event('submit',{cancelable:true}))},[venc]);await pg.waitForTimeout(600)};
+await editar();console.log('editado',JSON.stringify(await estado()));
+resposta=false;console.log('2 pagar 500 e CANCELAR a substituição',await run(()=>markPaymentPaid('s1')));await pg.waitForTimeout(500);console.log(JSON.stringify(await estado()));
+await editar();resposta=true;console.log('3 pagar 500 e CONFIRMAR',await run(()=>markPaymentPaid('s1')));await pg.waitForTimeout(500);console.log(JSON.stringify(await estado()));
+console.log('4 pagar o mês seguinte (outro vencimento)',await run(()=>markPaymentPaid('s1')));await pg.waitForTimeout(500);console.log(JSON.stringify(await estado()));
+await pg.reload();await pg.waitForTimeout(3000);console.log('depois de recarregar',JSON.stringify(await estado()));
+await run(()=>{const f=['showScreen','goScreen','setScreen','openScreen'].find(n=>typeof window[n]==='function');if(f)window[f]('finance');return f}).then(f=>console.log('tela',f));await pg.waitForTimeout(800);await pg.locator('#paymentHistory').screenshot({path:'/tmp/t299/historico-'+v+'.png'}).catch(e=>console.log('shot',e.message.slice(0,80)));
+console.log('diálogos:',JSON.stringify(dialogs,null,0));console.log('erros:',errs.slice(0,4));
+await b.close()})();
