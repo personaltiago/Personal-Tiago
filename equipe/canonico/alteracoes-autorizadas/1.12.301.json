@@ -1,0 +1,23 @@
+{
+ "versao": "1.12.301",
+ "sequencia": 407,
+ "titulo": "Publicar: barra não vai a 100% no erro",
+ "base": {
+  "referencia": "pacote-1-12-300-pagamentos-repetidos-mensalidade-e-imc-por-idade",
+  "impressao": "19cd3747776d559336487f5f4dbd82887ec42cd6d62bddcd52ff53310989817a"
+ },
+ "pedido": "Tiago, 21/11/2026 13:27 (lista dos problemas pendentes, item: Publicar para os alunos pula para 100% no erro) e 14:01 (\"já dá continuidade no próximo\").",
+ "aprovado_por": "Tiago pediu a continuidade em 21/11/2026 14:01. Pacote ainda não aprovado para assinatura (depende do upload dele na main).",
+ "gerador": "tools/gerar-publicar-erro-1.12.301.cjs",
+ "alteracoes": [
+  {
+   "pagina": "index.html",
+   "id": "ap-distribution-controls",
+   "antes": "7c5d5df002b0dea08e43264cf499ef443f1170891a36a65ce5e7fb92df0f5bf8",
+   "depois": "78e4244e9993a236df166103c6ddd61f0b35515d1df8fb9b858a4254c0f0f67f",
+   "motivo": "Publicar para os alunos: no erro a barra usa o último progresso real (parou em X% / enviado, sem confirmação), nunca 100%"
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}
