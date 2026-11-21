@@ -1,5 +1,5 @@
 'use strict';
-const CACHE='agenda-personal-web-shell-v8',FILES=['/app/','/app/web.css','/app/boot.js','/app/registration-notices.js','/app/registration-notices.css','/app/platform.js','/app/icon.png','/app/icon-192.png','/app/manifest.webmanifest','/app/teacher-sync-model.js','/app/teacher-sync-preferences.js','/app/teacher-sync.js','/app/teacher-sync.css','/app/firebase-loader.js','/app/firebase.js','/app/login-session.js'];
+const CACHE='agenda-personal-web-shell-v9',FILES=['/app/','/app/web.css','/app/boot.js','/app/registration-notices.js','/app/registration-notices.css','/app/platform.js','/app/publication-panel.js','/app/icon.png','/app/icon-192.png','/app/manifest.webmanifest','/app/teacher-sync-model.js','/app/teacher-sync-preferences.js','/app/teacher-sync.js','/app/teacher-sync.css','/app/firebase-loader.js','/app/firebase.js','/app/login-session.js'];
 self.addEventListener('install',event=>event.waitUntil((async()=>{const cache=await caches.open(CACHE);await cache.addAll(FILES);await self.skipWaiting()})()));
 self.addEventListener('activate',event=>event.waitUntil((async()=>{for(const key of await caches.keys())if(key.startsWith('agenda-personal-web-shell-')&&key!==CACHE)await caches.delete(key);await self.clients.claim()})()));
 self.addEventListener('fetch',event=>{
