@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "checks": [
+    "Publication acknowledgement must match selected version/sequence/size/SHA-256 and shared public manifest before success",
+    "Presencial finalization and recent missing request recovery roundtrip through real client and Worker handler in isolated storage",
+    "Later student UID binding, storage failure, wrong student, duplicate prevention, deleted requests and response roundtrip",
+    "Managed browser: v300 installs, v301 waits while workout active, then auto-installs and keeps test record"
+  ],
+  "limits": [
+    "Firebase/auth/storage simulated in API tests; no real students messaged",
+    "Browser preview used isolated release fixture and HTTP hash bridge because managed preview is HTTP",
+    "Physical iPhone not tested"
+  ],
+  "cadenceSeconds": 30
+}

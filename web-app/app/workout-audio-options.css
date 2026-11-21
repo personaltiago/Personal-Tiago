@@ -1,0 +1,22 @@
+.ap-audio-choices[hidden], #apStudentAudioOpen[hidden] { display: none !important; }
+.ap-audio-choices summary { cursor: pointer; font-weight: 700; padding-block: 10px; }
+.ap-audio-choices summary:focus-visible, .ap-audio-choices button:focus-visible,
+.ap-audio-choices select:focus-visible { outline: 2px solid var(--prof-accent, currentColor); outline-offset: 2px; }
+.ap-audio-choice-list { list-style: none; padding: 0; margin: 8px 0 0; }
+.ap-audio-choice-list li, .ap-audio-choice-group { display: grid; gap: 8px; padding: 10px 0; border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent); }
+.ap-audio-choice-list li strong { overflow-wrap: anywhere; }
+.ap-audio-choice-actions, .ap-audio-choice-controls { display: flex; flex-wrap: wrap; gap: 8px; }
+.ap-audio-choice-message { margin: 7px 0; font-size: .9em; overflow-wrap: anywhere; }
+.ap-audio-choice-message:empty { display: none; }
+#apStudentAudioOptions { display: grid; gap: 8px; margin: 0; padding: 14px; }
+#apStudentAudioOptions h2 { font-size: 1.05em; margin: 0; }
+#apStudentAudioOptions label { font-weight: 700; }
+#apStudentAudioOptions select, .ap-audio-choice-button {
+  min-height: 44px; padding: 6px 12px; font: inherit; color: inherit;
+  border: 1px solid color-mix(in srgb, currentColor 45%, transparent);
+  border-radius: 9px; background: transparent;
+}
+#apStudentAudioOptions select { width: 100%; }
+#apStudentAudioOptions option { color: CanvasText; background: Canvas; }
+.ap-audio-choice-button { cursor: pointer; }
+.ap-audio-choice-button:disabled { opacity: .58; cursor: default; }

@@ -1,0 +1,781 @@
+{
+  "format": "agenda-aquarium-media",
+  "version": 1,
+  "created": "2026-11-03",
+  "spriteOrientation": "right",
+  "images": {
+    "fish-original-baby": {
+      "id": "fish-original-baby",
+      "path": "fish-original-baby.webp",
+      "mime": "image/webp",
+      "width": 320,
+      "height": 240,
+      "bytes": 21972,
+      "sha256": "1e10a45c55f9f59ea11fd64938d2885dfd46c34fc1aee8aba642133c27d784cb",
+      "source": {
+        "file": "07-1000053464.png",
+        "crop": {
+          "x": 519,
+          "y": 91,
+          "width": 231,
+          "height": 116
+        },
+        "corePixels": 14014
+      },
+      "contentBounds": [
+        0.0375,
+        0.19033189033189035,
+        0.925,
+        0.6193362193362193
+      ],
+      "displayWidth": 0.15,
+      "rig": {
+        "nose": [
+          0.94215,
+          0.5185800865800866
+        ],
+        "eye": [
+          0.87185,
+          0.469033189033189
+        ],
+        "head": [
+          0.8422499999999999,
+          0.5123867243867244
+        ],
+        "headStart": 0.759,
+        "tailRoot": [
+          0.39825,
+          0.5123867243867244
+        ],
+        "bodyCenter": [
+          0.648,
+          0.5185800865800866
+        ],
+        "dorsal": [
+          0.54625,
+          0.3265858585858586
+        ],
+        "ventral": [
+          0.56475,
+          0.6610274170274171
+        ],
+        "finSwingStart": 0.36124999999999996
+      }
+    },
+    "fish-original-teen": {
+      "id": "fish-original-teen",
+      "path": "fish-original-teen.webp",
+      "mime": "image/webp",
+      "width": 448,
+      "height": 336,
+      "bytes": 43248,
+      "sha256": "49631f3a4965f71b0a23164dcb76cdb4446a5c4991354d6635511cf8014dfb3f",
+      "source": {
+        "file": "07-1000053464.png",
+        "crop": {
+          "x": 815,
+          "y": 28,
+          "width": 330,
+          "height": 210
+        },
+        "corePixels": 37912
+      },
+      "contentBounds": [
+        0.026785714285714284,
+        0.0984848484848485,
+        0.9464285714285714,
+        0.803030303030303
+      ],
+      "displayWidth": 0.22,
+      "rig": {
+        "nose": [
+          0.952392857142857,
+          0.5160606060606061
+        ],
+        "eye": [
+          0.8975000000000001,
+          0.44378787878787884
+        ],
+        "head": [
+          0.8596428571428572,
+          0.5
+        ],
+        "headStart": 0.7839285714285715,
+        "tailRoot": [
+          0.5094642857142857,
+          0.5160606060606061
+        ],
+        "bodyCenter": [
+          0.7082142857142857,
+          0.5
+        ],
+        "dorsal": [
+          0.6230357142857142,
+          0.226969696969697
+        ],
+        "ventral": [
+          0.6230357142857142,
+          0.748939393939394
+        ],
+        "finSwingStart": 0.48107142857142854
+      }
+    },
+    "fish-original-adult": {
+      "id": "fish-original-adult",
+      "path": "fish-original-adult.webp",
+      "mime": "image/webp",
+      "width": 512,
+      "height": 384,
+      "bytes": 51596,
+      "sha256": "724b3ec05578f7a3d47bfb394806b4e0079616cfd341c4caf3ed78e67dd20a08",
+      "source": {
+        "file": "07-1000053464.png",
+        "crop": {
+          "x": 1243,
+          "y": 0,
+          "width": 383,
+          "height": 250
+        },
+        "corePixels": 62376
+      },
+      "contentBounds": [
+        0.0234375,
+        0.0852371627502176,
+        0.953125,
+        0.8295256744995648
+      ],
+      "displayWidth": 0.28,
+      "rig": {
+        "nose": [
+          0.956546875,
+          0.524885770234987
+        ],
+        "eye": [
+          0.9041250000000001,
+          0.45852371627502175
+        ],
+        "head": [
+          0.866,
+          0.5165905134899913
+        ],
+        "headStart": 0.7954687500000001,
+        "tailRoot": [
+          0.5476562500000001,
+          0.5165905134899913
+        ],
+        "bodyCenter": [
+          0.72875,
+          0.5082952567449956
+        ],
+        "dorsal": [
+          0.6525000000000001,
+          0.2013707571801567
+        ],
+        "ventral": [
+          0.6525000000000001,
+          0.782038729329852
+        ],
+        "finSwingStart": 0.50953125
+      }
+    },
+    "fish-blue-baby": {
+      "id": "fish-blue-baby",
+      "path": "fish-blue-baby.webp",
+      "mime": "image/webp",
+      "width": 320,
+      "height": 240,
+      "bytes": 22724,
+      "sha256": "8d28a844d20431d8c5b15e583056cad1afa2de070a3e6ce91173a9a1c3bf416d",
+      "source": {
+        "file": "07-1000053464.png",
+        "crop": {
+          "x": 519,
+          "y": 312,
+          "width": 232,
+          "height": 113
+        },
+        "corePixels": 13860
+      },
+      "contentBounds": [
+        0.0375,
+        0.19964080459770112,
+        0.925,
+        0.6007183908045978
+      ],
+      "displayWidth": 0.15,
+      "rig": {
+        "nose": [
+          0.94215,
+          0.518021551724138
+        ],
+        "eye": [
+          0.87185,
+          0.4699640804597701
+        ],
+        "head": [
+          0.8422499999999999,
+          0.5120143678160919
+        ],
+        "headStart": 0.759,
+        "tailRoot": [
+          0.39825,
+          0.5120143678160919
+        ],
+        "bodyCenter": [
+          0.648,
+          0.518021551724138
+        ],
+        "dorsal": [
+          0.54625,
+          0.33179885057471264
+        ],
+        "ventral": [
+          0.56475,
+          0.6561867816091954
+        ],
+        "finSwingStart": 0.36124999999999996
+      }
+    },
+    "fish-blue-teen": {
+      "id": "fish-blue-teen",
+      "path": "fish-blue-teen.webp",
+      "mime": "image/webp",
+      "width": 448,
+      "height": 336,
+      "bytes": 45758,
+      "sha256": "f7b7a4292776f6f95f2d944572aae8a0d7e61c52aa8ff2c0adf9a3a0d8fe895a",
+      "source": {
+        "file": "07-1000053464.png",
+        "crop": {
+          "x": 811,
+          "y": 259,
+          "width": 340,
+          "height": 209
+        },
+        "corePixels": 40750
+      },
+      "contentBounds": [
+        0.026785714285714284,
+        0.11214985994397761,
+        0.9464285714285714,
+        0.7757002801120448
+      ],
+      "displayWidth": 0.22,
+      "rig": {
+        "nose": [
+          0.952392857142857,
+          0.5155140056022409
+        ],
+        "eye": [
+          0.8975000000000001,
+          0.4457009803921569
+        ],
+        "head": [
+          0.8596428571428572,
+          0.5
+        ],
+        "headStart": 0.7839285714285715,
+        "tailRoot": [
+          0.5094642857142857,
+          0.5155140056022409
+        ],
+        "bodyCenter": [
+          0.7082142857142857,
+          0.5
+        ],
+        "dorsal": [
+          0.6230357142857142,
+          0.2362619047619048
+        ],
+        "ventral": [
+          0.6230357142857142,
+          0.740467086834734
+        ],
+        "finSwingStart": 0.48107142857142854
+      }
+    },
+    "fish-blue-adult": {
+      "id": "fish-blue-adult",
+      "path": "fish-blue-adult.webp",
+      "mime": "image/webp",
+      "width": 512,
+      "height": 384,
+      "bytes": 56678,
+      "sha256": "43784b7edf71a1c20daf780362fbde45cfa5e1200480432c86fd69a0f078b6e6",
+      "source": {
+        "file": "07-1000053464.png",
+        "crop": {
+          "x": 1244,
+          "y": 243,
+          "width": 398,
+          "height": 239
+        },
+        "corePixels": 61065
+      },
+      "contentBounds": [
+        0.0234375,
+        0.11843069514237858,
+        0.953125,
+        0.7631386097152428
+      ],
+      "displayWidth": 0.28,
+      "rig": {
+        "nose": [
+          0.956546875,
+          0.5228941582914574
+        ],
+        "eye": [
+          0.9041250000000001,
+          0.46184306951423787
+        ],
+        "head": [
+          0.866,
+          0.5152627721943049
+        ],
+        "headStart": 0.7954687500000001,
+        "tailRoot": [
+          0.5476562500000001,
+          0.5152627721943049
+        ],
+        "bodyCenter": [
+          0.72875,
+          0.5076313860971524
+        ],
+        "dorsal": [
+          0.6525000000000001,
+          0.22527010050251262
+        ],
+        "ventral": [
+          0.6525000000000001,
+          0.7594671273031826
+        ],
+        "finSwingStart": 0.50953125
+      }
+    },
+    "fish-gold-baby": {
+      "id": "fish-gold-baby",
+      "path": "fish-gold-baby.webp",
+      "mime": "image/webp",
+      "width": 320,
+      "height": 240,
+      "bytes": 21622,
+      "sha256": "7d4b9286d4694a2307fe2f1376fe6169753c5f6552c772beacab4eec1b70c322",
+      "source": {
+        "file": "07-1000053464.png",
+        "crop": {
+          "x": 523,
+          "y": 548,
+          "width": 223,
+          "height": 106
+        },
+        "corePixels": 12191
+      },
+      "contentBounds": [
+        0.0375,
+        0.20687593423019432,
+        0.925,
+        0.5862481315396113
+      ],
+      "displayWidth": 0.15,
+      "rig": {
+        "nose": [
+          0.94215,
+          0.5175874439461884
+        ],
+        "eye": [
+          0.87185,
+          0.4706875934230194
+        ],
+        "head": [
+          0.8422499999999999,
+          0.5117249626307923
+        ],
+        "headStart": 0.759,
+        "tailRoot": [
+          0.39825,
+          0.5117249626307923
+        ],
+        "bodyCenter": [
+          0.648,
+          0.5175874439461884
+        ],
+        "dorsal": [
+          0.54625,
+          0.33585052316890884
+        ],
+        "ventral": [
+          0.56475,
+          0.6524245142002989
+        ],
+        "finSwingStart": 0.36124999999999996
+      }
+    },
+    "fish-gold-teen": {
+      "id": "fish-gold-teen",
+      "path": "fish-gold-teen.webp",
+      "mime": "image/webp",
+      "width": 448,
+      "height": 336,
+      "bytes": 45962,
+      "sha256": "e89a8eb26705409cbaff9e9c898378ec0c80421719b83f2efce38e630b787b2a",
+      "source": {
+        "file": "07-1000053464.png",
+        "crop": {
+          "x": 812,
+          "y": 487,
+          "width": 340,
+          "height": 218
+        },
+        "corePixels": 40349
+      },
+      "contentBounds": [
+        0.026785714285714284,
+        0.09544817927170866,
+        0.9464285714285714,
+        0.8091036414565826
+      ],
+      "displayWidth": 0.22,
+      "rig": {
+        "nose": [
+          0.952392857142857,
+          0.5161820728291316
+        ],
+        "eye": [
+          0.8975000000000001,
+          0.4433627450980392
+        ],
+        "head": [
+          0.8596428571428572,
+          0.5
+        ],
+        "headStart": 0.7839285714285715,
+        "tailRoot": [
+          0.5094642857142857,
+          0.5161820728291316
+        ],
+        "bodyCenter": [
+          0.7082142857142857,
+          0.5
+        ],
+        "dorsal": [
+          0.6230357142857142,
+          0.22490476190476189
+        ],
+        "ventral": [
+          0.6230357142857142,
+          0.7508221288515406
+        ],
+        "finSwingStart": 0.48107142857142854
+      }
+    },
+    "fish-gold-adult": {
+      "id": "fish-gold-adult",
+      "path": "fish-gold-adult.webp",
+      "mime": "image/webp",
+      "width": 512,
+      "height": 384,
+      "bytes": 59070,
+      "sha256": "c9cb1219c753e3b6ec6b04035bf02fe0085c7ab45442b12ffa742ed608ab8650",
+      "source": {
+        "file": "07-1000053464.png",
+        "crop": {
+          "x": 1239,
+          "y": 469,
+          "width": 384,
+          "height": 253
+        },
+        "corePixels": 60578
+      },
+      "contentBounds": [
+        0.0234375,
+        0.08135308159722225,
+        0.953125,
+        0.8372938368055555
+      ],
+      "displayWidth": 0.28,
+      "rig": {
+        "nose": [
+          0.956546875,
+          0.5251188151041667
+        ],
+        "eye": [
+          0.9041250000000001,
+          0.4581353081597222
+        ],
+        "head": [
+          0.866,
+          0.5167458767361112
+        ],
+        "headStart": 0.7954687500000001,
+        "tailRoot": [
+          0.5476562500000001,
+          0.5167458767361112
+        ],
+        "bodyCenter": [
+          0.72875,
+          0.5083729383680555
+        ],
+        "dorsal": [
+          0.6525000000000001,
+          0.19857421875000003
+        ],
+        "ventral": [
+          0.6525000000000001,
+          0.7846799045138889
+        ],
+        "finSwingStart": 0.50953125
+      }
+    },
+    "aq-jardim": {
+      "id": "aq-jardim",
+      "path": "aq-jardim.webp",
+      "mime": "image/webp",
+      "width": 1000,
+      "height": 637,
+      "bytes": 111136,
+      "sha256": "18e9b70c18889d74632e91822084cc357f85baa311af0da69d334bff7fabaac6",
+      "source": {
+        "file": "05-1000053459.png",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 1536,
+          "height": 979
+        }
+      }
+    },
+    "aq-ruinas": {
+      "id": "aq-ruinas",
+      "path": "aq-ruinas.webp",
+      "mime": "image/webp",
+      "width": 1000,
+      "height": 689,
+      "bytes": 119072,
+      "sha256": "17765b898257afa91bb528923cfcee9340d12aada21b3a4ab57b5392524a53b1",
+      "source": {
+        "file": "03-1000053461.png",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 1536,
+          "height": 1059
+        }
+      }
+    },
+    "aq-cristais": {
+      "id": "aq-cristais",
+      "path": "aq-cristais.webp",
+      "mime": "image/webp",
+      "width": 1000,
+      "height": 632,
+      "bytes": 92936,
+      "sha256": "7b7e30be617e9c5403e18fb24d26286b7460602dbf55474c66c4bf15399620e9",
+      "source": {
+        "file": "04-1000053460.png",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 1536,
+          "height": 970
+        }
+      }
+    },
+    "aq-cachoeira": {
+      "id": "aq-cachoeira",
+      "path": "aq-cachoeira.webp",
+      "mime": "image/webp",
+      "width": 1000,
+      "height": 695,
+      "bytes": 114778,
+      "sha256": "289f4383105041045ab9c615ea9cbae743524b593244f55dd1554a24ec6cd303",
+      "source": {
+        "file": "06-1000053463.png",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 1536,
+          "height": 1068
+        }
+      }
+    },
+    "aq-naufragio": {
+      "id": "aq-naufragio",
+      "path": "aq-naufragio.webp",
+      "mime": "image/webp",
+      "width": 1000,
+      "height": 401,
+      "bytes": 98574,
+      "sha256": "1b5a77b24286d3361248e53f4917851ac207e7a4980ebdb4228793511ba046e5",
+      "source": {
+        "file": "02-1000053462.png",
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 1536,
+          "height": 616
+        }
+      }
+    }
+  },
+  "fish": {
+    "original": {
+      "baby": "fish-original-baby",
+      "teen": "fish-original-teen",
+      "adult": "fish-original-adult"
+    },
+    "blue": {
+      "baby": "fish-blue-baby",
+      "teen": "fish-blue-teen",
+      "adult": "fish-blue-adult"
+    },
+    "gold": {
+      "baby": "fish-gold-baby",
+      "teen": "fish-gold-teen",
+      "adult": "fish-gold-adult"
+    }
+  },
+  "scenes": [
+    {
+      "id": "aq-jardim",
+      "name": "Jardim submerso",
+      "image": "aq-jardim",
+      "position": [
+        0.5,
+        0.53
+      ],
+      "bubbles": [
+        [
+          0.44,
+          0.97
+        ],
+        [
+          0.7,
+          0.98
+        ]
+      ],
+      "effects": {
+        "light": [
+          0.48,
+          0.02
+        ],
+        "tone": "green"
+      }
+    },
+    {
+      "id": "aq-ruinas",
+      "name": "Ruínas submersas",
+      "image": "aq-ruinas",
+      "position": [
+        0.52,
+        0.52
+      ],
+      "bubbles": [
+        [
+          0.3,
+          0.98
+        ],
+        [
+          0.68,
+          0.95
+        ]
+      ],
+      "effects": {
+        "light": [
+          0.48,
+          0.02
+        ],
+        "tone": "blue"
+      }
+    },
+    {
+      "id": "aq-cristais",
+      "name": "Gruta de cristais",
+      "image": "aq-cristais",
+      "position": [
+        0.5,
+        0.5
+      ],
+      "bubbles": [
+        [
+          0.33,
+          0.97
+        ],
+        [
+          0.65,
+          0.98
+        ]
+      ],
+      "effects": {
+        "light": [
+          0.5,
+          0.02
+        ],
+        "tone": "violet"
+      }
+    },
+    {
+      "id": "aq-cachoeira",
+      "name": "Cachoeira submersa",
+      "image": "aq-cachoeira",
+      "position": [
+        0.53,
+        0.52
+      ],
+      "bubbles": [
+        [
+          0.28,
+          0.98
+        ],
+        [
+          0.62,
+          0.96
+        ]
+      ],
+      "effects": {
+        "light": [
+          0.42,
+          0.02
+        ],
+        "tone": "blue",
+        "waterfall": [
+          0.71,
+          0.24,
+          0.23,
+          0.58
+        ]
+      }
+    },
+    {
+      "id": "aq-naufragio",
+      "name": "Naufrágio",
+      "image": "aq-naufragio",
+      "position": [
+        0.48,
+        0.52
+      ],
+      "bubbles": [
+        [
+          0.55,
+          0.98
+        ],
+        [
+          0.68,
+          0.95
+        ]
+      ],
+      "effects": {
+        "light": [
+          0.47,
+          0.02
+        ],
+        "tone": "blue"
+      }
+    }
+  ],
+  "notes": [
+    "All visual identities are taken from the supplied images.",
+    "Source fish sheet has touching low-alpha fringe between rows; opaque cores and nearby connected fin fringe were preserved separately.",
+    "No frontal pose is fabricated; swimming mesh should anchor the head and gently flex fins/tail."
+  ],
+  "totalImageBytes": 905126
+}

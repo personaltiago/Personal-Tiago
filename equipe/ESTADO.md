@@ -1,5 +1,14 @@
 # Agenda Personal — ESTADO
 
+## Fonte web exportada para revisão (20/11/2026)
+
+O rascunho `chatgpt/app-web` inclui a publicação 44 do Sites, commit de
+origem `7702aa6`, em `web-app/`. Os 17 recursos do cliente conferem
+byte a byte com os recursos embutidos no Worker. O manifesto público
+anunciava 1.12.298/404 e o SHA-256 da cópia exportada coincide com ele.
+A referência assinada do repositório segue 1.12.300/406. Localize os passos
+de construção e os limites de exportação em `web-app/EXPORTACAO.md`.
+
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
 **Atualização de 20/11, 21h (Claude), `main` em `39c35e1`:** o Tiago subiu o **1.12.299/405** (`0f06f40`, assinado 44839477648) e o **1.12.300/406** (`39c35e1`, assinado 44849098710, artefato 14684233109), os dois gerados pelo Claude (PR #28) e idênticos byte a byte. **Referência agora: 1.12.300/406; próxima versão livre 1.12.301/407.** Instalação não confirmada (canônico instalado segue 1.12.294). Os testes passam a seguir a referência do manifesto (teste do teste e Java não fixam mais versões); Java: 170 verificações com o 1.12.300 como referência.
