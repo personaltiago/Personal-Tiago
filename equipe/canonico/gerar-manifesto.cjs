@@ -40,7 +40,8 @@ const CADEIA = [
   ['1.12.298', 'AgendaPersonal-1.12.298-Feedback-Consolidado-Para-Assinar.agenda.json', '602b204bd7d93b460e4b9e9d1f8f12d89da18ffc6c5b7959105f6af778c87973', 'main'],
   // Gerado pelo Claude (tools/gerar-financeiro-imc-1.12.299.cjs, PR #28), subido pelo Tiago em 20/11 (commit 0f06f40).
   ['1.12.299', 'AgendaPersonal-1.12.299-Financeiro-IMC-Idade-Para-Assinar.agenda.json', '45e86b1368c86534abe4bb3c26bf34428feed7e23b2529f050ce214c644a671e', 'main'],  // Gerado pelo Claude (tools/gerar-duplicados-1.12.300.cjs, PR #28), subido pelo Tiago em 20/11 (commit 39c35e1); inclui o 1.12.299.
-  ['1.12.300', 'AgendaPersonal-1.12.300-Pagamentos-Repetidos-Para-Assinar.agenda.json', 'c91d3a533b305c5bb518173094e93ea158f737e10b1107f23d12ee4db91496dd', 'main'],
+  ['1.12.300', 'AgendaPersonal-1.12.300-Pagamentos-Repetidos-Para-Assinar.agenda.json', 'c91d3a533b305c5bb518173094e93ea158f737e10b1107f23d12ee4db91496dd', 'main'],  // Gerado pelo Claude (tools/gerar-publicar-erro-1.12.301.cjs, PR #36), subido pelo Tiago em 21/11 (commit ee472a7).
+  ['1.12.301', 'AgendaPersonal-1.12.301-Publicar-Barra-Erro-Para-Assinar.agenda.json', 'daf5e60ff1b08a780e4c6fbf339e24bee301772c684d4b94d6e00928c7fcb44f', 'main'],
 ];
 // Correções por área da raiz da main. "esperado": a situação no canônico que o Tiago já conhece (presente, evoluída ou conflito).
 const CORRECOES = [

@@ -153,7 +153,15 @@
    "assinado": "sim: execução 44849098710 do workflow de assinatura (commit 39c35e1, \"Assinado e conferido\"), artefato 14684233109",
    "publicado": "sim: o Tiago publicou pelo app (\"Publicar para Android e iPhone\"); a tela confirmou \"Versão 1.12.300 confirmada para professor e alunos no Android, iPhone e navegador\" (prints de 21/11/2026 11:25-11:26)",
    "instalado": "sim: no aparelho do Tiago (Xiaomi), \"Versão instalada: 1.12.300\" (print 21/11/2026 11:27) e confirmação dele (\"Sim\", 21/11/2026 13:03)",
-   "validado": "não confirmado: nenhum teste das funções novas (mensalidade substituída, IMC por idade, quadro de pagamentos repetidos) feito no aparelho"
+   "validado": "sim, por relato do Tiago (21/11/2026 15:38: \"os testes no Android e no iPhone… foi feito, deu certo\"), sem prints e sem o detalhe de cada função testada (mensalidade substituída, IMC por idade, quadro de pagamentos repetidos, app web no iPhone)"
+  },
+  "1.12.301": {
+   "proposto": "sim: gerado pelo Claude em 21/11/2026 (tools/gerar-publicar-erro-1.12.301.cjs, PR #36)",
+   "aprovado": "sim: o Tiago subiu o arquivo na main (commit ee472a7, byte a byte igual ao gerado) e aprovou juntar o PR #36 (21/11 18:20)",
+   "assinado": "sim: execução 44942130415 do workflow de assinatura (commit ee472a7, \"Assinado e conferido\"; conferência antes de assinar aprovada, com aviso de bloco alterado sem autorização versionada naquele momento), artefato 14721852272",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado",
+   "validado": "não confirmado"
   }
  }
 }

@@ -2,7 +2,13 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+<<<<<<< HEAD
 **21/11, 14h (Claude): 1.12.301/407 — Publicar para os alunos não vai a 100% no erro (PR em rascunho).** APK 1.210 instalado e validado pelo Tiago (13:27: "Ocultar" enquanto carrega, "Fechar" no erro). Pacote completo a partir do 1.12.300 (o bloco `ap-distribution-controls` não está em nenhuma área do UpdateAreaPatch), mudando só esse bloco: no erro, a barra usa o último progresso real ("Parou em X%" ou "Enviado, sem confirmação"), nunca 100%. Testes: Chrome 300 x 301 (queda em 25%: 100% → "Parou em 25%"), verificador PR/assinatura aprovado com `alteracoes-autorizadas/1.12.301.json`, mecanismo real 169, oficiais 18/18. Gerador `tools/gerar-publicar-erro-1.12.301.cjs`. Para assinar: juntar este PR (a autorização precisa estar na main) e o Tiago sobe o arquivo.
+=======
+**21/11, 18h20: 1.12.301 subida (`ee472a7`) e assinada (execução 44942130415, artefato 14721852272); PR #36 juntado com a aprovação do Tiago. Referência agora 1.12.301/407; próxima versão livre 1.12.302/408.** A conferência antes de assinar aprovou com aviso (a autorização do 1.12.301 ainda não estava na main; o bloco não é protegido). Instalação ainda não confirmada.
+
+**21/11, 15h40: 1.12.300 validada por relato do Tiago** ("os testes no Android e no iPhone… foi feito, deu certo", 15:38). Sem prints nem detalhe por função; registrado assim em `status-pacotes.json`. APK 1.210 instalado e validado pelo Tiago (13:27: "Ocultar" enquanto carrega, "Fechar" no erro).
+>>>>>>> origin/main
 
 **21/11, 13h15 (Claude): APK 1.210 em PR — botão "Fechar" no fim.** APK 1.209 (PR #33) gerado, publicado (Release `android-1.209-conteudo-1.12.269-44927980408`) e instalado; barra validada no Xiaomi (prints 13:08: sem assinatura → 48% vermelha; 1.12.300 reimportada → 55% "já está instalado"). Pedido do Tiago (13:10): no fim o botão diz "Ocultar" e devia dizer "Fechar". 1.210: "Ocultar" enquanto a importação continua, "Fechar" quando concluiu ou deu erro; e a linha "Etapa N de 4" deixa de ficar vazia no erro. Só `UpdateProgress` + teste + versão.
 

@@ -11,15 +11,15 @@
   "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: tela \"Atualizar aplicativo\" com \"Versão instalada: 1.12.300\" (print do Tiago, 21/11/2026 11:27) e confirmação dele por escrito (\"Sim\", 21/11/2026 13:03). Antes: 1.12.294 (20/11)."
  },
  "referencia": {
-  "id": "pacote-1-12-300-pagamentos-repetidos-mensalidade-e-imc-por-idade",
+  "id": "pacote-1-12-301-publicar-barra-nao-vai-a-100-no-erro",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-1.12.300-Pagamentos-Repetidos-Para-Assinar.agenda.json",
-  "sha256": "c91d3a533b305c5bb518173094e93ea158f737e10b1107f23d12ee4db91496dd",
-  "versao_efetiva": "1.12.300",
-  "sequencia_efetiva": 406,
-  "proxima_versao_livre": "1.12.301",
-  "proxima_sequencia_livre": 407,
-  "impressao": "19cd3747776d559336487f5f4dbd82887ec42cd6d62bddcd52ff53310989817a"
+  "arquivo": "AgendaPersonal-1.12.301-Publicar-Barra-Erro-Para-Assinar.agenda.json",
+  "sha256": "daf5e60ff1b08a780e4c6fbf339e24bee301772c684d4b94d6e00928c7fcb44f",
+  "versao_efetiva": "1.12.301",
+  "sequencia_efetiva": 407,
+  "proxima_versao_livre": "1.12.302",
+  "proxima_sequencia_livre": 408,
+  "impressao": "1eac8a9b0274a1e8bfa34c01d0af24f091e86d2c029122db7cb404796f6f630d"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -48,6 +48,7 @@
   "AgendaPersonal-1.12.298-Feedback-Consolidado-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.299-Financeiro-IMC-Idade-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.300-Pagamentos-Repetidos-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.301-Publicar-Barra-Erro-Para-Assinar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
   "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
@@ -390,7 +391,24 @@
     "assinado": "sim: execução 44849098710 do workflow de assinatura (commit 39c35e1, \"Assinado e conferido\"), artefato 14684233109",
     "publicado": "sim: o Tiago publicou pelo app (\"Publicar para Android e iPhone\"); a tela confirmou \"Versão 1.12.300 confirmada para professor e alunos no Android, iPhone e navegador\" (prints de 21/11/2026 11:25-11:26)",
     "instalado": "sim: no aparelho do Tiago (Xiaomi), \"Versão instalada: 1.12.300\" (print 21/11/2026 11:27) e confirmação dele (\"Sim\", 21/11/2026 13:03)",
-    "validado": "não confirmado: nenhum teste das funções novas (mensalidade substituída, IMC por idade, quadro de pagamentos repetidos) feito no aparelho"
+    "validado": "sim, por relato do Tiago (21/11/2026 15:38: \"os testes no Android e no iPhone… foi feito, deu certo\"), sem prints e sem o detalhe de cada função testada (mensalidade substituída, IMC por idade, quadro de pagamentos repetidos, app web no iPhone)"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.301",
+   "sequencia": 407,
+   "arquivo": "AgendaPersonal-1.12.301-Publicar-Barra-Erro-Para-Assinar.agenda.json",
+   "sha256": "daf5e60ff1b08a780e4c6fbf339e24bee301772c684d4b94d6e00928c7fcb44f",
+   "origem": "main",
+   "titulo": "Publicar: barra não vai a 100% no erro",
+   "status": {
+    "proposto": "sim: gerado pelo Claude em 21/11/2026 (tools/gerar-publicar-erro-1.12.301.cjs, PR #36)",
+    "aprovado": "sim: o Tiago subiu o arquivo na main (commit ee472a7, byte a byte igual ao gerado) e aprovou juntar o PR #36 (21/11 18:20)",
+    "assinado": "sim: execução 44942130415 do workflow de assinatura (commit ee472a7, \"Assinado e conferido\"; conferência antes de assinar aprovada, com aviso de bloco alterado sem autorização versionada naquele momento), artefato 14721852272",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado",
+    "validado": "não confirmado"
    }
   }
  ],
@@ -812,7 +830,7 @@
     "vezes": 1
    },
    "ap-distribution-controls": {
-    "hash": "7c5d5df002b0dea08e43264cf499ef443f1170891a36a65ce5e7fb92df0f5bf8",
+    "hash": "78e4244e9993a236df166103c6ddd61f0b35515d1df8fb9b858a4254c0f0f67f",
     "area": "geral",
     "vezes": 1
    },
@@ -2422,6 +2440,10 @@
    {
     "hash": "7c5d5df002b0dea08e43264cf499ef443f1170891a36a65ce5e7fb92df0f5bf8",
     "desde": "1.12.273"
+   },
+   {
+    "hash": "78e4244e9993a236df166103c6ddd61f0b35515d1df8fb9b858a4254c0f0f67f",
+    "desde": "1.12.301"
    }
   ],
   "index.html|ap-student-identity-controls": [
@@ -4452,6 +4474,26 @@
    ],
    "depende_de": [
     "pacote-1-12-299-mensalidade-corrigida-e-imc-por-idade"
+   ]
+  },
+  {
+   "id": "pacote-1-12-301-publicar-barra-nao-vai-a-100-no-erro",
+   "titulo": "Publicar: barra não vai a 100% no erro",
+   "tipo": "pacote-completo",
+   "versao": "1.12.301",
+   "sequencia": 407,
+   "arquivo": "AgendaPersonal-1.12.301-Publicar-Barra-Erro-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "index.html",
+     "id": "ap-distribution-controls",
+     "area": "geral",
+     "antes": "7c5d5df002b0dea08e43264cf499ef443f1170891a36a65ce5e7fb92df0f5bf8",
+     "depois": "78e4244e9993a236df166103c6ddd61f0b35515d1df8fb9b858a4254c0f0f67f"
+    }
+   ],
+   "depende_de": [
+    "base-1.12.273"
    ]
   }
  ],
