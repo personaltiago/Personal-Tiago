@@ -2,6 +2,8 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**21/11, 15h40: 1.12.300 validada por relato do Tiago** ("os testes no Android e no iPhone… foi feito, deu certo", 15:38). Sem prints nem detalhe por função; registrado assim em `status-pacotes.json`. APK 1.210 instalado e validado pelo Tiago (13:27: "Ocultar" enquanto carrega, "Fechar" no erro).
+
 **21/11, 13h15 (Claude): APK 1.210 em PR — botão "Fechar" no fim.** APK 1.209 (PR #33) gerado, publicado (Release `android-1.209-conteudo-1.12.269-44927980408`) e instalado; barra validada no Xiaomi (prints 13:08: sem assinatura → 48% vermelha; 1.12.300 reimportada → 55% "já está instalado"). Pedido do Tiago (13:10): no fim o botão diz "Ocultar" e devia dizer "Fechar". 1.210: "Ocultar" enquanto a importação continua, "Fechar" quando concluiu ou deu erro; e a linha "Etapa N de 4" deixa de ficar vazia no erro. Só `UpdateProgress` + teste + versão.
 
 **21/11, 13h: 1.12.300 registrada como INSTALADA (canônico).** Evidência: print "Versão instalada: 1.12.300" (11:27) e confirmação do Tiago ("Sim", 13:03); publicada para Android/iPhone/navegador pelo app (prints 11:25–11:26). Funções novas da 300 ainda não validadas no aparelho. Com isso, reassinar 1.12.294 ou 1.12.295 passa a ser reprovado (volta). PR #33 (APK 1.209, textos claros) juntado (`8ccd826`); APK 1.209 ainda não gerado.

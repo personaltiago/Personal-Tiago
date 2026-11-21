@@ -153,7 +153,7 @@
    "assinado": "sim: execução 44849098710 do workflow de assinatura (commit 39c35e1, \"Assinado e conferido\"), artefato 14684233109",
    "publicado": "sim: o Tiago publicou pelo app (\"Publicar para Android e iPhone\"); a tela confirmou \"Versão 1.12.300 confirmada para professor e alunos no Android, iPhone e navegador\" (prints de 21/11/2026 11:25-11:26)",
    "instalado": "sim: no aparelho do Tiago (Xiaomi), \"Versão instalada: 1.12.300\" (print 21/11/2026 11:27) e confirmação dele (\"Sim\", 21/11/2026 13:03)",
-   "validado": "não confirmado: nenhum teste das funções novas (mensalidade substituída, IMC por idade, quadro de pagamentos repetidos) feito no aparelho"
+   "validado": "sim, por relato do Tiago (21/11/2026 15:38: \"os testes no Android e no iPhone… foi feito, deu certo\"), sem prints e sem o detalhe de cada função testada (mensalidade substituída, IMC por idade, quadro de pagamentos repetidos, app web no iPhone)"
   }
  }
 }
