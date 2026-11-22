@@ -1,5 +1,13 @@
 # Agenda Personal — ESTADO
 
+## Publicação web com progresso confirmado (21/11/2026)
+
+O rascunho em `chatgpt/web-publication-progress` parte da publicação 44 exportada no PR anterior. O painel informa bytes lidos e enviados e usa barra indeterminada quando a etapa não tem total conhecido. Em caso de erro, preserva a última medição da etapa. Tentar de novo consulta o manifesto antes de reenviar. O sucesso exige que o manifesto sem cache confirme versão, sequência, tamanho e SHA-256 do pacote. O recibo informa o arquivo enviado, a versão disponível no servidor e a versão carregada no aparelho, com data e hora.
+
+O diálogo de atualizações diferencia versão instalada, cópia preparada e manifesto consultado. A instalação da cópia preparada exige correspondência com o SHA-256 e a sequência do manifesto confirmado, inclusive após troca de publicação com a mesma sequência. Retorno ao comportamento anterior consiste em reverter a mudança no código web antes de publicar uma futura versão.
+
+Os quatro cenários pedidos foram validados no Chromium com rede simulada. A suíte do painel verificou também total desconhecido, manifesto divergente e repetição sem segundo envio. As capturas e as asserções estão em `web-app/tests/evidencias/publicacao/`. Não houve publicação nem mudança de pacote na produção.
+
 ## Fonte web exportada para revisão (20/11/2026)
 
 O rascunho `chatgpt/app-web` inclui a publicação 44 do Sites, commit de
