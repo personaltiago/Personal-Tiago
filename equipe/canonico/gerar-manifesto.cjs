@@ -42,6 +42,8 @@ const CADEIA = [
   ['1.12.299', 'AgendaPersonal-1.12.299-Financeiro-IMC-Idade-Para-Assinar.agenda.json', '45e86b1368c86534abe4bb3c26bf34428feed7e23b2529f050ce214c644a671e', 'main'],  // Gerado pelo Claude (tools/gerar-duplicados-1.12.300.cjs, PR #28), subido pelo Tiago em 20/11 (commit 39c35e1); inclui o 1.12.299.
   ['1.12.300', 'AgendaPersonal-1.12.300-Pagamentos-Repetidos-Para-Assinar.agenda.json', 'c91d3a533b305c5bb518173094e93ea158f737e10b1107f23d12ee4db91496dd', 'main'],  // Gerado pelo Claude (tools/gerar-publicar-erro-1.12.301.cjs, PR #36), subido pelo Tiago em 21/11 (commit ee472a7).
   ['1.12.301', 'AgendaPersonal-1.12.301-Publicar-Barra-Erro-Para-Assinar.agenda.json', 'daf5e60ff1b08a780e4c6fbf339e24bee301772c684d4b94d6e00928c7fcb44f', 'main'],
+  // Gerado pelo Claude (tools/gerar-nome-feedbacks-1.12.302.cjs) e entregue no PR junto com a classificação (fluxo novo: merge = upload).
+  ['1.12.302', 'AgendaPersonal-1.12.302-Nome-Feedbacks-Para-Assinar.agenda.json', 'bb04ce6f59279e02d06dfd02c2c3ace762ca78f1bfaea4d0fa1e11b0036d59e1', 'main'],
 ];
 // Correções por área da raiz da main. "esperado": a situação no canônico que o Tiago já conhece (presente, evoluída ou conflito).
 const CORRECOES = [

@@ -162,6 +162,14 @@
    "publicado": "não confirmado",
    "instalado": "sim: no aparelho do Tiago, por confirmação dele (\"Cara eu já instalei\", 21/11/2026 18:37), sem print",
    "validado": "não confirmado"
+  },
+  "1.12.302": {
+   "proposto": "sim: gerado pelo Claude em 22/11/2026 (tools/gerar-nome-feedbacks-1.12.302.cjs), pedido do Tiago às 11:31 e aprovado às 11:36",
+   "aprovado": "não: aguardando o Tiago juntar o PR (o merge é a aprovação e o envio para a main)",
+   "assinado": "não",
+   "publicado": "não",
+   "instalado": "não",
+   "validado": "não"
   }
  }
 }

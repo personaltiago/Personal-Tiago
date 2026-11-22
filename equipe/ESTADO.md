@@ -2,6 +2,15 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**22/11, 12h (Claude): 1.12.302/408 — Nome nos feedbacks (PR em rascunho; o pacote vai junto no PR, fluxo novo do #39).**
+- Pedido do Tiago (11:31) e aprovação (11:36). Gerador `tools/gerar-nome-feedbacks-1.12.302.cjs`, a partir do 1.12.301 (SHA-256 `daf5e60f…`). Pacote `AgendaPersonal-1.12.302-Nome-Feedbacks-Para-Assinar.agenda.json`, SHA-256 `bb04ce6f59279e02d06dfd02c2c3ace762ca78f1bfaea4d0fa1e11b0036d59e1`.
+- O que muda: Configurações ganha "Nome nos feedbacks" (até 40 letras, em `state.trainerProfile.feedbackName`). O rodapé do cartão de feedback vira "<nome> · Acompanhamento de treino." (vazio = Agenda Personal, igual a hoje). O nome vai ao aluno em `area.trainer.feedbackName`, dentro do `payload` que já é enviado, sem mudar regra nem coleção do Firebase. Salvar chama `save()`, que já reenvia as áreas.
+- Blocos: `ap-feedback-card` (as duas páginas, texto idêntico), `ap-feedback-student`, `ap-feedback-teacher`, `#fora-dos-blocos` do professor (tela Configurações e `data-ap-student-model`) e dois blocos novos, `ap-feedback-name-css` e `ap-feedback-name`. Autorização: `alteracoes-autorizadas/1.12.302.json`. Classificado na cadeia como proposto. A referência continua 1.12.301 até a assinatura.
+- Compatibilidade: aluno com pacote antigo aceita a área nova e ignora o campo (testado com o `assertArea` do 1.12.301). Sem nome, o cartão sai idêntico ao do 1.12.301, pixel a pixel.
+- **Brecha corrigida nos testes:** um pacote já classificado na cadeia, mas proposto depois da referência (não assinado), caía no atalho de "reassinatura" e pulava a conferência, no verificador e no mecanismo real. Agora o atalho só vale até a referência. Novo caso em `testar-verificador.cjs`: reprova com o código antigo e passa com o novo.
+- Testes: verificador (modo pr) aprovado; teste do verificador 45/45; mecanismo real 169 verificações; testes oficiais 18/18; funcionalidades aprovado (2 avisos: "guardar agenda no telefone" parece restaurada, o que confere com o print do Tiago); conferência antes de assinar aprovada; Chrome (`equipe/testes/navegador/nome-feedbacks-302/`) 25/25. Sem teste em aparelho.
+- Instalar: o Tiago junta o PR → a assinatura roda → link direto (pré-lançamento) → importar na Central. Reverter: Central → Restaurar versão anterior (volta ao 1.12.301). O nome salvo fica guardado e é ignorado pelo 1.12.301.
+
 **22/11, 11h (Claude): link direto do arquivo assinado (PR em rascunho, só workflow) + arrumação de PRs e correção deste arquivo.**
 - `assinar-atualizacoes-agenda.yml` ganha o job `link-direto` (depois de `assinar`, sem acesso à chave, `contents: write` só nele): cria um **pré-lançamento** `conteudo-<execução>-<tentativa>` com o(s) `…-Assinado.agenda.json` e escreve o link direto no resumo da execução. Assim o Tiago baixa o `.json` no celular sem abrir ZIP. Nada mais muda: verificação antes de assinar, assinatura e artefato continuam iguais.
 - Risco tratado: o site (`worker/index.js`, `officialInstaller`) e o app (`AndroidInstaller.java`) leem `releases/latest` e só aceitam tag `android-*`. Pré-lançamento nunca é "latest" (e vai com `--latest=false`); mesmo assim, o job confere o `latest` depois e, se não for `android-*`, apaga o pré-lançamento e falha.
@@ -147,6 +156,7 @@ Nenhuma linha está validada **no aparelho** na 1.204; isso continua [H] até o 
 ## 4. Regressões confirmadas
 
 ### 4.1 Áudios do treino (opções de áudio) — perdidos na 1.199 e por isso também na 1.204 [V]
+> **Atualização de 22/11/2026: no app atual as opções existem.** Prints do Tiago (11:26): Configurações tem Som do início da pausa, do fim do cardio, do descanso do treino, antes e no fim da aula, cada um com Ouvir, Escolher áudio, Toques do celular ou Usar som padrão e Enviar aos alunos. Não aparece controle de volume. O texto abaixo é o histórico da 1.204.
 - **Na 1.197:** existia o bloco `ap-workout-audio-options-ui` em `professor.html`, com escolha de vários áudios e volume (chave `agenda_workout_audio_v1`).
 - **Na 1.199** (feita pelo ChatGPT, a partir da 1.197):
   - o bloco foi **removido**;
@@ -158,6 +168,7 @@ Nenhuma linha está validada **no aparelho** na 1.204; isso continua [H] até o 
 - Até lá, o teste de presença (REGRAS, seção 5.2) registra esse bloco como **ausência conhecida**.
 
 ### 4.2 "Guardar a agenda no telefone" — ativação desligada na 1.199 e na 1.204 [V]
+> **Atualização de 22/11/2026: resolvido no app atual.** Print do Tiago (10:56): "Modo telefone ativo · 505 KB na agenda. Tudo salvo no arquivo do telefone" e "Cópia no telefone: OK". `verificar_funcionalidades.py` também avisa que a regressão parece restaurada. O texto abaixo é o histórico da 1.204.
 - O botão de ativar o armazenamento principal no telefone não aparece mais. O texto "Guardar a agenda no telefone" não existe no `professor.html` da 1.204.
 - A **leitura** de quem já ativou continua [V] (`ap-native-store` presente, teste `native_store` passou).
 - Não foi aprovado pelo Tiago. Foi uma decisão da 1.199 [H sobre o motivo].
@@ -226,8 +237,8 @@ Conclusões:
 
 ## 9. Pendências (decisão do Tiago)
 
-1. Voltar ou não as **opções de áudio do treino** (seção 4.1). É uma regressão confirmada, sem restauração automática.
-2. Voltar ou não o botão **"Guardar a agenda no telefone"** (seção 4.2). Também é uma regressão confirmada, sem restauração automática.
+1. ~~Voltar ou não as opções de áudio do treino~~ — existem no app atual (22/11, prints do Tiago); só o controle de volume não aparece.
+2. ~~Voltar ou não o botão "Guardar a agenda no telefone"~~ — resolvido no app atual (22/11, print do Tiago: modo telefone ativo e cópia no telefone OK).
 3. Descanso: aceitar a piscada (1.204) ou testar a atualização a cada 5 s (seção 5).
 4. Aprovar ou não as **propostas** de `REGRAS.md`: assinatura manual, simulação sem commit na `main`, teste de presença e proteção da `main`. **Nenhum workflow foi alterado.**
 5. Disponibilizar o código descompactado e provar que gera o mesmo app que o ZIP.

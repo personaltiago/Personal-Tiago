@@ -1,0 +1,65 @@
+{
+ "versao": "1.12.302",
+ "sequencia": 408,
+ "titulo": "Nome nos feedbacks",
+ "base": {
+  "referencia": "pacote-1-12-301-publicar-barra-nao-vai-a-100-no-erro",
+  "impressao": "1eac8a9b0274a1e8bfa34c01d0af24f091e86d2c029122db7cb404796f6f630d"
+ },
+ "pedido": "Tiago, 22/11/2026 11:31 (\"na parte Mais coloca o nome dos feedbacks… se não colocar nenhum nome vai aparecer só Agenda Personal\") e 11:36 (\"Concordo pode fazer\").",
+ "aprovado_por": "Tiago pediu e aprovou a funcionalidade em 22/11/2026 11:36. A assinatura acontece quando ele juntar o PR (fluxo novo do PR #39).",
+ "gerador": "tools/gerar-nome-feedbacks-1.12.302.cjs",
+ "alteracoes": [
+  {
+   "pagina": "index.html",
+   "id": "ap-feedback-card",
+   "antes": "3049d4feb124f63f55a33b468e3ddcef04dc0e5d1c8805cbb49448b57d217c73",
+   "depois": "d4f26c4bc7a2c8200739471e52b30b26cce50de3fea5f7eac5851d068601e949",
+   "motivo": "Nome nos feedbacks: o rodapé do cartão usa o nome escolhido (opção brand); vazio = Agenda Personal; encurta se não couber. Mesmo texto do professor.html"
+  },
+  {
+   "pagina": "index.html",
+   "id": "ap-feedback-student",
+   "antes": "8da53613d598b6e459f2de5f63019c6dcfcc5c9da209903c923ff954db217ecd",
+   "depois": "77b298623d2c1e56905e485c4831850a3448c033cd51c56190cc714937d7c751",
+   "motivo": "o cartão do aluno passa o nome que veio na área do aluno (area.trainer.feedbackName)"
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-feedback-card",
+   "antes": "3049d4feb124f63f55a33b468e3ddcef04dc0e5d1c8805cbb49448b57d217c73",
+   "depois": "d4f26c4bc7a2c8200739471e52b30b26cce50de3fea5f7eac5851d068601e949",
+   "motivo": "Nome nos feedbacks: o mesmo bloco do index.html (cartão idêntico no aluno e no professor)"
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-feedback-teacher",
+   "antes": "27fbd592dfa66598e02c87912e241a00882c4caf6c45994b3d2a7a5e8b1024ce",
+   "depois": "ca063db7f4b0f01a715ed29d6bdf16fce9c4b1505968c51b7e98d0d2eb1b2ed1",
+   "motivo": "o cartão do professor passa o nome salvo em Configurações (window.APFeedbackName)"
+  },
+  {
+   "pagina": "professor.html",
+   "id": "#fora-dos-blocos",
+   "antes": "8fd4422c749ce89291499f09f3846ed8c096668cfa41bc6b0931384e855adc04",
+   "depois": "88c390feac7299cc8c7affe91e5c7bcbf299feed81bfd1af1f102b0c8e331b7a",
+   "motivo": "Configurações: cartão Nome nos feedbacks depois de Tamanho das letras; modelo da área do aluno (script data-ap-student-model) leva trainer.feedbackName; posição dos blocos novos"
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-feedback-name-css",
+   "antes": null,
+   "depois": "0864d84ed1676cebc04b6d26a52ae26559a74fa7b5dae80ff47c9fb1bfa10be3",
+   "motivo": "bloco novo: estilo do cartão Nome nos feedbacks"
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-feedback-name",
+   "antes": null,
+   "depois": "42f1cfe9bbef5374402e634f78a56f5424ffdf97ee9e587d8995d37bb911f552",
+   "motivo": "bloco novo: campo Nome nos feedbacks (salva em state.trainerProfile.feedbackName; vazio = Agenda Personal)"
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}

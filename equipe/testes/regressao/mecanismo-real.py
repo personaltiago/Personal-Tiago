@@ -86,7 +86,9 @@ def main():
         subprocess.run(compilador + ['-nowarn', '-encoding', 'UTF-8', '-d', str(classes)] + fontes, check=True)
         falhas = []
         import hashlib
-        passos = {p['sha256']: p for p in manifesto['pacotes'] if p['tipo'] == 'pacote-completo' and p['sequencia'] >= manifesto['canonico']['sequencia']}
+        # Só passos que não passam da referência: um passo proposto DEPOIS dela (já na cadeia, ainda não assinado) é testado de verdade.
+        passos = {p['sha256']: p for p in manifesto['pacotes'] if p['tipo'] == 'pacote-completo'
+                  and manifesto['canonico']['sequencia'] <= p['sequencia'] <= manifesto['referencia']['sequencia_efetiva']}
         for candidato in candidatos:
             print('\n=== Candidato: %s' % candidato.name, flush=True)
             passo = passos.get(hashlib.sha256(candidato.read_bytes()).hexdigest())
