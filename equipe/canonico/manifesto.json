@@ -49,6 +49,7 @@
   "AgendaPersonal-1.12.299-Financeiro-IMC-Idade-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.300-Pagamentos-Repetidos-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.301-Publicar-Barra-Erro-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.302-Nome-Feedbacks-Para-Assinar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
   "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
@@ -409,6 +410,23 @@
     "publicado": "não confirmado",
     "instalado": "sim: no aparelho do Tiago, por confirmação dele (\"Cara eu já instalei\", 21/11/2026 18:37), sem print",
     "validado": "não confirmado"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.302",
+   "sequencia": 408,
+   "arquivo": "AgendaPersonal-1.12.302-Nome-Feedbacks-Para-Assinar.agenda.json",
+   "sha256": "bb04ce6f59279e02d06dfd02c2c3ace762ca78f1bfaea4d0fa1e11b0036d59e1",
+   "origem": "main",
+   "titulo": "Nome nos feedbacks",
+   "status": {
+    "proposto": "sim: gerado pelo Claude em 22/11/2026 (tools/gerar-nome-feedbacks-1.12.302.cjs), pedido do Tiago às 11:31 e aprovado às 11:36",
+    "aprovado": "não: aguardando o Tiago juntar o PR (o merge é a aprovação e o envio para a main)",
+    "assinado": "não",
+    "publicado": "não",
+    "instalado": "não",
+    "validado": "não"
    }
   }
  ],
@@ -4494,6 +4512,71 @@
    ],
    "depende_de": [
     "base-1.12.273"
+   ]
+  },
+  {
+   "id": "pacote-1-12-302-nome-nos-feedbacks",
+   "titulo": "Nome nos feedbacks",
+   "tipo": "pacote-completo",
+   "versao": "1.12.302",
+   "sequencia": 408,
+   "arquivo": "AgendaPersonal-1.12.302-Nome-Feedbacks-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "index.html",
+     "id": "ap-feedback-card",
+     "area": "geral",
+     "antes": "3049d4feb124f63f55a33b468e3ddcef04dc0e5d1c8805cbb49448b57d217c73",
+     "depois": "d4f26c4bc7a2c8200739471e52b30b26cce50de3fea5f7eac5851d068601e949"
+    },
+    {
+     "pagina": "index.html",
+     "id": "ap-feedback-student",
+     "area": "evolucao",
+     "antes": "8da53613d598b6e459f2de5f63019c6dcfcc5c9da209903c923ff954db217ecd",
+     "depois": "77b298623d2c1e56905e485c4831850a3448c033cd51c56190cc714937d7c751"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-feedback-card",
+     "area": "evolucao",
+     "antes": "3049d4feb124f63f55a33b468e3ddcef04dc0e5d1c8805cbb49448b57d217c73",
+     "depois": "d4f26c4bc7a2c8200739471e52b30b26cce50de3fea5f7eac5851d068601e949"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-feedback-teacher",
+     "area": "evolucao",
+     "antes": "27fbd592dfa66598e02c87912e241a00882c4caf6c45994b3d2a7a5e8b1024ce",
+     "depois": "ca063db7f4b0f01a715ed29d6bdf16fce9c4b1505968c51b7e98d0d2eb1b2ed1"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-feedback-name-css",
+     "area": "geral",
+     "antes": null,
+     "depois": "0864d84ed1676cebc04b6d26a52ae26559a74fa7b5dae80ff47c9fb1bfa10be3"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-feedback-name",
+     "area": "geral",
+     "antes": null,
+     "depois": "42f1cfe9bbef5374402e634f78a56f5424ffdf97ee9e587d8995d37bb911f552"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "8fd4422c749ce89291499f09f3846ed8c096668cfa41bc6b0931384e855adc04",
+     "depois": "88c390feac7299cc8c7affe91e5c7bcbf299feed81bfd1af1f102b0c8e331b7a"
+    }
+   ],
+   "depende_de": [
+    "base-1.12.273",
+    "complemento-feedback-online-compartilhar",
+    "pacote-1-12-282-feedback-do-aluno",
+    "pacote-1-12-300-pagamentos-repetidos-mensalidade-e-imc-por-idade"
    ]
   }
  ],

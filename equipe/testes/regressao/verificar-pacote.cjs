@@ -135,7 +135,9 @@ function verificarCompleto(pacote, arquivo, M, o) {
   // Reassinar, byte a byte, um passo já aprovado da cadeia que não é anterior ao instalado no Tiago (hoje 1.12.294 e 1.12.295) não é
   // regressão: é o caminho para levar até a referência um aparelho que ainda está atrás dela (os artefatos assinados expiram).
   const passo = M.pacotes.find(p => p.tipo === 'pacote-completo' && p.sha256 === o.sha256);
-  if (passo && passo.sequencia >= c.sequencia && falhas.length === 0) {
+  // Só vale para passo que não passa da referência: um passo proposto DEPOIS dela (já classificado na cadeia, mas ainda não assinado,
+  // como no fluxo em que o pacote e a classificação chegam no mesmo PR) passa pela conferência completa abaixo.
+  if (passo && passo.sequencia >= c.sequencia && passo.sequencia <= r.sequencia_efetiva && falhas.length === 0) {
     avisos.push(`reassinatura do passo ${passo.versao} da cadeia, idêntico byte a byte; é ANTERIOR à referência ${r.id}: instalar só em aparelho que ainda não tem a referência (sobre ela o app avisa "Revisar restauração")`);
     return {falhas, avisos, linhas: [], resumo: `passo conhecido da cadeia ${passo.versao} (reassinatura)`};
   }

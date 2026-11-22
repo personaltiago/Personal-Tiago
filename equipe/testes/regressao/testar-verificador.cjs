@@ -87,6 +87,10 @@ for (const [versao, arquivo] of [['1.12.294', 'AgendaPersonal-1.12.294-Icone-Fee
   if (numero(versao) >= numero(INSTALADO)) caso(`controle: reassinar o ${versao} idêntico byte a byte (passo aprovado, do instalado ${INSTALADO} em diante)`, achar(arquivo), {modo: 'assinatura', espera: 'passa'});
   else caso(`reassinar o ${versao} idêntico byte a byte, abaixo do instalado ${INSTALADO}`, achar(arquivo), {modo: 'assinatura', espera: 'reprova', motivo: /REGRESSIVO/});
 }
+// Passo já classificado na cadeia mas proposto DEPOIS da referência (ainda não assinado): não pode usar o atalho de reassinatura;
+// passa pela conferência completa e, sem autorização no modo pr, é reprovado (brecha achada em 22/11 com o 1.12.302).
+for (const passo of M.pacotes.filter(p => p.tipo === 'pacote-completo' && p.sequencia > M.referencia.sequencia_efetiva))
+  caso(`passo ${passo.versao} proposto depois da referência (na cadeia, não assinado) sem autorização`, achar(passo.arquivo), {modo: 'pr', espera: 'reprova', motivo: /sem autorização/});
 caso('pacote antigo 1.12.288 idêntico byte a byte (anterior ao instalado)', achar('AgendaPersonal-1.12.288-Janelas-Como-Pagina-Para-Assinar.agenda.json'), {modo: 'assinatura', espera: 'reprova', motivo: /REGRESSIVO/});
 for (const [rot, p] of [['1.12.288', p288], ['1.12.294 com bytes diferentes', p294], ['1.12.295 com bytes diferentes (sem o complemento)', p295]])
   caso(`pacote completo antigo ${rot} por cima da referência`, p, {modo: 'assinatura', espera: 'reprova', motivo: /REGRESSIVO/});
