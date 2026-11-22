@@ -2,6 +2,14 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**22/11, 11h (Claude): link direto do arquivo assinado (PR em rascunho, só workflow) + arrumação de PRs e correção deste arquivo.**
+- `assinar-atualizacoes-agenda.yml` ganha o job `link-direto` (depois de `assinar`, sem acesso à chave, `contents: write` só nele): cria um **pré-lançamento** `conteudo-<execução>-<tentativa>` com o(s) `…-Assinado.agenda.json` e escreve o link direto no resumo da execução. Assim o Tiago baixa o `.json` no celular sem abrir ZIP. Nada mais muda: verificação antes de assinar, assinatura e artefato continuam iguais.
+- Risco tratado: o site (`worker/index.js`, `officialInstaller`) e o app (`AndroidInstaller.java`) leem `releases/latest` e só aceitam tag `android-*`. Pré-lançamento nunca é "latest" (e vai com `--latest=false`); mesmo assim, o job confere o `latest` depois e, se não for `android-*`, apaga o pré-lançamento e falha.
+- Testes: `actionlint` sem avisos; simulação do passo com `gh` falso (latest `android-*` → cria e escreve o link; latest outro → apaga e falha; pacote completo e correção por área nas notas com versão e SHA-256). Sem execução real: a primeira assinatura depois do merge é o teste.
+- Reverter: remover o job `link-direto` e o `outputs` do job `assinar`; os pré-lançamentos podem ser apagados sem efeito no app.
+- Arrumação (21/11, aprovada pelo Tiago): PRs #10–#24 fechados (versões já na cadeia), #4–#8 fechados (mural e modo telefone antigo, nunca integrados), #1 fechado; #28 juntado (`fadb7ac`). PR #32 juntado na `chatgpt/app-web` e site republicado (versão 45; `sw.js` público com cache `agenda-personal-web-shell-v9`, conferido 22/11).
+- **Correção das seções 4.2 e 9:** "Guardar a agenda no telefone" **não está perdido**: o Tiago mostrou no app (22/11, 10:56) "Modo telefone ativo · 505 KB… Cópia no telefone: OK". As opções de áudio (4.1) não foram reconferidas no aparelho.
+
 **21/11, 18h40: 1.12.301 instalada (canônico)**, por confirmação do Tiago (18:37), sem print. PR #32 do ChatGPT (barra e recibo do app web) revisado pelo Claude: testes do PR passam (8 + 7 cenários no Chrome); só vale no app web (precisa de `APWebPlatform`), não muda o Android; juntar o PR não publica o site (a publicação do chatgpt.site é feita pelo ChatGPT).
 
 **21/11, 18h20: 1.12.301 subida (`ee472a7`) e assinada (execução 44942130415, artefato 14721852272); PR #36 juntado com a aprovação do Tiago. Referência agora 1.12.301/407; próxima versão livre 1.12.302/408.** A conferência antes de assinar aprovou com aviso (a autorização do 1.12.301 ainda não estava na main; o bloco não é protegido). Instalação ainda não confirmada.

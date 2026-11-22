@@ -20,6 +20,8 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    outputs:
+      assinar: ${{ steps.entrada.outputs.assinar }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -149,3 +151,69 @@ jobs:
           name: AgendaPersonal-Atualizacoes-Assinadas
           path: signed-updates/*.agenda.json
           if-no-files-found: error
+
+  # Link direto para o Tiago baixar o arquivo assinado no celular (sem ZIP). Job separado: não tem acesso à chave, só recebe o
+  # resultado já assinado e conferido do job "assinar". Cria um PRÉ-LANÇAMENTO (prerelease, nunca "latest"): o botão Android do site
+  # e do app lê apenas releases/latest com tag android-*, então nada muda para eles. Não publica para os alunos: a publicação continua
+  # sendo feita pelo Tiago na Central de atualizações, depois de instalar e testar.
+  link-direto:
+    needs: assinar
+    if: needs.assinar.outputs.assinar == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    concurrency:
+      group: agenda-link-direto
+      cancel-in-progress: false
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: AgendaPersonal-Atualizacoes-Assinadas
+          path: assinados
+      - name: Criar o link direto (pré-lançamento)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          arquivos=(assinados/*-Assinado.agenda.json)
+          (( ${#arquivos[@]} > 0 )) || { echo 'Nenhum arquivo assinado recebido.'; exit 1; }
+          python3 - "${arquivos[@]}" > notas.md <<'PY'
+          import hashlib, json, sys
+          from pathlib import Path
+          print('Arquivo assinado e conferido pelo fluxo "Assinar atualizações do Agenda Personal".\n')
+          for nome in sys.argv[1:]:
+              caminho = Path(nome)
+              dados = json.loads(caminho.read_text(encoding='utf-8'))
+              versao = dados.get('version') or dados.get('id') or '?'
+              seq = dados.get('sequence')
+              sha = hashlib.sha256(caminho.read_bytes()).hexdigest()
+              print(f'- **{caminho.name}** — versão {versao}' + (f' · sequência {seq}' if seq is not None else '') + f'\n  SHA-256: `{sha}`')
+          print('\nComo usar: baixe o arquivo neste celular, abra o Agenda → Central de atualizações → Importar. '
+                'Teste no seu aparelho antes de publicar para os alunos.\n\n'
+                'Isto é um pré-lançamento: não publica para os alunos e não muda o botão de atualizar o APK.')
+          PY
+          tag="conteudo-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          primeiro=$(basename "${arquivos[0]}" -Assinado.agenda.json)
+          titulo="Assinado: ${primeiro}"
+          (( ${#arquivos[@]} > 1 )) && titulo="${titulo} (+$(( ${#arquivos[@]} - 1 )))"
+          gh release create "$tag" "${arquivos[@]}" --prerelease --latest=false --target "$GITHUB_SHA" \
+            --title "$titulo" --notes-file notas.md
+          # Trava de segurança: o "latest" tem de continuar sendo o APK (o site e o app dependem disso).
+          ultimo=$(gh api "repos/$GH_REPO/releases/latest" --jq .tag_name)
+          if [[ "$ultimo" != android-* ]]; then
+            echo "O 'latest' virou $ultimo; removendo o pré-lançamento para não afetar o botão Android."
+            gh release delete "$tag" --yes --cleanup-tag
+            exit 1
+          fi
+          {
+            echo '## Link direto do arquivo assinado'
+            for f in "${arquivos[@]}"; do
+              n=$(basename "$f")
+              echo "- [$n](https://github.com/$GH_REPO/releases/download/$tag/$n)"
+            done
+            echo
+            echo "Página: https://github.com/$GH_REPO/releases/tag/$tag"
+          } >> "$GITHUB_STEP_SUMMARY"
