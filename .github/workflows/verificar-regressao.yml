@@ -46,10 +46,12 @@ jobs:
           set -euo pipefail
           : > pacotes.txt
           if [[ -n "${PR:-}" ]]; then
-            gh api "repos/$GITHUB_REPOSITORY/pulls/$PR/files" --paginate --jq '.[] | select(.status != "removed") | .filename | select(endswith(".agenda.json"))' >> pacotes.txt
+            gh api "repos/$GITHUB_REPOSITORY/pulls/$PR/files" --paginate --jq '.[] | select(.status != "removed") | .filename | select(endswith(".agenda.json")) | select(contains("/") | not)' >> pacotes.txt
           fi
           sort -u pacotes.txt -o pacotes.txt
-          echo "Arquivos .agenda.json deste PR:"; cat pacotes.txt
+          # Só os arquivos da RAIZ são candidatos: é só deles que o fluxo de assinatura lê. Casos de teste guardados em pastas
+          # (como equipe/testes/regressao/casos/, com a Raposinha em conflito de propósito) não são pacotes a assinar.
+          echo "Arquivos .agenda.json da raiz deste PR:"; cat pacotes.txt
       - name: Verificador de regressão (modo PR)
         if: success() || failure()
         run: |
