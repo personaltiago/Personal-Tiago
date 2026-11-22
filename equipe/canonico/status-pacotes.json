@@ -173,7 +173,15 @@
   },
   "1.12.303": {
    "proposto": "sim: gerado pelo Claude em 22/11/2026 (tools/gerar-cartoes-separados-1.12.303.cjs), pedido do Tiago às 12:20",
-   "aprovado": "não: aguardando o merge do PR (o merge é a aprovação e o envio para a main)",
+   "aprovado": "sim: o Tiago pediu para juntar (\"pode juntar as duas atualizações numa só\", 22/11/2026 12:45); merge 20e9af1 feito pelo Claude",
+   "assinado": "sim: execução 45045674146 do workflow de assinatura (conferência antes de assinar aprovada, \"Assinado e conferido\"), artefato 14763437112; pré-lançamento conteudo-45045674146-1 (arquivo assinado SHA-256 11d169aa296889c4bc01e489564c00a286b4bfb7d9d76a009cf3361f2a2fd19b)",
+   "publicado": "não",
+   "instalado": "não: o Tiago vai instalar direto o 1.12.304, que inclui o 1.12.303",
+   "validado": "não"
+  },
+  "1.12.304": {
+   "proposto": "sim: gerado pelo Claude em 22/11/2026 (tools/gerar-icones-perfil-aluno-1.12.304.cjs), pedido do Tiago às 12:41 (foto do Perfil do aluno)",
+   "aprovado": "não: aguardando o merge do PR (o Tiago pediu às 12:45 para juntar as duas atualizações)",
    "assinado": "não",
    "publicado": "não",
    "instalado": "não",
