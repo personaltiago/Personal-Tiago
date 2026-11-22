@@ -10,6 +10,8 @@
 - Arrumação (21/11, aprovada pelo Tiago): PRs #10–#24 fechados (versões já na cadeia), #4–#8 fechados (mural e modo telefone antigo, nunca integrados), #1 fechado; #28 juntado (`fadb7ac`). PR #32 juntado na `chatgpt/app-web` e site republicado (versão 45; `sw.js` público com cache `agenda-personal-web-shell-v9`, conferido 22/11).
 - **Correção das seções 4.2 e 9:** "Guardar a agenda no telefone" **não está perdido**: o Tiago mostrou no app (22/11, 10:56) "Modo telefone ativo · 505 KB… Cópia no telefone: OK". As opções de áudio (4.1) não foram reconferidas no aparelho.
 
+**21/11, 18h40: 1.12.301 instalada (canônico)**, por confirmação do Tiago (18:37), sem print. PR #32 do ChatGPT (barra e recibo do app web) revisado pelo Claude: testes do PR passam (8 + 7 cenários no Chrome); só vale no app web (precisa de `APWebPlatform`), não muda o Android; juntar o PR não publica o site (a publicação do chatgpt.site é feita pelo ChatGPT).
+
 **21/11, 18h20: 1.12.301 subida (`ee472a7`) e assinada (execução 44942130415, artefato 14721852272); PR #36 juntado com a aprovação do Tiago. Referência agora 1.12.301/407; próxima versão livre 1.12.302/408.** A conferência antes de assinar aprovou com aviso (a autorização do 1.12.301 ainda não estava na main; o bloco não é protegido). Instalação ainda não confirmada.
 
 **21/11, 15h40: 1.12.300 validada por relato do Tiago** ("os testes no Android e no iPhone… foi feito, deu certo", 15:38). Sem prints nem detalhe por função; registrado assim em `status-pacotes.json`. APK 1.210 instalado e validado pelo Tiago (13:27: "Ocultar" enquanto carrega, "Fechar" no erro).

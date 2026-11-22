@@ -1,14 +1,14 @@
 {
  "descricao": "Fonte canônica versionada do conteúdo do Agenda Personal e manifesto das funcionalidades. Gerado por equipe/canonico/gerar-manifesto.cjs; não editar à mão (o CI confere).",
  "canonico": {
-  "versao": "1.12.300",
-  "sequencia": 406,
-  "arquivo": "AgendaPersonal-1.12.300-Pagamentos-Repetidos-Para-Assinar.agenda.json",
-  "sha256": "c91d3a533b305c5bb518173094e93ea158f737e10b1107f23d12ee4db91496dd",
+  "versao": "1.12.301",
+  "sequencia": 407,
+  "arquivo": "AgendaPersonal-1.12.301-Publicar-Barra-Erro-Para-Assinar.agenda.json",
+  "sha256": "daf5e60ff1b08a780e4c6fbf339e24bee301772c684d4b94d6e00928c7fcb44f",
   "appId": "com.tiagolima.agendapersonal",
   "bridgeVersion": 3,
   "dataSchema": 4,
-  "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: tela \"Atualizar aplicativo\" com \"Versão instalada: 1.12.300\" (print do Tiago, 21/11/2026 11:27) e confirmação dele por escrito (\"Sim\", 21/11/2026 13:03). Antes: 1.12.294 (20/11)."
+  "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: confirmação dele por escrito (\"Cara eu já instalei\", 21/11/2026 18:37), sem print. Antes: 1.12.300 (21/11 13:03)."
  },
  "referencia": {
   "id": "pacote-1-12-301-publicar-barra-nao-vai-a-100-no-erro",
@@ -407,7 +407,7 @@
     "aprovado": "sim: o Tiago subiu o arquivo na main (commit ee472a7, byte a byte igual ao gerado) e aprovou juntar o PR #36 (21/11 18:20)",
     "assinado": "sim: execução 44942130415 do workflow de assinatura (commit ee472a7, \"Assinado e conferido\"; conferência antes de assinar aprovada, com aviso de bloco alterado sem autorização versionada naquele momento), artefato 14721852272",
     "publicado": "não confirmado",
-    "instalado": "não confirmado",
+    "instalado": "sim: no aparelho do Tiago, por confirmação dele (\"Cara eu já instalei\", 21/11/2026 18:37), sem print",
     "validado": "não confirmado"
    }
   }
