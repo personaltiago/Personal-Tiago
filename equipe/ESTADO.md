@@ -2,6 +2,8 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**22/11, 15h30 (Claude): 1.12.304 instalado — canônico passa a 1.12.304.** O Tiago confirmou "Deu certo" às 15:30, depois do link do 1.12.304 assinado (execução 45046266345, artefato 14762824563, pré-lançamento `conteudo-45046266345-1`, SHA-256 do assinado `30384d8f…`), sem print. Os 1.12.302 e 1.12.303 não foram instalados separadamente (o 1.12.304 inclui os dois). Publicação para os alunos: não confirmada (o aluno da foto das 12:41 estava na 1.12.300). Achado para depois: em Mais, "Sons e alertas" e "Configurações" agora abrem a mesma tela (despertador e sons).
+
 **22/11, 13h (Claude): 1.12.304/410 — ícones do Perfil do aluno (PR); 1.12.303 assinado.**
 - **1.12.303 assinado:** PR #41 juntado pelo Claude a pedido do Tiago ("pode juntar as duas atualizações numa só", 12:45), merge `20e9af1`. Execução 45045674146, artefato 14763437112, pré-lançamento `conteudo-45045674146-1`, arquivo assinado com SHA-256 `11d169aa…`. O "latest" continua `android-1.210-…`. **Referência agora 1.12.303/409; próxima versão livre 1.12.304/410.** O Tiago vai instalar direto o 1.12.304, que inclui o 303 e o 302; o canônico continua 1.12.301.
 - **1.12.304** (foto do Tiago, 12:41: Perfil do aluno com itens sem ícone). Gerador `tools/gerar-icones-perfil-aluno-1.12.304.cjs`, a partir do 1.12.303. SHA-256 `6bc7982e6e4b8daf4e32345d6cc287edf7ed9dbcbda81eb30ad59a21ea2cd1ef`.

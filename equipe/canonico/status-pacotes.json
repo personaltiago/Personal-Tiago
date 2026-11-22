@@ -1,7 +1,7 @@
 {
  "descricao": "Situação de cada pacote completo da cadeia, escrita à mão com a evidência. Os estados são independentes: proposto, aprovado, assinado, publicado, instalado, validado. Não presumir nenhum estado pelo nome do arquivo ou pelo número da versão. Mudar o canônico só por PR aprovado pelo Tiago, depois de o pacote estar assinado e instalado.",
- "canonico": "1.12.301",
- "motivo_canonico": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: confirmação dele por escrito (\"Cara eu já instalei\", 21/11/2026 18:37), sem print. Antes: 1.12.300 (21/11 13:03).",
+ "canonico": "1.12.304",
+ "motivo_canonico": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: confirmação dele por escrito (\"Deu certo\", 22/11/2026 15:30, depois de receber o link do 1.12.304 assinado), sem print. O 1.12.302 e o 1.12.303 não foram instalados separadamente: o 1.12.304 inclui os dois. Antes: 1.12.301 (21/11 18:37).",
  "pacotes": {
   "1.12.273": {
    "proposto": "sim",
@@ -168,7 +168,7 @@
    "aprovado": "sim: o Tiago pediu para juntar o PR #40 (\"pode juntar\", 22/11/2026 12:04); merge 2d00cb4 feito pelo Claude",
    "assinado": "sim: execução 45041744787 do workflow de assinatura (conferência antes de assinar aprovada, \"Assinado e conferido\"), artefato 14761878109; pré-lançamento conteudo-45041744787-1 com o arquivo assinado (SHA-256 7cc16b50bed36d72bad5d89a9db8167e71cd8f8b9704147831f44b65f45e78c6)",
    "publicado": "não confirmado",
-   "instalado": "não confirmado: às 12:20 o Tiago descreveu o cartão em Configurações, mas não confirmou a instalação",
+   "instalado": "não separadamente: o Tiago instalou o 1.12.304, que inclui este pacote (22/11/2026 15:30)",
    "validado": "não confirmado"
   },
   "1.12.303": {
@@ -176,16 +176,16 @@
    "aprovado": "sim: o Tiago pediu para juntar (\"pode juntar as duas atualizações numa só\", 22/11/2026 12:45); merge 20e9af1 feito pelo Claude",
    "assinado": "sim: execução 45045674146 do workflow de assinatura (conferência antes de assinar aprovada, \"Assinado e conferido\"), artefato 14763437112; pré-lançamento conteudo-45045674146-1 (arquivo assinado SHA-256 11d169aa296889c4bc01e489564c00a286b4bfb7d9d76a009cf3361f2a2fd19b)",
    "publicado": "não",
-   "instalado": "não: o Tiago vai instalar direto o 1.12.304, que inclui o 1.12.303",
+   "instalado": "não separadamente: o Tiago instalou o 1.12.304, que inclui este pacote (22/11/2026 15:30)",
    "validado": "não"
   },
   "1.12.304": {
    "proposto": "sim: gerado pelo Claude em 22/11/2026 (tools/gerar-icones-perfil-aluno-1.12.304.cjs), pedido do Tiago às 12:41 (foto do Perfil do aluno)",
-   "aprovado": "não: aguardando o merge do PR (o Tiago pediu às 12:45 para juntar as duas atualizações)",
-   "assinado": "não",
-   "publicado": "não",
-   "instalado": "não",
-   "validado": "não"
+   "aprovado": "sim: o Tiago pediu às 12:45 para juntar as duas atualizações; merge bf178b8 (PR #42) feito pelo Claude depois do CI verde",
+   "assinado": "sim: execução 45046266345 (conferência antes de assinar aprovada, \"Assinado e conferido\"), artefato 14762824563; pré-lançamento conteudo-45046266345-1 (arquivo assinado SHA-256 30384d8f21ebaaff8cba050c26a66b669638de803d57bdab9a19cba2570a3f51)",
+   "publicado": "não confirmado",
+   "instalado": "sim: \"Deu certo\" (Tiago, 22/11/2026 15:30), sem print",
+   "validado": "parcial: o Tiago disse que deu certo; sem print das telas novas"
   }
  }
 }
