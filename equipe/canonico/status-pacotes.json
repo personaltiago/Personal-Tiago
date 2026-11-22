@@ -183,7 +183,7 @@
    "proposto": "sim: gerado pelo Claude em 22/11/2026 (tools/gerar-icones-perfil-aluno-1.12.304.cjs), pedido do Tiago às 12:41 (foto do Perfil do aluno)",
    "aprovado": "sim: o Tiago pediu às 12:45 para juntar as duas atualizações; merge bf178b8 (PR #42) feito pelo Claude depois do CI verde",
    "assinado": "sim: execução 45046266345 (conferência antes de assinar aprovada, \"Assinado e conferido\"), artefato 14762824563; pré-lançamento conteudo-45046266345-1 (arquivo assinado SHA-256 30384d8f21ebaaff8cba050c26a66b669638de803d57bdab9a19cba2570a3f51)",
-   "publicado": "não confirmado",
+   "publicado": "sim: o Tiago publicou para os alunos manualmente (\"Já foi publicado… eu publiquei manualmente\", 22/11/2026 15:47), sem print",
    "instalado": "sim: \"Deu certo\" (Tiago, 22/11/2026 15:30), sem print",
    "validado": "parcial: o Tiago disse que deu certo; sem print das telas novas"
   }

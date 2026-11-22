@@ -56,6 +56,7 @@ const CORRECOES = [
   ['AgendaPersonal-03-Corrigir-Duplicatas-Catalogo-Para-Assinar.agenda.json', 'be415ec62e96d0c6a337da6b2d3153ba9a7d7b56c967b5a436fe518ee178a9cd'],
   ['AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json', '7d3724d46ee4ba242571f1b857d0a5d47ae05a466d7063be0204541159a14375'],
   ['AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json', '0e5b7283321675b7f5d8a00c4ffb2efa8b9fa5772b7d9ecbf1ed357f8d3609ad'],
+  // Fora da raiz desde 22/11/2026 (pedido do Tiago): guardada em equipe/testes/regressao/casos/ só como caso de conflito dos testes.
   ['AgendaPersonal-Pets-Raposinha.agenda.json', '84b0ede80c28d44ef04ecf7ab20a19191a6fd738ad865299b611c0c6cfbf8587'],
   ['AgendaPersonal-Pix-Comprovantes-Sem-Arquivos.agenda.json', '2f5ad122e4fd141d0fcc9db2938057718e287f6c0b7f9233c4bb65db5ecec5bc'],
   ['AgendaPersonal-Professor-Ficha-Recolhivel-253.agenda.json', '8eb9179bdc851637f8dbecc7669eec4c0bfc67f777222a85dfc94cdc4548afd8'],

@@ -9,10 +9,11 @@ const L = require('./lib.cjs');
 const M = L.lerJson(path.join(__dirname, 'manifesto.json'));
 const conhecidos = new Map([...M.pacotes, ...M.correcoes, ...M.anteriores_a_cadeia].map(p => [p.arquivo, p.sha256]));
 let ruim = 0;
-for (const nome of fs.readdirSync(L.RAIZ).filter(n => n.endsWith('.agenda.json')).sort()) {
+const naRaiz = fs.readdirSync(L.RAIZ).filter(n => n.endsWith('.agenda.json')).sort();
+for (const nome of naRaiz) {
   const sha = L.sha256Bytes(fs.readFileSync(path.join(L.RAIZ, nome)));
   if (!M.classificados.includes(nome)) { ruim++; console.log('NÃO CLASSIFICADO: ' + nome + ' (' + sha.slice(0, 12) + '): inclua em equipe/canonico/gerar-manifesto.cjs e status-pacotes.json'); }
   else if (conhecidos.get(nome) !== sha) { ruim++; console.log('SHA-256 DIFERENTE do manifesto: ' + nome + ' (' + sha.slice(0, 12) + ' x ' + String(conhecidos.get(nome)).slice(0, 12) + ')'); }
 }
-console.log(ruim ? ruim + ' arquivo(s) da raiz fora do manifesto' : 'Todos os ' + M.classificados.length + ' arquivos da raiz estão classificados no manifesto, com o SHA-256 conferido');
+console.log(ruim ? ruim + ' arquivo(s) da raiz fora do manifesto' : 'Todos os ' + naRaiz.length + ' arquivos da raiz estão classificados no manifesto, com o SHA-256 conferido');
 process.exit(ruim ? 1 : 0);

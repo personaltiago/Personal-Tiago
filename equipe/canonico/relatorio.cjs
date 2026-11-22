@@ -155,6 +155,8 @@ function relatorio() {
   w('');
   w('## 7. Raposinha (`AgendaPersonal-Pets-Raposinha.agenda.json`)');
   w('');
+  w('**Retirada da raiz em 22/11/2026, a pedido do Tiago.** O arquivo não é só a Raposinha: troca os quatro blocos dos mascotes por cópias antigas, com o Galo. Fica guardado em `equipe/testes/regressao/casos/`, só como caso de conflito dos testes (o fluxo de assinatura só lê a raiz).');
+  w('');
   const rap = M.correcoes.find(c => c.arquivo.includes('Raposinha'));
   for (const m of rap.mudancas) {
     const hist = M.historico[m.pagina + '|' + m.id] || [];
@@ -172,7 +174,7 @@ function relatorio() {
   w('');
   w(`Origem do conflito: o "antes" que a Raposinha espera em \`ap-student-mascot-model\` ${b255.hash === modelo.antes ? 'é exatamente o do pacote **1.12.255**' : 'não é o do 1.12.255'} (main, \`AgendaPersonal-1.12.255-Verificar-Para-Assinar.agenda.json\`), cujo modelo dos mascotes ainda cita o Galo (${(t255.match(/rooster|galo/gi) || []).length} ocorrências de "rooster"/"galo"). O conteúdo-base do APK (1.12.269) e toda a cadeia 1.12.273 → ${M.canonico.versao} têm o modelo depois da retirada do Urso e do Galo (aprovada na 1.195). Por isso o app recusa.`);
   w('');
-  w('Conclusão: a Raposinha foi feita sobre um conteúdo de pets anterior à cadeia. Aplicar à força as mudanças dela trocaria o modelo dos mascotes atual pelo dela, montado sobre o modelo antigo: risco [H] de trazer de volta o que foi retirado na 1.195. O app recusa a correção inteira ("Conflito em ap-student-mascot-model") e não aplica as outras três mudanças. Ela **nunca esteve** em nenhum pacote completo da cadeia. Integrar exige refazer as quatro mudanças sobre o conteúdo atual dos mascotes, revisar os mascotes aprovados (Gato, Lobo, Capivara; Urso e Galo removidos na 1.195) e testar no aparelho: **decisão pendente do Tiago; nada foi alterado nos mascotes**.');
+  w('Conclusão: a Raposinha foi feita sobre um conteúdo de pets anterior à cadeia. Aplicar à força as mudanças dela trocaria o modelo dos mascotes atual pelo dela, montado sobre o modelo antigo: risco [H] de trazer de volta o que foi retirado na 1.195. O app recusa a correção inteira ("Conflito em ap-student-mascot-model") e não aplica as outras três mudanças. Ela **nunca esteve** em nenhum pacote completo da cadeia. Integrar exige refazer as quatro mudanças sobre o conteúdo atual dos mascotes, revisar os mascotes aprovados (Gato, Lobo, Capivara; Urso e Galo removidos na 1.195) e testar no aparelho: **decisão do Tiago em 22/11: apagar da raiz; nada foi alterado nos mascotes**.');
   w('');
   return linhas.join('\n') + '\n';
 }

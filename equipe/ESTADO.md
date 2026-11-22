@@ -2,6 +2,16 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**22/11, 15h50 (Claude): Raposinha retirada da raiz (pedido do Tiago, 15:49) + 1.12.304 publicado para os alunos.**
+- O Tiago publicou o 1.12.304 para os alunos manualmente ("Já foi publicado… eu publiquei manualmente", 15:47, sem print).
+- `AgendaPersonal-Pets-Raposinha.agenda.json` saiu da raiz e foi movida, byte a byte (SHA-256 `84b0ede8…`), para `equipe/testes/regressao/casos/`.
+  - Motivo: o arquivo não é só a Raposinha. Ele troca os 4 blocos dos mascotes (`ap-student-mascot-model`, `-art`, `ap-mascot-homes`, `ap-mascot-home-assets`) por cópias antigas, com o Galo e as 5 cores dele.
+  - Hoje o app recusa a correção inteira por conflito em `ap-student-mascot-model`.
+  - Fora da raiz ela não é assinada (o fluxo só lê `*.agenda.json` da raiz) e continua servindo de caso de conflito nos testes.
+- Ferramentas: `arquivos-da-main.cjs` também procura em `casos/`; o relatório anota a retirada; `conferir-raiz.cjs` conta os arquivos que estão de fato na raiz (31). O manifesto não mudou (SHA-256 `977f9906…`).
+- Testes: teste do verificador 44/44 (a Raposinha continua reprovada por CONFLITO); mecanismo real 211 verificações; funcionalidades aprovado; INVENTARIO confere.
+- Nada mudou no app nem nos mascotes. Reverter: mover o arquivo de volta para a raiz.
+
 **22/11, 15h30 (Claude): 1.12.304 instalado — canônico passa a 1.12.304.** O Tiago confirmou "Deu certo" às 15:30, depois do link do 1.12.304 assinado (execução 45046266345, artefato 14762824563, pré-lançamento `conteudo-45046266345-1`, SHA-256 do assinado `30384d8f…`), sem print. Os 1.12.302 e 1.12.303 não foram instalados separadamente (o 1.12.304 inclui os dois). Publicação para os alunos: não confirmada (o aluno da foto das 12:41 estava na 1.12.300). Achado para depois: em Mais, "Sons e alertas" e "Configurações" agora abrem a mesma tela (despertador e sons).
 
 **22/11, 13h (Claude): 1.12.304/410 — ícones do Perfil do aluno (PR); 1.12.303 assinado.**

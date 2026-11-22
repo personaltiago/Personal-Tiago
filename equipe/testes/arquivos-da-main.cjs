@@ -1,6 +1,6 @@
 'use strict';
 // Acha, conferindo o SHA-256, arquivos que o Tiago subiu na raiz da main (pacotes e correções por área) para os testes do pacote 1.12.293.
-// Ordem de busca para cada arquivo: a raiz deste clone; a main do GitHub (origin/main); qualquer commit do histórico que tenha o arquivo
+// Ordem de busca para cada arquivo: a raiz deste clone; equipe/testes/regressao/casos/ (casos guardados fora da raiz); a main do GitHub (origin/main); qualquer commit do histórico que tenha o arquivo
 // com esse SHA-256 (git log --all). Copia o que achou para a pasta de trabalho e imprime o caminho da cópia.
 // Uso:  node equipe/testes/arquivos-da-main.cjs <pasta-de-trabalho> <nome>=<sha256> [<nome>=<sha256> ...]
 const fs = require('fs');
@@ -17,6 +17,9 @@ function locateMain(name, sha256, workDir) {
   const accept = bytes => { if (bytes && digest(bytes) === sha256) { fs.writeFileSync(target, bytes); return target; } return null; };
   const inRoot = path.join(ROOT, name);
   if (fs.existsSync(inRoot)) { const found = accept(fs.readFileSync(inRoot)); if (found) return found; }
+  // casos de teste guardados fora da raiz (ex.: a Raposinha, retirada da raiz em 22/11/2026 a pedido do Tiago)
+  const inCasos = path.join(ROOT, 'equipe/testes/regressao/casos', name);
+  if (fs.existsSync(inCasos)) { const found = accept(fs.readFileSync(inCasos)); if (found) return found; }
   for (const ref of ['origin/main', 'main']) { const found = accept(git(['show', ref + ':' + name])); if (found) return found; }
   const commits = (git(['log', '--all', '--format=%H', '--', name]) || Buffer.alloc(0)).toString('utf8').split(/\s+/).filter(Boolean);
   for (const commit of commits) { const found = accept(git(['show', commit + ':' + name])); if (found) return found; }
