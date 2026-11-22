@@ -44,6 +44,8 @@ const CADEIA = [
   ['1.12.301', 'AgendaPersonal-1.12.301-Publicar-Barra-Erro-Para-Assinar.agenda.json', 'daf5e60ff1b08a780e4c6fbf339e24bee301772c684d4b94d6e00928c7fcb44f', 'main'],
   // Gerado pelo Claude (tools/gerar-nome-feedbacks-1.12.302.cjs) e entregue no PR junto com a classificação (fluxo novo: merge = upload).
   ['1.12.302', 'AgendaPersonal-1.12.302-Nome-Feedbacks-Para-Assinar.agenda.json', 'bb04ce6f59279e02d06dfd02c2c3ace762ca78f1bfaea4d0fa1e11b0036d59e1', 'main'],
+  // Gerado pelo Claude (tools/gerar-cartoes-separados-1.12.303.cjs), entregue no PR junto com a classificação.
+  ['1.12.303', 'AgendaPersonal-1.12.303-Cartoes-Separados-Para-Assinar.agenda.json', 'b865827a6bd69c9408067e02622f25124dbdcce9d3c9e767ae3cf00bb46791b4', 'main'],
 ];
 // Correções por área da raiz da main. "esperado": a situação no canônico que o Tiago já conhece (presente, evoluída ou conflito).
 const CORRECOES = [
@@ -165,6 +167,11 @@ function gerar() {
       for (const [bid, b] of L.blocos(ref.files[pagina])) canonicoBlocos[pagina][bid] = {hash: b.hash, area: L.areaDoBloco(regras, pagina, bid), vezes: b.vezes};
     }
     const impressao = L.sha256(JSON.stringify(L.PAGINAS.map(pg => [pg, Object.entries(canonicoBlocos[pg]).map(([i, v]) => [i, v.hash])])));
+    // alterações autorizadas dos pacotes completos da cadeia até a referência (já assinados): continuações legítimas de blocos
+    const assinadosAteRef = new Set(passos.slice(0, referencia.ate).filter(x => x.tipo === 'pacote').map(x => x.versao));
+    const pastaAut = path.join(L.RAIZ, 'equipe/canonico/alteracoes-autorizadas');
+    const continuacoes = fs.readdirSync(pastaAut).filter(f => f.endsWith('.json')).map(f => L.lerJson(path.join(pastaAut, f)))
+      .filter(a => assinadosAteRef.has(a.versao)).flatMap(a => (a.alteracoes || []).filter(x => x.antes && x.depois));
     const correcoes = [];
     const todas = CORRECOES.map(([nome, sha]) => ({nome, sha, p: L.lerJson(caminho[nome])}));
     for (const {nome, sha, p} of todas) {
@@ -174,8 +181,16 @@ function gerar() {
         const s = L.situacaoMudanca(ref, c);
         if (s !== 'conflito') return s;
         const atual = canonicoBlocos[c.page][c.id]?.hash;
-        const segue = todas.some(o => o.nome !== nome && o.p.changes.some(d => d.page === c.page && d.id === c.id && d.before === c.after && d.after === atual));
-        return segue ? 'evoluida' : 'conflito';
+        // Segue a linha a partir do "depois" desta mudança: outra correção da main ou uma alteração AUTORIZADA de um pacote completo
+        // já assinado (até a referência) que continuou o bloco. Se a linha chega ao bloco da referência, a correção está "evoluída"
+        // (continua viva lá dentro e o bloco continua protegido); senão, é conflito. (Até 22/11 só valia continuação por correção:
+        // o 1.12.302, um pacote completo autorizado, continuou o bloco dos complementos de feedback e eles viravam "conflito".)
+        // (todos os caminhos: dois pacotes podem ter partido do mesmo bloco, como o 1.12.299 e o 1.12.300 no recibo do Pix)
+        const arestas = [...todas.filter(o => o.nome !== nome).flatMap(o => o.p.changes).filter(d => d.page === c.page && d.id === c.id).map(d => [d.before, d.after]),
+          ...continuacoes.filter(x => x.pagina === c.page && x.id === c.id).map(x => [x.antes, x.depois])];
+        const vistos = new Set([c.after]), fila = [c.after];
+        while (fila.length) { const h = fila.shift(); if (h === atual) return 'evoluida'; for (const [de, para] of arestas) if (de === h && !vistos.has(para)) { vistos.add(para); fila.push(para); } }
+        return 'conflito';
       });
       const situacao = porMudanca.every(s => s === 'presente') ? 'presente'
         : porMudanca.every(s => s === 'presente' || s === 'evoluida') ? 'evoluida'

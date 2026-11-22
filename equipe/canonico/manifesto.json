@@ -11,15 +11,15 @@
   "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: confirmação dele por escrito (\"Cara eu já instalei\", 21/11/2026 18:37), sem print. Antes: 1.12.300 (21/11 13:03)."
  },
  "referencia": {
-  "id": "pacote-1-12-301-publicar-barra-nao-vai-a-100-no-erro",
+  "id": "pacote-1-12-302-nome-nos-feedbacks",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-1.12.301-Publicar-Barra-Erro-Para-Assinar.agenda.json",
-  "sha256": "daf5e60ff1b08a780e4c6fbf339e24bee301772c684d4b94d6e00928c7fcb44f",
-  "versao_efetiva": "1.12.301",
-  "sequencia_efetiva": 407,
-  "proxima_versao_livre": "1.12.302",
-  "proxima_sequencia_livre": 408,
-  "impressao": "1eac8a9b0274a1e8bfa34c01d0af24f091e86d2c029122db7cb404796f6f630d"
+  "arquivo": "AgendaPersonal-1.12.302-Nome-Feedbacks-Para-Assinar.agenda.json",
+  "sha256": "bb04ce6f59279e02d06dfd02c2c3ace762ca78f1bfaea4d0fa1e11b0036d59e1",
+  "versao_efetiva": "1.12.302",
+  "sequencia_efetiva": 408,
+  "proxima_versao_livre": "1.12.303",
+  "proxima_sequencia_livre": 409,
+  "impressao": "afa5bc6b25959a41e79b0a0e49340ec2d12823d75d8eb312ab1e87002c9a15fd"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -50,6 +50,7 @@
   "AgendaPersonal-1.12.300-Pagamentos-Repetidos-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.301-Publicar-Barra-Erro-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.302-Nome-Feedbacks-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.303-Cartoes-Separados-Para-Assinar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
   "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
@@ -422,7 +423,24 @@
    "titulo": "Nome nos feedbacks",
    "status": {
     "proposto": "sim: gerado pelo Claude em 22/11/2026 (tools/gerar-nome-feedbacks-1.12.302.cjs), pedido do Tiago às 11:31 e aprovado às 11:36",
-    "aprovado": "não: aguardando o Tiago juntar o PR (o merge é a aprovação e o envio para a main)",
+    "aprovado": "sim: o Tiago pediu para juntar o PR #40 (\"pode juntar\", 22/11/2026 12:04); merge 2d00cb4 feito pelo Claude",
+    "assinado": "sim: execução 45041744787 do workflow de assinatura (conferência antes de assinar aprovada, \"Assinado e conferido\"), artefato 14761878109; pré-lançamento conteudo-45041744787-1 com o arquivo assinado (SHA-256 7cc16b50bed36d72bad5d89a9db8167e71cd8f8b9704147831f44b65f45e78c6)",
+    "publicado": "não confirmado",
+    "instalado": "não confirmado: às 12:20 o Tiago descreveu o cartão em Configurações, mas não confirmou a instalação",
+    "validado": "não confirmado"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.303",
+   "sequencia": 409,
+   "arquivo": "AgendaPersonal-1.12.303-Cartoes-Separados-Para-Assinar.agenda.json",
+   "sha256": "b865827a6bd69c9408067e02622f25124dbdcce9d3c9e767ae3cf00bb46791b4",
+   "origem": "main",
+   "titulo": "Tamanho das letras e Feedback com cartões próprios",
+   "status": {
+    "proposto": "sim: gerado pelo Claude em 22/11/2026 (tools/gerar-cartoes-separados-1.12.303.cjs), pedido do Tiago às 12:20",
+    "aprovado": "não: aguardando o merge do PR (o merge é a aprovação e o envio para a main)",
     "assinado": "não",
     "publicado": "não",
     "instalado": "não",
@@ -998,12 +1016,12 @@
     "vezes": 1
    },
    "ap-feedback-card": {
-    "hash": "3049d4feb124f63f55a33b468e3ddcef04dc0e5d1c8805cbb49448b57d217c73",
+    "hash": "d4f26c4bc7a2c8200739471e52b30b26cce50de3fea5f7eac5851d068601e949",
     "area": "geral",
     "vezes": 1
    },
    "ap-feedback-student": {
-    "hash": "8da53613d598b6e459f2de5f63019c6dcfcc5c9da209903c923ff954db217ecd",
+    "hash": "77b298623d2c1e56905e485c4831850a3448c033cd51c56190cc714937d7c751",
     "area": "evolucao",
     "vezes": 1
    },
@@ -1675,12 +1693,12 @@
     "vezes": 1
    },
    "ap-feedback-card": {
-    "hash": "3049d4feb124f63f55a33b468e3ddcef04dc0e5d1c8805cbb49448b57d217c73",
+    "hash": "d4f26c4bc7a2c8200739471e52b30b26cce50de3fea5f7eac5851d068601e949",
     "area": "evolucao",
     "vezes": 1
    },
    "ap-feedback-teacher": {
-    "hash": "27fbd592dfa66598e02c87912e241a00882c4caf6c45994b3d2a7a5e8b1024ce",
+    "hash": "ca063db7f4b0f01a715ed29d6bdf16fce9c4b1505968c51b7e98d0d2eb1b2ed1",
     "area": "evolucao",
     "vezes": 1
    },
@@ -1724,8 +1742,18 @@
     "area": "geral",
     "vezes": 1
    },
+   "ap-feedback-name-css": {
+    "hash": "0864d84ed1676cebc04b6d26a52ae26559a74fa7b5dae80ff47c9fb1bfa10be3",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-feedback-name": {
+    "hash": "42f1cfe9bbef5374402e634f78a56f5424ffdf97ee9e587d8995d37bb911f552",
+    "area": "geral",
+    "vezes": 1
+   },
    "#fora-dos-blocos": {
-    "hash": "8fd4422c749ce89291499f09f3846ed8c096668cfa41bc6b0931384e855adc04",
+    "hash": "88c390feac7299cc8c7affe91e5c7bcbf299feed81bfd1af1f102b0c8e331b7a",
     "area": "geral",
     "vezes": 1
    }
@@ -2678,6 +2706,10 @@
    {
     "hash": "8da53613d598b6e459f2de5f63019c6dcfcc5c9da209903c923ff954db217ecd",
     "desde": "Feedback-Online-Compartilhar-Para-Assinar"
+   },
+   {
+    "hash": "77b298623d2c1e56905e485c4831850a3448c033cd51c56190cc714937d7c751",
+    "desde": "1.12.302"
    }
   ],
   "index.html|ap-student-session-recovery": [
@@ -3502,12 +3534,20 @@
    {
     "hash": "3049d4feb124f63f55a33b468e3ddcef04dc0e5d1c8805cbb49448b57d217c73",
     "desde": "1.12.273"
+   },
+   {
+    "hash": "d4f26c4bc7a2c8200739471e52b30b26cce50de3fea5f7eac5851d068601e949",
+    "desde": "1.12.302"
    }
   ],
   "professor.html|ap-feedback-teacher": [
    {
     "hash": "27fbd592dfa66598e02c87912e241a00882c4caf6c45994b3d2a7a5e8b1024ce",
     "desde": "1.12.273"
+   },
+   {
+    "hash": "ca063db7f4b0f01a715ed29d6bdf16fce9c4b1505968c51b7e98d0d2eb1b2ed1",
+    "desde": "1.12.302"
    }
   ],
   "professor.html|ap-more-menu-glyphs": [
@@ -3626,6 +3666,10 @@
    {
     "hash": "8fd4422c749ce89291499f09f3846ed8c096668cfa41bc6b0931384e855adc04",
     "desde": "1.12.300"
+   },
+   {
+    "hash": "88c390feac7299cc8c7affe91e5c7bcbf299feed81bfd1af1f102b0c8e331b7a",
+    "desde": "1.12.302"
    }
   ],
   "avaliacoes.html|ap-native-store": [
@@ -3886,6 +3930,10 @@
    {
     "hash": "3049d4feb124f63f55a33b468e3ddcef04dc0e5d1c8805cbb49448b57d217c73",
     "desde": "1.12.282"
+   },
+   {
+    "hash": "d4f26c4bc7a2c8200739471e52b30b26cce50de3fea5f7eac5851d068601e949",
+    "desde": "1.12.302"
    }
   ],
   "professor.html|dialog-scroll-lock-pages": [
@@ -3908,6 +3956,18 @@
    {
     "hash": "e4eaf3659499806091b9cc12ca238e1143f439977b47e69a05cf9b882ad0c82d",
     "desde": "1.12.300"
+   }
+  ],
+  "professor.html|ap-feedback-name-css": [
+   {
+    "hash": "0864d84ed1676cebc04b6d26a52ae26559a74fa7b5dae80ff47c9fb1bfa10be3",
+    "desde": "1.12.302"
+   }
+  ],
+  "professor.html|ap-feedback-name": [
+   {
+    "hash": "42f1cfe9bbef5374402e634f78a56f5424ffdf97ee9e587d8995d37bb911f552",
+    "desde": "1.12.302"
    }
   ]
  },
@@ -4578,6 +4638,48 @@
     "pacote-1-12-282-feedback-do-aluno",
     "pacote-1-12-300-pagamentos-repetidos-mensalidade-e-imc-por-idade"
    ]
+  },
+  {
+   "id": "pacote-1-12-303-tamanho-das-letras-e-feedback-com-cartoes-proprios",
+   "titulo": "Tamanho das letras e Feedback com cartões próprios",
+   "tipo": "pacote-completo",
+   "versao": "1.12.303",
+   "sequencia": 409,
+   "arquivo": "AgendaPersonal-1.12.303-Cartoes-Separados-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-more-menu-glyphs",
+     "area": "geral",
+     "antes": "8cfe406c8a0623d4eab3826d799c08a5c695fe5ea95f0a0cef5c7b94e04ee912",
+     "depois": "282fd2c35485b855814925a1da7c9b0db6480f02f3a4971e38815ec189796f13"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-more-organization",
+     "area": "professor",
+     "antes": "775f29c1096df43f5418790bb3ccef6ab2b21c12e9887e05c921e47ec20fbe85",
+     "depois": "1f49fb62257f94c2054af1499f56d8f9a972f99c8a1423a4cf12e0fbf7476c26"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-feedback-name",
+     "area": "geral",
+     "antes": "42f1cfe9bbef5374402e634f78a56f5424ffdf97ee9e587d8995d37bb911f552",
+     "depois": "3c6e17bcfccb454583e7b1424d95e6c7df702b3d1edf3c7e63b6938d185441e9"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "88c390feac7299cc8c7affe91e5c7bcbf299feed81bfd1af1f102b0c8e331b7a",
+     "depois": "f1480252b2a30a60185eb77196960dbfba551cfcfeca38f39de0d0e989bd63a7"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-285-excluidos-da-lista",
+    "pacote-1-12-302-nome-nos-feedbacks"
+   ]
   }
  ],
  "correcoes": [
@@ -4748,7 +4850,7 @@
      "area": "pagamentos",
      "antes": "3f025eb5e70cc3b09ccbceff7bf09907f9aeb01f6ee2f1b4666d3f38e19dba50",
      "depois": "16ad7ace53445431bfe5882875be661bab17f8e41cd7f94c3d33d60b8d38dacb",
-     "situacao_no_canonico": "conflito"
+     "situacao_no_canonico": "evoluida"
     },
     {
      "pagina": "professor.html",
@@ -4759,7 +4861,7 @@
      "situacao_no_canonico": "presente"
     }
    ],
-   "situacao_no_canonico": "conflito"
+   "situacao_no_canonico": "evoluida"
   },
   {
    "id": "correcao-professor-ficha-selecionada-recolhivel-v2",
@@ -4880,10 +4982,10 @@
      "area": "evolucao",
      "antes": "f538a26d6c96490bcde72b4aaaf82ea3a877e1619ec45341578808ac10ee40c3",
      "depois": "8da53613d598b6e459f2de5f63019c6dcfcc5c9da209903c923ff954db217ecd",
-     "situacao_no_canonico": "presente"
+     "situacao_no_canonico": "evoluida"
     }
    ],
-   "situacao_no_canonico": "presente"
+   "situacao_no_canonico": "evoluida"
   }
  ]
 }

@@ -165,7 +165,15 @@
   },
   "1.12.302": {
    "proposto": "sim: gerado pelo Claude em 22/11/2026 (tools/gerar-nome-feedbacks-1.12.302.cjs), pedido do Tiago às 11:31 e aprovado às 11:36",
-   "aprovado": "não: aguardando o Tiago juntar o PR (o merge é a aprovação e o envio para a main)",
+   "aprovado": "sim: o Tiago pediu para juntar o PR #40 (\"pode juntar\", 22/11/2026 12:04); merge 2d00cb4 feito pelo Claude",
+   "assinado": "sim: execução 45041744787 do workflow de assinatura (conferência antes de assinar aprovada, \"Assinado e conferido\"), artefato 14761878109; pré-lançamento conteudo-45041744787-1 com o arquivo assinado (SHA-256 7cc16b50bed36d72bad5d89a9db8167e71cd8f8b9704147831f44b65f45e78c6)",
+   "publicado": "não confirmado",
+   "instalado": "não confirmado: às 12:20 o Tiago descreveu o cartão em Configurações, mas não confirmou a instalação",
+   "validado": "não confirmado"
+  },
+  "1.12.303": {
+   "proposto": "sim: gerado pelo Claude em 22/11/2026 (tools/gerar-cartoes-separados-1.12.303.cjs), pedido do Tiago às 12:20",
+   "aprovado": "não: aguardando o merge do PR (o merge é a aprovação e o envio para a main)",
    "assinado": "não",
    "publicado": "não",
    "instalado": "não",

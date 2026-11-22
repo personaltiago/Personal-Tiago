@@ -2,6 +2,32 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**22/11, 13h (Claude): 1.12.303/409 — Tamanho das letras e Feedback com cartões próprios (PR); 1.12.302 assinado; proteção dos testes corrigida.**
+- **1.12.302 assinado:** PR #40 juntado pelo Claude a pedido do Tiago ("pode juntar", 12:04), merge `2d00cb4`. Execução 45041744787: conferência aprovada, "Assinado e conferido", artefato 14761878109, pré-lançamento `conteudo-45041744787-1`, arquivo assinado com SHA-256 `7cc16b50…`. O "latest" continua `android-1.210-…` (primeiro uso real do link direto do #39). Instalação: o Tiago descreveu o cartão em Configurações (12:20), mas **não confirmou**; o canônico continua 1.12.301. **Referência agora 1.12.302/408; próxima versão livre 1.12.303/409.**
+- **1.12.303** (pedido do Tiago, 12:20: "tudo fica separado"). Gerador `tools/gerar-cartoes-separados-1.12.303.cjs`, a partir do 1.12.302. SHA-256 `b865827a6bd69c9408067e02622f25124dbdcce9d3c9e767ae3cf00bb46791b4`.
+  - Mudanças, só no professor:
+    - Mais → Aparência e preferências ganha os cartões "Tamanho das letras" (depois de Painel de cores) e "Feedback" (depois de Configurações), cada um com tela própria.
+    - Configurações fica só com despertador e sons.
+    - Os controles são os mesmos, com os mesmos ids e as mesmas chaves de gravação; nada precisa ser configurado de novo.
+    - Ícones novos `menu-text` e `menu-feedback` nos três desenhos do menu (`ap-more-menu-glyphs`, metal e deep).
+  - Blocos: `ap-more-menu-glyphs`, `ap-more-organization`, `ap-feedback-name` e `#fora-dos-blocos` do professor. Autorização em `alteracoes-autorizadas/1.12.303.json`.
+  - O Mais pede dois toques, como em todos os cartões: o primeiro destaca, o segundo abre.
+- **Proteção dos testes (achado ao mudar a referência para o 1.12.302):**
+  - O manifesto e o harness Java só reconheciam uma correção como "evoluída" se OUTRA CORREÇÃO a continuasse. O 1.12.302, um pacote completo autorizado, continuou o `ap-feedback-student`, e os dois complementos de feedback viraram "conflito". Com isso, o bloco **deixava de ser protegido**: uma mudança sem autorização passava. O recibo do Pix já estava "conflito" na `main` pelo mesmo motivo (dois caminhos, 1.12.299 e 1.12.300, e a busca só seguia o primeiro).
+  - Agora a linha segue todos os caminhos e aceita as alterações autorizadas dos pacotes já assinados (até a referência). Isso vale em `gerar-manifesto.cjs`, `RegressaoBase.java`/`RegressaoHarness.java` e `mecanismo-real.py`.
+  - Resultado: Pix e os dois complementos de feedback ficam "evoluída" e protegidos. A Raposinha continua "conflito".
+  - `testar-verificador.cjs`: a trava antiga ("bloco da referência mudou depois do 295 + complementos") virou conferência de que os complementos continuam vivos. O "Feedback online" reimportado passa a ser reprovado por CONFLITO (o app recusa; nada a assinar).
+- Testes do 1.12.303:
+  - verificador (modo pr): aprovado;
+  - teste do verificador: 45/45;
+  - mecanismo real: **210** verificações (11 correções acompanhadas; eram 8). Sem candidato, a referência dá 211;
+  - testes oficiais: 18/18;
+  - funcionalidades: aprovado (2 avisos já conhecidos);
+  - conferência antes de assinar: aprovada;
+  - Chrome (`equipe/testes/navegador/cartoes-separados-303/`): 11/11 (cartões, ícones, telas, Voltar, gravação, acabamento 3D, escolhas antigas mantidas).
+  - Sem teste em aparelho.
+- Instalar: juntar o PR → assinatura → link direto → importar na Central. Reverter: Central → Restaurar versão anterior (volta ao 1.12.302).
+
 **22/11, 12h (Claude): 1.12.302/408 — Nome nos feedbacks (PR em rascunho; o pacote vai junto no PR, fluxo novo do #39).**
 - Pedido do Tiago (11:31) e aprovação (11:36). Gerador `tools/gerar-nome-feedbacks-1.12.302.cjs`, a partir do 1.12.301 (SHA-256 `daf5e60f…`). Pacote `AgendaPersonal-1.12.302-Nome-Feedbacks-Para-Assinar.agenda.json`, SHA-256 `bb04ce6f59279e02d06dfd02c2c3ace762ca78f1bfaea4d0fa1e11b0036d59e1`.
 - O que muda: Configurações ganha "Nome nos feedbacks" (até 40 letras, em `state.trainerProfile.feedbackName`). O rodapé do cartão de feedback vira "<nome> · Acompanhamento de treino." (vazio = Agenda Personal, igual a hoje). O nome vai ao aluno em `area.trainer.feedbackName`, dentro do `payload` que já é enviado, sem mudar regra nem coleção do Firebase. Salvar chama `save()`, que já reenvia as áreas.
