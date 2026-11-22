@@ -1,0 +1,44 @@
+{
+ "versao": "1.12.303",
+ "sequencia": 409,
+ "titulo": "Tamanho das letras e Feedback com cartões próprios",
+ "base": {
+  "referencia": "pacote-1-12-302-nome-nos-feedbacks",
+  "impressao": "afa5bc6b25959a41e79b0a0e49340ec2d12823d75d8eb312ab1e87002c9a15fd"
+ },
+ "pedido": "Tiago, 22/11/2026 12:20 (\"faça sua própria [entrada] escrito Feedback com os nomes… coloque [uma] para o tamanho das letras e tudo fica separado\").",
+ "aprovado_por": "Pedido do Tiago em 22/11/2026 12:20. A assinatura acontece quando o PR for juntado.",
+ "gerador": "tools/gerar-cartoes-separados-1.12.303.cjs",
+ "alteracoes": [
+  {
+   "pagina": "professor.html",
+   "id": "ap-more-menu-glyphs",
+   "antes": "8cfe406c8a0623d4eab3826d799c08a5c695fe5ea95f0a0cef5c7b94e04ee912",
+   "depois": "282fd2c35485b855814925a1da7c9b0db6480f02f3a4971e38815ec189796f13",
+   "motivo": "ícones novos do Mais: menu-text (Tamanho das letras) e menu-feedback (Feedback)"
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-more-organization",
+   "antes": "775f29c1096df43f5418790bb3ccef6ab2b21c12e9887e05c921e47ec20fbe85",
+   "depois": "1f49fb62257f94c2054af1499f56d8f9a972f99c8a1423a4cf12e0fbf7476c26",
+   "motivo": "posição dos cartões novos no Mais (Aparência e preferências): Tamanho das letras depois de Painel de cores, Feedback depois de Configurações"
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-feedback-name",
+   "antes": "42f1cfe9bbef5374402e634f78a56f5424ffdf97ee9e587d8995d37bb911f552",
+   "depois": "3c6e17bcfccb454583e7b1424d95e6c7df702b3d1edf3c7e63b6938d185441e9",
+   "motivo": "o campo do nome observa a tela em que está (agora a tela Feedback), não mais Configurações"
+  },
+  {
+   "pagina": "professor.html",
+   "id": "#fora-dos-blocos",
+   "antes": "88c390feac7299cc8c7affe91e5c7bcbf299feed81bfd1af1f102b0c8e331b7a",
+   "depois": "f1480252b2a30a60185eb77196960dbfba551cfcfeca38f39de0d0e989bd63a7",
+   "motivo": "telas próprias Tamanho das letras e Feedback (os mesmos controles, com os mesmos ids, saem de Configurações); dois cartões no Mais; ícones novos nos acabamentos metal e deep; descrição de Configurações"
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}

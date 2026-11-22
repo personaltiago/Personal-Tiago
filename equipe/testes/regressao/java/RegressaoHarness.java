@@ -64,6 +64,10 @@ public final class RegressaoHarness {
         RegressaoBase.samePages(consolidado, refNode, "1.12.295 + complementos pelo app x 295 + complementos do manifesto (= 1.12.298)");
         // a referência de verdade: o último passo assinado do manifesto (pacote completo desde o 1.12.298; 1.12.300 em 20/11)
         JSONObject ref = args.length > 11 ? RegressaoBase.read(args[11]) : consolidado;
+        if (args.length > 12) {
+            JSONArray cont = new JSONArray(new String(java.nio.file.Files.readAllBytes(Path.of(args[12])), java.nio.charset.StandardCharsets.UTF_8));
+            for (int i = 0; i < cont.length(); i++) { JSONObject e = cont.getJSONObject(i); RegressaoBase.CONTINUACOES.add(new String[]{e.getString("pagina"), e.getString("id"), e.getString("antes"), e.getString("depois")}); }
+        }
         String sobre294 = RegressaoBase.refusal(s294, patches.get(COMP));
         check(sobre294 != null && sobre294.contains("ap-feedback-student"), "O complemento devia ser recusado sobre o 1.12.294 (depende do 295), mas: " + sobre294);
         System.out.println("A. 1.12.291 = 1.12.288 + 01/02/03 pelo app; 1.12.295 + " + COMPS.length + " complemento(s) pelo app = 295 + complementos do manifesto; referência " + ref.getString("version") + "/" + ref.getInt("sequence") + "; complemento sobre o 1.12.294: recusado (" + sobre294 + ")");
@@ -84,7 +88,14 @@ public final class RegressaoHarness {
             check(RegressaoBase.PRESENT.equals(RegressaoBase.refusal(after, patches.get(p))), nome(p) + ": reimportar devia ser recusado como já presente");
             before = after;
         }
-        check(RegressaoBase.PRESENT.equals(RegressaoBase.refusal(ref, patches.get(ULTIMO))), "Reimportar o último complemento na referência devia dar 'já presente'");
+        // O último complemento: "já presente" enquanto a referência tem os blocos dele como ele deixou; depois que um pacote completo
+        // autorizado continuou o bloco (o 1.12.302 no ap-feedback-student), o app recusa por conflito nesse bloco, como o primeiro.
+        boolean ultimoIntacto = true;
+        JSONArray mudUltimo = patches.get(ULTIMO).getJSONArray("changes");
+        for (int i = 0; i < mudUltimo.length(); i++) { JSONObject m = mudUltimo.getJSONObject(i); if (!m.getString("after").equals(blockHash(ref.getJSONObject("files").getString(m.getString("page")), m.getString("id")))) ultimoIntacto = false; }
+        String ultimo = RegressaoBase.refusal(ref, patches.get(ULTIMO));
+        if (ultimoIntacto) check(RegressaoBase.PRESENT.equals(ultimo), "Reimportar o último complemento na referência devia dar 'já presente'");
+        else check(ultimo != null && !RegressaoBase.PRESENT.equals(ultimo) && ultimo.contains("ap-feedback-student"), "O último complemento, já continuado pela referência, devia ser recusado por conflito em ap-feedback-student, mas: " + ultimo);
         if (COMPS.length > 1) {
             String primeiro = RegressaoBase.refusal(ref, patches.get(COMP));
             check(primeiro != null && !RegressaoBase.PRESENT.equals(primeiro) && primeiro.contains("ap-feedback-student"), "O primeiro complemento, já continuado pelo seguinte, devia ser recusado por conflito na referência, mas: " + primeiro);

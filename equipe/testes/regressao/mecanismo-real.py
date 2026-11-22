@@ -86,6 +86,17 @@ def main():
         subprocess.run(compilador + ['-nowarn', '-encoding', 'UTF-8', '-d', str(classes)] + fontes, check=True)
         falhas = []
         import hashlib
+        # continuações autorizadas dos pacotes completos já assinados (até a referência), para o Java reconhecer correção "evoluída"
+        import json as _json
+        ref_seq = manifesto['referencia']['sequencia_efetiva']
+        assinados = {p['versao'] for p in manifesto['pacotes'] if p['tipo'] == 'pacote-completo' and p['sequencia'] <= ref_seq}
+        arestas = []
+        for arq in sorted((RAIZ / 'equipe' / 'canonico' / 'alteracoes-autorizadas').glob('*.json')):
+            aut = _json.loads(arq.read_text(encoding='utf-8'))
+            if aut.get('versao') in assinados:
+                arestas += [{'pagina': x['pagina'], 'id': x['id'], 'antes': x['antes'], 'depois': x['depois']} for x in aut.get('alteracoes', []) if x.get('antes') and x.get('depois')]
+        continuacoes = trabalho / 'continuacoes.json'
+        continuacoes.write_text(_json.dumps(arestas), encoding='utf-8')
         # Só passos que não passam da referência: um passo proposto DEPOIS dela (já na cadeia, ainda não assinado) é testado de verdade.
         passos = {p['sha256']: p for p in manifesto['pacotes'] if p['tipo'] == 'pacote-completo'
                   and manifesto['canonico']['sequencia'] <= p['sequencia'] <= manifesto['referencia']['sequencia_efetiva']}
@@ -99,7 +110,7 @@ def main():
                 continue
             autorizados = node(Path(__file__).resolve().parent / 'autorizados.cjs', candidato)[-1]
             r = subprocess.run([java, '-Xmx3g', '-cp', str(classes), 'com.tiagolima.agendapersonal.RegressaoHarness',
-                                str(projeto), str(p288), str(p291), str(p292), str(p294), str(p295), str(referencia), str(candidato), str(pasta), ','.join(c.name for c in pcomps), autorizados, str(referencia_real)])
+                                str(projeto), str(p288), str(p291), str(p292), str(p294), str(p295), str(referencia), str(candidato), str(pasta), ','.join(c.name for c in pcomps), autorizados, str(referencia_real), str(continuacoes)])
             if r.returncode:
                 falhas.append(candidato.name)
         if falhas:

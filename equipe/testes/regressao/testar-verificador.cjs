@@ -23,7 +23,10 @@ const ONLINE = 'AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.
 const ref = L.lerJson(achar(M.referencia.arquivo)); // a referência atual (último passo assinado da cadeia)
 const consolidado = L.aplicarCorrecao(L.aplicarCorrecao(p295, comp), L.lerJson(achar(ONLINE))); // 295 + os dois complementos (= 1.12.298)
 // Os casos de feedback montam pacotes a partir da referência: os blocos de feedback dela precisam ser os de 295 + complementos.
-for (const id of ['ap-feedback-student', 'ap-feedback-sync']) if (L.blocos(consolidado.files['index.html']).get(id).hash !== L.blocos(ref.files['index.html']).get(id).hash) throw new Error(`o bloco ${id} da referência mudou depois do 295 + complementos; revise os casos`);
+// Os casos de feedback montam pacotes a partir da referência. Os dois complementos do 295 precisam continuar vivos nela: presentes ou
+// evoluídos (continuados por uma correção ou por um pacote completo autorizado, como o 1.12.302 no ap-feedback-student).
+const situacaoOnline = M.correcoes.find(c => c.arquivo === ONLINE).situacao_no_canonico;
+for (const arq of [COMP, ONLINE]) { const sit = M.correcoes.find(c => c.arquivo === arq).situacao_no_canonico; if (!['presente', 'evoluida'].includes(sit)) throw new Error(`o complemento ${arq} está "${sit}" na referência; revise os casos`); }
 const corr = nome => L.lerJson(achar(nome));
 const C01 = 'AgendaPersonal-01-Catalogo-Unificado-Para-Assinar.agenda.json';
 
@@ -64,7 +67,8 @@ function caso(nome, dado, {modo = 'pr', autorizacoes = vazio, espera, motivo, la
 }
 
 // ---------------- controles que precisam passar
-caso('controle: o complemento "Feedback online" reimportado (idempotente: último passo do bloco)', achar(ONLINE), {modo: 'assinatura', espera: 'passa'});
+if (situacaoOnline === 'presente') caso('controle: o complemento "Feedback online" reimportado (idempotente: último passo do bloco)', achar(ONLINE), {modo: 'assinatura', espera: 'passa'});
+else caso('o complemento "Feedback online" reimportado sobre a referência que já o continuou (o app recusa; nada a assinar)', achar(ONLINE), {modo: 'assinatura', espera: 'reprova', motivo: /CONFLITO/});
 caso(`controle: reassinar o ${M.referencia.versao_efetiva} idêntico byte a byte (é a referência)`, achar(M.referencia.arquivo), {modo: 'assinatura', espera: 'passa'});
 caso('controle: correção 01 (presente)', corr(C01), {modo: 'assinatura', espera: 'passa'});
 caso('controle: correção Sininho de cadastro (presente)', corr('AgendaPersonal-Sininho-Cadastro-Professor-para-assinar.agenda.json'), {espera: 'passa'});

@@ -175,6 +175,9 @@ public final class RegressaoBase {
 
 
     static TreeMap<String, JSONObject> ALL = new TreeMap<>();
+    // Continuações AUTORIZADAS de pacotes completos já assinados (até a referência): {página, id, antes, depois}. Contam como continuação
+    // legítima de um bloco, como as correções da main (o 1.12.302 continuou o bloco dos complementos de feedback).
+    static final List<String[]> CONTINUACOES = new ArrayList<>();
 
     /** Cópia da correção só com a mudança de índice i (para saber, uma a uma, o que o conteúdo já tem). */
     static JSONObject only(JSONObject patch, int i) throws Exception {
@@ -198,6 +201,7 @@ public final class RegressaoBase {
                     if (c.getString("page").equals(page) && c.getString("id").equals(id) && c.getString("before").equals(now)) queue.add(c.getString("after"));
                 }
             }
+            for (String[] e : CONTINUACOES) if (e[0].equals(page) && e[1].equals(id) && e[2].equals(now)) queue.add(e[3]);
         }
         return false;
     }
@@ -227,6 +231,11 @@ public final class RegressaoBase {
                         found = entry.getKey().replace("AgendaPersonal-", "").replace(".agenda.json", "") + " (" + c.getString("id") + ")";
                 }
                 if (found != null) break;
+            }
+            if (found == null) {
+                // continuada por um pacote completo autorizado e já assinado: a linha parte do "depois" dela e chega ao bloco atual
+                String atual = RegressaoHarness.blockHash(release.getJSONObject("files").getString(c.getString("page")), c.getString("id"));
+                if (reaches(c.getString("page"), c.getString("id"), c.getString("after"), atual)) found = "continuação autorizada (" + c.getString("id") + ")";
             }
             if (found == null) return whole;
             by.add(found);
