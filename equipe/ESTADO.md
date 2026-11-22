@@ -2,6 +2,24 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**22/11, 13h (Claude): 1.12.304/410 — ícones do Perfil do aluno (PR); 1.12.303 assinado.**
+- **1.12.303 assinado:** PR #41 juntado pelo Claude a pedido do Tiago ("pode juntar as duas atualizações numa só", 12:45), merge `20e9af1`. Execução 45045674146, artefato 14763437112, pré-lançamento `conteudo-45045674146-1`, arquivo assinado com SHA-256 `11d169aa…`. O "latest" continua `android-1.210-…`. **Referência agora 1.12.303/409; próxima versão livre 1.12.304/410.** O Tiago vai instalar direto o 1.12.304, que inclui o 303 e o 302; o canônico continua 1.12.301.
+- **1.12.304** (foto do Tiago, 12:41: Perfil do aluno com itens sem ícone). Gerador `tools/gerar-icones-perfil-aluno-1.12.304.cjs`, a partir do 1.12.303. SHA-256 `6bc7982e6e4b8daf4e32345d6cc287edf7ed9dbcbda81eb30ad59a21ea2cd1ef`.
+  - Causa: "Sons do treino", "Pet" e "Atualizações" tinham um `<svg>` solto num `<span>` sem tamanho; na linha flex do menu ele encolhia a 0×0.
+  - Correção: os três passam a `data-profile-icon` (`sound`, `pet` e `update`), com desenhos novos no `profileSymbol`, contorno e traço 2 como os outros. Ficam com 27×27 e a cor do tema, também no modo claro.
+  - Só o `index.html` muda, fora dos blocos. Autorização em `alteracoes-autorizadas/1.12.304.json`.
+  - Na foto, o aluno ainda vê "Nova versão 1.12.300 disponível": para os alunos, a última versão publicada é a 1.12.300.
+- Testes:
+  - verificador (modo pr): aprovado;
+  - teste do verificador: 45/45;
+  - mecanismo real: 210 verificações;
+  - testes oficiais: 18/18;
+  - funcionalidades: aprovado;
+  - conferência antes de assinar: aprovada;
+  - Chrome (`equipe/testes/navegador/icones-perfil-304/`): 7/7 (no 1.12.303 os três ficam 0×0; no 1.12.304, 27×27 na cor do tema, também no modo claro).
+  - Sem teste em aparelho.
+- Instalar: o Tiago instala só o 1.12.304 (inclui 303 e 302). Reverter: Central → Restaurar versão anterior.
+
 **22/11, 13h (Claude): 1.12.303/409 — Tamanho das letras e Feedback com cartões próprios (PR); 1.12.302 assinado; proteção dos testes corrigida.**
 - **1.12.302 assinado:** PR #40 juntado pelo Claude a pedido do Tiago ("pode juntar", 12:04), merge `2d00cb4`. Execução 45041744787: conferência aprovada, "Assinado e conferido", artefato 14761878109, pré-lançamento `conteudo-45041744787-1`, arquivo assinado com SHA-256 `7cc16b50…`. O "latest" continua `android-1.210-…` (primeiro uso real do link direto do #39). Instalação: o Tiago descreveu o cartão em Configurações (12:20), mas **não confirmou**; o canônico continua 1.12.301. **Referência agora 1.12.302/408; próxima versão livre 1.12.303/409.**
 - **1.12.303** (pedido do Tiago, 12:20: "tudo fica separado"). Gerador `tools/gerar-cartoes-separados-1.12.303.cjs`, a partir do 1.12.302. SHA-256 `b865827a6bd69c9408067e02622f25124dbdcce9d3c9e767ae3cf00bb46791b4`.

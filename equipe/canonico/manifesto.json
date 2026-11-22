@@ -11,15 +11,15 @@
   "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: confirmação dele por escrito (\"Cara eu já instalei\", 21/11/2026 18:37), sem print. Antes: 1.12.300 (21/11 13:03)."
  },
  "referencia": {
-  "id": "pacote-1-12-302-nome-nos-feedbacks",
+  "id": "pacote-1-12-303-tamanho-das-letras-e-feedback-com-cartoes-proprios",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-1.12.302-Nome-Feedbacks-Para-Assinar.agenda.json",
-  "sha256": "bb04ce6f59279e02d06dfd02c2c3ace762ca78f1bfaea4d0fa1e11b0036d59e1",
-  "versao_efetiva": "1.12.302",
-  "sequencia_efetiva": 408,
-  "proxima_versao_livre": "1.12.303",
-  "proxima_sequencia_livre": 409,
-  "impressao": "afa5bc6b25959a41e79b0a0e49340ec2d12823d75d8eb312ab1e87002c9a15fd"
+  "arquivo": "AgendaPersonal-1.12.303-Cartoes-Separados-Para-Assinar.agenda.json",
+  "sha256": "b865827a6bd69c9408067e02622f25124dbdcce9d3c9e767ae3cf00bb46791b4",
+  "versao_efetiva": "1.12.303",
+  "sequencia_efetiva": 409,
+  "proxima_versao_livre": "1.12.304",
+  "proxima_sequencia_livre": 410,
+  "impressao": "ac30b8a97656a06988f3329eadd034686ed14b56091a1eece75204f5a292b87d"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -51,6 +51,7 @@
   "AgendaPersonal-1.12.301-Publicar-Barra-Erro-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.302-Nome-Feedbacks-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.303-Cartoes-Separados-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.304-Icones-Perfil-Aluno-Para-Assinar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
   "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
@@ -440,7 +441,24 @@
    "titulo": "Tamanho das letras e Feedback com cartões próprios",
    "status": {
     "proposto": "sim: gerado pelo Claude em 22/11/2026 (tools/gerar-cartoes-separados-1.12.303.cjs), pedido do Tiago às 12:20",
-    "aprovado": "não: aguardando o merge do PR (o merge é a aprovação e o envio para a main)",
+    "aprovado": "sim: o Tiago pediu para juntar (\"pode juntar as duas atualizações numa só\", 22/11/2026 12:45); merge 20e9af1 feito pelo Claude",
+    "assinado": "sim: execução 45045674146 do workflow de assinatura (conferência antes de assinar aprovada, \"Assinado e conferido\"), artefato 14763437112; pré-lançamento conteudo-45045674146-1 (arquivo assinado SHA-256 11d169aa296889c4bc01e489564c00a286b4bfb7d9d76a009cf3361f2a2fd19b)",
+    "publicado": "não",
+    "instalado": "não: o Tiago vai instalar direto o 1.12.304, que inclui o 1.12.303",
+    "validado": "não"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.304",
+   "sequencia": 410,
+   "arquivo": "AgendaPersonal-1.12.304-Icones-Perfil-Aluno-Para-Assinar.agenda.json",
+   "sha256": "6bc7982e6e4b8daf4e32345d6cc287edf7ed9dbcbda81eb30ad59a21ea2cd1ef",
+   "origem": "main",
+   "titulo": "Ícones do Perfil do aluno",
+   "status": {
+    "proposto": "sim: gerado pelo Claude em 22/11/2026 (tools/gerar-icones-perfil-aluno-1.12.304.cjs), pedido do Tiago às 12:41 (foto do Perfil do aluno)",
+    "aprovado": "não: aguardando o merge do PR (o Tiago pediu às 12:45 para juntar as duas atualizações)",
     "assinado": "não",
     "publicado": "não",
     "instalado": "não",
@@ -1703,7 +1721,7 @@
     "vezes": 1
    },
    "ap-more-menu-glyphs": {
-    "hash": "8cfe406c8a0623d4eab3826d799c08a5c695fe5ea95f0a0cef5c7b94e04ee912",
+    "hash": "282fd2c35485b855814925a1da7c9b0db6480f02f3a4971e38815ec189796f13",
     "area": "geral",
     "vezes": 1
    },
@@ -1718,7 +1736,7 @@
     "vezes": 1
    },
    "ap-more-organization": {
-    "hash": "775f29c1096df43f5418790bb3ccef6ab2b21c12e9887e05c921e47ec20fbe85",
+    "hash": "1f49fb62257f94c2054af1499f56d8f9a972f99c8a1423a4cf12e0fbf7476c26",
     "area": "professor",
     "vezes": 1
    },
@@ -1748,12 +1766,12 @@
     "vezes": 1
    },
    "ap-feedback-name": {
-    "hash": "42f1cfe9bbef5374402e634f78a56f5424ffdf97ee9e587d8995d37bb911f552",
+    "hash": "3c6e17bcfccb454583e7b1424d95e6c7df702b3d1edf3c7e63b6938d185441e9",
     "area": "geral",
     "vezes": 1
    },
    "#fora-dos-blocos": {
-    "hash": "88c390feac7299cc8c7affe91e5c7bcbf299feed81bfd1af1f102b0c8e331b7a",
+    "hash": "f1480252b2a30a60185eb77196960dbfba551cfcfeca38f39de0d0e989bd63a7",
     "area": "geral",
     "vezes": 1
    }
@@ -3566,6 +3584,10 @@
    {
     "hash": "8cfe406c8a0623d4eab3826d799c08a5c695fe5ea95f0a0cef5c7b94e04ee912",
     "desde": "1.12.285"
+   },
+   {
+    "hash": "282fd2c35485b855814925a1da7c9b0db6480f02f3a4971e38815ec189796f13",
+    "desde": "1.12.303"
    }
   ],
   "professor.html|ap-native-mirror": [
@@ -3596,6 +3618,10 @@
    {
     "hash": "775f29c1096df43f5418790bb3ccef6ab2b21c12e9887e05c921e47ec20fbe85",
     "desde": "1.12.285"
+   },
+   {
+    "hash": "1f49fb62257f94c2054af1499f56d8f9a972f99c8a1423a4cf12e0fbf7476c26",
+    "desde": "1.12.303"
    }
   ],
   "professor.html|ap-workout-export-model": [
@@ -3670,6 +3696,10 @@
    {
     "hash": "88c390feac7299cc8c7affe91e5c7bcbf299feed81bfd1af1f102b0c8e331b7a",
     "desde": "1.12.302"
+   },
+   {
+    "hash": "f1480252b2a30a60185eb77196960dbfba551cfcfeca38f39de0d0e989bd63a7",
+    "desde": "1.12.303"
    }
   ],
   "avaliacoes.html|ap-native-store": [
@@ -3968,6 +3998,10 @@
    {
     "hash": "42f1cfe9bbef5374402e634f78a56f5424ffdf97ee9e587d8995d37bb911f552",
     "desde": "1.12.302"
+   },
+   {
+    "hash": "3c6e17bcfccb454583e7b1424d95e6c7df702b3d1edf3c7e63b6938d185441e9",
+    "desde": "1.12.303"
    }
   ]
  },
@@ -4679,6 +4713,26 @@
    "depende_de": [
     "pacote-1-12-285-excluidos-da-lista",
     "pacote-1-12-302-nome-nos-feedbacks"
+   ]
+  },
+  {
+   "id": "pacote-1-12-304-icones-do-perfil-do-aluno",
+   "titulo": "Ícones do Perfil do aluno",
+   "tipo": "pacote-completo",
+   "versao": "1.12.304",
+   "sequencia": 410,
+   "arquivo": "AgendaPersonal-1.12.304-Icones-Perfil-Aluno-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "index.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "2b2754ec52644565fb5ddccb6a807075c45703577b734cbeac748a6d65907918",
+     "depois": "26743a3453113e82ef8ee5dddcbb7fb435d4b5d6784de4e3ff8c33e264323c8a"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-282-feedback-do-aluno"
    ]
   }
  ],

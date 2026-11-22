@@ -1,0 +1,23 @@
+{
+ "versao": "1.12.304",
+ "sequencia": 410,
+ "titulo": "Ícones do Perfil do aluno",
+ "base": {
+  "referencia": "pacote-1-12-303-tamanho-das-letras-e-feedback-com-cartoes-proprios",
+  "impressao": "ac30b8a97656a06988f3329eadd034686ed14b56091a1eece75204f5a292b87d"
+ },
+ "pedido": "Tiago, 22/11/2026 12:41 (foto do Perfil do aluno: \"tem algumas coisas que estão sem os ícones\") e 12:45 (\"pode juntar as duas atualizações numa só\").",
+ "aprovado_por": "Pedido do Tiago às 12:41; às 12:45 pediu para juntar junto com o 1.12.303 (ele instala só o 1.12.304, que inclui o 1.12.303).",
+ "gerador": "tools/gerar-icones-perfil-aluno-1.12.304.cjs",
+ "alteracoes": [
+  {
+   "pagina": "index.html",
+   "id": "#fora-dos-blocos",
+   "antes": "2b2754ec52644565fb5ddccb6a807075c45703577b734cbeac748a6d65907918",
+   "depois": "26743a3453113e82ef8ee5dddcbb7fb435d4b5d6784de4e3ff8c33e264323c8a",
+   "motivo": "Perfil do aluno: Sons do treino, Pet e Atualizações passam a usar o desenhador de ícones do app (data-profile-icon sound, pet e update, com os desenhos novos no profileSymbol); antes o svg solto encolhia a 0×0"
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}
