@@ -11,15 +11,15 @@
   "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: confirmação dele por escrito (\"Deu certo\", 22/11/2026 15:30, depois de receber o link do 1.12.304 assinado), sem print. O 1.12.302 e o 1.12.303 não foram instalados separadamente: o 1.12.304 inclui os dois. Antes: 1.12.301 (21/11 18:37)."
  },
  "referencia": {
-  "id": "pacote-1-12-304-icones-do-perfil-do-aluno",
+  "id": "pacote-1-12-305-aluno-arquivado-sai-da-agenda",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-1.12.304-Icones-Perfil-Aluno-Para-Assinar.agenda.json",
-  "sha256": "6bc7982e6e4b8daf4e32345d6cc287edf7ed9dbcbda81eb30ad59a21ea2cd1ef",
-  "versao_efetiva": "1.12.304",
-  "sequencia_efetiva": 410,
-  "proxima_versao_livre": "1.12.305",
-  "proxima_sequencia_livre": 411,
-  "impressao": "d5fb542ce32ab2ea303a37621dc8f1a1630676373f6eda0c5ec9ac600d73f66a"
+  "arquivo": "AgendaPersonal-1.12.305-Arquivado-Fora-Da-Agenda-Para-Assinar.agenda.json",
+  "sha256": "691fbef2510b36ec9b1437c3728429d990378562fc1c32c1fc32a8f93928c536",
+  "versao_efetiva": "1.12.305",
+  "sequencia_efetiva": 411,
+  "proxima_versao_livre": "1.12.306",
+  "proxima_sequencia_livre": 412,
+  "impressao": "ebacb8c47a91fcd4c592e0861231052d9fad43d058e8552c540a85afd7aded94"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -53,6 +53,7 @@
   "AgendaPersonal-1.12.303-Cartoes-Separados-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.304-Icones-Perfil-Aluno-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.305-Arquivado-Fora-Da-Agenda-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.306-Arquivar-Sem-Pagamento-Para-Assinar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
   "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
@@ -476,6 +477,23 @@
    "titulo": "Aluno arquivado sai da agenda",
    "status": {
     "proposto": "sim: gerado pelo Claude em 23/11/2026 (tools/gerar-arquivado-fora-da-agenda-1.12.305.cjs), pedido do Tiago às 07:06 (foto da aluna arquivada na Semana) e decisão dele às 07:13 (despertador das aulas para, cobrança continua)",
+    "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (23/11/2026, ~07:30, pela pergunta no app); merge 301cb37 (PR #45) feito pelo Claude depois do CI verde",
+    "assinado": "sim: execução 45166321377 (conferência antes de assinar aprovada, \"Assinar e verificar com a chave oficial\" ok), artefato 14813604551; pré-lançamento conteudo-45166321377-1 (arquivo assinado SHA-256 398902bc3ea0e5955cd6c754352def4a829be8dcc9f05d96f4d960d4d6c6b1e9; sem a assinatura, idêntico ao proposto)",
+    "publicado": "não",
+    "instalado": "não",
+    "validado": "não"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.306",
+   "sequencia": 412,
+   "arquivo": "AgendaPersonal-1.12.306-Arquivar-Sem-Pagamento-Para-Assinar.agenda.json",
+   "sha256": "e9c603aef95c53349efe402c13549c40e3ad4f1b5548c87e1ae5b5ee9082845e",
+   "origem": "main",
+   "titulo": "Arquivar sozinho quem não paga",
+   "status": {
+    "proposto": "sim: gerado pelo Claude em 23/11/2026 (tools/gerar-arquivar-sem-pagamento-1.12.306.cjs), pedido do Tiago às 07:13 (arquivar sozinho quem não paga, cobrança continua) e escolha dele às ~07:30 (automático, 5 dias)",
     "aprovado": "não",
     "assinado": "não",
     "publicado": "não",
@@ -1559,7 +1577,7 @@
     "vezes": 1
    },
    "ap-student-archive": {
-    "hash": "67dd1d52cef809d49a817fce09c1d5a779591e44dd0a55e6084531abd82a7c1d",
+    "hash": "d1bfed0b8ce15556fcf427f073057337b3c9b5a17b41e446d177dc0b168feb4d",
     "area": "professor",
     "vezes": 1
    },
@@ -1789,7 +1807,7 @@
     "vezes": 1
    },
    "#fora-dos-blocos": {
-    "hash": "f1480252b2a30a60185eb77196960dbfba551cfcfeca38f39de0d0e989bd63a7",
+    "hash": "4a6a23d17a5f420b4de582f4e234f30b932f63a1629254f1aa30e7b874fedd05",
     "area": "geral",
     "vezes": 1
    }
@@ -3352,6 +3370,10 @@
    {
     "hash": "67dd1d52cef809d49a817fce09c1d5a779591e44dd0a55e6084531abd82a7c1d",
     "desde": "1.12.273"
+   },
+   {
+    "hash": "d1bfed0b8ce15556fcf427f073057337b3c9b5a17b41e446d177dc0b168feb4d",
+    "desde": "1.12.305"
    }
   ],
   "professor.html|ap-teacher-appearance": [
@@ -3722,6 +3744,10 @@
    {
     "hash": "f1480252b2a30a60185eb77196960dbfba551cfcfeca38f39de0d0e989bd63a7",
     "desde": "1.12.303"
+   },
+   {
+    "hash": "4a6a23d17a5f420b4de582f4e234f30b932f63a1629254f1aa30e7b874fedd05",
+    "desde": "1.12.305"
    }
   ],
   "avaliacoes.html|ap-native-store": [
@@ -4783,6 +4809,40 @@
    "depende_de": [
     "base-1.12.273",
     "pacote-1-12-303-tamanho-das-letras-e-feedback-com-cartoes-proprios"
+   ]
+  },
+  {
+   "id": "pacote-1-12-306-arquivar-sozinho-quem-nao-paga",
+   "titulo": "Arquivar sozinho quem não paga",
+   "tipo": "pacote-completo",
+   "versao": "1.12.306",
+   "sequencia": 412,
+   "arquivo": "AgendaPersonal-1.12.306-Arquivar-Sem-Pagamento-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-finance-auto-archive-css",
+     "area": "geral",
+     "antes": null,
+     "depois": "e9cc73c301860c72211376e2b6bd42d3615406a21aee3264993f44c62a6b00ab"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-finance-auto-archive",
+     "area": "geral",
+     "antes": null,
+     "depois": "5d470f0dc6ec81146ae5c98438a7ce635ffb04a12d42d00f38e37601e2ad77bf"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "4a6a23d17a5f420b4de582f4e234f30b932f63a1629254f1aa30e7b874fedd05",
+     "depois": "2740a1725ebd2877ce864cd7627123c68239223dc306ba112db1bac63882fc18"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-305-aluno-arquivado-sai-da-agenda"
    ]
   }
  ],

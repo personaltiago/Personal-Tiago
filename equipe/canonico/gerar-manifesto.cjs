@@ -50,6 +50,8 @@ const CADEIA = [
   ['1.12.304', 'AgendaPersonal-1.12.304-Icones-Perfil-Aluno-Para-Assinar.agenda.json', '6bc7982e6e4b8daf4e32345d6cc287edf7ed9dbcbda81eb30ad59a21ea2cd1ef', 'main'],
   // Gerado pelo Claude (tools/gerar-arquivado-fora-da-agenda-1.12.305.cjs), entregue no PR junto com a classificação.
   ['1.12.305', 'AgendaPersonal-1.12.305-Arquivado-Fora-Da-Agenda-Para-Assinar.agenda.json', '691fbef2510b36ec9b1437c3728429d990378562fc1c32c1fc32a8f93928c536', 'main'],
+  // Gerado pelo Claude (tools/gerar-arquivar-sem-pagamento-1.12.306.cjs), entregue no PR junto com a classificação.
+  ['1.12.306', 'AgendaPersonal-1.12.306-Arquivar-Sem-Pagamento-Para-Assinar.agenda.json', 'e9c603aef95c53349efe402c13549c40e3ad4f1b5548c87e1ae5b5ee9082845e', 'main'],
 ];
 // Correções por área da raiz da main. "esperado": a situação no canônico que o Tiago já conhece (presente, evoluída ou conflito).
 const CORRECOES = [
