@@ -11,15 +11,15 @@
   "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: confirmação dele por escrito (\"Deu certo\", 22/11/2026 15:30, depois de receber o link do 1.12.304 assinado), sem print. O 1.12.302 e o 1.12.303 não foram instalados separadamente: o 1.12.304 inclui os dois. Antes: 1.12.301 (21/11 18:37)."
  },
  "referencia": {
-  "id": "pacote-1-12-305-aluno-arquivado-sai-da-agenda",
+  "id": "pacote-1-12-306-arquivar-sozinho-quem-nao-paga",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-1.12.305-Arquivado-Fora-Da-Agenda-Para-Assinar.agenda.json",
-  "sha256": "691fbef2510b36ec9b1437c3728429d990378562fc1c32c1fc32a8f93928c536",
-  "versao_efetiva": "1.12.305",
-  "sequencia_efetiva": 411,
-  "proxima_versao_livre": "1.12.306",
-  "proxima_sequencia_livre": 412,
-  "impressao": "ebacb8c47a91fcd4c592e0861231052d9fad43d058e8552c540a85afd7aded94"
+  "arquivo": "AgendaPersonal-1.12.306-Arquivar-Sem-Pagamento-Para-Assinar.agenda.json",
+  "sha256": "e9c603aef95c53349efe402c13549c40e3ad4f1b5548c87e1ae5b5ee9082845e",
+  "versao_efetiva": "1.12.306",
+  "sequencia_efetiva": 412,
+  "proxima_versao_livre": "1.12.307",
+  "proxima_sequencia_livre": 413,
+  "impressao": "86c88500420081f61453e33a57d5d86f8942c23f8c99c208596762634e5d36a1"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -54,6 +54,7 @@
   "AgendaPersonal-1.12.304-Icones-Perfil-Aluno-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.305-Arquivado-Fora-Da-Agenda-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.306-Arquivar-Sem-Pagamento-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.307-Carga-Da-Ficha-Para-Assinar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
   "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
@@ -494,6 +495,23 @@
    "titulo": "Arquivar sozinho quem não paga",
    "status": {
     "proposto": "sim: gerado pelo Claude em 23/11/2026 (tools/gerar-arquivar-sem-pagamento-1.12.306.cjs), pedido do Tiago às 07:13 (arquivar sozinho quem não paga, cobrança continua) e escolha dele às ~07:30 (automático, 5 dias)",
+    "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (23/11/2026, ~09:20, pela pergunta no app); merge 9b0e795 (PR #46) feito pelo Claude depois do CI verde",
+    "assinado": "sim: execução 45173739915 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14816934064; pré-lançamento conteudo-45173739915-1 (arquivo assinado SHA-256 6babccbaeae6f37e1bdf7e86d1de3b269988536bdae30ba444065e757cc3ad56; sem a assinatura, idêntico ao proposto)",
+    "publicado": "não",
+    "instalado": "não",
+    "validado": "não"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.307",
+   "sequencia": 413,
+   "arquivo": "AgendaPersonal-1.12.307-Carga-Da-Ficha-Para-Assinar.agenda.json",
+   "sha256": "59e739f68b0a71bf7b7a97041b12a047a40106cf44f6b9cd2e8be20d77841119",
+   "origem": "main",
+   "titulo": "Carga da ficha atualizada pelo treino",
+   "status": {
+    "proposto": "sim: gerado pelo Claude em 23/11/2026 (tools/gerar-carga-da-ficha-1.12.307.cjs), pedido do Tiago às 17:41 (\"Não tá atualizando os pesos\") e escolhas dele às ~17:50 (\"Atualizar a ficha\"; treinos registrados pelos dois)",
     "aprovado": "não",
     "assinado": "não",
     "publicado": "não",
@@ -1806,8 +1824,18 @@
     "area": "geral",
     "vezes": 1
    },
+   "ap-finance-auto-archive-css": {
+    "hash": "e9cc73c301860c72211376e2b6bd42d3615406a21aee3264993f44c62a6b00ab",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-finance-auto-archive": {
+    "hash": "5d470f0dc6ec81146ae5c98438a7ce635ffb04a12d42d00f38e37601e2ad77bf",
+    "area": "geral",
+    "vezes": 1
+   },
    "#fora-dos-blocos": {
-    "hash": "4a6a23d17a5f420b4de582f4e234f30b932f63a1629254f1aa30e7b874fedd05",
+    "hash": "2740a1725ebd2877ce864cd7627123c68239223dc306ba112db1bac63882fc18",
     "area": "geral",
     "vezes": 1
    }
@@ -3748,6 +3776,10 @@
    {
     "hash": "4a6a23d17a5f420b4de582f4e234f30b932f63a1629254f1aa30e7b874fedd05",
     "desde": "1.12.305"
+   },
+   {
+    "hash": "2740a1725ebd2877ce864cd7627123c68239223dc306ba112db1bac63882fc18",
+    "desde": "1.12.306"
    }
   ],
   "avaliacoes.html|ap-native-store": [
@@ -4050,6 +4082,18 @@
    {
     "hash": "3c6e17bcfccb454583e7b1424d95e6c7df702b3d1edf3c7e63b6938d185441e9",
     "desde": "1.12.303"
+   }
+  ],
+  "professor.html|ap-finance-auto-archive-css": [
+   {
+    "hash": "e9cc73c301860c72211376e2b6bd42d3615406a21aee3264993f44c62a6b00ab",
+    "desde": "1.12.306"
+   }
+  ],
+  "professor.html|ap-finance-auto-archive": [
+   {
+    "hash": "5d470f0dc6ec81146ae5c98438a7ce635ffb04a12d42d00f38e37601e2ad77bf",
+    "desde": "1.12.306"
    }
   ]
  },
@@ -4843,6 +4887,40 @@
    ],
    "depende_de": [
     "pacote-1-12-305-aluno-arquivado-sai-da-agenda"
+   ]
+  },
+  {
+   "id": "pacote-1-12-307-carga-da-ficha-atualizada-pelo-treino",
+   "titulo": "Carga da ficha atualizada pelo treino",
+   "tipo": "pacote-completo",
+   "versao": "1.12.307",
+   "sequencia": 413,
+   "arquivo": "AgendaPersonal-1.12.307-Carga-Da-Ficha-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-workout-series-loads",
+     "area": "geral",
+     "antes": null,
+     "depois": "b5c55fc1230f5fc886b771b7a6a53dc99d277640a1b6164f3762d20bd793739a"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-workout-load-update",
+     "area": "geral",
+     "antes": null,
+     "depois": "5a17fc1568a76e90826ce1104715f96f0b385dac358fbac24cd2db43b889946a"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "2740a1725ebd2877ce864cd7627123c68239223dc306ba112db1bac63882fc18",
+     "depois": "9a8725bfdd6be4224bf8749501499f7754197aa2b08e2d172de93ed736c79903"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-306-arquivar-sozinho-quem-nao-paga"
    ]
   }
  ],
