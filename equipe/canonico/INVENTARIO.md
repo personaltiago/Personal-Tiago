@@ -31,6 +31,7 @@ Gerado por `equipe/canonico/relatorio.cjs` a partir de `equipe/canonico/manifest
 | 1.12.302 | 408 | completo | 1.12.302-Nome-Feedbacks-Para-Assinar (`bb04ce6f5927`) | main | sim: gerado pelo Claude em 22/11/2026 (tools/gerar-nome-feedbacks-1.12.302.cjs), pedido do Tiago às 11:31 e aprovado às 11:36 | sim: o Tiago pediu para juntar o PR #40 ("pode juntar", 22/11/2026 12:04); merge 2d00cb4 feito pelo Claude | sim: execução 45041744787 do workflow de assinatura (conferência antes de assinar aprovada, "Assinado e conferido"), artefato 14761878109; pré-lançamento conteudo-45041744787-1 com o arquivo assinado (SHA-256 7cc16b50bed36d72bad5d89a9db8167e71cd8f8b9704147831f44b65f45e78c6) | não confirmado | não separadamente: o Tiago instalou o 1.12.304, que inclui este pacote (22/11/2026 15:30) | não confirmado |
 | 1.12.303 | 409 | completo | 1.12.303-Cartoes-Separados-Para-Assinar (`b865827a6bd6`) | main | sim: gerado pelo Claude em 22/11/2026 (tools/gerar-cartoes-separados-1.12.303.cjs), pedido do Tiago às 12:20 | sim: o Tiago pediu para juntar ("pode juntar as duas atualizações numa só", 22/11/2026 12:45); merge 20e9af1 feito pelo Claude | sim: execução 45045674146 do workflow de assinatura (conferência antes de assinar aprovada, "Assinado e conferido"), artefato 14763437112; pré-lançamento conteudo-45045674146-1 (arquivo assinado SHA-256 11d169aa296889c4bc01e489564c00a286b4bfb7d9d76a009cf3361f2a2fd19b) | não | não separadamente: o Tiago instalou o 1.12.304, que inclui este pacote (22/11/2026 15:30) | não |
 | 1.12.304 | 410 | completo | 1.12.304-Icones-Perfil-Aluno-Para-Assinar (`6bc7982e6e4b`) | main | sim: gerado pelo Claude em 22/11/2026 (tools/gerar-icones-perfil-aluno-1.12.304.cjs), pedido do Tiago às 12:41 (foto do Perfil do aluno) | sim: o Tiago pediu às 12:45 para juntar as duas atualizações; merge bf178b8 (PR #42) feito pelo Claude depois do CI verde | sim: execução 45046266345 (conferência antes de assinar aprovada, "Assinado e conferido"), artefato 14762824563; pré-lançamento conteudo-45046266345-1 (arquivo assinado SHA-256 30384d8f21ebaaff8cba050c26a66b669638de803d57bdab9a19cba2570a3f51) | sim: o Tiago publicou para os alunos manualmente ("Já foi publicado… eu publiquei manualmente", 22/11/2026 15:47), sem print | sim: "Deu certo" (Tiago, 22/11/2026 15:30), sem print | parcial: o Tiago disse que deu certo; sem print das telas novas |
+| 1.12.305 | 411 | completo | 1.12.305-Arquivado-Fora-Da-Agenda-Para-Assinar (`691fbef2510b`) | main | sim: gerado pelo Claude em 23/11/2026 (tools/gerar-arquivado-fora-da-agenda-1.12.305.cjs), pedido do Tiago às 07:06 (foto da aluna arquivada na Semana) e decisão dele às 07:13 (despertador das aulas para, cobrança continua) | não | não | não | não | não |
 
 "publicado" = distribuído ao app web dos alunos ou ao repositório de distribuição; nenhuma evidência disso foi verificada pelo Claude.
 
@@ -38,47 +39,48 @@ Gerado por `equipe/canonico/relatorio.cjs` a partir de `equipe/canonico/manifest
 
 Cada funcionalidade é o conjunto de blocos que o passo (pacote completo ou complemento) mudou em relação à anterior da cadeia (identificador estável `pacote-<versão>-<título>`). "evoluída" = uma versão posterior continuou o mesmo bloco; "AUSENTE" = o bloco não está como nenhuma versão posterior o deixou.
 
-| Funcionalidade | Versão | Blocos | Depende de | 1.12.304 |
-|---|---|---|---|---|
-| `pacote-1-12-274-aviso-de-recuperacao-da-agenda` | 1.12.274 | professor:#fora-dos-blocos | `base-1.12.273` | ok (1 evoluído) |
-| `pacote-1-12-276-cadastro-e-instalacao-dos-alunos` | 1.12.276 | professor:ap-registration-link-editor-css, professor:#fora-dos-blocos | `base-1.12.273`, `pacote-1-12-274-aviso-de-recuperacao-da-agenda` | ok (1 evoluído) |
-| `pacote-1-12-278-grupo-da-turma` | 1.12.278 | index:ap-student-identity-css, index:ap-student-identity-controls, professor:ap-more-menu-glyphs, professor:ap-more-organization, professor:#fora-dos-blocos | `base-1.12.273`, `pacote-1-12-276-cadastro-e-instalacao-dos-alunos` | ok (3 evoluídos) |
-| `pacote-1-12-281-links-dos-alunos` | 1.12.281 | index:ap-single-navigation, professor:ap-registration-hub-css, professor:#fora-dos-blocos | `base-1.12.273`, `pacote-1-12-278-grupo-da-turma` | ok (2 evoluídos) |
-| `pacote-1-12-282-feedback-do-aluno` | 1.12.282 | index:ap-feedback-sync, index:ap-feedback-card, index:ap-feedback-student, index:#fora-dos-blocos | `base-1.12.273` | ok (4 evoluídos) |
-| `pacote-1-12-283-alunos-para-aprovar` | 1.12.283 | index:ap-student-accounts, professor:ap-registration-hub-css, professor:ap-more-menu-glyphs, professor:ap-more-organization, professor:#fora-dos-blocos | `base-1.12.273`, `pacote-1-12-278-grupo-da-turma`, `pacote-1-12-281-links-dos-alunos` | ok (3 evoluídos) |
-| `pacote-1-12-285-excluidos-da-lista` | 1.12.285 | professor:ap-more-menu-glyphs, professor:ap-more-organization, professor:#fora-dos-blocos | `pacote-1-12-283-alunos-para-aprovar` | ok (3 evoluídos) |
-| `pacote-1-12-286-recados-no-modo-claro` | 1.12.286 | professor:ap-teacher-mascot-card-css | `base-1.12.273` | incorporada |
-| `pacote-1-12-288-janelas-como-pagina` | 1.12.288 | professor:dialog-scroll-lock-pages, professor:#fora-dos-blocos | `pacote-1-12-285-excluidos-da-lista` | ok (1 evoluído) |
-| `pacote-1-12-291-correcoes-de-exercicios-incluidas` | 1.12.291 | professor:ap-workout-instructions, professor:ap-workout-corrections, professor:ap-workout-export | `base-1.12.273` | incorporada |
-| `pacote-1-12-292-sino-do-feedback-no-topo-do-aluno` | 1.12.292 | index:ap-feedback-css, index:ap-feedback-student, professor:ap-feedback-css | `base-1.12.273`, `pacote-1-12-282-feedback-do-aluno` | ok (3 evoluídos) |
-| `pacote-1-12-294-icone-do-feedback-personalizavel` | 1.12.294 | index:ap-feedback-css, index:ap-feedback-student, professor:ap-feedback-css | `pacote-1-12-292-sino-do-feedback-no-topo-do-aluno` | ok (1 evoluído) |
-| `pacote-1-12-295-feedback-pelo-icone-do-topo` | 1.12.295 | index:ap-feedback-student | `pacote-1-12-294-icone-do-feedback-personalizavel` | ok (1 evoluído) |
-| `complemento-feedback-somente-no-topo` | 1.12.296 | index:ap-feedback-student | `pacote-1-12-295-feedback-pelo-icone-do-topo` | ok (1 evoluído) |
-| `complemento-feedback-online-compartilhar` | 1.12.297 | index:ap-feedback-sync, index:ap-feedback-student | `complemento-feedback-somente-no-topo`, `pacote-1-12-282-feedback-do-aluno` | ok (1 evoluído) |
-| `pacote-1-12-298-feedback-online-e-compartilhamento` | 1.12.298 |  | — | incorporada |
-| `pacote-1-12-299-mensalidade-corrigida-e-imc-por-idade` | 1.12.299 | professor:ap-finance-wallet-model, professor:ap-finance-results-model, professor:ap-pix-receipt, professor:ap-finance-replacements, professor:#fora-dos-blocos, avaliacoes:#fora-dos-blocos | `base-1.12.273`, `pacote-1-12-288-janelas-como-pagina` | ok (3 evoluídos) |
-| `pacote-1-12-300-pagamentos-repetidos-mensalidade-e-imc-por-idade` | 1.12.300 | professor:ap-finance-duplicates-css, professor:ap-pix-receipt, professor:ap-finance-replacements, professor:#fora-dos-blocos | `pacote-1-12-299-mensalidade-corrigida-e-imc-por-idade` | ok (1 evoluído) |
-| `pacote-1-12-301-publicar-barra-nao-vai-a-100-no-erro` | 1.12.301 | index:ap-distribution-controls | `base-1.12.273` | incorporada |
-| `pacote-1-12-302-nome-nos-feedbacks` | 1.12.302 | index:ap-feedback-card, index:ap-feedback-student, professor:ap-feedback-card, professor:ap-feedback-teacher, professor:ap-feedback-name-css, professor:ap-feedback-name, professor:#fora-dos-blocos | `base-1.12.273`, `complemento-feedback-online-compartilhar`, `pacote-1-12-282-feedback-do-aluno`, `pacote-1-12-300-pagamentos-repetidos-mensalidade-e-imc-por-idade` | ok (2 evoluídos) |
-| `pacote-1-12-303-tamanho-das-letras-e-feedback-com-cartoes-proprios` | 1.12.303 | professor:ap-more-menu-glyphs, professor:ap-more-organization, professor:ap-feedback-name, professor:#fora-dos-blocos | `pacote-1-12-285-excluidos-da-lista`, `pacote-1-12-302-nome-nos-feedbacks` | incorporada |
-| `pacote-1-12-304-icones-do-perfil-do-aluno` | 1.12.304 | index:#fora-dos-blocos | `pacote-1-12-282-feedback-do-aluno` | incorporada |
+| Funcionalidade | Versão | Blocos | Depende de | 1.12.304 | 1.12.305 |
+|---|---|---|---|---|---|
+| `pacote-1-12-274-aviso-de-recuperacao-da-agenda` | 1.12.274 | professor:#fora-dos-blocos | `base-1.12.273` | ok (1 evoluído) | ok (1 evoluído) |
+| `pacote-1-12-276-cadastro-e-instalacao-dos-alunos` | 1.12.276 | professor:ap-registration-link-editor-css, professor:#fora-dos-blocos | `base-1.12.273`, `pacote-1-12-274-aviso-de-recuperacao-da-agenda` | ok (1 evoluído) | ok (1 evoluído) |
+| `pacote-1-12-278-grupo-da-turma` | 1.12.278 | index:ap-student-identity-css, index:ap-student-identity-controls, professor:ap-more-menu-glyphs, professor:ap-more-organization, professor:#fora-dos-blocos | `base-1.12.273`, `pacote-1-12-276-cadastro-e-instalacao-dos-alunos` | ok (3 evoluídos) | ok (3 evoluídos) |
+| `pacote-1-12-281-links-dos-alunos` | 1.12.281 | index:ap-single-navigation, professor:ap-registration-hub-css, professor:#fora-dos-blocos | `base-1.12.273`, `pacote-1-12-278-grupo-da-turma` | ok (2 evoluídos) | ok (2 evoluídos) |
+| `pacote-1-12-282-feedback-do-aluno` | 1.12.282 | index:ap-feedback-sync, index:ap-feedback-card, index:ap-feedback-student, index:#fora-dos-blocos | `base-1.12.273` | ok (4 evoluídos) | ok (4 evoluídos) |
+| `pacote-1-12-283-alunos-para-aprovar` | 1.12.283 | index:ap-student-accounts, professor:ap-registration-hub-css, professor:ap-more-menu-glyphs, professor:ap-more-organization, professor:#fora-dos-blocos | `base-1.12.273`, `pacote-1-12-278-grupo-da-turma`, `pacote-1-12-281-links-dos-alunos` | ok (3 evoluídos) | ok (3 evoluídos) |
+| `pacote-1-12-285-excluidos-da-lista` | 1.12.285 | professor:ap-more-menu-glyphs, professor:ap-more-organization, professor:#fora-dos-blocos | `pacote-1-12-283-alunos-para-aprovar` | ok (3 evoluídos) | ok (3 evoluídos) |
+| `pacote-1-12-286-recados-no-modo-claro` | 1.12.286 | professor:ap-teacher-mascot-card-css | `base-1.12.273` | incorporada | incorporada |
+| `pacote-1-12-288-janelas-como-pagina` | 1.12.288 | professor:dialog-scroll-lock-pages, professor:#fora-dos-blocos | `pacote-1-12-285-excluidos-da-lista` | ok (1 evoluído) | ok (1 evoluído) |
+| `pacote-1-12-291-correcoes-de-exercicios-incluidas` | 1.12.291 | professor:ap-workout-instructions, professor:ap-workout-corrections, professor:ap-workout-export | `base-1.12.273` | incorporada | incorporada |
+| `pacote-1-12-292-sino-do-feedback-no-topo-do-aluno` | 1.12.292 | index:ap-feedback-css, index:ap-feedback-student, professor:ap-feedback-css | `base-1.12.273`, `pacote-1-12-282-feedback-do-aluno` | ok (3 evoluídos) | ok (3 evoluídos) |
+| `pacote-1-12-294-icone-do-feedback-personalizavel` | 1.12.294 | index:ap-feedback-css, index:ap-feedback-student, professor:ap-feedback-css | `pacote-1-12-292-sino-do-feedback-no-topo-do-aluno` | ok (1 evoluído) | ok (1 evoluído) |
+| `pacote-1-12-295-feedback-pelo-icone-do-topo` | 1.12.295 | index:ap-feedback-student | `pacote-1-12-294-icone-do-feedback-personalizavel` | ok (1 evoluído) | ok (1 evoluído) |
+| `complemento-feedback-somente-no-topo` | 1.12.296 | index:ap-feedback-student | `pacote-1-12-295-feedback-pelo-icone-do-topo` | ok (1 evoluído) | ok (1 evoluído) |
+| `complemento-feedback-online-compartilhar` | 1.12.297 | index:ap-feedback-sync, index:ap-feedback-student | `complemento-feedback-somente-no-topo`, `pacote-1-12-282-feedback-do-aluno` | ok (1 evoluído) | ok (1 evoluído) |
+| `pacote-1-12-298-feedback-online-e-compartilhamento` | 1.12.298 |  | — | incorporada | incorporada |
+| `pacote-1-12-299-mensalidade-corrigida-e-imc-por-idade` | 1.12.299 | professor:ap-finance-wallet-model, professor:ap-finance-results-model, professor:ap-pix-receipt, professor:ap-finance-replacements, professor:#fora-dos-blocos, avaliacoes:#fora-dos-blocos | `base-1.12.273`, `pacote-1-12-288-janelas-como-pagina` | ok (3 evoluídos) | ok (3 evoluídos) |
+| `pacote-1-12-300-pagamentos-repetidos-mensalidade-e-imc-por-idade` | 1.12.300 | professor:ap-finance-duplicates-css, professor:ap-pix-receipt, professor:ap-finance-replacements, professor:#fora-dos-blocos | `pacote-1-12-299-mensalidade-corrigida-e-imc-por-idade` | ok (1 evoluído) | ok (1 evoluído) |
+| `pacote-1-12-301-publicar-barra-nao-vai-a-100-no-erro` | 1.12.301 | index:ap-distribution-controls | `base-1.12.273` | incorporada | incorporada |
+| `pacote-1-12-302-nome-nos-feedbacks` | 1.12.302 | index:ap-feedback-card, index:ap-feedback-student, professor:ap-feedback-card, professor:ap-feedback-teacher, professor:ap-feedback-name-css, professor:ap-feedback-name, professor:#fora-dos-blocos | `base-1.12.273`, `complemento-feedback-online-compartilhar`, `pacote-1-12-282-feedback-do-aluno`, `pacote-1-12-300-pagamentos-repetidos-mensalidade-e-imc-por-idade` | ok (2 evoluídos) | ok (2 evoluídos) |
+| `pacote-1-12-303-tamanho-das-letras-e-feedback-com-cartoes-proprios` | 1.12.303 | professor:ap-more-menu-glyphs, professor:ap-more-organization, professor:ap-feedback-name, professor:#fora-dos-blocos | `pacote-1-12-285-excluidos-da-lista`, `pacote-1-12-302-nome-nos-feedbacks` | incorporada | ok (1 evoluído) |
+| `pacote-1-12-304-icones-do-perfil-do-aluno` | 1.12.304 | index:#fora-dos-blocos | `pacote-1-12-282-feedback-do-aluno` | incorporada | incorporada |
+| `pacote-1-12-305-aluno-arquivado-sai-da-agenda` | 1.12.305 | professor:ap-student-archive, professor:#fora-dos-blocos | `base-1.12.273`, `pacote-1-12-303-tamanho-das-letras-e-feedback-com-cartoes-proprios` | posterior | incorporada |
 
 ## 3. Correções por área da raiz da main
 
-| Correção (id) | Arquivo | Área/módulo | Blocos | 1.12.304 |
-|---|---|---|---|---|
-| `correcao-professor-catalogo-exercicios-unificado` | 01-Catalogo-Unificado-Para-Assinar | professor/exercicios | professor:ap-workout-instructions | presente |
-| `correcao-professor-baixar-catalogo-exercicios` | 02-Baixar-Catalogo-Para-Assinar | professor/exercicios | professor:ap-workout-export | presente |
-| `correcao-professor-catalogo-exercicios-duplicatas` | 03-Corrigir-Duplicatas-Catalogo-Para-Assinar | professor/exercicios | professor:ap-workout-corrections | presente |
-| `correcao-professor-apagar-exercicio-do-catalogo` | Apagar-Exercicio-do-Catalogo-Assinado | professor/exercicios | professor:ap-workout-previous-series | presente |
-| `correcao-professor-apagar-exercicio-do-catalogo` | Apagar-Exercicio-do-Catalogo | professor/exercicios | professor:ap-workout-previous-series | presente |
-| `correcao-raposinha-tres-fases` | Pets-Raposinha | pets/geral | index:ap-student-mascot-model, index:ap-student-mascot-art, index:ap-mascot-homes, cadastro:ap-mascot-home-assets | conflito+aplicável |
-| `correcao-pix-historico-mensal` | Pix-Comprovantes-Sem-Arquivos | pagamentos/recibos | professor:ap-pix-receipt-model, professor:ap-pix-receipt, professor:ap-pix-receipt-css | presente+evoluída |
-| `correcao-professor-ficha-selecionada-recolhivel-v2` | Professor-Ficha-Recolhivel-253 | professor/exercicios | professor:ap-workout-export, professor:ap-workout-export-css | evoluída+presente |
-| `correcao-professor-avisos-cadastros-pendentes` | Sininho-Cadastro-Professor-para-assinar | professor/painel | professor:ap-teacher-features | presente |
-| `correcao-restaurar-testar-e-enviar-sons-do-treino` | Testar-Enviar-Sons-Treino-para-assinar | sons/audios | index:ap-workout-audio, professor:ap-workout-audio | presente |
-| `correcao-feedback-somente-no-topo` | Feedback-Somente-No-Topo-Para-Assinar | evolucao/feedback | index:ap-feedback-student | evoluída |
-| `correcao-feedback-online-compartilhar` | Feedback-Online-Compartilhar-Para-Assinar | evolucao/feedback | index:ap-feedback-sync, index:ap-feedback-student | presente+evoluída |
+| Correção (id) | Arquivo | Área/módulo | Blocos | 1.12.304 | 1.12.305 |
+|---|---|---|---|---|---|
+| `correcao-professor-catalogo-exercicios-unificado` | 01-Catalogo-Unificado-Para-Assinar | professor/exercicios | professor:ap-workout-instructions | presente | presente |
+| `correcao-professor-baixar-catalogo-exercicios` | 02-Baixar-Catalogo-Para-Assinar | professor/exercicios | professor:ap-workout-export | presente | presente |
+| `correcao-professor-catalogo-exercicios-duplicatas` | 03-Corrigir-Duplicatas-Catalogo-Para-Assinar | professor/exercicios | professor:ap-workout-corrections | presente | presente |
+| `correcao-professor-apagar-exercicio-do-catalogo` | Apagar-Exercicio-do-Catalogo-Assinado | professor/exercicios | professor:ap-workout-previous-series | presente | presente |
+| `correcao-professor-apagar-exercicio-do-catalogo` | Apagar-Exercicio-do-Catalogo | professor/exercicios | professor:ap-workout-previous-series | presente | presente |
+| `correcao-raposinha-tres-fases` | Pets-Raposinha | pets/geral | index:ap-student-mascot-model, index:ap-student-mascot-art, index:ap-mascot-homes, cadastro:ap-mascot-home-assets | conflito+aplicável | conflito+aplicável |
+| `correcao-pix-historico-mensal` | Pix-Comprovantes-Sem-Arquivos | pagamentos/recibos | professor:ap-pix-receipt-model, professor:ap-pix-receipt, professor:ap-pix-receipt-css | presente+evoluída | presente+evoluída |
+| `correcao-professor-ficha-selecionada-recolhivel-v2` | Professor-Ficha-Recolhivel-253 | professor/exercicios | professor:ap-workout-export, professor:ap-workout-export-css | evoluída+presente | evoluída+presente |
+| `correcao-professor-avisos-cadastros-pendentes` | Sininho-Cadastro-Professor-para-assinar | professor/painel | professor:ap-teacher-features | presente | presente |
+| `correcao-restaurar-testar-e-enviar-sons-do-treino` | Testar-Enviar-Sons-Treino-para-assinar | sons/audios | index:ap-workout-audio, professor:ap-workout-audio | presente | presente |
+| `correcao-feedback-somente-no-topo` | Feedback-Somente-No-Topo-Para-Assinar | evolucao/feedback | index:ap-feedback-student | evoluída | evoluída |
+| `correcao-feedback-online-compartilhar` | Feedback-Online-Compartilhar-Para-Assinar | evolucao/feedback | index:ap-feedback-sync, index:ap-feedback-student | presente+evoluída | presente+evoluída |
 
 ## 4. Pull Requests
 
@@ -108,15 +110,31 @@ Nenhum PR foi juntado à `main` (conferido pela API em 20/11): o conteúdo chego
 
 ## 5. Paridade por área: canônico instalado x passos posteriores
 
+### 1.12.304 → 1.12.305
+
+| Área | Iguais | Alterados | Removidos | Novos |
+|---|---|---|---|---|
+| agenda | 10 | 0 | 0 | 0 |
+| alunos | 14 | 0 | 0 | 0 |
+| avaliacoes | 8 | 0 | 0 | 0 |
+| cadastro | 5 | 0 | 0 | 0 |
+| evolucao | 15 | 0 | 0 | 0 |
+| geral | 170 | professor.html:#fora-dos-blocos | 0 | 0 |
+| pagamentos | 14 | 0 | 0 | 0 |
+| pets | 25 | 0 | 0 | 0 |
+| professor | 19 | professor.html:ap-student-archive | 0 | 0 |
+| relogio | 7 | 0 | 0 | 0 |
+| sons | 12 | 0 | 0 | 0 |
+
 ## 6. Componentes compartilhados (aluno x professor)
 
-| Componente | 1.12.304 |
-|---|---|
-| `ap-workout-audio` | igual |
-| `ap-workout-audio-options-css` | igual |
-| `ap-workout-audio-options-ui` | ausente nos dois |
-| `ap-feedback-model` | igual |
-| `ap-feedback-css` | igual |
+| Componente | 1.12.304 | 1.12.305 |
+|---|---|---|
+| `ap-workout-audio` | igual | igual |
+| `ap-workout-audio-options-css` | igual | igual |
+| `ap-workout-audio-options-ui` | ausente nos dois | ausente nos dois |
+| `ap-feedback-model` | igual | igual |
+| `ap-feedback-css` | igual | igual |
 
 ## 7. Raposinha (`AgendaPersonal-Pets-Raposinha.agenda.json`)
 

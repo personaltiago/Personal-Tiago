@@ -186,6 +186,14 @@
    "publicado": "sim: o Tiago publicou para os alunos manualmente (\"Já foi publicado… eu publiquei manualmente\", 22/11/2026 15:47), sem print",
    "instalado": "sim: \"Deu certo\" (Tiago, 22/11/2026 15:30), sem print",
    "validado": "parcial: o Tiago disse que deu certo; sem print das telas novas"
+  },
+  "1.12.305": {
+   "proposto": "sim: gerado pelo Claude em 23/11/2026 (tools/gerar-arquivado-fora-da-agenda-1.12.305.cjs), pedido do Tiago às 07:06 (foto da aluna arquivada na Semana) e decisão dele às 07:13 (despertador das aulas para, cobrança continua)",
+   "aprovado": "não",
+   "assinado": "não",
+   "publicado": "não",
+   "instalado": "não",
+   "validado": "não"
   }
  }
 }
