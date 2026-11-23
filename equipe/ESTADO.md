@@ -2,6 +2,44 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**23/11, 18h30 (Claude): 1.12.307/413 — carga da ficha atualizada pelo treino (PR, proposto); 1.12.306 assinado.**
+- **1.12.306 assinado:** o Tiago respondeu "Pode juntar" (~09:20). PR #46 juntado, merge `9b0e795`.
+  - Execução 45173739915: conferência e assinatura ok; artefato 14816934064; pré-lançamento `conteudo-45173739915-1`.
+  - Arquivo assinado com SHA-256 `6babccba…`; sem a assinatura, idêntico ao proposto. Link mandado ao Tiago.
+  - Instalação não confirmada: o canônico continua 1.12.304.
+  - **Referência agora 1.12.306/412; próxima versão livre 1.12.307/413.**
+- **Pedido do 1.12.307:** Tiago, 17:41, com 3 fotos da tabela de séries: "Não tá atualizando os pesos".
+  - O que acontecia: a coluna Carga sempre começava com a carga da ficha, e o peso usado ficava só no histórico (Último treino mostra só repetições). Não era falha de gravação: o app nunca puxou o peso.
+  - Escolhas dele (~17:50): "Atualizar a ficha" e quem registra os treinos é "Os dois".
+- Gerador `tools/gerar-carga-da-ficha-1.12.307.cjs`, a partir do 1.12.306. SHA-256 `59e739f68b0a71bf7b7a97041b12a047a40106cf44f6b9cd2e8be20d77841119`.
+- Só `professor.html`, em dois blocos novos; fora dos blocos entram só as marcas deles (conferido).
+  - **`ap-workout-series-loads`**, logo depois do script das técnicas e antes do publicador da área do aluno (que guarda a função ao carregar): carga com "/" e o número exato de séries ("20/22/24" em 3) vira uma carga por série, na tabela e no app do aluno. É a mesma convenção das repetições "12/10/8". Qualquer outro texto continua igual para todas as séries.
+  - **`ap-workout-load-update`**, no fim da página: a ficha recebe as cargas do treino completo mais recente de cada exercício comum. Isso acontece ao finalizar o treino no app do professor e ao abrir a ficha do aluno. Ao abrir, entram os treinos do professor deste aparelho e os do aluno, lidos pelo `APWorkoutSync` da tela de evolução no máximo a cada 10 min por aluno; sem internet, usa os já recebidos.
+  - Carga igual em todas as séries vira um número (mantém o "kg" se a ficha tinha). Carga diferente vira "a/b/c". Uma gravação só, com Histórico e aviso.
+- Proteções:
+  - só exercício comum (técnica, bi-set e cardio não mudam);
+  - só treino com todas as séries da ficha e carga numérica em todas;
+  - carga escrita em texto ("Peso corporal") não vira número;
+  - dia com treino em andamento não muda;
+  - mudar a carga à mão no editor grava `loadsUpdatedAt`/`loadsSource:'manual'`, e treino mais antigo não sobrescreve;
+  - exercício ainda sem marca: vale treino do professor feito com a ficha igual à de hoje, ou treino do aluno depois desta atualização (marcador do aparelho `agendaWorkoutLoadsSince_v1`);
+  - não roda na restauração de backup nem no contexto do aluno.
+- Dependências: `workoutTechniqueRoundPrescription`/`workoutTechniquePrescription` (técnicas), `saveWorkoutExecution`, `openWorkoutStudent`, `workoutExerciseFormValue`, `commitWorkoutChange`, `workoutRunning`, `workoutBisetGroups`, o registro `prescribed.load`/`performedSets` do treino e o `APWorkoutSync`/`APloadWorkoutSync` do app principal (leitura). O gerador confere todas no 1.12.306.
+- Limites:
+  - o app do aluno só recebe as cargas novas quando o app do professor atualiza a ficha. Se o aluno treinar sozinho duas vezes antes de você abrir a ficha dele, a segunda começa com as cargas antigas;
+  - exercícios com técnica e bi-set continuam manuais.
+- Testes:
+  - verificador (modo pr): aprovado (2 blocos novos e as marcas, autorizados);
+  - teste do verificador: 45/45;
+  - mecanismo real: aprovado;
+  - testes oficiais: 18/18;
+  - funcionalidades: aprovado (os 2 avisos antigos);
+  - conferência antes de assinar: aprovada; raiz: 34 arquivos classificados;
+  - Chrome (`equipe/testes/navegador/carga-307/`, dados fictícios, toque de celular): 32/32. Cobre a carga por série (306 × 307) na tabela e na área do aluno; o treino real no app do professor com a ficha atualizada (140; 25/27,5/27,5; 22); a carga em texto e a técnica sem mudança; o Histórico, o aviso e a área do aluno; os treinos do aluno e do professor ao abrir (o mais novo vence; antes da atualização, incompleto ou com outra ficha não valem); a edição manual protegida; a busca a cada 10 min; o dia em andamento; as pausas; e o 1.12.306 sem nada disso;
+  - os testes do 1.12.305 (20/20) e do 1.12.306 (30/30) também passam com a página do 1.12.307;
+  - sem teste em aparelho.
+- Instalar: depois de assinado, importar na Central (inclui tudo do 1.12.306). Reverter: Central → Restaurar versão anterior. As fichas já atualizadas continuam com as cargas novas; "a/b/c" volta a aparecer como texto em todas as séries.
+
 **23/11, 9h (Claude): 1.12.306/412 — arquivar sozinho quem não paga (PR, proposto); 1.12.305 assinado.**
 - **1.12.305 assinado:** o Tiago respondeu "Pode juntar" (~07:30). PR #45 juntado pelo Claude depois do CI verde, merge `301cb37`.
   - Execução 45166321377: "Conferir regressão antes de assinar" e "Assinar e verificar com a chave oficial" ok; artefato 14813604551; pré-lançamento `conteudo-45166321377-1`.

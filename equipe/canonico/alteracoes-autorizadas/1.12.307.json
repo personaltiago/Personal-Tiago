@@ -1,0 +1,37 @@
+{
+ "versao": "1.12.307",
+ "sequencia": 413,
+ "titulo": "Carga da ficha atualizada pelo treino",
+ "base": {
+  "referencia": "pacote-1-12-306-arquivar-sozinho-quem-nao-paga",
+  "impressao": "86c88500420081f61453e33a57d5d86f8942c23f8c99c208596762634e5d36a1"
+ },
+ "pedido": "Tiago, 23/11/2026 17:41, com 3 fotos da tabela de séries (Elevação de Quadril 130, Glúteo coice 25, Stiff \"20 22\"): \"Não tá atualizando os pesos\". Às ~17:50, nas perguntas do app, escolheu \"Atualizar a ficha\" (ao finalizar o treino, a carga da ficha passa a ser a última usada, e muda também no app do aluno) e respondeu que quem registra os treinos é \"Os dois\" (ele no app do professor e o aluno no app dele).",
+ "aprovado_por": "Pedido específico do Tiago para mudar a ficha do aluno (dados de treino) pelas cargas registradas. O app do aluno recebe a ficha pelo mesmo envio que qualquer alteração de ficha já faz; os treinos do aluno são só lidos, pelo mesmo APWorkoutSync da tela de evolução. Descanso, cronômetros, alarmes, notificações, login, financeiro e mascotes não mudam.",
+ "gerador": "tools/gerar-carga-da-ficha-1.12.307.cjs",
+ "alteracoes": [
+  {
+   "pagina": "professor.html",
+   "id": "ap-workout-series-loads",
+   "antes": null,
+   "depois": "b5c55fc1230f5fc886b771b7a6a53dc99d277640a1b6164f3762d20bd793739a",
+   "motivo": "Bloco novo, logo depois do script das técnicas e antes do publicador da área do aluno (que guarda a função quando carrega): embrulha workoutTechniqueRoundPrescription para que a carga da ficha escrita com \"/\" e o número exato de séries (\"20/22/24\" em 3 séries) dê uma carga por série, como as repetições \"12/10/8\". Exercício com técnica e qualquer outro texto continuam como antes. Expõe APSeriesLoads (number, split, format)."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-workout-load-update",
+   "antes": null,
+   "depois": "5a17fc1568a76e90826ce1104715f96f0b385dac358fbac24cd2db43b889946a",
+   "motivo": "Bloco novo no fim da página: a ficha recebe as cargas do treino completo mais recente de cada exercício comum. Ao finalizar o treino (embrulho de saveWorkoutExecution) e ao abrir a ficha do aluno (embrulho de openWorkoutStudent: treinos do professor deste aparelho e os do aluno, lidos por APWorkoutSync no máximo a cada 10 min por aluno), numa gravação só, com Histórico e aviso. Carga igual em todas as séries vira um número (mantém o \"kg\" se já tinha); diferente vira \"a/b/c\". Proteções: só exercício comum (técnica, bi-set e cardio não), só treino com todas as séries e carga numérica, carga em texto não vira número, dia com treino em andamento não muda, edição manual da carga grava loadsUpdatedAt/loadsSource 'manual' (embrulho de workoutExerciseFormValue) e treino mais antigo não sobrescreve; exercício sem marca só aceita treino do professor feito com a ficha igual à de hoje ou treino do aluno depois do marcador do aparelho agendaWorkoutLoadsSince_v1; não roda na restauração de backup nem no contexto do aluno."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "#fora-dos-blocos",
+   "antes": "2740a1725ebd2877ce864cd7627123c68239223dc306ba112db1bac63882fc18",
+   "depois": "9a8725bfdd6be4224bf8749501499f7754197aa2b08e2d172de93ed736c79903",
+   "motivo": "Só as marcas dos dois blocos novos (<script id=\"ap-workout-series-loads\"></script> depois do script das técnicas e <script id=\"ap-workout-load-update\"></script> antes de </body>); tirando essas duas marcas, o texto fora dos blocos é idêntico ao do 1.12.306 (conferido)."
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}

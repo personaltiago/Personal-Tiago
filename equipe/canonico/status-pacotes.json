@@ -197,6 +197,14 @@
   },
   "1.12.306": {
    "proposto": "sim: gerado pelo Claude em 23/11/2026 (tools/gerar-arquivar-sem-pagamento-1.12.306.cjs), pedido do Tiago às 07:13 (arquivar sozinho quem não paga, cobrança continua) e escolha dele às ~07:30 (automático, 5 dias)",
+   "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (23/11/2026, ~09:20, pela pergunta no app); merge 9b0e795 (PR #46) feito pelo Claude depois do CI verde",
+   "assinado": "sim: execução 45173739915 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14816934064; pré-lançamento conteudo-45173739915-1 (arquivo assinado SHA-256 6babccbaeae6f37e1bdf7e86d1de3b269988536bdae30ba444065e757cc3ad56; sem a assinatura, idêntico ao proposto)",
+   "publicado": "não",
+   "instalado": "não",
+   "validado": "não"
+  },
+  "1.12.307": {
+   "proposto": "sim: gerado pelo Claude em 23/11/2026 (tools/gerar-carga-da-ficha-1.12.307.cjs), pedido do Tiago às 17:41 (\"Não tá atualizando os pesos\") e escolhas dele às ~17:50 (\"Atualizar a ficha\"; treinos registrados pelos dois)",
    "aprovado": "não",
    "assinado": "não",
    "publicado": "não",
