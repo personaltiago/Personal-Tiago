@@ -2,6 +2,30 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**23/11, 8h (Claude): 1.12.305/411 — aluno arquivado sai da agenda (PR, proposto).**
+- Pedido (Tiago, 07:06, com fotos): uma aluna arquivada continuava na Semana (segunda 17:55). "Quando eu arquivo, ele deixa de ser aluno."
+- Causa: arquivar (manual ou "Marcar em atraso e arquivar") só marca `student.archived`. As aulas dele, inclusive as fixas, continuavam valendo em tudo que gera as aulas do dia.
+- Decisão do Tiago sobre as áreas protegidas (07:13): o despertador e o lembrete das aulas do aluno arquivado param; o lembrete de cobrança continua ("se a pessoa pagar, aí eu desarquivo").
+- Gerador `tools/gerar-arquivado-fora-da-agenda-1.12.305.cjs`, a partir do 1.12.304 (referência). SHA-256 `691fbef2510b36ec9b1437c3728429d990378562fc1c32c1fc32a8f93928c536`.
+- O que muda (só `professor.html`; nada é apagado):
+  - `#fora-dos-blocos`: `occurrences()` (Hoje, Semana, Painel, reposições) e `blockingOccurrencesOnDate()` (Horários livres, conflito) pulam a aula de aluno arquivado, menos a marcada como realizada (histórico).
+  - `candidateConflict()` ignora o horário de aluno arquivado, que fica livre para outro aluno.
+  - `syncNativeAlarms()` deixa de mandar ao Android as aulas de aluno arquivado. A cobrança (`students`) e os treinos (`workoutStudents`) enviados não mudam.
+  - `ap-student-archive`: a mensagem de Arquivar diz que o aluno sai da agenda. Ao reativar, o app avisa se algum horário dele foi ocupado. Arquivar e reativar reenviam os avisos ao Android na hora (antes o despertador só seria atualizado ao abrir Hoje, Semana ou Configurações).
+  - Não muda: `isOccurrence()` e o cronômetro da aula, descanso, notificações da tela bloqueada, Firebase, login, financeiro e o app do aluno. `automaticAvailabilityDefaults()` (janela padrão dos horários automáticos) ficou igual de propósito.
+- Dependências: `ap-student-archive` (bloco do arquivar) e funções da agenda fora dos blocos; o lado Android (`AlarmScheduler.synchronize`) cancela os planos das aulas que saem da lista e mantém os cronômetros em andamento (conferido no código do APK 1.210, sem mudança nele).
+- Testes:
+  - verificador (modo pr): aprovado;
+  - teste do verificador: 45/45;
+  - mecanismo real: 210 verificações;
+  - testes oficiais: 18/18;
+  - funcionalidades: aprovado (2 avisos antigos de "guardar a agenda no telefone", que existe: seção 4.2 desatualizada, nada a ver com esta mudança);
+  - conferência antes de assinar: aprovada; raiz: 32 arquivos classificados;
+  - Chrome (`equipe/testes/navegador/arquivado-305/`, dados fictícios): 20/20. No 1.12.304 o defeito aparece; no 1.12.305 a aluna arquivada some de Hoje, Semana, Painel e Horários livres, a aula realizada fica no histórico, nada é apagado, o despertador dela sai e a cobrança fica, e reativar traz tudo de volta.
+  - Sem teste em aparelho.
+- Fora deste pacote: **arquivar automaticamente quem não paga não existe hoje** (só o botão manual "Marcar em atraso e arquivar" do Financeiro). Ficou para o Tiago decidir se quer e com qual regra.
+- Instalar: depois de assinado, importar na Central (inclui tudo do 1.12.304). Reverter: Central → Restaurar versão anterior.
+
 **22/11, 15h50 (Claude): Raposinha retirada da raiz (pedido do Tiago, 15:49) + 1.12.304 publicado para os alunos.**
 - O Tiago publicou o 1.12.304 para os alunos manualmente ("Já foi publicado… eu publiquei manualmente", 15:47, sem print).
 - `AgendaPersonal-Pets-Raposinha.agenda.json` saiu da raiz e foi movida, byte a byte (SHA-256 `84b0ede8…`), para `equipe/testes/regressao/casos/`.

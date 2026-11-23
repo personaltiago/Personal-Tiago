@@ -52,6 +52,7 @@
   "AgendaPersonal-1.12.302-Nome-Feedbacks-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.303-Cartoes-Separados-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.304-Icones-Perfil-Aluno-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.305-Arquivado-Fora-Da-Agenda-Para-Assinar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
   "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
@@ -463,6 +464,23 @@
     "publicado": "sim: o Tiago publicou para os alunos manualmente (\"Já foi publicado… eu publiquei manualmente\", 22/11/2026 15:47), sem print",
     "instalado": "sim: \"Deu certo\" (Tiago, 22/11/2026 15:30), sem print",
     "validado": "parcial: o Tiago disse que deu certo; sem print das telas novas"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.305",
+   "sequencia": 411,
+   "arquivo": "AgendaPersonal-1.12.305-Arquivado-Fora-Da-Agenda-Para-Assinar.agenda.json",
+   "sha256": "691fbef2510b36ec9b1437c3728429d990378562fc1c32c1fc32a8f93928c536",
+   "origem": "main",
+   "titulo": "Aluno arquivado sai da agenda",
+   "status": {
+    "proposto": "sim: gerado pelo Claude em 23/11/2026 (tools/gerar-arquivado-fora-da-agenda-1.12.305.cjs), pedido do Tiago às 07:06 (foto da aluna arquivada na Semana) e decisão dele às 07:13 (despertador das aulas para, cobrança continua)",
+    "aprovado": "não",
+    "assinado": "não",
+    "publicado": "não",
+    "instalado": "não",
+    "validado": "não"
    }
   }
  ],
@@ -4737,6 +4755,34 @@
    ],
    "depende_de": [
     "pacote-1-12-282-feedback-do-aluno"
+   ]
+  },
+  {
+   "id": "pacote-1-12-305-aluno-arquivado-sai-da-agenda",
+   "titulo": "Aluno arquivado sai da agenda",
+   "tipo": "pacote-completo",
+   "versao": "1.12.305",
+   "sequencia": 411,
+   "arquivo": "AgendaPersonal-1.12.305-Arquivado-Fora-Da-Agenda-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-student-archive",
+     "area": "professor",
+     "antes": "67dd1d52cef809d49a817fce09c1d5a779591e44dd0a55e6084531abd82a7c1d",
+     "depois": "d1bfed0b8ce15556fcf427f073057337b3c9b5a17b41e446d177dc0b168feb4d"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "f1480252b2a30a60185eb77196960dbfba551cfcfeca38f39de0d0e989bd63a7",
+     "depois": "4a6a23d17a5f420b4de582f4e234f30b932f63a1629254f1aa30e7b874fedd05"
+    }
+   ],
+   "depende_de": [
+    "base-1.12.273",
+    "pacote-1-12-303-tamanho-das-letras-e-feedback-com-cartoes-proprios"
    ]
   }
  ],

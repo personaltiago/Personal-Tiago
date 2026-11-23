@@ -1,0 +1,30 @@
+{
+ "versao": "1.12.305",
+ "sequencia": 411,
+ "titulo": "Aluno arquivado sai da agenda",
+ "base": {
+  "referencia": "pacote-1-12-304-icones-do-perfil-do-aluno",
+  "impressao": "d5fb542ce32ab2ea303a37621dc8f1a1630676373f6eda0c5ec9ac600d73f66a"
+ },
+ "pedido": "Tiago, 23/11/2026 07:06 (fotos: uma aluna arquivada aparecendo na Semana, segunda 17:55, e a mesma aluna em Alunos → Arquivados): \"como ela tá arquivada não deveria constar que eu tenho que dar aula para ela […] quando eu arquivo ele deixa de ser o aluno\". 07:13, respondendo sobre as áreas protegidas: \"O despertador para e o lembrete para a aula para também […] o lembrete de pagamento tem que ser mandado ainda, pois [se] a pessoa pagar aí eu desarquivo\".",
+ "aprovado_por": "Pedido do Tiago às 07:06. Às 07:13 ele aprovou especificamente parar o despertador e o lembrete das aulas de aluno arquivado (área protegida: alarmes) e mandou manter o lembrete de cobrança (financeiro não muda). Nada de descanso, cronômetros, notificações da tela bloqueada, Firebase, login ou dados de alunos.",
+ "gerador": "tools/gerar-arquivado-fora-da-agenda-1.12.305.cjs",
+ "alteracoes": [
+  {
+   "pagina": "professor.html",
+   "id": "#fora-dos-blocos",
+   "antes": "f1480252b2a30a60185eb77196960dbfba551cfcfeca38f39de0d0e989bd63a7",
+   "depois": "4a6a23d17a5f420b4de582f4e234f30b932f63a1629254f1aa30e7b874fedd05",
+   "motivo": "Aula de aluno arquivado sai da agenda sem apagar nada: funções lessonOwnerArchived/archivedLessonHidden; occurrences() (Hoje, Semana, Painel, reposições) e blockingOccurrencesOnDate() (Horários livres e conflito) pulam a aula de aluno arquivado, menos a marcada como realizada (histórico); candidateConflict() ignora o horário de aluno arquivado; syncNativeAlarms() deixa de mandar ao Android as aulas de aluno arquivado (o despertador/lembrete da aula para, pedido das 07:13). A lista de cobrança (students) e a de treinos (workoutStudents) enviadas ao Android não mudam; isOccurrence() e o cronômetro da aula não mudam."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-student-archive",
+   "antes": "67dd1d52cef809d49a817fce09c1d5a779591e44dd0a55e6084531abd82a7c1d",
+   "depois": "d1bfed0b8ce15556fcf427f073057337b3c9b5a17b41e446d177dc0b168feb4d",
+   "motivo": "Arquivar passa a dizer que o aluno sai também da agenda e que as aulas são mantidas; ao reativar, avisa se algum horário do aluno foi ocupado enquanto estava arquivado; arquivar e reativar chamam syncNativeAlarms() na hora (antes, commitWorkoutChange não reenviava os avisos e o despertador só pararia ao abrir Hoje, Semana ou Configurações)."
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}
