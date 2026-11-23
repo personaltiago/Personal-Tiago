@@ -189,6 +189,14 @@
   },
   "1.12.305": {
    "proposto": "sim: gerado pelo Claude em 23/11/2026 (tools/gerar-arquivado-fora-da-agenda-1.12.305.cjs), pedido do Tiago às 07:06 (foto da aluna arquivada na Semana) e decisão dele às 07:13 (despertador das aulas para, cobrança continua)",
+   "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (23/11/2026, ~07:30, pela pergunta no app); merge 301cb37 (PR #45) feito pelo Claude depois do CI verde",
+   "assinado": "sim: execução 45166321377 (conferência antes de assinar aprovada, \"Assinar e verificar com a chave oficial\" ok), artefato 14813604551; pré-lançamento conteudo-45166321377-1 (arquivo assinado SHA-256 398902bc3ea0e5955cd6c754352def4a829be8dcc9f05d96f4d960d4d6c6b1e9; sem a assinatura, idêntico ao proposto)",
+   "publicado": "não",
+   "instalado": "não",
+   "validado": "não"
+  },
+  "1.12.306": {
+   "proposto": "sim: gerado pelo Claude em 23/11/2026 (tools/gerar-arquivar-sem-pagamento-1.12.306.cjs), pedido do Tiago às 07:13 (arquivar sozinho quem não paga, cobrança continua) e escolha dele às ~07:30 (automático, 5 dias)",
    "aprovado": "não",
    "assinado": "não",
    "publicado": "não",

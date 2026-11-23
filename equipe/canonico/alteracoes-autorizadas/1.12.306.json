@@ -1,0 +1,37 @@
+{
+ "versao": "1.12.306",
+ "sequencia": 412,
+ "titulo": "Arquivar sozinho quem não paga",
+ "base": {
+  "referencia": "pacote-1-12-305-aluno-arquivado-sai-da-agenda",
+  "impressao": "ebacb8c47a91fcd4c592e0861231052d9fad43d058e8552c540a85afd7aded94"
+ },
+ "pedido": "Tiago, 23/11/2026 07:13: \"cada pessoa [que] não paga a mensalidade tem que ser arquivada automaticamente; o lembrete de pagamento tem que ser mandado ainda, pois [se] a pessoa pagar aí eu desarquivo\". Às ~07:30, nas perguntas do app, escolheu \"Automático com tolerância (Recomendado)\" e \"5 dias (Recomendado)\".",
+ "aprovado_por": "Pedido específico do Tiago para o financeiro e o arquivar (07:13), com a regra escolhida por ele (~07:30): automático, 5 dias depois do vencimento. Arquivar bloqueia os treinos no app do aluno pelo mesmo envio ao Firebase que o Arquivar manual já fazia; nenhuma regra, coleção ou dado novo no Firebase. Descanso, cronômetros, notificações da tela bloqueada, login e mascotes não mudam.",
+ "gerador": "tools/gerar-arquivar-sem-pagamento-1.12.306.cjs",
+ "alteracoes": [
+  {
+   "pagina": "professor.html",
+   "id": "ap-finance-auto-archive-css",
+   "antes": null,
+   "depois": "e9cc73c301860c72211376e2b6bd42d3615406a21aee3264993f44c62a6b00ab",
+   "motivo": "Bloco novo: estilo da janela \"arquivados por falta de pagamento\" (lista, Desfazer e botões) com as variáveis de cor do app (escuro e claro); no toque abre como página inteira com as mesmas regras do dialog-scroll-lock-pages (1.12.288)."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-finance-auto-archive",
+   "antes": null,
+   "depois": "5d470f0dc6ec81146ae5c98438a7ce635ffb04a12d42d00f38e37601e2ad77bf",
+   "motivo": "Bloco novo: 6 s depois de abrir o app e de voltar para ele (refreshAgendaState), arquiva quem tem financeiro ativo e mensalidade vencida há 5 dias ou mais (archived:true, archiveReason 'payment-auto', numa gravação só, com Histórico), redesenha e reenvia os avisos (syncNativeAlarms); mostra a janela com Desfazer por aluno. Desfazer e o Reativar de sempre gravam reactivatedAt e mantêm o aluno ativo até o vencimento mudar. Na primeira vez (marcador do aparelho agendaAutoArchive_v1), quem já estava atrasado vai para uma lista de decisão (\"Arquivar estes N alunos\"), sem arquivar sozinho. Pausa com o app em segundo plano, durante a restauração de backup, com backup restaurado ainda não reunido com a conta e no contexto do aluno."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "#fora-dos-blocos",
+   "antes": "4a6a23d17a5f420b4de582f4e234f30b932f63a1629254f1aa30e7b874fedd05",
+   "depois": "2740a1725ebd2877ce864cd7627123c68239223dc306ba112db1bac63882fc18",
+   "motivo": "Só as marcas dos dois blocos novos, antes de </body> (<style id=\"ap-finance-auto-archive-css\"></style> e <script id=\"ap-finance-auto-archive\"></script>); nenhum outro caractere fora dos blocos muda (conferido pela diferença do texto fora dos blocos)."
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}

@@ -2,6 +2,39 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**23/11, 9h (Claude): 1.12.306/412 — arquivar sozinho quem não paga (PR, proposto); 1.12.305 assinado.**
+- **1.12.305 assinado:** o Tiago respondeu "Pode juntar" (~07:30). PR #45 juntado pelo Claude depois do CI verde, merge `301cb37`.
+  - Execução 45166321377: "Conferir regressão antes de assinar" e "Assinar e verificar com a chave oficial" ok; artefato 14813604551; pré-lançamento `conteudo-45166321377-1`.
+  - Arquivo assinado com SHA-256 `398902bc…`; sem a assinatura, idêntico ao proposto. O "latest" continua `android-1.210-…`.
+  - Link mandado ao Tiago às 07:36. Instalação ainda não confirmada: o canônico continua 1.12.304.
+  - **Referência agora 1.12.305/411; próxima versão livre 1.12.306/412** (CLAUDE.md atualizado).
+- **Pedido do 1.12.306:** Tiago, 07:13: "cada pessoa [que] não paga a mensalidade tem que ser arquivada automaticamente; o lembrete de pagamento tem que ser mandado ainda". Às ~07:30 escolheu "Automático com tolerância" e "5 dias".
+- Antes não existia arquivamento automático do aluno: só "Arquivar por atraso" (Financeiro) e Arquivar (perfil).
+- Gerador `tools/gerar-arquivar-sem-pagamento-1.12.306.cjs`, a partir do 1.12.305. SHA-256 `e9c603aef95c53349efe402c13549c40e3ad4f1b5548c87e1ae5b5ee9082845e`.
+- Só `professor.html`, em dois blocos novos antes de `</body>`: `ap-finance-auto-archive-css` e `ap-finance-auto-archive`. Fora dos blocos entram só as marcas deles (conferido).
+- Como funciona:
+  - **Regra:** 6 s depois de abrir o app e de voltar para ele, quem tem financeiro ativo e mensalidade vencida há 5 dias ou mais é arquivado (venceu dia 10 → arquivado a partir do dia 15). É o Arquivar de sempre (`archived:true`, `archiveReason:'payment-auto'`), numa gravação só e com registro no Histórico.
+  - **Efeitos:** o aluno sai da agenda e o despertador das aulas dele para (1.12.305). Os treinos são bloqueados no app do aluno pelo mesmo envio do Arquivar manual. A cobrança continua: ele fica no Financeiro e o lembrete de cobrança não muda.
+  - **Aviso e Desfazer:** uma janela (página inteira no celular, como as outras) lista quem foi arquivado, com Desfazer por aluno.
+  - **Sem rearquivar:** Desfazer e o Reativar de sempre gravam `reactivatedAt`. Com isso o aluno fica ativo até o vencimento mudar, ou seja, até o pagamento ser registrado.
+  - **Primeira vez neste aparelho** (marcador `agendaAutoArchive_v1` no localStorage): quem já tinha 5 dias ou mais de atraso não é arquivado sozinho. A janela mostra a lista com "Arquivar estes N alunos"; "Agora não", Voltar ou × fecham sem arquivar e não perguntam de novo.
+  - **Pausas:** não roda com o app em segundo plano, durante a restauração de backup, com backup restaurado ainda não reunido com a conta, nem no contexto do aluno.
+- Dependências: `refreshAgendaState` (embrulhado), `daysUntil`, `validWorkoutDate`, `commitWorkoutChange`, `syncNativeAlarms`, `openDialog`/`closeDialog`, `setFinanceView`, `hesc`, e o publicador `data-ap-student-area` (embrulha `renderAll`) para o bloqueio no Firebase. O gerador confere todas no 1.12.305.
+- Riscos e limites:
+  - Com dois aparelhos, um pagamento registrado no outro só chega pela sincronização da conta. Os 6 s de espera reduzem o risco, mas não o eliminam; a janela com Desfazer é a rede de segurança.
+  - Lembrete de cobrança: o app avisa antes e no dia do vencimento. Não há lembrete repetido depois do vencimento, nem antes nem agora.
+  - Não há chave para desligar no app; para desligar, é uma atualização.
+- Testes:
+  - verificador (modo pr): aprovado (2 blocos novos e as marcas fora dos blocos, autorizados);
+  - teste do verificador: 45/45;
+  - mecanismo real: aprovado;
+  - testes oficiais: 18/18;
+  - funcionalidades: aprovado (os 2 avisos antigos de "guardar a agenda no telefone");
+  - conferência antes de assinar: aprovada; raiz: 33 arquivos classificados;
+  - Chrome (`equipe/testes/navegador/arquivar-306/`, dados fictícios, toque de celular): 30/30. Cobre o 1º dia com a lista de atrasados e "Arquivar estes 2 alunos"; Voltar = não arquivar; no dia seguinte, quem completa 5 dias é arquivado sem toque, com o despertador sem a aula dele, a cobrança mantida e a área do aluno com `enabled:false`; Desfazer sem rearquivar; pagamento registrado; as pausas; voltar para o app; o aviso como página inteira, nos modos escuro e claro; e o 1.12.305 sem nada disso.
+  - Sem teste em aparelho.
+- Instalar: depois de assinado, importar na Central (inclui tudo do 1.12.305). Reverter: Central → Restaurar versão anterior. O que já foi arquivado continua arquivado; reative em Alunos → Arquivados.
+
 **23/11, 8h (Claude): 1.12.305/411 — aluno arquivado sai da agenda (PR, proposto).**
 - Pedido (Tiago, 07:06, com fotos): uma aluna arquivada continuava na Semana (segunda 17:55). "Quando eu arquivo, ele deixa de ser aluno."
 - Causa: arquivar (manual ou "Marcar em atraso e arquivar") só marca `student.archived`. As aulas dele, inclusive as fixas, continuavam valendo em tudo que gera as aulas do dia.
