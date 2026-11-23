@@ -1,0 +1,37 @@
+{
+ "versao": "1.12.308",
+ "sequencia": 414,
+ "titulo": "Feedback na cor do tema",
+ "base": {
+  "referencia": "pacote-1-12-307-carga-da-ficha-atualizada-pelo-treino",
+  "impressao": "7d528456add0730e3c5866dc99da505b9e616079565c0ae027a7e24f830c34e9"
+ },
+ "pedido": "Tiago, 23/11/2026 18:47, com print da tela Alunos (tema azul) e do cartão de feedback compartilhado no Status (verde): \"O meu primo tá zoando a hora que eu fui compartilhar saiu Verde qual é a loja que não tinha que sempre se adaptar as coisas do tema do professor ou do aluno aparentemente tá funcionando mas tem que avisar para ver se o dono está funcionando todas as cores\". Logo depois, com print da janela \"Feedbacks dos alunos\" verde: \"Tem muita azul mas na hora que eu entrei no feedback só ele tá verde\".",
+ "aprovado_por": "Pedido específico do Tiago para a cor do feedback seguir o tema e ser conferida com todas as cores. Só a aparência das janelas de feedback e do cartão de imagem do professor muda; conteúdo dos feedbacks, envio, respostas, treinos, descanso, cronômetros, alarmes, notificações, login, financeiro, mascotes e o app do aluno não mudam.",
+ "gerador": "tools/gerar-feedback-cor-do-tema-1.12.308.cjs",
+ "alteracoes": [
+  {
+   "pagina": "professor.html",
+   "id": "ap-feedback-theme-css",
+   "antes": null,
+   "depois": "274c335b6ceb884df619331ca8bba72835f32ace30c3b1536182686c8a90a875",
+   "motivo": "Bloco novo, logo depois do estilo compartilhado ap-feedback-css (que não muda, nas duas cópias): nas janelas de feedback do professor (.ap-feedback), --fb-accent passa a ser --ac-accent, a cor do tema que o AgendaColors já calcula legível no fundo da tela. Causa do verde: o estilo compartilhado usa --ac-primary/--accent, que existem no app do aluno mas não no do professor, e caía no #b6ff26. Seletor \"html .ap-feedback\" para valer sobre o compartilhado sem mexer nele."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-feedback-theme",
+   "antes": null,
+   "depois": "d5d0992a3a5bff9e902cc36c4cc501146054e1c79d9efbbcc2e888ccb4283e08",
+   "motivo": "Bloco novo no fim da página: embrulha APFeedbackCard (create e open) para o cartão de imagem do professor usar a cor do tema (--ac-accent), clareada só até ler bem no fundo escuro do cartão (#181c20, contraste ≥ 4,5, a mesma regra do app do aluno), em vez da cor que a janela passa (que era o verde). O resto das opções (foto, nome do professor, marca) passa igual. Expõe APFeedbackCard.accent."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "#fora-dos-blocos",
+   "antes": "9a8725bfdd6be4224bf8749501499f7754197aa2b08e2d172de93ed736c79903",
+   "depois": "60e41ae0215c4d7cfd4127cd2d435d5a962bfbc69200babe066c21d79415070f",
+   "motivo": "Só as marcas dos dois blocos novos (<style id=\"ap-feedback-theme-css\"></style> logo depois do ap-feedback-css e <script id=\"ap-feedback-theme\"></script> com uma quebra de linha antes de </body>); tirando essas duas marcas e essa quebra de linha, o texto fora dos blocos é idêntico ao do 1.12.307 (conferido)."
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}
