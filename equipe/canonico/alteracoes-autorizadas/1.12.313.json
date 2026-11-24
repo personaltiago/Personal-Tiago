@@ -1,0 +1,58 @@
+{
+ "versao": "1.12.313",
+ "sequencia": 419,
+ "titulo": "Aviso no relógio",
+ "base": {
+  "referencia": "pacote-1-12-312-aviso-de-novo-cadastro-na-tela",
+  "impressao": "f9aa8a2c7d1bc62f8a9c50c91589a9e8aa693c2cf89a5ea4e1bcc1c2c75327b0"
+ },
+ "pedido": "Tiago, 24/11/2026 15:17, com print do cartão Smartwatch mostrando \"Conexão Wear OS indisponível\": \"Vamos começar a trabalhar nesse projeto voltar a trabalhar né\". 15:54: \"os alunos não tem [...] não tem mais ali no mais dele nem tem onde registra o relógio nada igual ao meu [...] eu quero que você avalie para ver se está funcionando e se não tiver funcionando eu quero que você faça [funcionar] para vários modelos\". Na pergunta do app escolheu \"Avisos em qualquer relógio (Recomendado)\", cuja descrição dizia \"Mi Band, Redmi, Amazfit, Galaxy… recebem o fim do descanso pelo app da marca. Mexe no aviso do descanso.\", e respondeu \"Não tenho relógio\".",
+ "aprovado_por": "Pedido específico do Tiago (Smartwatch para vários modelos, mexendo no aviso do fim do descanso). Só blocos novos: o descanso (state.workoutRest e restUntil) é só lido; o som, o alarme, o cartão da tela bloqueada, os cronômetros, o despertador, o aviso de cadastro e o app Wear OS não mudam. Merge, assinatura e instalação continuam dependendo da autorização dele.",
+ "gerador": "tools/gerar-aviso-relogio-1.12.313.cjs",
+ "alteracoes": [
+  {
+   "pagina": "index.html",
+   "id": "ap-aviso-relogio-css",
+   "antes": null,
+   "depois": "1c0edff49952a830a87b0fb0ac40d0fa22ed12c166561622f480b241844a1c49",
+   "motivo": "Bloco novo antes do último </body>, igual ao do professor.html. Visual da tela Smartwatch (chave Avisar no relógio, estados, cores do tema por --ac-*; no aluno, as do Perfil) e a linha Smartwatch do Perfil com o mesmo ícone dos outros. Esconde o ícone \"Enviar treino ao smartwatch\" (Wear OS) enquanto o Android não informar relógio Wear OS conectado com o app do Agenda Personal (html[data-ap-wear-os=\"pronto\"]); com ele escondido, o título do treino do aluno volta ao formato sem o ícone. O app do relógio Wear OS nunca foi distribuído (PR #56)."
+  },
+  {
+   "pagina": "index.html",
+   "id": "ap-aviso-relogio",
+   "antes": null,
+   "depois": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff",
+   "motivo": "Bloco novo antes do último </body>, igual ao do professor.html. No aluno: linha \"Smartwatch\" no Perfil, antes de Pet, que abre a tela Smartwatch; com o Android 1.212 e o aviso ligado, lê o descanso do treino (exStore().active[...].restUntil, só leitura) e marca o aviso do fim do descanso (Android.scheduleWatchNotice(\"aluno\", horário, {titulo, texto})); desmarca (cancelWatchNotice) se o descanso for parado com mais de 3 s para o fim. Só age na conta de aluno. Sem o 1.212, a tela explica o que falta; no navegador, que o aviso é do app Android. Expõe window.APAvisoRelogio."
+  },
+  {
+   "pagina": "index.html",
+   "id": "#fora-dos-blocos",
+   "antes": "19c11b9a926875c521fc503bf81c3c2ad4f7233b162af031c5bbc10e8487844b",
+   "depois": "3700310e42ae5e1a6c51b44a6762285bd839c1c6d23e3670899dd05b463baae9",
+   "motivo": "Só as marcas dos dois blocos novos (<style id=\"ap-aviso-relogio-css\"></style>, <script id=\"ap-aviso-relogio\"></script> e as quebras de linha) antes do último </body>. Tirados os dois blocos, a página é idêntica à do 1.12.312 (conferido no teste do Chrome)."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-aviso-relogio-css",
+   "antes": null,
+   "depois": "1c0edff49952a830a87b0fb0ac40d0fa22ed12c166561622f480b241844a1c49",
+   "motivo": "O mesmo bloco do index.html (texto idêntico): tela Smartwatch nas cores do tema do professor e o ícone Wear OS do treino escondido sem relógio Wear OS pronto."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-aviso-relogio",
+   "antes": null,
+   "depois": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff",
+   "motivo": "O mesmo bloco do index.html (texto idêntico). No professor: o cartão Smartwatch que já existe em Mais (#moreSmartwatch, do ap-watch-teacher, que não muda) passa a abrir a tela Smartwatch (o primeiro toque continua só destacando, como nos outros cartões) e o texto dele vira \"Aviso no relógio ao fim do descanso.\"; a Conexão Wear OS continua acessível pela tela nova. Com o Android 1.212 e o aviso ligado, lê state.workoutRest (endAt, aluno e exercício; só leitura) e marca o aviso do fim do descanso (\"professor\"); desmarca se o descanso for parado com mais de 3 s para o fim."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "#fora-dos-blocos",
+   "antes": "a52b81f4e59d471d7f47817ccb45290a94cd7ca3556ef2c9e696256d78cc85a0",
+   "depois": "59ba2ef678c4559d144f6ddabe631fbfbb70f6f9614ffd0e9a1385751cc5c1a9",
+   "motivo": "Só as marcas dos dois blocos novos antes do </body>. Tirados os dois blocos, a página é idêntica à do 1.12.312 (conferido no teste do Chrome)."
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}

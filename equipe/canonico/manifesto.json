@@ -60,6 +60,7 @@
   "AgendaPersonal-1.12.310-Sons-E-Alertas-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.311-Aviso-Cadastro-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.312-Aviso-Cadastro-Local-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.313-Aviso-No-Relogio-Para-Assinar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
   "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
@@ -604,6 +605,23 @@
     "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-aviso-local-1.12.312.cjs), pedido do Tiago às 10:05 e mudança de plano dele às 11:32 (\"era só o próprio aplicativo notificar\"; escolheu \"Sim, do meu jeito (Recomendado)\"); precisa do APK 1.211 local (PR #52)",
     "aprovado": "sim: o Tiago escolheu \"Pode juntar e gerar o app (Recomendado)\" (24/11/2026, ~11:40, pergunta no app); merge 0c4f19b (PR #54) feito pelo Claude depois do CI verde",
     "assinado": "sim: execução 45467647035 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14954039302; pré-lançamento conteudo-45467647035-1 (arquivo assinado SHA-256 1a64a5ef774f1b4b53e38f45cee7f01a4d5656b6629fa5325abd4fbe3a4cd4ad; sem a assinatura, idêntico ao proposto)",
+    "publicado": "não",
+    "instalado": "não",
+    "validado": "não"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.313",
+   "sequencia": 419,
+   "arquivo": "AgendaPersonal-1.12.313-Aviso-No-Relogio-Para-Assinar.agenda.json",
+   "sha256": "b67ea8dc12c1a6629e2f4f0e5efdfd724b5a41dec1bef200a086161faa695ee5",
+   "origem": "main",
+   "titulo": "Aviso no relógio",
+   "status": {
+    "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-aviso-relogio-1.12.313.cjs), pedido do Tiago às 15:17 e 15:54 (Smartwatch \"para vários modelos\"; os alunos sem o cartão) e escolha dele na pergunta do app (\"Avisos em qualquer relógio (Recomendado)\"); precisa do APK 1.212 (PR #57)",
+    "aprovado": "não",
+    "assinado": "não",
     "publicado": "não",
     "instalado": "não",
     "validado": "não"
@@ -5404,6 +5422,61 @@
    ],
    "depende_de": [
     "pacote-1-12-311-aviso-de-novo-cadastro-na-tela-bloqueada"
+   ]
+  },
+  {
+   "id": "pacote-1-12-313-aviso-no-relogio",
+   "titulo": "Aviso no relógio",
+   "tipo": "pacote-completo",
+   "versao": "1.12.313",
+   "sequencia": 419,
+   "arquivo": "AgendaPersonal-1.12.313-Aviso-No-Relogio-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "index.html",
+     "id": "ap-aviso-relogio-css",
+     "area": "geral",
+     "antes": null,
+     "depois": "1c0edff49952a830a87b0fb0ac40d0fa22ed12c166561622f480b241844a1c49"
+    },
+    {
+     "pagina": "index.html",
+     "id": "ap-aviso-relogio",
+     "area": "geral",
+     "antes": null,
+     "depois": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff"
+    },
+    {
+     "pagina": "index.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "19c11b9a926875c521fc503bf81c3c2ad4f7233b162af031c5bbc10e8487844b",
+     "depois": "3700310e42ae5e1a6c51b44a6762285bd839c1c6d23e3670899dd05b463baae9"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-aviso-relogio-css",
+     "area": "geral",
+     "antes": null,
+     "depois": "1c0edff49952a830a87b0fb0ac40d0fa22ed12c166561622f480b241844a1c49"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-aviso-relogio",
+     "area": "geral",
+     "antes": null,
+     "depois": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "a52b81f4e59d471d7f47817ccb45290a94cd7ca3556ef2c9e696256d78cc85a0",
+     "depois": "59ba2ef678c4559d144f6ddabe631fbfbb70f6f9614ffd0e9a1385751cc5c1a9"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-312-aviso-de-novo-cadastro-na-tela"
    ]
   }
  ],
