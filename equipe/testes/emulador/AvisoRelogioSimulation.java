@@ -52,7 +52,8 @@ public class AvisoRelogioSimulation {
 
     @Before public void preparar() throws Exception {
         sh("pm grant " + PKG + " android.permission.POST_NOTIFICATIONS");
-        sh("appops set " + PKG + " SCHEDULE_EXACT_ALARM allow");
+        // "Alarmes e lembretes" é ligado e desligado pelo rodar-aviso-relogio.sh, antes de cada rodada: tirar a permissão
+        // com o app aberto faz o Android encerrar o app (e o teste junto).
         call("cancelar", app, "professor");
         call("cancelar", app, "aluno");
         nm.cancelAll();
@@ -155,23 +156,19 @@ public class AvisoRelogioSimulation {
         assertEquals("Ana Souza · Supino reto", String.valueOf(n.getNotification().extras.getCharSequence(Notification.EXTRA_TEXT)));
     }
 
+    /** Roda sozinho, numa segunda rodada, com "Alarmes e lembretes" já desligado pelo rodar-aviso-relogio.sh. */
     @Test public void g_semAlarmesELembretes() throws Exception {
-        sh("appops set " + PKG + " SCHEDULE_EXACT_ALARM deny");
-        try {
-            call("ligar", app, true);
-            JSONObject estado = new JSONObject(String.valueOf(call("status", app)));
-            long quando = System.currentTimeMillis() + 8000;
-            Object marcado = call("agendar", app, "aluno", quando, "{\"texto\":\"Agachamento\"}");
-            apagar();
-            StatusBarNotification n = esperar("aluno", 90000, null);
-            salvar(relatorio("sem Alarmes e lembretes (com tolerância)", n, quando).put("estado", estado).put("marcou", marcado));
-            acordar();
-            assertEquals(Boolean.TRUE, marcado);
-            assertTrue("o estado deveria mostrar o alarme sem horário exato", !estado.getBoolean("exato"));
-            assertNotNull("sem Alarmes e lembretes o aviso não saiu em 90 s", n);
-        } finally {
-            sh("appops set " + PKG + " SCHEDULE_EXACT_ALARM allow");
-        }
+        call("ligar", app, true);
+        JSONObject estado = new JSONObject(String.valueOf(call("status", app)));
+        long quando = System.currentTimeMillis() + 8000;
+        Object marcado = call("agendar", app, "aluno", quando, "{\"texto\":\"Agachamento\"}");
+        apagar();
+        StatusBarNotification n = esperar("aluno", 90000, null);
+        salvar(relatorio("sem Alarmes e lembretes (com tolerância)", n, quando).put("estado", estado).put("marcou", marcado));
+        acordar();
+        assertTrue("o estado deveria mostrar o alarme sem horário exato", !estado.getBoolean("exato"));
+        assertEquals(Boolean.TRUE, marcado);
+        assertNotNull("sem Alarmes e lembretes o aviso não saiu em 90 s", n);
     }
 
     // ---------------------------------------------------------------- apoio
