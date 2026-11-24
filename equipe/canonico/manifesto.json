@@ -11,15 +11,15 @@
   "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: print do Mais (23/11/2026 23:51) com o texto \"Nome e símbolo dos cartões de feedback.\", que só existe no 1.12.309, e confirmação dele na pergunta do app (\"Sim, instalei\", madrugada de 24/11/2026). O 1.12.305, 1.12.306, 1.12.307 e 1.12.308 não foram instalados separadamente: o 1.12.309 inclui todos. Antes: 1.12.304 (22/11 15:30)."
  },
  "referencia": {
-  "id": "pacote-1-12-311-aviso-de-novo-cadastro-na-tela-bloqueada",
+  "id": "pacote-1-12-312-aviso-de-novo-cadastro-na-tela",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-1.12.311-Aviso-Cadastro-Para-Assinar.agenda.json",
-  "sha256": "e5613f6e85648b3b355eb3fd2c4196613a3d95e509b6369c79447f9e2c2240c7",
-  "versao_efetiva": "1.12.311",
-  "sequencia_efetiva": 417,
-  "proxima_versao_livre": "1.12.312",
-  "proxima_sequencia_livre": 418,
-  "impressao": "ea739b45dec4feb195df384988d0aec54db19880c1817f146499e27a39eaa5f8"
+  "arquivo": "AgendaPersonal-1.12.312-Aviso-Cadastro-Local-Para-Assinar.agenda.json",
+  "sha256": "8c5eb7b4bdf100456069eba71352737d62978547c2111d323940a56c27c8fabb",
+  "versao_efetiva": "1.12.312",
+  "sequencia_efetiva": 418,
+  "proxima_versao_livre": "1.12.313",
+  "proxima_sequencia_livre": 419,
+  "impressao": "f9aa8a2c7d1bc62f8a9c50c91589a9e8aa693c2cf89a5ea4e1bcc1c2c75327b0"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -602,8 +602,8 @@
    "titulo": "Aviso de novo cadastro na tela",
    "status": {
     "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-aviso-local-1.12.312.cjs), pedido do Tiago às 10:05 e mudança de plano dele às 11:32 (\"era só o próprio aplicativo notificar\"; escolheu \"Sim, do meu jeito (Recomendado)\"); precisa do APK 1.211 local (PR #52)",
-    "aprovado": "não",
-    "assinado": "não",
+    "aprovado": "sim: o Tiago escolheu \"Pode juntar e gerar o app (Recomendado)\" (24/11/2026, ~11:40, pergunta no app); merge 0c4f19b (PR #54) feito pelo Claude depois do CI verde",
+    "assinado": "sim: execução 45467647035 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14954039302; pré-lançamento conteudo-45467647035-1 (arquivo assinado SHA-256 1a64a5ef774f1b4b53e38f45cee7f01a4d5656b6629fa5325abd4fbe3a4cd4ad; sem a assinatura, idêntico ao proposto)",
     "publicado": "não",
     "instalado": "não",
     "validado": "não"
@@ -1217,13 +1217,13 @@
     "area": "geral",
     "vezes": 1
    },
-   "ap-push-avisos": {
-    "hash": "5f3fdd8e3b2f068089d75d5bd2dbb0be6ae0ca9707f18dfe64ceb06a7801efbe",
+   "ap-aviso-cadastro": {
+    "hash": "d68cd5299f2a89baab6952f604a0e7c331ded21e99480926cc7b86e7bd8be285",
     "area": "geral",
     "vezes": 1
    },
    "#fora-dos-blocos": {
-    "hash": "224123256b8ae0e2c8bddf45df58d8e93120575feb6c066f42825af427f11550",
+    "hash": "19c11b9a926875c521fc503bf81c3c2ad4f7233b162af031c5bbc10e8487844b",
     "area": "geral",
     "vezes": 1
    }
@@ -1964,13 +1964,13 @@
     "area": "geral",
     "vezes": 1
    },
-   "ap-push-avisos-teacher": {
-    "hash": "8faa7b5a0439cd49e76767d0c0ce7b3e7a75016bce7627073c066ba0abc01933",
+   "ap-aviso-cadastro-teacher": {
+    "hash": "580b80c9e9babfebabc4a2ac03cb0f225c137d600ff57cda0354a8e8b44a8f7d",
     "area": "geral",
     "vezes": 1
    },
    "#fora-dos-blocos": {
-    "hash": "8aef8e68bec37738b899faef1950c653d2430f407de2f501d767cabaf26fba04",
+    "hash": "a52b81f4e59d471d7f47817ccb45290a94cd7ca3556ef2c9e696256d78cc85a0",
     "area": "geral",
     "vezes": 1
    }
@@ -2979,6 +2979,10 @@
    {
     "hash": "224123256b8ae0e2c8bddf45df58d8e93120575feb6c066f42825af427f11550",
     "desde": "1.12.311"
+   },
+   {
+    "hash": "19c11b9a926875c521fc503bf81c3c2ad4f7233b162af031c5bbc10e8487844b",
+    "desde": "1.12.312"
    }
   ],
   "professor.html|ap-native-store": [
@@ -3951,6 +3955,10 @@
    {
     "hash": "8aef8e68bec37738b899faef1950c653d2430f407de2f501d767cabaf26fba04",
     "desde": "1.12.311"
+   },
+   {
+    "hash": "a52b81f4e59d471d7f47817ccb45290a94cd7ca3556ef2c9e696256d78cc85a0",
+    "desde": "1.12.312"
    }
   ],
   "avaliacoes.html|ap-native-store": [
@@ -4327,6 +4335,18 @@
    {
     "hash": "8faa7b5a0439cd49e76767d0c0ce7b3e7a75016bce7627073c066ba0abc01933",
     "desde": "1.12.311"
+   }
+  ],
+  "index.html|ap-aviso-cadastro": [
+   {
+    "hash": "d68cd5299f2a89baab6952f604a0e7c331ded21e99480926cc7b86e7bd8be285",
+    "desde": "1.12.312"
+   }
+  ],
+  "professor.html|ap-aviso-cadastro-teacher": [
+   {
+    "hash": "580b80c9e9babfebabc4a2ac03cb0f225c137d600ff57cda0354a8e8b44a8f7d",
+    "desde": "1.12.312"
    }
   ]
  },

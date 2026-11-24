@@ -245,8 +245,8 @@
   },
   "1.12.312": {
    "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-aviso-local-1.12.312.cjs), pedido do Tiago às 10:05 e mudança de plano dele às 11:32 (\"era só o próprio aplicativo notificar\"; escolheu \"Sim, do meu jeito (Recomendado)\"); precisa do APK 1.211 local (PR #52)",
-   "aprovado": "não",
-   "assinado": "não",
+   "aprovado": "sim: o Tiago escolheu \"Pode juntar e gerar o app (Recomendado)\" (24/11/2026, ~11:40, pergunta no app); merge 0c4f19b (PR #54) feito pelo Claude depois do CI verde",
+   "assinado": "sim: execução 45467647035 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14954039302; pré-lançamento conteudo-45467647035-1 (arquivo assinado SHA-256 1a64a5ef774f1b4b53e38f45cee7f01a4d5656b6629fa5325abd4fbe3a4cd4ad; sem a assinatura, idêntico ao proposto)",
    "publicado": "não",
    "instalado": "não",
    "validado": "não"
