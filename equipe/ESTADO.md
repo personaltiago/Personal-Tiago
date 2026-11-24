@@ -36,8 +36,44 @@
   - Verificador `--modo pr`: aprovado (2 remoções, 2 blocos novos e 2 fora-dos-blocos, todos autorizados). `testar-verificador`: 45/45.
   - Mecanismo real: 11 mantidas / 0 perdidas. `conferir-antes-de-assinar`: aprovada.
   - Oficiais: 18/18. Funcionalidades: aprovado (2 avisos antigos).
-- **Ordem:** APK 1.211 local (PR #52) e este pacote. Sem o 1.211, o cartão só diz "Precisa do app 1.211".
+- **Ordem:** APK 1.211 local (PR #52, juntado em a285d13; o APK oficial é gerado pelo "Gerar e publicar APK" com a autorização do Tiago) e este pacote. Sem o 1.211, o cartão só diz "Precisa do app 1.211".
 - **Instalar e reverter:** instalar no lugar do 1.12.310 ou do 1.12.311. Para voltar, reinstalar o 1.12.310 assinado.
+
+**24/11, 12h30 (Claude): aviso de cadastro muda de plano — APK 1.211 com aviso local, sem Firebase no Android (PR #52, juntado em a285d13 com o "Pode juntar e gerar o app" do Tiago).**
+- **Decisão do Tiago:**
+  - 11:32: "não faz sentido eu precisar lá dessa parte. Era só o próprio aplicativo notificar".
+  - Na pergunta do app escolheu "Sim, do meu jeito (Recomendado)". A pergunta dizia: "Funciona com o app aberto ou em segundo plano, mas não se o Xiaomi tiver fechado o app".
+- **Como funciona:**
+  - O conteúdo (1.12.312, próximo PR) acompanha os cadastros à espera de aprovação, como o sininho.
+  - Quando chega um novo com o app em segundo plano ou o celular bloqueado, ele pede ao Android para mostrar a notificação.
+  - Se o celular fechou o app, não há aviso: o cadastro aparece ao abrir, como hoje.
+- **ZIP:** Android 1.211/211, SHA-256 `034db1dcac878a00b3792c190651bef89c8fc8eaef49923f9f1166177e59e17d`, 161 fontes.
+  - Mudam 11 arquivos: 3 novos e 8 alterados.
+  - O manifesto é idêntico ao do 1.210. O `build.gradle` só muda a versão.
+- **O que muda no APK:**
+  - `AvisosCadastro.java` (novo):
+    - canal "Cadastros de alunos" (`cadastros`): importância alta, privado na tela bloqueada, versão pública sem o nome;
+    - mostra o aviso que o conteúdo pede (JSON de até 2000 caracteres, só os tipos "cadastro" e "teste");
+    - toque com `NEW_TASK|CLEAR_TOP|SINGLE_TOP` e extras `agenda_aviso_tipo`/`agenda_aviso_aluno`;
+    - estado para "Sons e alertas" e abertura do canal.
+  - `MainActivity`:
+    - cria o canal;
+    - guarda a abertura pelo aviso (`ap-notice-open` + `takeNoticeOpen()`);
+    - ponte: `getNoticeVersion` (1), `getNoticeStatus`, `showRegistrationNotice`, `openNoticeSettings`.
+  - Ícone `ic_stat_cadastro`. O `verify_apk.py` confere o `AvisosCadastro` no APK oficial.
+  - Não muda: alarmes, descanso, cronômetros, notificações que já existem, login, financeiro e dados de alunos. Não há Firebase no Android nem servidor.
+- **Push guardado (para o aviso com o app fechado):**
+  - Fica no branch `claude/aviso-cadastro-push-guardado` (e7e8ab7): APK com FCM, mensagem só com dados e passo 0 do `publicar.sh`.
+  - As funções do PR #51 estão na `main`, mas não foram publicadas e não são usadas.
+- **1.12.311 (assinado, não instalado):** usa a ponte do push, que o 1.211 local não tem; o cartão diria "Precisa do app 1.211". Não instalar. O 1.12.312 troca os dois blocos dele pelo jeito local.
+- **Testes:**
+  - `tests/verify_avisos_cadastro.py` (novo): 43 verificações com a classe real. 6 mutações propositais foram reprovadas.
+  - `tests/run_all.py` completo e ZIP conferido.
+  - Compilação com o SDK real: CI deste PR.
+- **Instalar e reverter:**
+  - Instala por cima, com a mesma assinatura.
+  - Para voltar: reverter o ZIP na `main` e gerar um APK novo.
+  - Para calar o aviso: desligar o canal.
 
 **24/11, 12h (Claude): 1.12.311/417 — aviso de novo cadastro, fase 3: conteúdo (PR, proposto); 1.12.310 assinado.**
 - **1.12.310 assinado:**
