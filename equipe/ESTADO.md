@@ -2,6 +2,39 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**24/11, 5h (Claude): 1.12.310/416 — "Sons e alertas" no Mais (PR, proposto); 1.12.309 assinado e INSTALADO (canônico).**
+- **1.12.309 assinado:** o Tiago respondeu "Pode juntar" (~23:00). PR #49 juntado, merge `4ba6655`.
+  - Execução 45316649873: conferência e assinatura ok; artefato 14885845460; pré-lançamento `conteudo-45316649873-1`.
+  - Arquivo assinado com SHA-256 `dcebb470…`; sem a assinatura, idêntico ao proposto. Link mandado ao Tiago.
+- **1.12.309 instalado (canônico):** print do Mais às 23:51 com "Nome e símbolo dos cartões de feedback." (texto que só existe no 309) e "Sim, instalei" na pergunta do app (madrugada de 24/11).
+  - O 305, 306, 307 e 308 não foram instalados separadamente; o 309 inclui todos.
+  - **Canônico e referência agora 1.12.309/415; próxima versão livre 1.12.310/416.**
+- **Pedido do 1.12.310:** Tiago, 23:53, com prints do Mais ("Sons e alertas" e "Configurações" circulados) e da tela: "não parece que essas duas opções são a mesma coisa".
+  - Conferido no código: as duas abriam a mesma tela (`screen-settings`, só o Despertador e os 5 sons). "Configurações" abria no topo; "Sons e alertas" (`openLessonSoundSettings`) abria rolada até o som do descanso.
+  - A legenda "Preferências e ajustes do aplicativo." não correspondia: as outras preferências têm itens próprios.
+  - Escolha dele na pergunta do app: "Só Sons e alertas (Recomendado)". Nota dada à observação: 9/10.
+- Gerador `tools/gerar-sons-e-alertas-1.12.310.cjs`, a partir do 1.12.309. SHA-256 `8a60b5d5c6cde7c0cc944de0a06675f3a278c0fcbe6df0348193bd0d5d75ff19`.
+- O que muda, só em `professor.html`:
+  - fora dos blocos:
+    - sai o cartão "Configurações" do Mais. Nenhum bloco usa esse cartão como âncora; os cartões criados por blocos usam `#morePet` (conferido). O atalho do menu escondido `#proMoreMenu` continua;
+    - o cartão `#moreLessonSounds` abre a tela pela navegação de sempre (`data-screen="settings"`, no topo), com o texto "Sons e alertas / Despertador e sons das aulas e do treino.". Perde o `aria-label` antigo; o nome lido passa a ser o texto visível;
+    - o título da tela passa de "Configurações" para "Sons e alertas".
+  - `ap-more-organization`: a legenda do cartão fica igual à do HTML. A entrada precisa ficar: sem ela, a regra de reserva do bloco renomearia o cartão (agora `data-screen="settings"`) para "Configurações".
+- Não muda: o conteúdo da tela (idêntico ao 309, conferido no teste), descanso, cronômetros, alarmes, notificações, sons e o resto do Mais.
+- Testes:
+  - verificador (modo pr): aprovado; teste do verificador 45/45;
+  - mecanismo real: aprovado (11 mantidas, 0 perdidas);
+  - testes oficiais: 18/18; funcionalidades: aprovado (os 2 avisos antigos);
+  - conferência antes de assinar: aprovada; raiz: 37 arquivos;
+  - Chrome (`equipe/testes/navegador/sons-e-alertas-310/`): 12/12. Cobre:
+    - o 309 com os dois cartões (um rolado, o outro no topo);
+    - o 310 com Painel de cores, Tamanho das letras, Sons e alertas, Feedback e Pet; o resto do Mais igual (só "Configurações" saiu);
+    - os dois toques: o primeiro destaca, o segundo abre no topo com o Despertador à vista;
+    - o conteúdo da tela idêntico ao do 309; `#proMoreMenu` intacto;
+  - os testes do 305 (20/20), 306 (30/30), 307 (32/32), 308 (17/17) e 309 (38/38) também passam com a página do 310;
+  - sem teste em aparelho.
+- Instalar: depois de assinado, importar na Central (inclui tudo do 1.12.309). Reverter: Central → Restaurar versão anterior (volta o cartão "Configurações").
+
 **23/11, 23h (Claude): 1.12.309/415 — símbolo nos feedbacks (PR, proposto); 1.12.308 assinado.**
 - **1.12.308 assinado:** o Tiago respondeu "Pode juntar" (~21:33). PR #48 juntado, merge `1b15a8f`.
   - Execução 45305916001: conferência e assinatura ok; artefato 14880817003; pré-lançamento `conteudo-45305916001-1`.

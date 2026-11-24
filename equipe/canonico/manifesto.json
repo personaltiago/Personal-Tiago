@@ -1,25 +1,25 @@
 {
  "descricao": "Fonte canônica versionada do conteúdo do Agenda Personal e manifesto das funcionalidades. Gerado por equipe/canonico/gerar-manifesto.cjs; não editar à mão (o CI confere).",
  "canonico": {
-  "versao": "1.12.304",
-  "sequencia": 410,
-  "arquivo": "AgendaPersonal-1.12.304-Icones-Perfil-Aluno-Para-Assinar.agenda.json",
-  "sha256": "6bc7982e6e4b8daf4e32345d6cc287edf7ed9dbcbda81eb30ad59a21ea2cd1ef",
+  "versao": "1.12.309",
+  "sequencia": 415,
+  "arquivo": "AgendaPersonal-1.12.309-Simbolo-Feedback-Para-Assinar.agenda.json",
+  "sha256": "8bdf9e4ffa67bf3949355728a8ace532ab0ad89df89ef94d2fae7e8d2663be07",
   "appId": "com.tiagolima.agendapersonal",
   "bridgeVersion": 3,
   "dataSchema": 4,
-  "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: confirmação dele por escrito (\"Deu certo\", 22/11/2026 15:30, depois de receber o link do 1.12.304 assinado), sem print. O 1.12.302 e o 1.12.303 não foram instalados separadamente: o 1.12.304 inclui os dois. Antes: 1.12.301 (21/11 18:37)."
+  "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: print do Mais (23/11/2026 23:51) com o texto \"Nome e símbolo dos cartões de feedback.\", que só existe no 1.12.309, e confirmação dele na pergunta do app (\"Sim, instalei\", madrugada de 24/11/2026). O 1.12.305, 1.12.306, 1.12.307 e 1.12.308 não foram instalados separadamente: o 1.12.309 inclui todos. Antes: 1.12.304 (22/11 15:30)."
  },
  "referencia": {
-  "id": "pacote-1-12-308-feedback-na-cor-do-tema",
+  "id": "pacote-1-12-309-simbolo-nos-feedbacks",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-1.12.308-Feedback-Cor-Do-Tema-Para-Assinar.agenda.json",
-  "sha256": "b077e1f0a38d25fddcbafa5e83522d01859cc1ebffd588fa08d62d7e8c9a366b",
-  "versao_efetiva": "1.12.308",
-  "sequencia_efetiva": 414,
-  "proxima_versao_livre": "1.12.309",
-  "proxima_sequencia_livre": 415,
-  "impressao": "e10be94efe74eb42b15612efb3064c95f06d2587b8a4f543f96ab62104774dde"
+  "arquivo": "AgendaPersonal-1.12.309-Simbolo-Feedback-Para-Assinar.agenda.json",
+  "sha256": "8bdf9e4ffa67bf3949355728a8ace532ab0ad89df89ef94d2fae7e8d2663be07",
+  "versao_efetiva": "1.12.309",
+  "sequencia_efetiva": 415,
+  "proxima_versao_livre": "1.12.310",
+  "proxima_sequencia_livre": 416,
+  "impressao": "32fe4eb5c7efdd87f16f58989f7ad44435deea7458ea9927e0881231b1ca5c57"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -57,6 +57,7 @@
   "AgendaPersonal-1.12.307-Carga-Da-Ficha-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.308-Feedback-Cor-Do-Tema-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.309-Simbolo-Feedback-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.310-Sons-E-Alertas-Para-Assinar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
   "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
@@ -483,7 +484,7 @@
     "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (23/11/2026, ~07:30, pela pergunta no app); merge 301cb37 (PR #45) feito pelo Claude depois do CI verde",
     "assinado": "sim: execução 45166321377 (conferência antes de assinar aprovada, \"Assinar e verificar com a chave oficial\" ok), artefato 14813604551; pré-lançamento conteudo-45166321377-1 (arquivo assinado SHA-256 398902bc3ea0e5955cd6c754352def4a829be8dcc9f05d96f4d960d4d6c6b1e9; sem a assinatura, idêntico ao proposto)",
     "publicado": "não",
-    "instalado": "não",
+    "instalado": "não separadamente: o Tiago instalou o 1.12.309, que inclui este pacote (24/11/2026)",
     "validado": "não"
    }
   },
@@ -500,7 +501,7 @@
     "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (23/11/2026, ~09:20, pela pergunta no app); merge 9b0e795 (PR #46) feito pelo Claude depois do CI verde",
     "assinado": "sim: execução 45173739915 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14816934064; pré-lançamento conteudo-45173739915-1 (arquivo assinado SHA-256 6babccbaeae6f37e1bdf7e86d1de3b269988536bdae30ba444065e757cc3ad56; sem a assinatura, idêntico ao proposto)",
     "publicado": "não",
-    "instalado": "não",
+    "instalado": "não separadamente: o Tiago instalou o 1.12.309, que inclui este pacote (24/11/2026)",
     "validado": "não"
    }
   },
@@ -517,7 +518,7 @@
     "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (23/11/2026, ~18:40, pela pergunta no app); merge 313332f (PR #47) feito pelo Claude depois do CI verde",
     "assinado": "sim: execução 45281622887 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14869582346; pré-lançamento conteudo-45281622887-1 (arquivo assinado SHA-256 06e394599ab06527b2a06237c0a84351fedf012075a727ad8a32ca6913965932; sem a assinatura, idêntico ao proposto)",
     "publicado": "não",
-    "instalado": "não",
+    "instalado": "não separadamente: o Tiago instalou o 1.12.309, que inclui este pacote (24/11/2026)",
     "validado": "não"
    }
   },
@@ -534,7 +535,7 @@
     "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (23/11/2026, ~21:33, pela pergunta no app); merge 1b15a8f (PR #48) feito pelo Claude depois do CI verde",
     "assinado": "sim: execução 45305916001 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14880817003; pré-lançamento conteudo-45305916001-1 (arquivo assinado SHA-256 239664e10348ff4718af6c0af162b6ec37c82231e0cabcd6a074babf355d6f2b; sem a assinatura, idêntico ao proposto)",
     "publicado": "não",
-    "instalado": "não",
+    "instalado": "não separadamente: o Tiago instalou o 1.12.309, que inclui este pacote (24/11/2026)",
     "validado": "não"
    }
   },
@@ -548,6 +549,23 @@
    "titulo": "Símbolo nos feedbacks",
    "status": {
     "proposto": "sim: gerado pelo Claude em 23/11/2026 (tools/gerar-simbolo-feedback-1.12.309.cjs), pedido do Tiago às 21:36 (\"eles têm que ter o próprio ícone deles\") e escolha dele às ~21:45 (\"Símbolo próprio (Recomendado)\", com o símbolo indo ao Firebase na área do aluno)",
+    "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (23/11/2026, ~23:00, pela pergunta no app); merge 4ba6655 (PR #49) feito pelo Claude depois do CI verde",
+    "assinado": "sim: execução 45316649873 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14885845460; pré-lançamento conteudo-45316649873-1 (arquivo assinado SHA-256 dcebb4705516e9e591495d78f76262a5ea690c80424d6f319aeafe3cf096272c; sem a assinatura, idêntico ao proposto)",
+    "publicado": "não",
+    "instalado": "sim: no aparelho do Tiago (Xiaomi): print do Mais às 23:51 de 23/11/2026 com \"Nome e símbolo dos cartões de feedback.\" (texto que só existe no 1.12.309) e confirmação dele na pergunta do app (\"Sim, instalei\", madrugada de 24/11/2026)",
+    "validado": "não"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.310",
+   "sequencia": 416,
+   "arquivo": "AgendaPersonal-1.12.310-Sons-E-Alertas-Para-Assinar.agenda.json",
+   "sha256": "8a60b5d5c6cde7c0cc944de0a06675f3a278c0fcbe6df0348193bd0d5d75ff19",
+   "origem": "main",
+   "titulo": "Sons e alertas no Mais",
+   "status": {
+    "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-sons-e-alertas-1.12.310.cjs), pedido do Tiago às 23:53 de 23/11 (\"não parece que essas duas opções são a mesma coisa\") e escolha dele na pergunta do app (\"Só Sons e alertas (Recomendado)\")",
     "aprovado": "não",
     "assinado": "não",
     "publicado": "não",
@@ -1124,7 +1142,7 @@
     "vezes": 1
    },
    "ap-feedback-card": {
-    "hash": "d4f26c4bc7a2c8200739471e52b30b26cce50de3fea5f7eac5851d068601e949",
+    "hash": "93919d7a562ac4fbed19c3ff294107bb3b14514ca446bfa72be54956000defb8",
     "area": "geral",
     "vezes": 1
    },
@@ -1158,8 +1176,13 @@
     "area": "geral",
     "vezes": 1
    },
+   "ap-feedback-symbol-student": {
+    "hash": "507873562958d44cc3336d7b2ce3de8db70ec487dd2f4acfcf931ca5a9c2907b",
+    "area": "geral",
+    "vezes": 1
+   },
    "#fora-dos-blocos": {
-    "hash": "26743a3453113e82ef8ee5dddcbb7fb435d4b5d6784de4e3ff8c33e264323c8a",
+    "hash": "cb26d6e50f8d9742ab467145274957e930cebc9fb91f7559f1fa6261a529ae37",
     "area": "geral",
     "vezes": 1
    }
@@ -1811,7 +1834,7 @@
     "vezes": 1
    },
    "ap-feedback-card": {
-    "hash": "d4f26c4bc7a2c8200739471e52b30b26cce50de3fea5f7eac5851d068601e949",
+    "hash": "93919d7a562ac4fbed19c3ff294107bb3b14514ca446bfa72be54956000defb8",
     "area": "evolucao",
     "vezes": 1
    },
@@ -1886,12 +1909,22 @@
     "vezes": 1
    },
    "ap-feedback-theme": {
-    "hash": "d5d0992a3a5bff9e902cc36c4cc501146054e1c79d9efbbcc2e888ccb4283e08",
+    "hash": "fbaa9ec13927cb7d1daccfa2ce4271e1b5e97370f07ab3d511ccdc17ad5e2bcf",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-feedback-symbol-css": {
+    "hash": "6ba679d7996554c6c0e2c703c2c33bb3d9d7af4e474797dc50a6c63d9c1dcdc9",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-feedback-symbol": {
+    "hash": "54913bae96542c99a50cc2f684de1d1b2091ec3baf24131e19ccb05bbda3053c",
     "area": "geral",
     "vezes": 1
    },
    "#fora-dos-blocos": {
-    "hash": "60e41ae0215c4d7cfd4127cd2d435d5a962bfbc69200babe066c21d79415070f",
+    "hash": "c7a5aeb0f33d00bccd65062a3cb577f143baf64394cdae0e7d64d40beb12fcea",
     "area": "geral",
     "vezes": 1
    }
@@ -2892,6 +2925,10 @@
    {
     "hash": "26743a3453113e82ef8ee5dddcbb7fb435d4b5d6784de4e3ff8c33e264323c8a",
     "desde": "1.12.304"
+   },
+   {
+    "hash": "cb26d6e50f8d9742ab467145274957e930cebc9fb91f7559f1fa6261a529ae37",
+    "desde": "1.12.309"
    }
   ],
   "professor.html|ap-native-store": [
@@ -3684,6 +3721,10 @@
    {
     "hash": "d4f26c4bc7a2c8200739471e52b30b26cce50de3fea5f7eac5851d068601e949",
     "desde": "1.12.302"
+   },
+   {
+    "hash": "93919d7a562ac4fbed19c3ff294107bb3b14514ca446bfa72be54956000defb8",
+    "desde": "1.12.309"
    }
   ],
   "professor.html|ap-feedback-teacher": [
@@ -3844,6 +3885,10 @@
    {
     "hash": "60e41ae0215c4d7cfd4127cd2d435d5a962bfbc69200babe066c21d79415070f",
     "desde": "1.12.308"
+   },
+   {
+    "hash": "c7a5aeb0f33d00bccd65062a3cb577f143baf64394cdae0e7d64d40beb12fcea",
+    "desde": "1.12.309"
    }
   ],
   "avaliacoes.html|ap-native-store": [
@@ -4108,6 +4153,10 @@
    {
     "hash": "d4f26c4bc7a2c8200739471e52b30b26cce50de3fea5f7eac5851d068601e949",
     "desde": "1.12.302"
+   },
+   {
+    "hash": "93919d7a562ac4fbed19c3ff294107bb3b14514ca446bfa72be54956000defb8",
+    "desde": "1.12.309"
    }
   ],
   "professor.html|dialog-scroll-lock-pages": [
@@ -4182,6 +4231,28 @@
    {
     "hash": "d5d0992a3a5bff9e902cc36c4cc501146054e1c79d9efbbcc2e888ccb4283e08",
     "desde": "1.12.308"
+   },
+   {
+    "hash": "fbaa9ec13927cb7d1daccfa2ce4271e1b5e97370f07ab3d511ccdc17ad5e2bcf",
+    "desde": "1.12.309"
+   }
+  ],
+  "index.html|ap-feedback-symbol-student": [
+   {
+    "hash": "507873562958d44cc3336d7b2ce3de8db70ec487dd2f4acfcf931ca5a9c2907b",
+    "desde": "1.12.309"
+   }
+  ],
+  "professor.html|ap-feedback-symbol-css": [
+   {
+    "hash": "6ba679d7996554c6c0e2c703c2c33bb3d9d7af4e474797dc50a6c63d9c1dcdc9",
+    "desde": "1.12.309"
+   }
+  ],
+  "professor.html|ap-feedback-symbol": [
+   {
+    "hash": "54913bae96542c99a50cc2f684de1d1b2091ec3baf24131e19ccb05bbda3053c",
+    "desde": "1.12.309"
    }
   ]
  },
@@ -5114,6 +5185,34 @@
     "pacote-1-12-302-nome-nos-feedbacks",
     "pacote-1-12-304-icones-do-perfil-do-aluno",
     "pacote-1-12-308-feedback-na-cor-do-tema"
+   ]
+  },
+  {
+   "id": "pacote-1-12-310-sons-e-alertas-no-mais",
+   "titulo": "Sons e alertas no Mais",
+   "tipo": "pacote-completo",
+   "versao": "1.12.310",
+   "sequencia": 416,
+   "arquivo": "AgendaPersonal-1.12.310-Sons-E-Alertas-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-more-organization",
+     "area": "professor",
+     "antes": "1f49fb62257f94c2054af1499f56d8f9a972f99c8a1423a4cf12e0fbf7476c26",
+     "depois": "445aea0e7b0672c7d58932dd5b28f8f4b5ff350cb38b31c3a3d81d69927d15fc"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "c7a5aeb0f33d00bccd65062a3cb577f143baf64394cdae0e7d64d40beb12fcea",
+     "depois": "9a9708849fb17548474bfc8112328dcd6e1b4e80a1f2252f80b383e805c683aa"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-303-tamanho-das-letras-e-feedback-com-cartoes-proprios",
+    "pacote-1-12-309-simbolo-nos-feedbacks"
    ]
   }
  ],

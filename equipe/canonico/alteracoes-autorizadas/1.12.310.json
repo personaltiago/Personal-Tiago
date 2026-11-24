@@ -1,0 +1,30 @@
+{
+ "versao": "1.12.310",
+ "sequencia": 416,
+ "titulo": "Sons e alertas no Mais",
+ "base": {
+  "referencia": "pacote-1-12-309-simbolo-nos-feedbacks",
+  "impressao": "32fe4eb5c7efdd87f16f58989f7ad44435deea7458ea9927e0881231b1ca5c57"
+ },
+ "pedido": "Tiago, 23/11/2026 23:53, com prints do Mais (\"Sons e alertas\" e \"Configurações\" circulados) e da tela Configurações: \"Dá uma analisada mas não parece que essas duas opções são a mesma coisa\". Na pergunta do app escolheu \"Só Sons e alertas (Recomendado)\": Configurações sai do Mais; a tela passa a se chamar \"Sons e alertas\" e abre no topo; os sons, o despertador e o descanso não mudam.",
+ "aprovado_por": "Pedido específico do Tiago, só sobre o menu Mais e o título da tela. O conteúdo da tela (Despertador e os 5 sons), o descanso do treino, cronômetros, alarmes, notificações, sons, Firebase, alunos, treinos, financeiro, login e mascotes não mudam.",
+ "gerador": "tools/gerar-sons-e-alertas-1.12.310.cjs",
+ "alteracoes": [
+  {
+   "pagina": "professor.html",
+   "id": "ap-more-organization",
+   "antes": "1f49fb62257f94c2054af1499f56d8f9a972f99c8a1423a4cf12e0fbf7476c26",
+   "depois": "445aea0e7b0672c7d58932dd5b28f8f4b5ff350cb38b31c3a3d81d69927d15fc",
+   "motivo": "Só a legenda do cartão Sons e alertas em copies: \"Aulas, descanso e despertador.\" → \"Despertador e sons das aulas e do treino.\", igual ao HTML. A entrada continua (sem ela, o cartão, agora com data-screen=\"settings\", seria renomeado para \"Configurações\" pela regra de reserva do bloco)."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "#fora-dos-blocos",
+   "antes": "c7a5aeb0f33d00bccd65062a3cb577f143baf64394cdae0e7d64d40beb12fcea",
+   "depois": "9a9708849fb17548474bfc8112328dcd6e1b4e80a1f2252f80b383e805c683aa",
+   "motivo": "Três mudanças no HTML do Mais e da tela: (1) sai o cartão \"Configurações\" (button.more-function data-screen=\"settings\"), que abria a mesma tela que \"Sons e alertas\"; nenhum bloco usa esse cartão como âncora (os cartões criados por blocos usam #morePet, conferido); o atalho do menu escondido #proMoreMenu continua. (2) O cartão #moreLessonSounds troca onclick=\"openLessonSoundSettings()\" (que rolava até o som do descanso) e o aria-label antigo por data-screen=\"settings\", abrindo a tela no topo pela navegação de sempre, e o texto vira \"Sons e alertas / Despertador e sons das aulas e do treino.\". (3) O título da tela passa de \"Configurações\" para \"Sons e alertas\" (a descrição continua). Desfeitas essas três mudanças, o texto fora dos blocos é idêntico ao do 1.12.309 (conferido)."
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}
