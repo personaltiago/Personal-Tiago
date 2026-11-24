@@ -2,6 +2,42 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**24/11, 12h (Claude): 1.12.311/417 — aviso de novo cadastro, fase 3: conteúdo (PR, proposto); 1.12.310 assinado.**
+- **1.12.310 assinado:**
+  - Execução 45380753080; artefato 14914356152; pré-lançamento `conteudo-45380753080-1`.
+  - Assinado SHA-256 `5779084a0d9d76e766e1f0f70acbca0d628498304b3ba22977ee55b9a42f4e4c`. Sem a assinatura, é idêntico ao proposto (conferido).
+  - **Referência agora 1.12.310/416; próxima livre 1.12.311/417.** O canônico (instalado) continua 1.12.309.
+- **Pacote:** `AgendaPersonal-1.12.311-Aviso-Cadastro-Para-Assinar.agenda.json`, SHA-256 `e5613f6e85648b3b355eb3fd2c4196613a3d95e509b6369c79447f9e2c2240c7`. Gerador `tools/gerar-aviso-cadastro-1.12.311.cjs`, a partir do 1.12.310 (SHA conferido).
+- **O que muda (só blocos novos):**
+  - `index.html`, `ap-push-avisos`. Só no app do professor com o Android 1.211 ou mais novo:
+    - liga o aviso (`Android.refreshPushToken`) quando o painel fica pronto;
+    - guarda o endereço pela função `registrarAparelho` (POST na função chamável, com o token da conta). Repete só se o endereço mudar ou passar uma semana; guarda uma marca do endereço, não o endereço;
+    - no toque do aviso (`ap-push-open` + `takePushOpen()`), abre o painel e "Alunos para aprovar";
+    - expõe `window.APPushAvisos` (estado, testar, ajustar).
+  - `professor.html`, `ap-push-avisos-teacher`: cartão "Aviso de novo cadastro" em Sons e alertas, logo abaixo do Despertador, fora das abas dos sons, com as mesmas classes dos cartões de som. Tem estado, botão Testar (`testarAviso`) e toque que abre o canal no Android.
+  - Estados do cartão:
+    - Ligado, Ligando…, Sem conexão, Notificações desligadas, Desligado, Fora da tela bloqueada, Silencioso, Não ligado (com o motivo);
+    - Precisa do app 1.211 (sem Testar);
+    - escondido no navegador.
+  - Fora dos blocos: só as marcas dos dois blocos novos (conferido).
+- **Não muda:** despertador, sons, descanso do treino, cronômetros, alarmes, notificações existentes, cadastro do aluno, regras do Firestore, login, financeiro, treinos e mascotes. No app do aluno, no navegador e no APK antigo o bloco não chama o Android nem o Firebase.
+- **Testes:**
+  - `equipe/testes/navegador/aviso-cadastro-311/aviso-cadastro-chrome.cjs`: 57/57. Simula a ponte do Android 1.211 e as funções chamáveis, sem rede.
+    - Cobre: registro com o token da conta, de novo só com endereço novo ou depois de uma semana, sem duplicar; toque abrindo a aprovação (inclusive antes de a conta voltar); estados; Testar (sucesso, não entregue, funções não publicadas, outra conta, sem internet); aluno, APK antigo e navegador parados.
+    - O cartão fica no lugar certo, com as mesmas cores dos outros cartões (tema do Tiago e tema claro), e o resto da tela é idêntico ao do 1.12.310.
+    - O `index.html` real carrega o bloco sem erro.
+  - Verificador `--modo pr`: aprovado. `testar-verificador`: 45/45.
+  - Mecanismo real: candidato aprovado, 11 mantidas / 0 perdidas em todos os estados. `conferir-antes-de-assinar`: aprovada.
+  - Testes oficiais: 18/18. Funcionalidades: aprovado (2 avisos antigos).
+- **Ordem para funcionar no celular:**
+  1. Blaze + `google-services.json` (Tiago).
+  2. Funções publicadas pelo Cloud Shell.
+  3. APK 1.211 oficial instalado.
+  4. 1.12.311 assinado e instalado.
+  5. Testar no Xiaomi, em Sons e alertas.
+  - Sem o APK 1.211, o 1.12.311 só mostra "Precisa do app 1.211" no cartão.
+- **Instalar e reverter:** instalar no lugar do 1.12.310. Para voltar, reinstalar o 1.12.310 assinado (o 1.12.311 só acrescenta os dois blocos).
+
 **24/11, 10h30 (Claude): avisos de cadastro na tela bloqueada. Fase 1: funções do Firebase (PR). Nada publicado no Firebase.**
 - **Pedido:** Tiago, 24/11 10:05, com print da tela bloqueada sem aviso e do sininho com "1". Quando um aluno se cadastrar, avisar fora do app, na tela bloqueada, "para agilizar".
 - **Autorização:** na pergunta do app, ele escolheu "Push com Firebase (Recomendado)". A opção dizia: "Precisa de APK novo e do plano Blaze (cartão, custo esperado R$0). Você autoriza o gatilho e guardar o endereço do seu celular no Firebase". Para publicar, escolheu "Só pelo celular".
