@@ -7,7 +7,6 @@ const crypto = require('node:crypto');
 
 const TEACHER = 'R2EmnDVcvMWt7TjPxOP6DjW1VOn1'; // a conta do professor (a mesma de APStudentModel.TEACHER)
 const COLECAO = 'avisosAparelhos'; // avisosAparelhos/{professor}/aparelhos/{chave}: só as funções gravam e leem
-const CANAL = 'cadastros'; // canal de notificação criado pelo app Android (1.211)
 const TOKEN = /^[A-Za-z0-9_:-]{20,4096}$/;
 const INVALIDOS = new Set([
   'messaging/registration-token-not-registered',
@@ -18,7 +17,7 @@ const INVALIDOS = new Set([
 // Só o primeiro nome vai para a tela bloqueada.
 function primeiroNome(nome) {
   const primeiro = String(nome ?? '').trim().split(/\s+/)[0] || '';
-  return primeiro.replace(/[\u0000-\u001f\u007f]/g, '').slice(0, 40);
+  return Array.from(primeiro.replace(/[\u0000-\u001f\u007f]/g, '')).slice(0, 40).join(''); // corta por letra, sem partir emoji
 }
 
 // O documento novo em usuarios/{uid} é um cadastro de aluno à espera de aprovação?
@@ -32,19 +31,13 @@ function chave(token) {
   return crypto.createHash('sha256').update(String(token)).digest('hex').slice(0, 40);
 }
 
+// Só dados, sem o bloco "notification": o app (PushAvisos, APK 1.211) monta o aviso no canal "Cadastros de alunos" com o app
+// aberto ou fechado. Com "notification", o Firebase mostraria sozinho com o app fechado e o toque recarregaria a agenda sem
+// abrir a lista de aprovação.
 function mensagem(aviso, tokens, aluno) {
-  const data = {tipo: aviso.tipo};
+  const data = {tipo: aviso.tipo, titulo: aviso.titulo, texto: aviso.texto};
   if (aluno) data.aluno = String(aluno);
-  return {
-    tokens,
-    notification: {title: aviso.titulo, body: aviso.texto},
-    data,
-    android: {
-      priority: 'high',
-      ttl: 24 * 60 * 60 * 1000,
-      notification: {channelId: CANAL, tag: aviso.tipo + (aluno ? ':' + aluno : ''), defaultSound: true, visibility: 'private'},
-    },
-  };
+  return {tokens, data, android: {priority: 'high', ttl: 24 * 60 * 60 * 1000}};
 }
 
 function tokensInvalidos(tokens, resposta) {
@@ -74,4 +67,4 @@ function validarAparelho(dados) {
   return {token, plataforma: 'android', versaoApp: String(dados?.versaoApp ?? '').replace(/[^0-9.]/g, '').slice(0, 20)};
 }
 
-module.exports = {TEACHER, COLECAO, CANAL, TOKEN, primeiroNome, novoCadastro, chave, mensagem, tokensInvalidos, aparelhos, enviar, validarAparelho};
+module.exports = {TEACHER, COLECAO, TOKEN, primeiroNome, novoCadastro, chave, mensagem, tokensInvalidos, aparelhos, enviar, validarAparelho};

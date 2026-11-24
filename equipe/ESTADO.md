@@ -2,6 +2,50 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**24/11, 11h (Claude): avisos de cadastro, fase 2 — APK 1.211 com Firebase Cloud Messaging (PR em rascunho). Nenhum APK gerado nem publicado.**
+- **ZIP:** `AgendaPersonal_AndroidStudio_v1.65_contas_convites.zip`, Android 1.211/211. O conteúdo de base dentro do APK continua 1.12.269/375. SHA-256 `edf403d91a306026266ba2b1fec2968786aefd707f720bffd1089146acc38069`, com 162 fontes.
+- **O que muda no APK:**
+  - `PushAvisos.java` (novo):
+    - Canal "Cadastros de alunos" (`cadastros`): importância alta e privado na tela bloqueada. A versão pública do aviso não leva o nome do aluno.
+    - O toque abre o app com `NEW_TASK|CLEAR_TOP|SINGLE_TOP`, sem recarregar a agenda se ela já estiver aberta. Leva os extras `agenda_aviso_tipo` e `agenda_aviso_aluno`.
+    - O endereço de push fica em `agenda_push_v1`. Um erro passageiro não apaga um endereço que funciona.
+    - Também dá o estado para "Sons e alertas" e abre as configurações do canal.
+  - `AgendaMessagingService.java` (novo): recebe a mensagem do Firebase e chama o `PushAvisos`.
+  - `MainActivity`:
+    - cria o canal;
+    - guarda a abertura pelo aviso e avisa o conteúdo (evento `ap-push-open`), que busca com `takePushOpen()`;
+    - ponte: `getPushVersion` (1), `getPushStatus`, `getPushToken`, `refreshPushToken` (evento `ap-push-token`), `openPushSettings`.
+  - Manifesto:
+    - serviço não exportado, com `MESSAGING_EVENT`;
+    - `firebase_messaging_auto_init_enabled=false`: nos celulares dos alunos o Firebase Messaging fica parado e só liga quando o conteúdo do professor pede;
+    - ícone `ic_stat_cadastro`, o mesmo desenho do botão Cadastro, em branco.
+  - `app/build.gradle`:
+    - Firebase BoM 33.13.0 + `firebase-messaging`.
+    - Lê `app/google-services.json` sem o plugin e confere projeto, remetente, id do app e chave.
+    - Sem o arquivo, o APK de teste compila com o aviso desligado e o oficial (`assembleRelease`) é barrado.
+  - `tools/verify_apk.py`: o APK oficial precisa ter o serviço e a configuração do Firebase.
+  - Não muda: alarmes, descanso, cronômetros, notificações que já existem, login, financeiro e dados de alunos. São 13 arquivos do ZIP: 4 novos e 9 alterados, sem nenhum desses.
+- **Funções (fase 1, ainda não publicadas):**
+  - A mensagem passou a ir só com dados (tipo, título, texto, aluno). Com o bloco "notification", o Firebase mostraria o aviso sozinho com o app fechado, e o toque recarregaria a agenda sem abrir a aprovação.
+  - `primeiroNome` agora corta por letra, sem partir emoji.
+  - `npm test`: 9/9.
+- **Testes:**
+  - `tests/verify_push_avisos.py` (novo): 45 verificações com as classes reais e Android/Firebase de mentira. 6 mutações propositais foram reprovadas.
+  - `tests/run_all.py`: passou completo.
+  - Leitura do `google-services.json` no Gradle 8.14 local, em 5 casos: sem arquivo (teste passa, oficial barrado), válido com outro app junto, projeto errado e sem o app do pacote.
+  - ZIP conferido.
+  - Testes oficiais: 18/18, com a referência e com o 1.12.310.
+  - Mecanismo real: 211 verificações. Verificador: 45/45. Funcionalidades: aprovado (2 avisos antigos).
+  - Compilação com o SDK real: CI `compilar-apk-teste.yml` deste PR. Teste no aparelho: só depois do APK oficial, pelo botão "Testar aviso" (fase 3).
+- **Falta para o APK oficial:**
+  1. `app/google-services.json`, do registro do app Android no Firebase (Tiago).
+  2. PR com o arquivo e "Pode juntar".
+  3. Autorização do Tiago para rodar "Gerar e publicar APK".
+- **Instalar e reverter:**
+  - Instala por cima, com a mesma assinatura.
+  - O Android não aceita versão menor por cima. Para voltar, reverte-se o ZIP na `main` e gera-se um APK novo (código de versão maior).
+  - Para só calar o aviso, basta desligar o canal "Cadastros de alunos".
+
 **24/11, 10h30 (Claude): avisos de cadastro na tela bloqueada. Fase 1: funções do Firebase (PR). Nada publicado no Firebase.**
 - **Pedido:** Tiago, 24/11 10:05, com print da tela bloqueada sem aviso e do sininho com "1". Quando um aluno se cadastrar, avisar fora do app, na tela bloqueada, "para agilizar".
 - **Autorização:** na pergunta do app, ele escolheu "Push com Firebase (Recomendado)". A opção dizia: "Precisa de APK novo e do plano Blaze (cartão, custo esperado R$0). Você autoriza o gatilho e guardar o endereço do seu celular no Firebase". Para publicar, escolheu "Só pelo celular".

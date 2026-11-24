@@ -19,7 +19,7 @@ Grupo de funções `avisos`, em `functions/`, com Node 22, firebase-functions 7 
 
 **Como o aviso aparece:**
 - Só o primeiro nome do aluno vai para a notificação.
-- Usa o canal `cadastros` do app Android, a partir do APK 1.211.
+- Manda só dados (tipo, título, texto, aluno). O app Android 1.211 monta o aviso no canal "Cadastros de alunos" e o toque abre "Alunos para aprovar".
 - Tem prioridade alta e visibilidade "privada": se o celular estiver configurado para esconder conteúdo sensível, a tela bloqueada esconde o texto.
 
 **Onde os dados ficam:**
