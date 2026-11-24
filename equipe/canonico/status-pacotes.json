@@ -253,8 +253,8 @@
   },
   "1.12.313": {
    "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-aviso-relogio-1.12.313.cjs), pedido do Tiago às 15:17 e 15:54 (Smartwatch \"para vários modelos\"; os alunos sem o cartão) e escolha dele na pergunta do app (\"Avisos em qualquer relógio (Recomendado)\"); precisa do APK 1.212 (PR #57)",
-   "aprovado": "não",
-   "assinado": "não",
+   "aprovado": "sim: o Tiago escolheu \"Pode juntar e gerar (Recomendado)\" (24/11/2026, pergunta no app, junto com o #55 e o #57); merge ce732ba (PR #58) feito pelo Claude depois do CI verde",
+   "assinado": "sim: execução 45497636418 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14968419737; pré-lançamento conteudo-45497636418-1 (arquivo assinado SHA-256 9ddd17ffe0fae1b8d51bd7282a5040b7458c74a8d6d5869a76f46c5bf191f3b6; sem a assinatura, idêntico ao proposto). Precisa do APK 1.212 (release android-1.212-conteudo-1.12.269-45496896284)",
    "publicado": "não",
    "instalado": "não",
    "validado": "não"
