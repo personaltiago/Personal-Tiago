@@ -11,15 +11,15 @@
   "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: confirmação dele por escrito (\"Deu certo\", 22/11/2026 15:30, depois de receber o link do 1.12.304 assinado), sem print. O 1.12.302 e o 1.12.303 não foram instalados separadamente: o 1.12.304 inclui os dois. Antes: 1.12.301 (21/11 18:37)."
  },
  "referencia": {
-  "id": "pacote-1-12-306-arquivar-sozinho-quem-nao-paga",
+  "id": "pacote-1-12-307-carga-da-ficha-atualizada-pelo-treino",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-1.12.306-Arquivar-Sem-Pagamento-Para-Assinar.agenda.json",
-  "sha256": "e9c603aef95c53349efe402c13549c40e3ad4f1b5548c87e1ae5b5ee9082845e",
-  "versao_efetiva": "1.12.306",
-  "sequencia_efetiva": 412,
-  "proxima_versao_livre": "1.12.307",
-  "proxima_sequencia_livre": 413,
-  "impressao": "86c88500420081f61453e33a57d5d86f8942c23f8c99c208596762634e5d36a1"
+  "arquivo": "AgendaPersonal-1.12.307-Carga-Da-Ficha-Para-Assinar.agenda.json",
+  "sha256": "59e739f68b0a71bf7b7a97041b12a047a40106cf44f6b9cd2e8be20d77841119",
+  "versao_efetiva": "1.12.307",
+  "sequencia_efetiva": 413,
+  "proxima_versao_livre": "1.12.308",
+  "proxima_sequencia_livre": 414,
+  "impressao": "7d528456add0730e3c5866dc99da505b9e616079565c0ae027a7e24f830c34e9"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -55,6 +55,7 @@
   "AgendaPersonal-1.12.305-Arquivado-Fora-Da-Agenda-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.306-Arquivar-Sem-Pagamento-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.307-Carga-Da-Ficha-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.308-Feedback-Cor-Do-Tema-Para-Assinar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
   "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
@@ -512,6 +513,23 @@
    "titulo": "Carga da ficha atualizada pelo treino",
    "status": {
     "proposto": "sim: gerado pelo Claude em 23/11/2026 (tools/gerar-carga-da-ficha-1.12.307.cjs), pedido do Tiago às 17:41 (\"Não tá atualizando os pesos\") e escolhas dele às ~17:50 (\"Atualizar a ficha\"; treinos registrados pelos dois)",
+    "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (23/11/2026, ~18:40, pela pergunta no app); merge 313332f (PR #47) feito pelo Claude depois do CI verde",
+    "assinado": "sim: execução 45281622887 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14869582346; pré-lançamento conteudo-45281622887-1 (arquivo assinado SHA-256 06e394599ab06527b2a06237c0a84351fedf012075a727ad8a32ca6913965932; sem a assinatura, idêntico ao proposto)",
+    "publicado": "não",
+    "instalado": "não",
+    "validado": "não"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.308",
+   "sequencia": 414,
+   "arquivo": "AgendaPersonal-1.12.308-Feedback-Cor-Do-Tema-Para-Assinar.agenda.json",
+   "sha256": "b077e1f0a38d25fddcbafa5e83522d01859cc1ebffd588fa08d62d7e8c9a366b",
+   "origem": "main",
+   "titulo": "Feedback na cor do tema",
+   "status": {
+    "proposto": "sim: gerado pelo Claude em 23/11/2026 (tools/gerar-feedback-cor-do-tema-1.12.308.cjs), pedido do Tiago às 18:47 (cartão de feedback \"saiu Verde\" e a janela de feedbacks \"só ele tá verde\"; conferir com todas as cores)",
     "aprovado": "não",
     "assinado": "não",
     "publicado": "não",
@@ -1564,6 +1582,11 @@
     "area": "professor",
     "vezes": 1
    },
+   "ap-workout-series-loads": {
+    "hash": "b5c55fc1230f5fc886b771b7a6a53dc99d277640a1b6164f3762d20bd793739a",
+    "area": "geral",
+    "vezes": 1
+   },
    "agenda-drag-reorder-css": {
     "hash": "ca96fc2c71a4111491d586abc39d238f88d405a18718322e1004cbc111d1a694",
     "area": "geral",
@@ -1834,8 +1857,13 @@
     "area": "geral",
     "vezes": 1
    },
+   "ap-workout-load-update": {
+    "hash": "5a17fc1568a76e90826ce1104715f96f0b385dac358fbac24cd2db43b889946a",
+    "area": "geral",
+    "vezes": 1
+   },
    "#fora-dos-blocos": {
-    "hash": "2740a1725ebd2877ce864cd7627123c68239223dc306ba112db1bac63882fc18",
+    "hash": "9a8725bfdd6be4224bf8749501499f7754197aa2b08e2d172de93ed736c79903",
     "area": "geral",
     "vezes": 1
    }
@@ -3780,6 +3808,10 @@
    {
     "hash": "2740a1725ebd2877ce864cd7627123c68239223dc306ba112db1bac63882fc18",
     "desde": "1.12.306"
+   },
+   {
+    "hash": "9a8725bfdd6be4224bf8749501499f7754197aa2b08e2d172de93ed736c79903",
+    "desde": "1.12.307"
    }
   ],
   "avaliacoes.html|ap-native-store": [
@@ -4094,6 +4126,18 @@
    {
     "hash": "5d470f0dc6ec81146ae5c98438a7ce635ffb04a12d42d00f38e37601e2ad77bf",
     "desde": "1.12.306"
+   }
+  ],
+  "professor.html|ap-workout-series-loads": [
+   {
+    "hash": "b5c55fc1230f5fc886b771b7a6a53dc99d277640a1b6164f3762d20bd793739a",
+    "desde": "1.12.307"
+   }
+  ],
+  "professor.html|ap-workout-load-update": [
+   {
+    "hash": "5a17fc1568a76e90826ce1104715f96f0b385dac358fbac24cd2db43b889946a",
+    "desde": "1.12.307"
    }
   ]
  },
@@ -4921,6 +4965,40 @@
    ],
    "depende_de": [
     "pacote-1-12-306-arquivar-sozinho-quem-nao-paga"
+   ]
+  },
+  {
+   "id": "pacote-1-12-308-feedback-na-cor-do-tema",
+   "titulo": "Feedback na cor do tema",
+   "tipo": "pacote-completo",
+   "versao": "1.12.308",
+   "sequencia": 414,
+   "arquivo": "AgendaPersonal-1.12.308-Feedback-Cor-Do-Tema-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-feedback-theme-css",
+     "area": "geral",
+     "antes": null,
+     "depois": "274c335b6ceb884df619331ca8bba72835f32ace30c3b1536182686c8a90a875"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-feedback-theme",
+     "area": "geral",
+     "antes": null,
+     "depois": "d5d0992a3a5bff9e902cc36c4cc501146054e1c79d9efbbcc2e888ccb4283e08"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "9a8725bfdd6be4224bf8749501499f7754197aa2b08e2d172de93ed736c79903",
+     "depois": "60e41ae0215c4d7cfd4127cd2d435d5a962bfbc69200babe066c21d79415070f"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-307-carga-da-ficha-atualizada-pelo-treino"
    ]
   }
  ],

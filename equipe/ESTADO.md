@@ -2,6 +2,42 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**23/11, 19h30 (Claude): 1.12.308/414 — feedback na cor do tema (PR, proposto); 1.12.307 assinado.**
+- **1.12.307 assinado:** o Tiago respondeu "Pode juntar" (~18:40). PR #47 juntado, merge `313332f`.
+  - Execução 45281622887: conferência e assinatura ok; artefato 14869582346; pré-lançamento `conteudo-45281622887-1`.
+  - Arquivo assinado com SHA-256 `06e39459…`; sem a assinatura, idêntico ao proposto. Link mandado ao Tiago.
+  - Instalação não confirmada: o canônico continua 1.12.304.
+  - **Referência agora 1.12.307/413; próxima versão livre 1.12.308/414.**
+- **Pedido do 1.12.308:** Tiago, 18:47, com prints. O cartão de feedback que ele compartilhou no Status "saiu Verde", e na janela "Feedbacks dos alunos" "tem muita azul mas … só ele tá verde". A cor tem que seguir o tema do professor (ou do aluno), conferida com todas as cores.
+- Causa (medida no Chrome): o estilo compartilhado `ap-feedback-css` (igual nos dois apps) usa `--fb-accent:var(--ac-primary,var(--accent,#b6ff26))`.
+  - O app do aluno define `--ac-primary`, então lá o feedback já seguia o tema do aluno.
+  - O do professor chama a cor do tema de `--ac-accent` (AgendaColors) e não tem `--ac-primary` nem `--accent`, então caía no verde `#b6ff26` em todos os temas.
+  - O cartão de imagem do professor copia a cor do título da janela, por isso também saía verde.
+  - Nos temas claros o verde ficava quase ilegível (contraste 1,15 no fundo claro).
+- Gerador `tools/gerar-feedback-cor-do-tema-1.12.308.cjs`, a partir do 1.12.307. SHA-256 `b077e1f0a38d25fddcbafa5e83522d01859cc1ebffd588fa08d62d7e8c9a366b`.
+- Só `professor.html`, em dois blocos novos. O estilo compartilhado não muda (as duas cópias continuam iguais). Fora dos blocos entram só as marcas deles e uma quebra de linha (conferido).
+  - **`ap-feedback-theme-css`**, logo depois do `ap-feedback-css`: nas janelas de feedback do professor, `--fb-accent` passa a ser `--ac-accent`, que o AgendaColors já calcula legível no fundo (claro ou escuro).
+  - **`ap-feedback-theme`**, no fim da página: embrulha `APFeedbackCard.create`/`open`. O cartão usa a cor do tema, clareada só até ler bem no fundo escuro do cartão (contraste ≥ 4,5, a mesma regra do app do aluno). A barra, os títulos e o símbolo TL do cartão acompanham.
+- Dependências: `ap-feedback-css` (a regra do `--fb-accent`), o AgendaColors (`--ac-accent` na paleta), `APFeedbackCard` (`create`/`open`) e a chamada da janela do professor (`APFeedbackCard.open(i,{professional:…})`). O gerador confere todas no 1.12.307.
+- Testes:
+  - verificador (modo pr): aprovado (2 blocos novos e as marcas, autorizados);
+  - teste do verificador: 45/45;
+  - mecanismo real: aprovado (11 mantidas, 0 perdidas);
+  - testes oficiais: 18/18;
+  - funcionalidades: aprovado (os 2 avisos antigos);
+  - conferência antes de assinar: aprovada; raiz: 35 arquivos classificados;
+  - Chrome (`equipe/testes/navegador/feedback-cor-308/`, dados fictícios, toque de celular): 17/17, nos 5 visuais × 24 combinações de cores (120), com a janela aberta como o professor abre (um feedback respondido com avaliação e um aguardando):
+    - no 1.12.307, título e cartão verdes em todas;
+    - no 1.12.308, título = cor do tema em todas;
+    - todo texto na cor do tema (título, filtro ativo, etiqueta Presencial/Online, "Avaliação do professor") com contraste ≥ 4,5 sobre o fundo real em todas (menor: 5,09);
+    - cartão = cor do tema clareada só o necessário, contraste ≥ 4,5, inclusive quando a janela passa verde;
+    - no tema do Tiago (Azul Royal + Preto), janela e cartão `#5f82ff`;
+  - os testes do 1.12.305 (20/20), 1.12.306 (30/30) e 1.12.307 (32/32) também passam com a página do 1.12.308;
+  - sem teste em aparelho.
+- Fica igual: o app do aluno (já seguia o tema dele), o conteúdo dos feedbacks, o envio e as respostas.
+- Observação: o símbolo TL do cartão é fixo. Hoje é o do Tiago; só importa se o app for usado por outro professor.
+- Instalar: depois de assinado, importar na Central (inclui tudo do 1.12.307). Reverter: Central → Restaurar versão anterior (volta o verde).
+
 **23/11, 18h30 (Claude): 1.12.307/413 — carga da ficha atualizada pelo treino (PR, proposto); 1.12.306 assinado.**
 - **1.12.306 assinado:** o Tiago respondeu "Pode juntar" (~09:20). PR #46 juntado, merge `9b0e795`.
   - Execução 45173739915: conferência e assinatura ok; artefato 14816934064; pré-lançamento `conteudo-45173739915-1`.
