@@ -2,6 +2,31 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**24/11, 16h30 (Claude): Smartwatch — avaliação e APK 1.212 com o aviso no relógio (PR em rascunho; precisa do "Pode juntar e gerar" do Tiago).**
+- **Pedido do Tiago (15:17 e 15:54):** voltar ao Smartwatch; "avalie para ver se está funcionando e se não tiver funcionando eu quero que você faça [funcionar] para vários modelos". Na pergunta do app escolheu "Avisos em qualquer relógio (Recomendado)", que dizia "Mexe no aviso do descanso", e respondeu "Não tenho relógio".
+- **Avaliação (evidências):**
+  - Professor: o cartão mostra "Conexão Wear OS indisponível" porque o celular não tem relógio Wear OS (o Google devolve `API_UNAVAILABLE` sem app companheiro nem relógio).
+  - O app do relógio (`wear/`) nunca foi gerado: todos os fluxos compilam só `:app:…` e nenhum dos 75 arquivos das Releases é dele. Ele compila e passa nos próprios testes (PR #56, execução 45476212756, `BUILD SUCCESSFUL`), mas nunca foi instalado num relógio.
+  - Aluno: nunca teve cartão no Mais. Só tem o ícone do relógio no título do treino, que no app web mostra "Instale a nova versão… e a versão Wear OS no relógio". O descanso do aluno é só da página (`restUntil`, com som) e não gera notificação.
+  - Mi Band, Redmi Watch, Xiaomi Watch S, Amazfit, Huawei, Garmin e Apple Watch não instalam app Android; o caminho comum a todos é a notificação do celular, repassada pelo app da marca.
+- **ZIP:** Android 1.212/212, SHA-256 `e926ee9b417566153a41f4cb56a58b1f4b443ec5303782bff67f61eb0b0e24aa`, 166 arquivos (165 fontes no inventário).
+  - Novos: `AvisosRelogio.java`, `AvisoRelogioReceiver.java`, `res/drawable/ic_stat_relogio.xml`, `tests/verify_avisos_relogio.py`.
+  - Alterados: `MainActivity.java` (7 métodos da ponte), `AndroidManifest.xml` (o receptor, não exportado), versão (`build.gradle`, `release.json`, `check_release.cjs`, `package*.json`, `LEIA-ME.txt`), `tools/verify_apk.py` (exige as duas classes), `tests/run_all.py` e `tests/verify_avisos_cadastro.py` (aceita 1.211 ou mais novo).
+- **Como funciona:**
+  - Começa **desligado** (preferência `agenda_avisos_relogio_v1`); quem liga é a pessoa, no cartão Smartwatch do conteúdo 1.12.313.
+  - O conteúdo marca o fim do descanso: `scheduleWatchNotice("professor"|"aluno", horário, {titulo, texto})`. Um aviso por chave; marcar de novo substitui; `cancelWatchNotice` desmarca quando o descanso é parado antes do fim.
+  - O aviso sai por alarme próprio (`setExactAndAllowWhileIdle`; sem "Alarmes e lembretes", `setAndAllowWhileIdle`, com tolerância), mesmo com o app fechado. No disparo, só mostra se o horário ainda é o marcado e o aviso continua ligado.
+  - Canal "Avisos no relógio" (`relogio`): importância alta, **sem som** (o som continua sendo o do descanso), com vibração, privado na tela bloqueada (versão pública sem nome de aluno), some depois de 2 min. Antes de publicar, tira o anterior, para o relógio vibrar de novo.
+  - `testWatchNotice()` manda um aviso de teste depois de 10 s, pelo mesmo caminho (funciona desligado). `getWatchNoticeStatus()` devolve ligado, permissão, canal e alarme exato; `openWatchNoticeSettings()` abre o canal.
+- **Não muda:** `AlarmReceiver`, `AlarmScheduler`, `AlarmStore`, `AlarmStatus`, `AudioSettings`, `BootReceiver`, `WorkoutRestAlarmService`, `LessonTimerOverlayService/Model`, `WatchBridge` e `AvisosCadastro` (SHA-256 iguais ao 1.211, conferidos pelo teste novo). Descanso, som, cartão da tela bloqueada, cronômetro, despertador, Firebase, login, financeiro e o app Wear OS ficam como estão.
+- **Testes:**
+  - `tests/verify_avisos_relogio.py`: 67 verificações com as classes reais e Android de mentira (marcar, substituir, desmarcar, disparo só do marcado, desligar, teste em 10 s, sem alarme exato, Android 11 e 12, recusas, estado e configurações) e as ligações do projeto.
+  - `python3 tests/run_all.py`: aprovado (54 PASS). `node tools/check_release.cjs`: Android 1.212.
+  - No GitHub: "Compilar APK de teste" (compila com o SDK real) roda neste PR.
+- **Limite honesto:** o Tiago não tem relógio. Dá para provar que o celular publica o aviso na hora; a chegada no pulso depende do app da marca e só um relógio de verdade confirma.
+- **Ordem:** juntar este PR e gerar o APK oficial 1.212 (com a autorização do Tiago); depois o conteúdo 1.12.313 (PR seguinte). Sem o conteúdo, o 1.212 não muda nada na tela.
+- **Reverter:** reinstalar o APK 1.211 por cima (mesma assinatura). A preferência e o canal ficam sem uso.
+
 **24/11, 13h (Claude): 1.12.312/418 — aviso de novo cadastro na tela, do jeito local (PR, proposto); 1.12.311 assinado (não instalar).**
 - **Mudança de plano do Tiago:**
   - 11:32: "não faz sentido eu precisar lá dessa parte. Era só o próprio aplicativo notificar" e "é só ele jogar na tela a notificação".
