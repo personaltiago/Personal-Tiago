@@ -1,0 +1,72 @@
+{
+ "versao": "1.12.309",
+ "sequencia": 415,
+ "titulo": "Símbolo nos feedbacks",
+ "base": {
+  "referencia": "pacote-1-12-308-feedback-na-cor-do-tema",
+  "impressao": "e10be94efe74eb42b15612efb3064c95f06d2587b8a4f543f96ab62104774dde"
+ },
+ "pedido": "Tiago, 23/11/2026 21:36, com print do cartão de feedback e o símbolo TL circulado: \"Esse ícone … eu acho que ele já é fixo … onde eu coloco a foto do meu perfil … ele segue aquele lá ou como é que é ou você acha melhor criar um perfil … e aí eu coloco uma foto lá e aí muda ali também … quando eu for para outras pessoas eles têm que ter o próprio ícone deles\". Às ~21:45, na pergunta do app, escolheu \"Símbolo próprio (Recomendado)\": opção na tela Feedback; o app tira o fundo do logo e pinta na cor do tema; sem símbolo, aparecem as iniciais; vale também no cartão do aluno, e ele autoriza mandar o símbolo (poucos KB) ao Firebase.",
+ "aprovado_por": "Pedido específico do Tiago, com autorização expressa para o símbolo ir ao Firebase dentro da área do aluno (area.trainer.symbol, no payload que o app já envia, como o feedbackName do 1.12.302; regras e coleções do Firestore não mudam) e no perfil do professor (state.trainerProfile.feedbackSymbol, que já viaja com o perfil). Sem símbolo enviado, a conta do Tiago continua com o TL; nenhum aluno, treino, financeiro, login, descanso, cronômetro, alarme, notificação ou mascote muda.",
+ "gerador": "tools/gerar-simbolo-feedback-1.12.309.cjs",
+ "alteracoes": [
+  {
+   "pagina": "index.html",
+   "id": "ap-feedback-card",
+   "antes": "d4f26c4bc7a2c8200739471e52b30b26cce50de3fea5f7eac5851d068601e949",
+   "depois": "93919d7a562ac4fbed19c3ff294107bb3b14514ca446bfa72be54956000defb8",
+   "motivo": "Cartão compartilhado, o mesmo texto do professor.html antes e depois: opções novas symbol (PNG só com a forma, até 40 mil caracteres, pintado na cor do cartão; largo fica mais baixo, até 216×54) e initials (selo arredondado na cor do cartão com as iniciais escuras). symbol \"tl\" ou sem as opções: o desenho TL de antes (k), byte a byte. Símbolo inválido e sem iniciais: nada no lugar, nunca o TL. Exporta initials(nome) (primeira e última palavra, sem da/de/do/dos/das/e). Com \"Símbolo nos cartões de feedback\" desligado, continua o nome escrito."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-feedback-card",
+   "antes": "d4f26c4bc7a2c8200739471e52b30b26cce50de3fea5f7eac5851d068601e949",
+   "depois": "93919d7a562ac4fbed19c3ff294107bb3b14514ca446bfa72be54956000defb8",
+   "motivo": "A mesma mudança do index.html (componente compartilhado, texto idêntico nas duas páginas)."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-feedback-theme",
+   "antes": "d5d0992a3a5bff9e902cc36c4cc501146054e1c79d9efbbcc2e888ccb4283e08",
+   "depois": "fbaa9ec13927cb7d1daccfa2ce4271e1b5e97370f07ab3d511ccdc17ad5e2bcf",
+   "motivo": "O embrulho da cor do tema (1.12.308) passa a expor tudo do cartão ({...card, create, open, accent}): lines e symbol tinham ficado de fora no 1.12.308 (ninguém usava, conferido) e o bloco novo precisa de initials. A cor do tema não muda."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-feedback-symbol-css",
+   "antes": null,
+   "depois": "6ba679d7996554c6c0e2c703c2c33bb3d9d7af4e474797dc50a6c63d9c1dcdc9",
+   "motivo": "Bloco novo antes de </body>: estilo do cartão \"Símbolo nos feedbacks\" na tela Feedback (prévia de até 420 px, botões de 48 px, aviso de erro na cor de perigo do tema), no mesmo padrão do \"Nome nos feedbacks\"."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-feedback-symbol",
+   "antes": null,
+   "depois": "54913bae96542c99a50cc2f684de1d1b2091ec3baf24131e19ccb05bbda3053c",
+   "motivo": "Bloco novo antes de </body> (depois do ap-feedback-theme). Tira o fundo da imagem escolhida (transparente, ou de uma cor só pela cor da borda; foto e imagem sem fundo são recusadas com aviso), recorta e guarda só a forma em PNG branco com transparência (até 160 px de altura e 40 mil caracteres) em state.trainerProfile.feedbackSymbol, com prévia (o alto do cartão de verdade), Salvar, Cancelar e Voltar ao padrão; sair da tela descarta a prévia. Embrulha APFeedbackCard (create/open) para o cartão do professor usar o símbolo salvo; sem símbolo, \"tl\" na conta do Tiago (APaccounts.teacherUid igual à conta dele) e iniciais nas outras. Embrulha APStudentModel.makeArea (os 3 lugares que montam a área chamam por esse nome na hora) para a área do aluno levar area.trainer.symbol (o salvo, \"tl\" ou vazio), só se a área continuar com até 620 mil bytes (o limite de envio é 650 mil); senão vai vazio (iniciais). Expõe APFeedbackSymbol (saved, effective, initials, process)."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "#fora-dos-blocos",
+   "antes": "60e41ae0215c4d7cfd4127cd2d435d5a962bfbc69200babe066c21d79415070f",
+   "depois": "c7a5aeb0f33d00bccd65062a3cb577f143baf64394cdae0e7d64d40beb12fcea",
+   "motivo": "O cartão \"Símbolo nos feedbacks\" (HTML estático) logo depois do \"Nome nos feedbacks\" na tela Feedback; o atalho do Mais diz \"Nome e símbolo dos cartões de feedback.\" e a tela \"O nome e o símbolo que aparecem nos cartões de feedback dos seus alunos.\"; as marcas dos dois blocos novos antes de </body>. Desfeitas essas mudanças, o texto fora dos blocos é idêntico ao do 1.12.308 (conferido)."
+  },
+  {
+   "pagina": "index.html",
+   "id": "ap-feedback-symbol-student",
+   "antes": null,
+   "depois": "507873562958d44cc3336d7b2ce3de8db70ec487dd2f4acfcf931ca5a9c2907b",
+   "motivo": "Bloco novo antes de </body>: embrulha APFeedbackCard (create/open) no app do aluno para usar area.trainer.symbol da área recebida (\"tl\", PNG válido de até 40 mil caracteres, ou vazio = iniciais de feedbackName ou do nome do professor). Área sem o campo (professor com o app antigo): nada muda, continua o TL."
+  },
+  {
+   "pagina": "index.html",
+   "id": "#fora-dos-blocos",
+   "antes": "26743a3453113e82ef8ee5dddcbb7fb435d4b5d6784de4e3ff8c33e264323c8a",
+   "depois": "cb26d6e50f8d9742ab467145274957e930cebc9fb91f7559f1fa6261a529ae37",
+   "motivo": "Só a marca do bloco novo (<script id=\"ap-feedback-symbol-student\"></script> e uma quebra de linha antes do último </body>); sem ela, o texto fora dos blocos é idêntico ao do 1.12.308 (conferido)."
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}

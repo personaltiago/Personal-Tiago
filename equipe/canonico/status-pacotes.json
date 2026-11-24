@@ -213,6 +213,14 @@
   },
   "1.12.308": {
    "proposto": "sim: gerado pelo Claude em 23/11/2026 (tools/gerar-feedback-cor-do-tema-1.12.308.cjs), pedido do Tiago às 18:47 (cartão de feedback \"saiu Verde\" e a janela de feedbacks \"só ele tá verde\"; conferir com todas as cores)",
+   "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (23/11/2026, ~21:33, pela pergunta no app); merge 1b15a8f (PR #48) feito pelo Claude depois do CI verde",
+   "assinado": "sim: execução 45305916001 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14880817003; pré-lançamento conteudo-45305916001-1 (arquivo assinado SHA-256 239664e10348ff4718af6c0af162b6ec37c82231e0cabcd6a074babf355d6f2b; sem a assinatura, idêntico ao proposto)",
+   "publicado": "não",
+   "instalado": "não",
+   "validado": "não"
+  },
+  "1.12.309": {
+   "proposto": "sim: gerado pelo Claude em 23/11/2026 (tools/gerar-simbolo-feedback-1.12.309.cjs), pedido do Tiago às 21:36 (\"eles têm que ter o próprio ícone deles\") e escolha dele às ~21:45 (\"Símbolo próprio (Recomendado)\", com o símbolo indo ao Firebase na área do aluno)",
    "aprovado": "não",
    "assinado": "não",
    "publicado": "não",

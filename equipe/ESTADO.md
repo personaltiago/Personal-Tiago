@@ -2,6 +2,51 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**23/11, 23h (Claude): 1.12.309/415 — símbolo nos feedbacks (PR, proposto); 1.12.308 assinado.**
+- **1.12.308 assinado:** o Tiago respondeu "Pode juntar" (~21:33). PR #48 juntado, merge `1b15a8f`.
+  - Execução 45305916001: conferência e assinatura ok; artefato 14880817003; pré-lançamento `conteudo-45305916001-1`.
+  - Arquivo assinado com SHA-256 `239664e1…`; sem a assinatura, idêntico ao proposto. Link mandado ao Tiago.
+  - Instalação não confirmada: o canônico continua 1.12.304.
+  - **Referência agora 1.12.308/414; próxima versão livre 1.12.309/415.**
+- **Pedido do 1.12.309:** Tiago, 21:36, com print do cartão e o TL circulado. O ícone é fixo; quando o app for para outros professores, "eles têm que ter o próprio ícone deles".
+  - Às ~21:45 escolheu "Símbolo próprio (Recomendado)": opção na tela Feedback; o app tira o fundo do logo e pinta na cor do tema; sem símbolo, iniciais; vale no cartão do aluno.
+  - Ele autorizou o símbolo ir ao Firebase (poucos KB) junto com a área do aluno.
+  - Mudança dita a ele antes de começar: na conta dele, sem símbolo enviado, continua o TL (não precisa enviar o arquivo do TL).
+- Como era: o símbolo do cartão era um desenho fixo (o TL) dentro do cartão compartilhado, igual para qualquer professor e para os alunos. A única opção era desligar em Atualizações ("Símbolo nos cartões de feedback"), que troca pelo nome escrito.
+  - Achado: o app já teve "Colocar meu logo" em Personalizar nome e foto, mas o campo está escondido e o bloco `ap-brand-logo-cleanup` (index.html) apaga o logo salvo. Motivo não encontrado; perguntado ao Tiago. O 1.12.309 não usa esse campo.
+- Gerador `tools/gerar-simbolo-feedback-1.12.309.cjs`, a partir do 1.12.308. SHA-256 `8bdf9e4ffa67bf3949355728a8ace532ab0ad89df89ef94d2fae7e8d2663be07`.
+- O que muda:
+  - **`ap-feedback-card`** (as duas páginas, o mesmo texto): opções `symbol` (PNG só com a forma, pintado na cor do cartão; largo fica mais baixo, até 216×54) e `initials` (selo arredondado na cor do cartão, letras escuras). Sem essas opções ou com `symbol:'tl'`, o TL de antes, byte a byte. Exporta `initials(nome)`.
+  - **`ap-feedback-theme`** (1.12.308): o embrulho volta a expor tudo do cartão (`lines`, `symbol`, `initials`); no 308 tinha ficado só create/open/accent (ninguém usava os outros, conferido).
+  - **`ap-feedback-symbol-css`** e **`ap-feedback-symbol`** (professor, novos):
+    - o cartão "Símbolo nos feedbacks" na tela Feedback, com prévia do alto do cartão de verdade, Escolher imagem, Salvar, Cancelar e Voltar ao padrão;
+    - o processamento: fundo transparente ou de uma cor só (pela borda); foto, imagem pequena e arquivo que não é imagem são recusados com aviso; guarda a forma recortada (até 160 px de altura, 40 mil caracteres) em `state.trainerProfile.feedbackSymbol`;
+    - o cartão do professor usa o símbolo salvo; sem símbolo, `'tl'` na conta do Tiago (`APaccounts.teacherUid` igual à conta dele, o mesmo teste do `ap-teacher-sync-core`) e iniciais nas outras;
+    - a área do aluno leva `area.trainer.symbol` (embrulho de `APStudentModel.makeArea`, que os 3 lugares chamam pelo nome na hora), só se a área continuar com até 620 mil bytes (limite de envio 650 mil); senão vai vazio (iniciais).
+  - **`ap-feedback-symbol-student`** (index.html, novo): o cartão do aluno usa o símbolo da área; área sem o campo (professor com o app antigo) continua com o TL.
+  - Fora dos blocos (professor): o cartão novo na tela Feedback e os textos do Mais e da tela citam o símbolo (conferido: desfeitas essas mudanças, idêntico ao 308).
+- Firebase: o campo novo vai dentro do `payload` da área (as regras só conferem as chaves do documento, como no `feedbackName` do 1.12.302) e no perfil do professor que já viaja na sincronização. Regras e coleções não mudam. A primeira sincronização depois de instalar reenvia a área de cada aluno uma vez (agora com `symbol:'tl'`).
+- Dependências: `APFeedbackCard` (create/open), `APTeacherFeatures` (`feedbackSymbol`), `APFeedbackName`, `trainerProfile`, `save()`, `showScreen`/`.screen.active`, `APStudentModel.makeArea`/`assertArea`, `APaccounts.teacherUid` (app principal) e `window.__AP_STUDENT_CONTEXT.area.trainer` (aluno). O gerador confere todas no 1.12.308.
+- Testes:
+  - verificador (modo pr): aprovado (todas as mudanças autorizadas);
+  - teste do verificador: 45/45;
+  - mecanismo real: aprovado (11 mantidas, 0 perdidas);
+  - testes oficiais: 18/18;
+  - funcionalidades: aprovado (os 2 avisos antigos);
+  - conferência antes de assinar: aprovada; raiz: 36 arquivos classificados;
+  - Chrome (`equipe/testes/navegador/simbolo-309/`, dados e logos fictícios desenhados no navegador, toque de celular): 38/38. Cobre:
+    - conta do Tiago sem símbolo: cartão idêntico ao 308 (TL) e área com `'tl'`;
+    - a tela Feedback com o cartão novo; recusas de foto, imagem pequena e arquivo que não é imagem; Cancelar; sair da tela descarta a prévia;
+    - logo JPG com fundo branco: Salvar, fundo removido, cartão e área com o símbolo, na cor do tema (Azul Royal → `#5f82ff`);
+    - símbolo desligado em Atualizações → nome escrito; Voltar ao padrão → TL;
+    - outra conta: iniciais (MS) no cartão, na tela e na área;
+    - limite da área: 614 mil bytes leva o símbolo; 626 mil fica sem e continua válida;
+    - aluno: app antigo (308) ignora o campo; 309 sem o campo ou com `'tl'` idêntico ao 308; com o símbolo, o mesmo do professor na cor do tema do aluno; outra conta e símbolo inválido → iniciais, nunca o TL;
+  - os testes do 1.12.305 (20/20), 306 (30/30), 307 (32/32) e 308 (17/17) também passam com a página do 1.12.309;
+  - sem teste em aparelho.
+- Limites: aluno com o app antigo continua vendo o TL até atualizar. O símbolo é uma forma de uma cor só: detalhes coloridos do logo viram a mesma cor.
+- Instalar: depois de assinado, importar na Central (inclui tudo do 1.12.308). Reverter: Central → Restaurar versão anterior (volta o TL fixo para todos).
+
 **23/11, 19h30 (Claude): 1.12.308/414 — feedback na cor do tema (PR, proposto); 1.12.307 assinado.**
 - **1.12.307 assinado:** o Tiago respondeu "Pode juntar" (~18:40). PR #47 juntado, merge `313332f`.
   - Execução 45281622887: conferência e assinatura ok; artefato 14869582346; pré-lançamento `conteudo-45281622887-1`.
