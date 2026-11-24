@@ -2,6 +2,25 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**24/11, 10h30 (Claude): avisos de cadastro na tela bloqueada. Fase 1: funções do Firebase (PR). Nada publicado no Firebase.**
+- **Pedido:** Tiago, 24/11 10:05, com print da tela bloqueada sem aviso e do sininho com "1". Quando um aluno se cadastrar, avisar fora do app, na tela bloqueada, "para agilizar".
+- **Autorização:** na pergunta do app, ele escolheu "Push com Firebase (Recomendado)". A opção dizia: "Precisa de APK novo e do plano Blaze (cartão, custo esperado R$0). Você autoriza o gatilho e guardar o endereço do seu celular no Firebase". Para publicar, escolheu "Só pelo celular".
+- **Plano, em três partes:**
+  1. Funções do Firebase (este PR, pasta `firebase/`).
+  2. APK 1.211 com Firebase Cloud Messaging: canal "cadastros", endereço de push, toque abrindo "Alunos para aprovar".
+  3. Conteúdo 1.12.311: o app registra o celular e ganha o botão "Testar aviso" em Sons e alertas.
+- **Fase 1, `firebase/functions` (grupo `avisos`, Node 22, firebase-functions 7.4, firebase-admin 14.5):**
+  - `avisoNovoCadastro`: gatilho em `usuarios/{uid}` criado, com `perfil: 'aluno'`, `ativo: false` e o professor. Manda "Novo cadastro" e "Primeiro-nome se cadastrou. Toque para aprovar." Só o primeiro nome; prioridade alta; visibilidade privada.
+  - `registrarAparelho` e `testarAviso`: chamadas do app em `southamerica-east1`; só aceitam a conta do professor.
+  - Os endereços ficam em `avisosAparelhos/{professor}/aparelhos/{sha256}`, com a escrita feita só pelas funções. Endereço inválido é apagado sozinho.
+  - Não mexe nas regras do Firestore nem em outras funções.
+- **Publicação:** pelo Cloud Shell do console do Firebase, que já entra logado, com um comando só (`firebase/LEIA-ME.md`). O `publicar.sh` descobre a região do banco, liga o FCM e publica com `--force` (limpeza das imagens antigas).
+- **Testes:** `npm test` passou 9/9, sem rede (regras, envio com Firebase de mentira, limpeza de endereços, recusa de quem não é o professor, as três funções como o Firebase as enxerga). Workflow novo `testar-avisos-firebase.yml`. Sem teste no Firebase de verdade nem no aparelho.
+- **Falta do Tiago:**
+  1. ativar o Blaze, com alerta de R$ 10;
+  2. registrar o app Android (`com.tiagolima.agendapersonal`) no Firebase e mandar o `google-services.json`;
+  3. depois do merge, colar o comando no Cloud Shell.
+
 **24/11, 5h (Claude): 1.12.310/416 — "Sons e alertas" no Mais (PR, proposto); 1.12.309 assinado e INSTALADO (canônico).**
 - **1.12.309 assinado:** o Tiago respondeu "Pode juntar" (~23:00). PR #49 juntado, merge `4ba6655`.
   - Execução 45316649873: conferência e assinatura ok; artefato 14885845460; pré-lançamento `conteudo-45316649873-1`.
