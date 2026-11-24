@@ -28,6 +28,9 @@
 - **Funções (fase 1, ainda não publicadas):**
   - A mensagem passou a ir só com dados (tipo, título, texto, aluno). Com o bloco "notification", o Firebase mostraria o aviso sozinho com o app fechado, e o toque recarregaria a agenda sem abrir a aprovação.
   - `primeiroNome` agora corta por letra, sem partir emoji.
+  - `publicar.sh` ganhou o passo 0, só de leitura. Se a API do Gemini (`generativelanguage`) ou do Vertex AI (`aiplatform`) estiver ligada, ele para e mostra o comando para desligar.
+    - Motivo: com o Blaze, as chaves públicas do app podem ser usadas por terceiros nessas APIs (vários casos de cobrança indevida em 2026). O app não usa nenhuma delas.
+    - Testado com um `gcloud` de mentira em 4 casos: sem IA, com Gemini, com Gemini e Vertex, e `gcloud` falhando.
   - `npm test`: 9/9.
 - **Testes:**
   - `tests/verify_push_avisos.py` (novo): 47 verificações com as classes reais e Android/Firebase de mentira. 6 mutações propositais foram reprovadas.
