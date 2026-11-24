@@ -19,8 +19,8 @@ Grupo de funções `avisos`, em `functions/`, com Node 22, firebase-functions 7 
 
 **Como o aviso aparece:**
 - Só o primeiro nome do aluno vai para a notificação.
-- Manda só dados (tipo, título, texto, aluno). O app Android 1.211 monta o aviso no canal "Cadastros de alunos" e o toque abre "Alunos para aprovar".
-- Vai com prioridade alta. O app mostra o aviso como "privado": se o celular esconde conteúdo sensível, a tela bloqueada mostra "Um aluno se cadastrou", sem o nome.
+- Usa o canal `cadastros` do app Android, a partir do APK 1.211.
+- Tem prioridade alta e visibilidade "privada": se o celular estiver configurado para esconder conteúdo sensível, a tela bloqueada esconde o texto.
 
 **Onde os dados ficam:**
 - Os endereços de push ficam em `avisosAparelhos/{professor}/aparelhos/{sha256 do endereço}`, com o endereço, a plataforma, a versão do app e a data.
@@ -44,8 +44,7 @@ Pré-requisito: o projeto `agenda-personal-bdb58` precisa estar no plano Blaze.
 git clone --depth 1 --filter=blob:none --sparse https://github.com/personaltiago/Personal-Tiago.git ap && cd ap && git sparse-checkout set firebase && bash firebase/publicar.sh
 ```
 
-O `publicar.sh` faz cinco coisas:
-0. Confere, só lendo, se alguma API de IA do Google (Gemini ou Vertex AI) está ligada no projeto. Se estiver, para e mostra o comando para desligar (o app não usa nenhuma).
+O `publicar.sh` faz quatro coisas:
 1. Descobre a região do banco, porque o gatilho precisa ficar nela.
 2. Liga a API do Firebase Cloud Messaging.
 3. Instala as bibliotecas.
@@ -58,13 +57,7 @@ Na primeira vez, o Firebase pode pedir para aguardar alguns minutos enquanto lib
 - **Push (Firebase Cloud Messaging):** gratuito.
 - **Funções:** 2 milhões de execuções gratuitas por mês. Um cadastro gera uma execução, e cada vez que o app registra o aparelho gera outra.
 - **Armazenamento das imagens:** 500 MB gratuitos, e a limpeza automática fica ligada.
-- **Total:** R$ 0 esperado. Recomendação: alerta de orçamento de R$ 10 no Google Cloud. O alerta avisa, mas não corta o gasto.
-
-**Chaves e cobrança:**
-- As chaves de API do Firebase vão dentro do app (a do site e a do Android). Isso é normal: elas identificam o projeto, não dão acesso aos dados, que continuam protegidos pelas regras e pelo login.
-- O risco é outro. Com o Blaze, se uma API paga que aceita essas chaves estiver ligada, terceiros podem usá-la e gerar cobrança. O caso mais comum é o Gemini: em 2026 houve vários casos de contas cobradas assim.
-- Por isso o passo 0 do `publicar.sh` para se o Gemini ou o Vertex AI estiverem ligados.
-- Restringir as chaves no Google Cloud (Credenciais → Restrições de API) também protege. Não mude sem conferir: uma restrição errada derruba o login.
+- **Total:** R$ 0 esperado. Recomendação: alerta de orçamento de R$ 10 no Google Cloud.
 
 ## Remover
 

@@ -2,52 +2,77 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
-**24/11, 11h (Claude): avisos de cadastro, fase 2 — APK 1.211 com Firebase Cloud Messaging (PR #52, rascunho). Nenhum APK gerado nem publicado.**
-- **ZIP:** `AgendaPersonal_AndroidStudio_v1.65_contas_convites.zip`, Android 1.211/211. O conteúdo de base dentro do APK continua 1.12.269/375. SHA-256 `495b070e0b49340c273ec261b0cd0ba1eeb69405918e89aafc1c8032a913d3e7`, com 162 fontes.
+**24/11, 12h30 (Claude): aviso de cadastro muda de plano — APK 1.211 com aviso local, sem Firebase no Android (PR #52, rascunho). Nenhum APK gerado.**
+- **Decisão do Tiago:**
+  - 11:32: "não faz sentido eu precisar lá dessa parte. Era só o próprio aplicativo notificar".
+  - Na pergunta do app escolheu "Sim, do meu jeito (Recomendado)". A pergunta dizia: "Funciona com o app aberto ou em segundo plano, mas não se o Xiaomi tiver fechado o app".
+- **Como funciona:**
+  - O conteúdo (1.12.312, próximo PR) acompanha os cadastros à espera de aprovação, como o sininho.
+  - Quando chega um novo com o app em segundo plano ou o celular bloqueado, ele pede ao Android para mostrar a notificação.
+  - Se o celular fechou o app, não há aviso: o cadastro aparece ao abrir, como hoje.
+- **ZIP:** Android 1.211/211, SHA-256 `034db1dcac878a00b3792c190651bef89c8fc8eaef49923f9f1166177e59e17d`, 161 fontes.
+  - Mudam 11 arquivos: 3 novos e 8 alterados.
+  - O manifesto é idêntico ao do 1.210. O `build.gradle` só muda a versão.
 - **O que muda no APK:**
-  - `PushAvisos.java` (novo):
-    - Canal "Cadastros de alunos" (`cadastros`): importância alta e privado na tela bloqueada. A versão pública do aviso não leva o nome do aluno.
-    - O toque abre o app com `NEW_TASK|CLEAR_TOP|SINGLE_TOP`, sem recarregar a agenda se ela já estiver aberta. Leva os extras `agenda_aviso_tipo` e `agenda_aviso_aluno`.
-    - O endereço de push fica em `agenda_push_v1`. Um erro passageiro não apaga um endereço que funciona.
-    - Também dá o estado para "Sons e alertas" (com a versão do APK) e abre as configurações do canal.
-  - `AgendaMessagingService.java` (novo): recebe a mensagem do Firebase e chama o `PushAvisos`.
+  - `AvisosCadastro.java` (novo):
+    - canal "Cadastros de alunos" (`cadastros`): importância alta, privado na tela bloqueada, versão pública sem o nome;
+    - mostra o aviso que o conteúdo pede (JSON de até 2000 caracteres, só os tipos "cadastro" e "teste");
+    - toque com `NEW_TASK|CLEAR_TOP|SINGLE_TOP` e extras `agenda_aviso_tipo`/`agenda_aviso_aluno`;
+    - estado para "Sons e alertas" e abertura do canal.
   - `MainActivity`:
     - cria o canal;
-    - guarda a abertura pelo aviso e avisa o conteúdo (evento `ap-push-open`), que busca com `takePushOpen()`;
-    - ponte: `getPushVersion` (1), `getPushStatus`, `getPushToken`, `refreshPushToken` (evento `ap-push-token`), `openPushSettings`.
-  - Manifesto:
-    - serviço não exportado, com `MESSAGING_EVENT`;
-    - `firebase_messaging_auto_init_enabled=false`: nos celulares dos alunos o Firebase Messaging fica parado e só liga quando o conteúdo do professor pede;
-    - ícone `ic_stat_cadastro`, o mesmo desenho do botão Cadastro, em branco.
-  - `app/build.gradle`:
-    - Firebase BoM 33.13.0 + `firebase-messaging`.
-    - Lê `app/google-services.json` sem o plugin e confere projeto, remetente, id do app e chave.
-    - Sem o arquivo, o APK de teste compila com o aviso desligado e o oficial (`assembleRelease`) é barrado.
-  - `tools/verify_apk.py`: o APK oficial precisa ter o serviço e a configuração do Firebase.
-  - Não muda: alarmes, descanso, cronômetros, notificações que já existem, login, financeiro e dados de alunos. São 13 arquivos do ZIP: 4 novos e 9 alterados, sem nenhum desses.
-- **Funções (fase 1, ainda não publicadas):**
-  - A mensagem passou a ir só com dados (tipo, título, texto, aluno). Com o bloco "notification", o Firebase mostraria o aviso sozinho com o app fechado, e o toque recarregaria a agenda sem abrir a aprovação.
-  - `primeiroNome` agora corta por letra, sem partir emoji.
-  - `publicar.sh` ganhou o passo 0, só de leitura. Se a API do Gemini (`generativelanguage`) ou do Vertex AI (`aiplatform`) estiver ligada, ele para e mostra o comando para desligar.
-    - Motivo: com o Blaze, as chaves públicas do app podem ser usadas por terceiros nessas APIs (vários casos de cobrança indevida em 2026). O app não usa nenhuma delas.
-    - Testado com um `gcloud` de mentira em 4 casos: sem IA, com Gemini, com Gemini e Vertex, e `gcloud` falhando.
-  - `npm test`: 9/9.
+    - guarda a abertura pelo aviso (`ap-notice-open` + `takeNoticeOpen()`);
+    - ponte: `getNoticeVersion` (1), `getNoticeStatus`, `showRegistrationNotice`, `openNoticeSettings`.
+  - Ícone `ic_stat_cadastro`. O `verify_apk.py` confere o `AvisosCadastro` no APK oficial.
+  - Não muda: alarmes, descanso, cronômetros, notificações que já existem, login, financeiro e dados de alunos. Não há Firebase no Android nem servidor.
+- **Push guardado (para o aviso com o app fechado):**
+  - Fica no branch `claude/aviso-cadastro-push-guardado` (e7e8ab7): APK com FCM, mensagem só com dados e passo 0 do `publicar.sh`.
+  - As funções do PR #51 estão na `main`, mas não foram publicadas e não são usadas.
+- **1.12.311 (assinado, não instalado):** usa a ponte do push, que o 1.211 local não tem; o cartão diria "Precisa do app 1.211". Não instalar. O 1.12.312 troca os dois blocos dele pelo jeito local.
 - **Testes:**
-  - `tests/verify_push_avisos.py` (novo): 47 verificações com as classes reais e Android/Firebase de mentira. 6 mutações propositais foram reprovadas.
-  - `tests/run_all.py`: passou completo.
-  - Leitura do `google-services.json` no Gradle 8.14 local, em 5 casos: sem arquivo (teste passa, oficial barrado), válido com outro app junto, projeto errado e sem o app do pacote.
-  - ZIP conferido.
-  - Testes oficiais: 18/18, com a referência e com o 1.12.310.
-  - Mecanismo real: 211 verificações. Verificador: 45/45. Funcionalidades: aprovado (2 avisos antigos).
-  - Compilação com o SDK real: CI `compilar-apk-teste.yml` do PR #52 passou (`BUILD SUCCESSFUL`, `versionCode=211`, `versionName=1.211`). Teste no aparelho: só depois do APK oficial, pelo botão "Testar aviso" (fase 3).
-- **Falta para o APK oficial:**
-  1. `app/google-services.json`, do registro do app Android no Firebase (Tiago).
-  2. PR com o arquivo e "Pode juntar".
-  3. Autorização do Tiago para rodar "Gerar e publicar APK".
+  - `tests/verify_avisos_cadastro.py` (novo): 43 verificações com a classe real. 6 mutações propositais foram reprovadas.
+  - `tests/run_all.py` completo e ZIP conferido.
+  - Compilação com o SDK real: CI deste PR.
 - **Instalar e reverter:**
   - Instala por cima, com a mesma assinatura.
-  - O Android não aceita versão menor por cima. Para voltar, reverte-se o ZIP na `main` e gera-se um APK novo (código de versão maior).
-  - Para só calar o aviso, basta desligar o canal "Cadastros de alunos".
+  - Para voltar: reverter o ZIP na `main` e gerar um APK novo.
+  - Para calar o aviso: desligar o canal.
+
+**24/11, 12h (Claude): 1.12.311/417 — aviso de novo cadastro, fase 3: conteúdo (PR, proposto); 1.12.310 assinado.**
+- **1.12.310 assinado:**
+  - Execução 45380753080; artefato 14914356152; pré-lançamento `conteudo-45380753080-1`.
+  - Assinado SHA-256 `5779084a0d9d76e766e1f0f70acbca0d628498304b3ba22977ee55b9a42f4e4c`. Sem a assinatura, é idêntico ao proposto (conferido).
+  - **Referência agora 1.12.310/416; próxima livre 1.12.311/417.** O canônico (instalado) continua 1.12.309.
+- **Pacote:** `AgendaPersonal-1.12.311-Aviso-Cadastro-Para-Assinar.agenda.json`, SHA-256 `e5613f6e85648b3b355eb3fd2c4196613a3d95e509b6369c79447f9e2c2240c7`. Gerador `tools/gerar-aviso-cadastro-1.12.311.cjs`, a partir do 1.12.310 (SHA conferido).
+- **O que muda (só blocos novos):**
+  - `index.html`, `ap-push-avisos`. Só no app do professor com o Android 1.211 ou mais novo:
+    - liga o aviso (`Android.refreshPushToken`) quando o painel fica pronto;
+    - guarda o endereço pela função `registrarAparelho` (POST na função chamável, com o token da conta). Repete só se o endereço mudar ou passar uma semana; guarda uma marca do endereço, não o endereço;
+    - no toque do aviso (`ap-push-open` + `takePushOpen()`), abre o painel e "Alunos para aprovar";
+    - expõe `window.APPushAvisos` (estado, testar, ajustar).
+  - `professor.html`, `ap-push-avisos-teacher`: cartão "Aviso de novo cadastro" em Sons e alertas, logo abaixo do Despertador, fora das abas dos sons, com as mesmas classes dos cartões de som. Tem estado, botão Testar (`testarAviso`) e toque que abre o canal no Android.
+  - Estados do cartão:
+    - Ligado, Ligando…, Sem conexão, Notificações desligadas, Desligado, Fora da tela bloqueada, Silencioso, Não ligado (com o motivo);
+    - Precisa do app 1.211 (sem Testar);
+    - escondido no navegador.
+  - Fora dos blocos: só as marcas dos dois blocos novos (conferido).
+- **Não muda:** despertador, sons, descanso do treino, cronômetros, alarmes, notificações existentes, cadastro do aluno, regras do Firestore, login, financeiro, treinos e mascotes. No app do aluno, no navegador e no APK antigo o bloco não chama o Android nem o Firebase.
+- **Testes:**
+  - `equipe/testes/navegador/aviso-cadastro-311/aviso-cadastro-chrome.cjs`: 57/57. Simula a ponte do Android 1.211 e as funções chamáveis, sem rede.
+    - Cobre: registro com o token da conta, de novo só com endereço novo ou depois de uma semana, sem duplicar; toque abrindo a aprovação (inclusive antes de a conta voltar); estados; Testar (sucesso, não entregue, funções não publicadas, outra conta, sem internet); aluno, APK antigo e navegador parados.
+    - O cartão fica no lugar certo, com as mesmas cores dos outros cartões (tema do Tiago e tema claro), e o resto da tela é idêntico ao do 1.12.310.
+    - O `index.html` real carrega o bloco sem erro.
+  - Verificador `--modo pr`: aprovado. `testar-verificador`: 45/45.
+  - Mecanismo real: candidato aprovado, 11 mantidas / 0 perdidas em todos os estados. `conferir-antes-de-assinar`: aprovada.
+  - Testes oficiais: 18/18. Funcionalidades: aprovado (2 avisos antigos).
+- **Ordem para funcionar no celular:**
+  1. Blaze + `google-services.json` (Tiago).
+  2. Funções publicadas pelo Cloud Shell.
+  3. APK 1.211 oficial instalado.
+  4. 1.12.311 assinado e instalado.
+  5. Testar no Xiaomi, em Sons e alertas.
+  - Sem o APK 1.211, o 1.12.311 só mostra "Precisa do app 1.211" no cartão.
+- **Instalar e reverter:** instalar no lugar do 1.12.310. Para voltar, reinstalar o 1.12.310 assinado (o 1.12.311 só acrescenta os dois blocos).
 
 **24/11, 10h30 (Claude): avisos de cadastro na tela bloqueada. Fase 1: funções do Firebase (PR). Nada publicado no Firebase.**
 - **Pedido:** Tiago, 24/11 10:05, com print da tela bloqueada sem aviso e do sininho com "1". Quando um aluno se cadastrar, avisar fora do app, na tela bloqueada, "para agilizar".

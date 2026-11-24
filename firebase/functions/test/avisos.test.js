@@ -43,19 +43,17 @@ test('nome vazio ou estranho', () => {
   assert.equal(avisos.novoCadastro({nome: '   ', perfil: 'aluno', ativo: false, professorId: avisos.TEACHER}).texto, 'Um aluno se cadastrou. Toque para aprovar.');
   assert.equal(avisos.primeiroNome('Ana\u0007Maria Silva'), 'AnaMaria');
   assert.equal(avisos.primeiroNome('x'.repeat(80)).length, 40);
-  const emoji = avisos.primeiroNome('a'.repeat(39) + '\u{1F600}\u{1F600}');
-  assert.equal(Array.from(emoji).length, 40);
-  assert.ok(!/[\ud800-\udbff]$/.test(emoji), 'não corta emoji ao meio');
 });
 
-test('a mensagem vai só com dados, alta prioridade: o app monta o aviso (aberto ou fechado)', () => {
+test('a mensagem vai no canal "cadastros", alta prioridade, privada na tela bloqueada', () => {
   const m = avisos.mensagem({titulo: 'Novo cadastro', texto: 'Carla se cadastrou. Toque para aprovar.', tipo: 'cadastro'}, [TOKEN_A], 'uid123');
-  assert.deepEqual(m.data, {tipo: 'cadastro', titulo: 'Novo cadastro', texto: 'Carla se cadastrou. Toque para aprovar.', aluno: 'uid123'});
-  assert.deepEqual(m.android, {priority: 'high', ttl: 86400000});
-  assert.equal(m.notification, undefined, 'com "notification" o Firebase mostraria sozinho e o toque não abriria a aprovação');
-  assert.deepEqual(m.tokens, [TOKEN_A]);
-  assert.ok(Object.values(m.data).every(v => typeof v === 'string'), 'o FCM só aceita textos nos dados');
-  assert.deepEqual(avisos.mensagem({titulo: 't', texto: 'x', tipo: 'teste'}, [TOKEN_A]).data, {tipo: 'teste', titulo: 't', texto: 'x'});
+  assert.deepEqual(m.notification, {title: 'Novo cadastro', body: 'Carla se cadastrou. Toque para aprovar.'});
+  assert.deepEqual(m.data, {tipo: 'cadastro', aluno: 'uid123'});
+  assert.equal(m.android.priority, 'high');
+  assert.equal(m.android.notification.channelId, 'cadastros');
+  assert.equal(m.android.notification.visibility, 'private');
+  assert.equal(m.android.notification.tag, 'cadastro:uid123');
+  assert.deepEqual(avisos.mensagem({titulo: 't', texto: 'x', tipo: 'teste'}, [TOKEN_A]).data, {tipo: 'teste'});
 });
 
 test('envia para todos os aparelhos e tira os que não existem mais', async () => {

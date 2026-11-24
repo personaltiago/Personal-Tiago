@@ -1,0 +1,44 @@
+{
+ "versao": "1.12.311",
+ "sequencia": 417,
+ "titulo": "Aviso de novo cadastro na tela bloqueada",
+ "base": {
+  "referencia": "pacote-1-12-310-sons-e-alertas-no-mais",
+  "impressao": "b8a2d8b1d3e92bc40d5f21786b719596c1ca050db933af0ee852570029421d86"
+ },
+ "pedido": "Tiago, 24/11/2026 10:05, com print da tela bloqueada sem aviso e do sininho com \"1\": \"alunos cadastrou chegasse notificação na tela bloqueada [...] alguma notificação fora do aplicativo para agilizando o tempo\". Na pergunta do app escolheu \"Push com Firebase (Recomendado)\", cuja opção dizia: \"Precisa de APK novo e do plano Blaze (cartão, custo esperado R$0). Você autoriza o gatilho e guardar o endereço do seu celular no Firebase\"; para publicar, \"Só pelo celular\". Fase 3 de 3: funções do Firebase (PR #51), Android 1.211 (PR #52) e este conteúdo.",
+ "aprovado_por": "Pedido específico do Tiago (aviso de cadastro fora do app) e autorização dele para o Firebase guardar o endereço de push do celular dele. Só blocos novos: o despertador, os sons, o descanso do treino, cronômetros, alarmes, notificações que já existem, o cadastro do aluno, regras do Firestore, alunos, treinos, financeiro, login e mascotes não mudam.",
+ "gerador": "tools/gerar-aviso-cadastro-1.12.311.cjs",
+ "alteracoes": [
+  {
+   "pagina": "index.html",
+   "id": "ap-push-avisos",
+   "antes": null,
+   "depois": "5f3fdd8e3b2f068089d75d5bd2dbb0be6ae0ca9707f18dfe64ceb06a7801efbe",
+   "motivo": "Bloco novo antes de </body>. Só age no app do professor com o Android 1.211 ou mais novo (Android.getPushVersion() >= 1 e APaccounts.isTeacher()): quando o painel do professor fica pronto (ap-teacher-ready), liga o aviso no celular (Android.refreshPushToken) e guarda o endereço de push pela função registrarAparelho (POST na função chamável com o token da conta, de APaccounts.getPhotoToken); registra de novo só quando o endereço muda ou passa uma semana (marca do endereço em localStorage apPushAparelho:<uid>, sem guardar o endereço). Quando o Tiago toca no aviso (ap-push-open + Android.takePushOpen() === 'cadastro'), abre o painel (APopenTeacher) e a lista Alunos para aprovar (openStudentApprovals do painel). Expõe window.APPushAvisos (estado, testar, ajustar), congelado, para o cartão do professor. No app do aluno, no navegador e no APK antigo não chama o Android nem o Firebase."
+  },
+  {
+   "pagina": "index.html",
+   "id": "#fora-dos-blocos",
+   "antes": "cb26d6e50f8d9742ab467145274957e930cebc9fb91f7559f1fa6261a529ae37",
+   "depois": "224123256b8ae0e2c8bddf45df58d8e93120575feb6c066f42825af427f11550",
+   "motivo": "Só a marca do bloco novo (<script id=\"ap-push-avisos\"></script> e uma quebra de linha) antes de </body>. Tirada a marca, o texto fora dos blocos é idêntico ao do 1.12.310 (conferido)."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-push-avisos-teacher",
+   "antes": null,
+   "depois": "8faa7b5a0439cd49e76767d0c0ce7b3e7a75016bce7627073c066ba0abc01933",
+   "motivo": "Bloco novo antes de </body>. Cria o cartão \"Aviso de novo cadastro\" em Sons e alertas (#screen-settings), logo depois do Despertador (.alarm-tools) e fora das abas Professor/Alunos dos sons, com as mesmas classes dos cartões de som (sound-choice-group, sound-button, sound-preview-button, sound-preview-help). Mostra o estado vindo de window.parent.APPushAvisos.estado(); o botão Testar chama APPushAvisos.testar() (função testarAviso); tocar no cartão abre o canal do aviso no Android (APPushAvisos.ajustar). Atualiza com ap-push-status, ao abrir a tela e ao voltar das configurações do Android. Sem APPushAvisos (página fora do app principal) ou no navegador, o cartão fica escondido. Não muda nenhum elemento existente da tela."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "#fora-dos-blocos",
+   "antes": "9a9708849fb17548474bfc8112328dcd6e1b4e80a1f2252f80b383e805c683aa",
+   "depois": "8aef8e68bec37738b899faef1950c653d2430f407de2f501d767cabaf26fba04",
+   "motivo": "Só a marca do bloco novo (<script id=\"ap-push-avisos-teacher\"></script> e uma quebra de linha) antes de </body>. Tirada a marca, o texto fora dos blocos é idêntico ao do 1.12.310 (conferido)."
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}

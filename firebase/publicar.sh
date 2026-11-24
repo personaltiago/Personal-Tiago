@@ -9,21 +9,6 @@ set -euo pipefail
 PROJETO=agenda-personal-bdb58
 cd "$(dirname "$0")"
 
-echo "0/4 Conferindo o risco de cobrança por IA (só leitura)..."
-# Com o Blaze, as chaves públicas do app (a do site e a do Android, que vão no app de qualquer jeito) podem ser usadas por
-# terceiros nas APIs de IA do Google se elas estiverem ligadas no projeto. O Agenda Personal não usa nenhuma delas.
-ATIVAS=$(gcloud services list --enabled --project "$PROJETO" --format='value(config.name)')
-IA=$(printf '%s\n' "$ATIVAS" | grep -xE 'generativelanguage\.googleapis\.com|aiplatform\.googleapis\.com' || true)
-if [ -n "$IA" ]; then
-  echo "    PAREI: estas APIs de IA estão ligadas no projeto e podem gerar cobrança com as chaves públicas do app:" >&2
-  echo "$IA" | sed 's/^/      /' >&2
-  echo "    O Agenda Personal não usa nenhuma delas. Para desligar, cole:" >&2
-  echo "$IA" | sed "s/^/      gcloud services disable /; s/\$/ --project $PROJETO/" >&2
-  echo "    Depois rode de novo o comando de publicar." >&2
-  exit 1
-fi
-echo "    ok: nenhuma API de IA ligada"
-
 echo "1/4 Descobrindo a região do banco (o gatilho de cadastro precisa ficar nela)..."
 LOCAL=$(gcloud firestore databases describe --database='(default)' --project "$PROJETO" --format='value(locationId)')
 case "$LOCAL" in
