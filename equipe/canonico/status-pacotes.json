@@ -250,6 +250,14 @@
    "publicado": "não",
    "instalado": "não",
    "validado": "não"
+  },
+  "1.12.313": {
+   "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-aviso-relogio-1.12.313.cjs), pedido do Tiago às 15:17 e 15:54 (Smartwatch \"para vários modelos\"; os alunos sem o cartão) e escolha dele na pergunta do app (\"Avisos em qualquer relógio (Recomendado)\"); precisa do APK 1.212 (PR #57)",
+   "aprovado": "não",
+   "assinado": "não",
+   "publicado": "não",
+   "instalado": "não",
+   "validado": "não"
   }
  }
 }

@@ -2,6 +2,26 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**24/11, 17h (Claude): 1.12.313/419 — Smartwatch: aviso no relógio no fim do descanso, para professor e aluno (PR, proposto; precisa do APK 1.212 do PR #57).**
+- **Pedido do Tiago (15:17 e 15:54):** voltar ao Smartwatch; os alunos não tinham onde configurar o relógio; "faça [funcionar] para vários modelos". Escolheu "Avisos em qualquer relógio (Recomendado)" ("Mexe no aviso do descanso") e respondeu "Não tenho relógio". Avaliação completa na entrada do APK 1.212 (logo abaixo, no PR #57) e no PR #56.
+- **Pacote:** `AgendaPersonal-1.12.313-Aviso-No-Relogio-Para-Assinar.agenda.json`, SHA-256 `b67ea8dc12c1a6629e2f4f0e5efdfd724b5a41dec1bef200a086161faa695ee5`. Gerador `tools/gerar-aviso-relogio-1.12.313.cjs`, a partir do 1.12.312 (referência; SHA conferido). Autorização `equipe/canonico/alteracoes-autorizadas/1.12.313.json`.
+- **O que muda:** dois blocos novos, com o mesmo texto nas duas telas, antes do último `</body>`. Fora dos blocos, só as marcas deles (tirando os blocos, as páginas são idênticas às do 1.12.312).
+  - `ap-aviso-relogio` (`975d9f3f…`):
+    - tela Smartwatch: chave "Avisar no relógio" (começa desligada), estado, Testar no relógio (aviso em 10 s), Ajustes do aviso, passo a passo por marca (Xiaomi/Redmi/Mi Band, Amazfit, Galaxy Watch, Huawei/Honor, Garmin, Pixel/Wear OS, Apple Watch, outra; a marca fica guardada) e a Conexão Wear OS de antes;
+    - professor: o cartão Smartwatch do Mais (do `ap-watch-teacher`, que não muda) passa a abrir esta tela e diz "Aviso no relógio ao fim do descanso."; o primeiro toque continua só destacando;
+    - aluno: linha "Smartwatch" no Perfil, antes de Pet, no formato das outras;
+    - com o Android 1.212 e o aviso ligado, lê o descanso (professor: `state.workoutRest`; aluno: `restUntil` do treino), só leitura, e marca o aviso (`scheduleWatchNotice("professor"|"aluno", fim, {titulo, texto})`) com aluno e exercício (professor) ou exercício (aluno); desmarca se o descanso for parado com mais de 3 s para o fim; ao abrir sem descanso, tira um aviso que tenha ficado marcado;
+    - sem o 1.212: "Atualize o aplicativo Android para a versão 1.212"; no navegador e no iPhone: explica que o aviso é do app Android. Expõe `window.APAvisoRelogio`.
+  - `ap-aviso-relogio-css` (`1c0edff4…`): cores do tema do professor (`--ac-*`, claro e escuro) e as do Perfil do aluno; esconde o ícone "Enviar treino ao smartwatch" (Wear OS) enquanto o Android não informar relógio Wear OS conectado com o app (o app do relógio nunca foi distribuído).
+- **Não muda:** descanso (só lido), som do fim do descanso, cartão da tela bloqueada, cronômetros, alarmes, despertador, aviso de cadastro, Wear OS (a tela antiga continua acessível), treinos, agenda, financeiro, login e mascotes.
+- **Testes:**
+  - `equipe/testes/navegador/aviso-relogio-313/aviso-relogio-chrome.cjs`: **72/72**. Páginas reais com o Android 1.212 de mentira. Cobre: páginas idênticas ao 1.12.312 sem os blocos; primeiro toque destaca e o segundo abre; ligar, desligar, Testar, Ajustes, marca guardada, Esc e Fechar; Conexão Wear OS; descanso do professor marcado com aluno e exercício, sem repetir, desmarcado se parado, mantido no fim natural, não marcado se já acabou ou desligado; estados (permissão, canal desligado/silencioso, sem alarme exato, ilegível); tema claro e escuro do professor; linha do aluno no lugar e no formato das outras (ícone com o mesmo tamanho, posição e cor); cores do Perfil claro e escuro; descanso do aluno (série e botão); conta que não é de aluno; navegador; APK antigo; ícone Wear OS (escondido sem relógio, escondido com relógio sem o app, à mostra com o app); sem erro de JavaScript.
+  - Verificador `--modo pr`: aprovado (4 blocos novos e 2 fora-dos-blocos, todos autorizados). `testar-verificador`: 44/44.
+  - Mecanismo real: 210 verificações, aprovado. Oficiais: 18/18. Funcionalidades: aprovado (os 2 avisos antigos).
+- **Limite:** sem relógio (o Tiago não tem), não dá para confirmar a chegada no pulso. Os testes provam que a tela marca o aviso na hora certa e que o APK 1.212 o publica.
+- **Ordem:** juntar o PR #55 (registro do 1.12.312 assinado; este PR parte dele), o PR #57 (APK 1.212, com "gerar") e este. Sem o 1.212, a tela só pede a atualização.
+- **Instalar e reverter:** instalar no lugar do 1.12.312. Para voltar, reinstalar o 1.12.312 assinado.
+
 **24/11, 15h15 (Claude): APK 1.211 gerado e publicado; 1.12.312 assinado. Falta o Tiago instalar e testar no Xiaomi.**
 - **Autorização do Tiago:** "Pode juntar e gerar o app (Recomendado)" (~11:40). Às 15:06 a mensagem das 11:32 chegou de novo; respondi que já estava do jeito dele e segui.
 - **APK 1.211:**
