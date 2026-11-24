@@ -1,0 +1,32 @@
+name: Testar avisos do Firebase
+
+# Testes sem rede das funções de aviso (firebase/functions). Não publica nada no Firebase.
+on:
+  pull_request:
+    paths:
+      - 'firebase/**'
+      - '.github/workflows/testar-avisos-firebase.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'firebase/**'
+
+permissions:
+  contents: read
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: firebase
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Instalar
+        working-directory: firebase/functions
+        run: npm ci --no-audit --no-fund
+      - name: Testar
+        working-directory: firebase/functions
+        run: npm test
