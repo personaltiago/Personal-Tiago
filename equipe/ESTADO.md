@@ -34,6 +34,29 @@
 - **Ordem:** juntar este PR e gerar o APK oficial 1.212 (com a autorização do Tiago); depois o conteúdo 1.12.313 (PR seguinte). Sem o conteúdo, o 1.212 não muda nada na tela.
 - **Reverter:** reinstalar o APK 1.211 por cima (mesma assinatura). A preferência e o canal ficam sem uso.
 
+**24/11, 15h15 (Claude): APK 1.211 gerado e publicado; 1.12.312 assinado. Falta o Tiago instalar e testar no Xiaomi.**
+- **Autorização do Tiago:** "Pode juntar e gerar o app (Recomendado)" (~11:40). Às 15:06 a mensagem das 11:32 chegou de novo; respondi que já estava do jeito dele e segui.
+- **APK 1.211:**
+  - Execução 45467032873 de "Gerar e publicar APK Agenda Personal", sobre a285d13 (#52).
+  - Lançamento `android-1.211-conteudo-1.12.269-45467032873` (o "latest", usado pelo botão Android), arquivo `AgendaPersonal-Android.apk`.
+  - SHA-256 `a1303b70bae8e31cfe43c6478638ee845b6942f56053e1d10cb03071ce609cde`. `versionCode` 1091 (o 1.210 era 1090).
+- **Conferido no APK baixado:**
+  - mesmo certificado do 1.210 (v2, SHA-256 `1166c0b2d36cbb22…`), então instala por cima e mantém os dados;
+  - mesmas permissões, serviços e receivers do 1.210;
+  - tem o `AvisosCadastro` e não tem Firebase Messaging;
+  - o `verify_apk.py` passou no CI.
+- **1.12.312 assinado:**
+  - Merge 0c4f19b (#54); execução 45467647035; artefato 14954039302; pré-lançamento `conteudo-45467647035-1`.
+  - SHA-256 `1a64a5ef774f1b4b53e38f45cee7f01a4d5656b6629fa5325abd4fbe3a4cd4ad`. Sem a assinatura, é idêntico ao proposto.
+  - **Referência agora 1.12.312/418; próxima livre 1.12.313/419.** O canônico (instalado) continua 1.12.309.
+- **Para o Tiago:**
+  1. Instalar o APK por cima.
+  2. Instalar o 1.12.312 (pular o 1.12.311).
+  3. Sons e alertas → Testar.
+  4. Pôr a bateria do app em "Sem restrições".
+  5. Pedir a alguém para se cadastrar com o app em segundo plano.
+  - Validação no aparelho: **pendente**.
+
 **24/11, 13h (Claude): 1.12.312/418 — aviso de novo cadastro na tela, do jeito local (PR, proposto); 1.12.311 assinado (não instalar).**
 - **Mudança de plano do Tiago:**
   - 11:32: "não faz sentido eu precisar lá dessa parte. Era só o próprio aplicativo notificar" e "é só ele jogar na tela a notificação".
