@@ -237,6 +237,14 @@
   },
   "1.12.311": {
    "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-aviso-cadastro-1.12.311.cjs), pedido do Tiago às 10:05 (aviso de cadastro \"na tela bloqueada\" para agilizar) e escolha dele na pergunta do app (\"Push com Firebase (Recomendado)\"); fase 3 de 3 (funções do Firebase no PR #51 e APK 1.211 no PR #52)",
+   "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (24/11/2026, 11:25, no chat); merge c5f6941 (PR #53) feito pelo Claude depois do CI verde",
+   "assinado": "sim: execução 45425545030 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14936418032; pré-lançamento conteudo-45425545030-1 (arquivo assinado SHA-256 a3dd3a08fff07233347b8c7a4da5315d0c812ad2a2bf614d0ed8cb23cb59a9b4; sem a assinatura, idêntico ao proposto). Não instalar: usa a ponte do push, que o APK 1.211 local não tem; substituído pelo 1.12.312",
+   "publicado": "não",
+   "instalado": "não",
+   "validado": "não"
+  },
+  "1.12.312": {
+   "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-aviso-local-1.12.312.cjs), pedido do Tiago às 10:05 e mudança de plano dele às 11:32 (\"era só o próprio aplicativo notificar\"; escolheu \"Sim, do meu jeito (Recomendado)\"); precisa do APK 1.211 local (PR #52)",
    "aprovado": "não",
    "assinado": "não",
    "publicado": "não",
