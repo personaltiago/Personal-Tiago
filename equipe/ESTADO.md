@@ -22,7 +22,7 @@
 - **Testes:**
   - `tests/verify_avisos_relogio.py`: 67 verificações com as classes reais e Android de mentira (marcar, substituir, desmarcar, disparo só do marcado, desligar, teste em 10 s, sem alarme exato, Android 11 e 12, recusas, estado e configurações) e as ligações do projeto.
   - `python3 tests/run_all.py`: aprovado (54 PASS). `node tools/check_release.cjs`: Android 1.212.
-  - No GitHub: "Compilar APK de teste" (SDK real, testes do ZIP): aprovado (execução 45480734559).
+  - No GitHub: "Compilar APK de teste" (SDK real, testes do ZIP): aprovado (execução 45480734559). Na execução 45485736868, com o mesmo ZIP, o teste antigo `verify_update_import_review.py` falhou uma vez ("Falta de descrição não foi explicada") e passou ao repetir. É intermitente e anterior a esta mudança: o `UpdateManager` não mudou.
   - **Emulador Android 14** (`equipe/testes/emulador/AvisoRelogioSimulation.java`, fluxo `emulador-aviso-relogio.yml`, só em PR, sem publicar): **7/7**, execução 45485736904.
     - Fim do descanso com a tela apagada: aviso no canal `relogio`, "Fim do descanso · Leg press 45°", 22 ms depois do horário, não fixo, some em 2 min, tela bloqueada sem o texto.
     - Descanso parado antes do fim: nenhum aviso. Descanso trocado: só o novo, 18 ms depois; nada no horário antigo.
