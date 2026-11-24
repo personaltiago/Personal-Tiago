@@ -2,6 +2,43 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**24/11, 13h (Claude): 1.12.312/418 — aviso de novo cadastro na tela, do jeito local (PR, proposto); 1.12.311 assinado (não instalar).**
+- **Mudança de plano do Tiago:**
+  - 11:32: "não faz sentido eu precisar lá dessa parte. Era só o próprio aplicativo notificar" e "é só ele jogar na tela a notificação".
+  - Escolheu "Sim, do meu jeito (Recomendado)", sabendo que com o Xiaomi tendo fechado o app não há aviso.
+  - O push (Blaze, funções, FCM) ficou guardado no branch `claude/aviso-cadastro-push-guardado`.
+- **1.12.311 assinado:**
+  - "Pode juntar" às 11:25; merge c5f6941 (#53); execução 45425545030; artefato 14936418032.
+  - SHA-256 `a3dd3a08fff07233347b8c7a4da5315d0c812ad2a2bf614d0ed8cb23cb59a9b4`. Sem a assinatura, é idêntico ao proposto.
+  - **Não instalar:** usa a ponte do push, que o APK 1.211 local não tem.
+  - **Referência agora 1.12.311/417; próxima livre 1.12.312/418.** O canônico (instalado) continua 1.12.309.
+- **Pacote:** `AgendaPersonal-1.12.312-Aviso-Cadastro-Local-Para-Assinar.agenda.json`, SHA-256 `8c5eb7b4bdf100456069eba71352737d62978547c2111d323940a56c27c8fabb`. Gerador `tools/gerar-aviso-local-1.12.312.cjs`, a partir do 1.12.311 (SHA conferido).
+- **O que muda:** troca os dois blocos do 1.12.311, no mesmo lugar.
+  - `index.html`, sai `ap-push-avisos` e entra `ap-aviso-cadastro`:
+    - só no app do professor com o Android 1.211;
+    - acompanha os cadastros à espera de aprovação com a mesma consulta do sininho (só leitura);
+    - cadastro novo com o app em segundo plano ou a tela bloqueada → `Android.showRegistrationNotice` ("Novo cadastro: <primeiro nome> se cadastrou. Toque para aprovar.");
+    - com o app na tela, o sininho mostra e não há notificação;
+    - na primeira vez no aparelho, quem já esperava não vira aviso;
+    - os vistos ficam em `apAvisoCadastroVistos:<uid>` (até 300);
+    - no toque (`ap-notice-open` + `takeNoticeOpen()`), abre "Alunos para aprovar";
+    - expõe `window.APAvisoCadastro`.
+  - `professor.html`, sai `ap-push-avisos-teacher` e entra `ap-aviso-cadastro-teacher`: o mesmo cartão em Sons e alertas, ligado ao aviso local.
+    - O Testar mostra um aviso no próprio celular.
+    - Estados: Ligado, Notificações desligadas, Desligado, Fora da tela bloqueada, Silencioso, Sem conexão, Precisa do app 1.211 (sem Testar). No navegador fica escondido.
+  - Fora dos blocos: só o id das duas marcas (conferido).
+  - Removido: o registro do celular nas funções do Firebase. Nunca foi instalado.
+- **Não muda:** sininho, despertador, sons, descanso do treino, cronômetros, alarmes, notificações existentes, cadastro do aluno, regras e dados do Firestore (só lê), login, financeiro, treinos e mascotes.
+- **Testes:**
+  - `equipe/testes/navegador/aviso-local-312/aviso-local-chrome.cjs`: 54/54. Simula a ponte do 1.211 e a consulta do sininho, sem rede.
+    - Cobre: primeira vez sem aviso; novo com o app na tela sem notificação; em segundo plano com aviso e primeiro nome; sem duplicar; dois juntos; nome estranho; reabrir o app; limite de 300; toque abrindo a aprovação, inclusive antes de a conta voltar; estados; erro de conexão e volta; Testar e ajustar; aluno, APK antigo e navegador parados.
+    - Cartão no lugar certo, com as mesmas cores (tema do Tiago e claro), e o resto da tela idêntico ao do 1.12.310. O `index.html` real carrega sem erro.
+  - Verificador `--modo pr`: aprovado (2 remoções, 2 blocos novos e 2 fora-dos-blocos, todos autorizados). `testar-verificador`: 45/45.
+  - Mecanismo real: 11 mantidas / 0 perdidas. `conferir-antes-de-assinar`: aprovada.
+  - Oficiais: 18/18. Funcionalidades: aprovado (2 avisos antigos).
+- **Ordem:** APK 1.211 local (PR #52) e este pacote. Sem o 1.211, o cartão só diz "Precisa do app 1.211".
+- **Instalar e reverter:** instalar no lugar do 1.12.310 ou do 1.12.311. Para voltar, reinstalar o 1.12.310 assinado.
+
 **24/11, 12h (Claude): 1.12.311/417 — aviso de novo cadastro, fase 3: conteúdo (PR, proposto); 1.12.310 assinado.**
 - **1.12.310 assinado:**
   - Execução 45380753080; artefato 14914356152; pré-lançamento `conteudo-45380753080-1`.

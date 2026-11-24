@@ -1,0 +1,57 @@
+{
+ "versao": "1.12.312",
+ "sequencia": 418,
+ "titulo": "Aviso de novo cadastro na tela",
+ "base": {
+  "referencia": "pacote-1-12-311-aviso-de-novo-cadastro-na-tela-bloqueada",
+  "impressao": "ea739b45dec4feb195df384988d0aec54db19880c1817f146499e27a39eaa5f8"
+ },
+ "pedido": "Tiago, 24/11/2026 10:05: aviso de cadastro na tela bloqueada \"para agilizar\". Às 11:32 mudou o plano: \"não faz sentido eu precisar lá dessa parte. Era só o próprio aplicativo notificar\" e \"é só ele jogar na tela a notificação\". Na pergunta do app escolheu \"Sim, do meu jeito (Recomendado)\", que dizia: \"O app mostra a notificação quando o sininho recebe um cadastro, sem Blaze e sem console. Funciona com o app aberto ou em segundo plano, mas não se o Xiaomi tiver fechado o app\".",
+ "aprovado_por": "Pedido específico do Tiago (aviso de cadastro na tela, do jeito local). Troca só os dois blocos do 1.12.311 (aviso por push, assinado e não instalado) pelos do aviso local. O sininho, o despertador, os sons, o descanso do treino, cronômetros, alarmes, notificações que já existem, o cadastro do aluno, regras e dados do Firestore, login, financeiro, treinos e mascotes não mudam.",
+ "gerador": "tools/gerar-aviso-local-1.12.312.cjs",
+ "alteracoes": [
+  {
+   "pagina": "index.html",
+   "id": "ap-aviso-cadastro",
+   "antes": null,
+   "depois": "d68cd5299f2a89baab6952f604a0e7c331ded21e99480926cc7b86e7bd8be285",
+   "motivo": "Bloco novo, no lugar do ap-push-avisos. Só age no app do professor com o Android 1.211 (Android.getNoticeVersion() >= 1 e APaccounts.isTeacher()): quando o painel fica pronto (ap-teacher-ready), acompanha os cadastros à espera de aprovação com a mesma consulta do sininho (usuarios com professorId do professor, perfil 'aluno', ativo false; só leitura, pelo APaccounts.registrationSdk()). Quando chega um cadastro novo com o app em segundo plano ou a tela bloqueada (document.hidden), pede ao Android para mostrar \"Novo cadastro: <primeiro nome> se cadastrou. Toque para aprovar.\" (Android.showRegistrationNotice). Na primeira vez no aparelho, quem já esperava não vira aviso; os vistos ficam em localStorage apAvisoCadastroVistos:<uid> (até 300 ids). No toque do aviso (ap-notice-open + Android.takeNoticeOpen() === 'cadastro'), abre o painel e Alunos para aprovar. Expõe window.APAvisoCadastro (estado, testar, ajustar), congelado. No app do aluno, no navegador e no APK antigo não acompanha nem chama o Android."
+  },
+  {
+   "pagina": "index.html",
+   "id": "#fora-dos-blocos",
+   "antes": "224123256b8ae0e2c8bddf45df58d8e93120575feb6c066f42825af427f11550",
+   "depois": "19c11b9a926875c521fc503bf81c3c2ad4f7233b162af031c5bbc10e8487844b",
+   "motivo": "Só o id da marca do bloco no mesmo lugar: <script id=\"ap-push-avisos\"> vira <script id=\"ap-aviso-cadastro\">. Trocado de volta o id, o texto fora dos blocos é idêntico ao do 1.12.311 (conferido)."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-aviso-cadastro-teacher",
+   "antes": null,
+   "depois": "580b80c9e9babfebabc4a2ac03cb0f225c137d600ff57cda0354a8e8b44a8f7d",
+   "motivo": "Bloco novo, no lugar do ap-push-avisos-teacher: o mesmo cartão \"Aviso de novo cadastro\" em Sons e alertas (logo depois do Despertador, fora das abas dos sons, com as classes dos cartões de som), agora ligado a window.parent.APAvisoCadastro: estado do aviso local, Testar (mostra um aviso de teste no próprio celular) e toque no cartão abrindo o canal no Android. Atualiza com ap-aviso-status, ao abrir a tela e ao voltar das configurações. Sem APAvisoCadastro ou no navegador, o cartão fica escondido."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "#fora-dos-blocos",
+   "antes": "8aef8e68bec37738b899faef1950c653d2430f407de2f501d767cabaf26fba04",
+   "depois": "a52b81f4e59d471d7f47817ccb45290a94cd7ca3556ef2c9e696256d78cc85a0",
+   "motivo": "Só o id da marca do bloco no mesmo lugar: <script id=\"ap-push-avisos-teacher\"> vira <script id=\"ap-aviso-cadastro-teacher\">. Trocado de volta o id, o texto fora dos blocos é idêntico ao do 1.12.311 (conferido)."
+  }
+ ],
+ "remocoes": [
+  {
+   "pagina": "index.html",
+   "id": "ap-push-avisos",
+   "antes": "5f3fdd8e3b2f068089d75d5bd2dbb0be6ae0ca9707f18dfe64ceb06a7801efbe",
+   "motivo": "Bloco do 1.12.311 (assinado, nunca instalado). O que se perde: registrar o celular do professor nas funções do Firebase (registrarAparelho) para o push e o Testar pela função testarAviso. O Tiago trocou o push pelo aviso local (24/11, 11:32 e \"Sim, do meu jeito\"); o push ficou guardado no branch claude/aviso-cadastro-push-guardado. A abertura de Alunos para aprovar pelo toque continua, no bloco novo."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-push-avisos-teacher",
+   "antes": "8faa7b5a0439cd49e76767d0c0ce7b3e7a75016bce7627073c066ba0abc01933",
+   "motivo": "Bloco do 1.12.311 (assinado, nunca instalado): o cartão ligado ao push. O mesmo cartão volta no bloco novo, ligado ao aviso local; não se perde nada visível."
+  }
+ ],
+ "reversoes": []
+}

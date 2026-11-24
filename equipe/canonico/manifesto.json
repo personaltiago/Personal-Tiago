@@ -11,15 +11,15 @@
   "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: print do Mais (23/11/2026 23:51) com o texto \"Nome e símbolo dos cartões de feedback.\", que só existe no 1.12.309, e confirmação dele na pergunta do app (\"Sim, instalei\", madrugada de 24/11/2026). O 1.12.305, 1.12.306, 1.12.307 e 1.12.308 não foram instalados separadamente: o 1.12.309 inclui todos. Antes: 1.12.304 (22/11 15:30)."
  },
  "referencia": {
-  "id": "pacote-1-12-310-sons-e-alertas-no-mais",
+  "id": "pacote-1-12-311-aviso-de-novo-cadastro-na-tela-bloqueada",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-1.12.310-Sons-E-Alertas-Para-Assinar.agenda.json",
-  "sha256": "8a60b5d5c6cde7c0cc944de0a06675f3a278c0fcbe6df0348193bd0d5d75ff19",
-  "versao_efetiva": "1.12.310",
-  "sequencia_efetiva": 416,
-  "proxima_versao_livre": "1.12.311",
-  "proxima_sequencia_livre": 417,
-  "impressao": "b8a2d8b1d3e92bc40d5f21786b719596c1ca050db933af0ee852570029421d86"
+  "arquivo": "AgendaPersonal-1.12.311-Aviso-Cadastro-Para-Assinar.agenda.json",
+  "sha256": "e5613f6e85648b3b355eb3fd2c4196613a3d95e509b6369c79447f9e2c2240c7",
+  "versao_efetiva": "1.12.311",
+  "sequencia_efetiva": 417,
+  "proxima_versao_livre": "1.12.312",
+  "proxima_sequencia_livre": 418,
+  "impressao": "ea739b45dec4feb195df384988d0aec54db19880c1817f146499e27a39eaa5f8"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -59,6 +59,7 @@
   "AgendaPersonal-1.12.309-Simbolo-Feedback-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.310-Sons-E-Alertas-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.311-Aviso-Cadastro-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.312-Aviso-Cadastro-Local-Para-Assinar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
   "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
@@ -584,6 +585,23 @@
    "titulo": "Aviso de novo cadastro na tela bloqueada",
    "status": {
     "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-aviso-cadastro-1.12.311.cjs), pedido do Tiago às 10:05 (aviso de cadastro \"na tela bloqueada\" para agilizar) e escolha dele na pergunta do app (\"Push com Firebase (Recomendado)\"); fase 3 de 3 (funções do Firebase no PR #51 e APK 1.211 no PR #52)",
+    "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (24/11/2026, 11:25, no chat); merge c5f6941 (PR #53) feito pelo Claude depois do CI verde",
+    "assinado": "sim: execução 45425545030 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14936418032; pré-lançamento conteudo-45425545030-1 (arquivo assinado SHA-256 a3dd3a08fff07233347b8c7a4da5315d0c812ad2a2bf614d0ed8cb23cb59a9b4; sem a assinatura, idêntico ao proposto). Não instalar: usa a ponte do push, que o APK 1.211 local não tem; substituído pelo 1.12.312",
+    "publicado": "não",
+    "instalado": "não",
+    "validado": "não"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.312",
+   "sequencia": 418,
+   "arquivo": "AgendaPersonal-1.12.312-Aviso-Cadastro-Local-Para-Assinar.agenda.json",
+   "sha256": "8c5eb7b4bdf100456069eba71352737d62978547c2111d323940a56c27c8fabb",
+   "origem": "main",
+   "titulo": "Aviso de novo cadastro na tela",
+   "status": {
+    "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-aviso-local-1.12.312.cjs), pedido do Tiago às 10:05 e mudança de plano dele às 11:32 (\"era só o próprio aplicativo notificar\"; escolheu \"Sim, do meu jeito (Recomendado)\"); precisa do APK 1.211 local (PR #52)",
     "aprovado": "não",
     "assinado": "não",
     "publicado": "não",
@@ -1199,8 +1217,13 @@
     "area": "geral",
     "vezes": 1
    },
+   "ap-push-avisos": {
+    "hash": "5f3fdd8e3b2f068089d75d5bd2dbb0be6ae0ca9707f18dfe64ceb06a7801efbe",
+    "area": "geral",
+    "vezes": 1
+   },
    "#fora-dos-blocos": {
-    "hash": "cb26d6e50f8d9742ab467145274957e930cebc9fb91f7559f1fa6261a529ae37",
+    "hash": "224123256b8ae0e2c8bddf45df58d8e93120575feb6c066f42825af427f11550",
     "area": "geral",
     "vezes": 1
    }
@@ -1941,8 +1964,13 @@
     "area": "geral",
     "vezes": 1
    },
+   "ap-push-avisos-teacher": {
+    "hash": "8faa7b5a0439cd49e76767d0c0ce7b3e7a75016bce7627073c066ba0abc01933",
+    "area": "geral",
+    "vezes": 1
+   },
    "#fora-dos-blocos": {
-    "hash": "9a9708849fb17548474bfc8112328dcd6e1b4e80a1f2252f80b383e805c683aa",
+    "hash": "8aef8e68bec37738b899faef1950c653d2430f407de2f501d767cabaf26fba04",
     "area": "geral",
     "vezes": 1
    }
@@ -2947,6 +2975,10 @@
    {
     "hash": "cb26d6e50f8d9742ab467145274957e930cebc9fb91f7559f1fa6261a529ae37",
     "desde": "1.12.309"
+   },
+   {
+    "hash": "224123256b8ae0e2c8bddf45df58d8e93120575feb6c066f42825af427f11550",
+    "desde": "1.12.311"
    }
   ],
   "professor.html|ap-native-store": [
@@ -3915,6 +3947,10 @@
    {
     "hash": "9a9708849fb17548474bfc8112328dcd6e1b4e80a1f2252f80b383e805c683aa",
     "desde": "1.12.310"
+   },
+   {
+    "hash": "8aef8e68bec37738b899faef1950c653d2430f407de2f501d767cabaf26fba04",
+    "desde": "1.12.311"
    }
   ],
   "avaliacoes.html|ap-native-store": [
@@ -4279,6 +4315,18 @@
    {
     "hash": "54913bae96542c99a50cc2f684de1d1b2091ec3baf24131e19ccb05bbda3053c",
     "desde": "1.12.309"
+   }
+  ],
+  "index.html|ap-push-avisos": [
+   {
+    "hash": "5f3fdd8e3b2f068089d75d5bd2dbb0be6ae0ca9707f18dfe64ceb06a7801efbe",
+    "desde": "1.12.311"
+   }
+  ],
+  "professor.html|ap-push-avisos-teacher": [
+   {
+    "hash": "8faa7b5a0439cd49e76767d0c0ce7b3e7a75016bce7627073c066ba0abc01933",
+    "desde": "1.12.311"
    }
   ]
  },
@@ -5281,6 +5329,61 @@
    "depende_de": [
     "pacote-1-12-309-simbolo-nos-feedbacks",
     "pacote-1-12-310-sons-e-alertas-no-mais"
+   ]
+  },
+  {
+   "id": "pacote-1-12-312-aviso-de-novo-cadastro-na-tela",
+   "titulo": "Aviso de novo cadastro na tela",
+   "tipo": "pacote-completo",
+   "versao": "1.12.312",
+   "sequencia": 418,
+   "arquivo": "AgendaPersonal-1.12.312-Aviso-Cadastro-Local-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "index.html",
+     "id": "ap-aviso-cadastro",
+     "area": "geral",
+     "antes": null,
+     "depois": "d68cd5299f2a89baab6952f604a0e7c331ded21e99480926cc7b86e7bd8be285"
+    },
+    {
+     "pagina": "index.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "224123256b8ae0e2c8bddf45df58d8e93120575feb6c066f42825af427f11550",
+     "depois": "19c11b9a926875c521fc503bf81c3c2ad4f7233b162af031c5bbc10e8487844b"
+    },
+    {
+     "pagina": "index.html",
+     "id": "ap-push-avisos",
+     "area": "geral",
+     "antes": "5f3fdd8e3b2f068089d75d5bd2dbb0be6ae0ca9707f18dfe64ceb06a7801efbe",
+     "depois": null
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-aviso-cadastro-teacher",
+     "area": "geral",
+     "antes": null,
+     "depois": "580b80c9e9babfebabc4a2ac03cb0f225c137d600ff57cda0354a8e8b44a8f7d"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "8aef8e68bec37738b899faef1950c653d2430f407de2f501d767cabaf26fba04",
+     "depois": "a52b81f4e59d471d7f47817ccb45290a94cd7ca3556ef2c9e696256d78cc85a0"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-push-avisos-teacher",
+     "area": "geral",
+     "antes": "8faa7b5a0439cd49e76767d0c0ce7b3e7a75016bce7627073c066ba0abc01933",
+     "depois": null
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-311-aviso-de-novo-cadastro-na-tela-bloqueada"
    ]
   }
  ],
