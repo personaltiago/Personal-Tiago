@@ -22,8 +22,15 @@
 - **Testes:**
   - `tests/verify_avisos_relogio.py`: 67 verificações com as classes reais e Android de mentira (marcar, substituir, desmarcar, disparo só do marcado, desligar, teste em 10 s, sem alarme exato, Android 11 e 12, recusas, estado e configurações) e as ligações do projeto.
   - `python3 tests/run_all.py`: aprovado (54 PASS). `node tools/check_release.cjs`: Android 1.212.
-  - No GitHub: "Compilar APK de teste" (compila com o SDK real) roda neste PR.
-- **Limite honesto:** o Tiago não tem relógio. Dá para provar que o celular publica o aviso na hora; a chegada no pulso depende do app da marca e só um relógio de verdade confirma.
+  - No GitHub: "Compilar APK de teste" (SDK real, testes do ZIP): aprovado (execução 45480734559).
+  - **Emulador Android 14** (`equipe/testes/emulador/AvisoRelogioSimulation.java`, fluxo `emulador-aviso-relogio.yml`, só em PR, sem publicar): **7/7**, execução 45485736904.
+    - Fim do descanso com a tela apagada: aviso no canal `relogio`, "Fim do descanso · Leg press 45°", 22 ms depois do horário, não fixo, some em 2 min, tela bloqueada sem o texto.
+    - Descanso parado antes do fim: nenhum aviso. Descanso trocado: só o novo, 18 ms depois; nada no horário antigo.
+    - Desligado: não marca. Testar no relógio (mesmo desligado): 10 s depois (+14 ms).
+    - Pela ponte da página (`window.Android.scheduleWatchNotice`): marcado e mostrado, 7 ms depois.
+    - Sem "Alarmes e lembretes": estado `exato: false`; o aviso saiu mesmo assim (6 ms).
+    - Na primeira tentativa, tirar a permissão com o app aberto fez o Android encerrar o app ("schedule_exact_alarm revoked"), e o teste caiu junto. Era um problema do teste, não do app: agora a permissão é desligada antes, numa segunda rodada.
+- **Limite honesto:** o Tiago não tem relógio. Os testes provam que o celular publica o aviso na hora, inclusive com a tela apagada. A chegada no pulso depende do app da marca, e só um relógio de verdade confirma.
 - **Ordem:** juntar este PR e gerar o APK oficial 1.212 (com a autorização do Tiago); depois o conteúdo 1.12.313 (PR seguinte). Sem o conteúdo, o 1.212 não muda nada na tela.
 - **Reverter:** reinstalar o APK 1.211 por cima (mesma assinatura). A preferência e o canal ficam sem uso.
 
