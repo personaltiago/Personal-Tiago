@@ -229,6 +229,14 @@
   },
   "1.12.310": {
    "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-sons-e-alertas-1.12.310.cjs), pedido do Tiago às 23:53 de 23/11 (\"não parece que essas duas opções são a mesma coisa\") e escolha dele na pergunta do app (\"Só Sons e alertas (Recomendado)\")",
+   "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (24/11/2026, ~07:00, pela pergunta no app); merge 4e63530 (PR #50) feito pelo Claude depois do CI verde",
+   "assinado": "sim: execução 45380753080 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14914356152; pré-lançamento conteudo-45380753080-1 (arquivo assinado SHA-256 5779084a0d9d76e766e1f0f70acbca0d628498304b3ba22977ee55b9a42f4e4c; sem a assinatura, idêntico ao proposto)",
+   "publicado": "não",
+   "instalado": "não",
+   "validado": "não"
+  },
+  "1.12.311": {
+   "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-aviso-cadastro-1.12.311.cjs), pedido do Tiago às 10:05 (aviso de cadastro \"na tela bloqueada\" para agilizar) e escolha dele na pergunta do app (\"Push com Firebase (Recomendado)\"); fase 3 de 3 (funções do Firebase no PR #51 e APK 1.211 no PR #52)",
    "aprovado": "não",
    "assinado": "não",
    "publicado": "não",
