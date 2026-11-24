@@ -2,14 +2,14 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
-**24/11, 11h (Claude): avisos de cadastro, fase 2 — APK 1.211 com Firebase Cloud Messaging (PR em rascunho). Nenhum APK gerado nem publicado.**
-- **ZIP:** `AgendaPersonal_AndroidStudio_v1.65_contas_convites.zip`, Android 1.211/211. O conteúdo de base dentro do APK continua 1.12.269/375. SHA-256 `edf403d91a306026266ba2b1fec2968786aefd707f720bffd1089146acc38069`, com 162 fontes.
+**24/11, 11h (Claude): avisos de cadastro, fase 2 — APK 1.211 com Firebase Cloud Messaging (PR #52, rascunho). Nenhum APK gerado nem publicado.**
+- **ZIP:** `AgendaPersonal_AndroidStudio_v1.65_contas_convites.zip`, Android 1.211/211. O conteúdo de base dentro do APK continua 1.12.269/375. SHA-256 `495b070e0b49340c273ec261b0cd0ba1eeb69405918e89aafc1c8032a913d3e7`, com 162 fontes.
 - **O que muda no APK:**
   - `PushAvisos.java` (novo):
     - Canal "Cadastros de alunos" (`cadastros`): importância alta e privado na tela bloqueada. A versão pública do aviso não leva o nome do aluno.
     - O toque abre o app com `NEW_TASK|CLEAR_TOP|SINGLE_TOP`, sem recarregar a agenda se ela já estiver aberta. Leva os extras `agenda_aviso_tipo` e `agenda_aviso_aluno`.
     - O endereço de push fica em `agenda_push_v1`. Um erro passageiro não apaga um endereço que funciona.
-    - Também dá o estado para "Sons e alertas" e abre as configurações do canal.
+    - Também dá o estado para "Sons e alertas" (com a versão do APK) e abre as configurações do canal.
   - `AgendaMessagingService.java` (novo): recebe a mensagem do Firebase e chama o `PushAvisos`.
   - `MainActivity`:
     - cria o canal;
@@ -30,13 +30,13 @@
   - `primeiroNome` agora corta por letra, sem partir emoji.
   - `npm test`: 9/9.
 - **Testes:**
-  - `tests/verify_push_avisos.py` (novo): 45 verificações com as classes reais e Android/Firebase de mentira. 6 mutações propositais foram reprovadas.
+  - `tests/verify_push_avisos.py` (novo): 47 verificações com as classes reais e Android/Firebase de mentira. 6 mutações propositais foram reprovadas.
   - `tests/run_all.py`: passou completo.
   - Leitura do `google-services.json` no Gradle 8.14 local, em 5 casos: sem arquivo (teste passa, oficial barrado), válido com outro app junto, projeto errado e sem o app do pacote.
   - ZIP conferido.
   - Testes oficiais: 18/18, com a referência e com o 1.12.310.
   - Mecanismo real: 211 verificações. Verificador: 45/45. Funcionalidades: aprovado (2 avisos antigos).
-  - Compilação com o SDK real: CI `compilar-apk-teste.yml` deste PR. Teste no aparelho: só depois do APK oficial, pelo botão "Testar aviso" (fase 3).
+  - Compilação com o SDK real: CI `compilar-apk-teste.yml` do PR #52 passou (`BUILD SUCCESSFUL`, `versionCode=211`, `versionName=1.211`). Teste no aparelho: só depois do APK oficial, pelo botão "Testar aviso" (fase 3).
 - **Falta para o APK oficial:**
   1. `app/google-services.json`, do registro do app Android no Firebase (Tiago).
   2. PR com o arquivo e "Pode juntar".
