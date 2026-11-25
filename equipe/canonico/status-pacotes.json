@@ -258,6 +258,14 @@
    "publicado": "não",
    "instalado": "não",
    "validado": "não"
+  },
+  "1.12.314": {
+   "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-treino-texto-1.12.314.cjs), pedido do Tiago às 18:49 (colar a prescrição em texto; \"Orientações + colar texto\" e \"Também montar os exercícios\"; regra do card de cardio) e ajuste das 20:46 (poder tirar o \"Como fazer\" e botão \"Orientações\" para o aluno ler); parte da referência 1.12.313/419, que ainda depende do registro do PR #59",
+   "aprovado": "não",
+   "assinado": "não",
+   "publicado": "não",
+   "instalado": "não",
+   "validado": "não"
   }
  }
 }
