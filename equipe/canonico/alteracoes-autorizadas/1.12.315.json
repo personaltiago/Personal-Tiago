@@ -1,0 +1,23 @@
+{
+ "versao": "1.12.315",
+ "sequencia": 421,
+ "titulo": "Criar treino manual no Aluno e ficha",
+ "base": {
+  "referencia": "pacote-1-12-314-treino-por-texto-e-orientacoes",
+  "impressao": "ea7742bd9c86193d150a49335b285f3b4a4637103a3ed07023511ca0efb21638"
+ },
+ "pedido": "Tiago, 24/11/2026 21:40, com print da ficha vazia (quadro \"Este aluno ainda não tem ficha de treino\" circulado) e do cartão Aluno e ficha: \"onde eu circulo [...] não faz sentido esse ter uma parte assim [...] faz um cardzinho para pôr na parte de baixo os cardzinho quadradinho ali ó igual tá só importar [por] texto já tem já coloco [criar] treino manual e retira aquela parte de cima\".",
+ "aprovado_por": "Pedido específico do Tiago (tirar o quadro da ficha vazia e pôr Criar treino manual entre os botões do Aluno e ficha). Só três trechos de renderWorkoutStudent no texto do app (fora dos blocos), que uma correção por área não alcança; nenhum bloco ap-* muda. Descanso, cronômetros, alarmes, notificações, Firebase, dados de alunos, financeiro, login e mascotes não mudam. Merge, assinatura e instalação continuam dependendo da autorização dele.",
+ "gerador": "tools/gerar-criar-treino-manual-1.12.315.cjs",
+ "alteracoes": [
+  {
+   "pagina": "professor.html",
+   "id": "#fora-dos-blocos",
+   "antes": "aa32edb2131544be348296ec93d4cd23dc31e7abeea00ee6366c6c8123d7090f",
+   "depois": "22de015f1bce5c85107742bf8ed2877c757ad97ae7d361573f90952c25b0bf7d",
+   "motivo": "Três trechos de renderWorkoutStudent: (1) botões do cartão Aluno e ficha passam a ser Criar treino manual (openWorkoutPlanEditor(), o mesmo do antigo Criar ficha de treino), Importar treino por PDF, Importar treino por texto e, por último, Inativar/Reativar nos treinos; (2) o cartão Aluno e ficha abre já aberto quando o aluno não tem ficha ativa (fora da lista de arquivadas); (3) sai o quadro da ficha vazia (\"Este aluno ainda não tem ficha de treino\" / \"Nenhuma ficha ativa\"), que repetia os botões. Com ficha ativa, o cartão continua abrindo fechado e Nova ficha continua em Ações da ficha. Desfeitas as três trocas, a página é idêntica à do 1.12.314 (conferido no teste do Chrome). O que se perde: O quadro da ficha vazia (\"Este aluno ainda não tem ficha de treino. Crie a ficha e adicione os treinos e exercícios.\" e, para quem só tem fichas arquivadas, \"Nenhuma ficha ativa. Acesse Arquivadas para consultar ou reativar os treinos anteriores.\") com os botões Criar ficha de treino e Importar treino por texto. Os dois botões continuam no cartão Aluno e ficha (o primeiro com o nome Criar treino manual); as abas Ativas/Arquivadas continuam mostrando as quantidades."
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}
