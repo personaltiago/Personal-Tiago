@@ -2,7 +2,7 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
-**24/11, 21h20 (Claude): 1.12.314 assinado.** O Tiago autorizou ("Ok pode fazer", 21:11). Merges: #59 → 79aa842, #60 → 99b1761. Assinatura: execução 45525434192, pré-lançamento `conteudo-45525434192-1`, arquivo assinado SHA-256 `cf67cf77bcd708bad30ea9e4d962d815807dc9318729eff2e29f4d2d719bc958` (sem a assinatura, idêntico ao proposto). Referência passa a 1.12.314/420. Falta o Tiago instalar e testar no Xiaomi (e o aluno no iPhone).
+**24/11, 21h20 (Claude): 1.12.314 assinado.** O Tiago autorizou ("Ok pode fazer", 21:11). Merges: #59 → 79aa842, #60 → 99b1761. Assinatura: execução 45525434192, pré-lançamento `conteudo-45525434192-1`, arquivo assinado SHA-256 `cf67cf77bcd708bad30ea9e4d962d815807dc9318729eff2e29f4d2d719bc958` (sem a assinatura, idêntico ao proposto). Referência passa a 1.12.314/420. **Instalado no Xiaomi do Tiago** (prints de 21:39–21:40 com os botões "Importar treino por texto", que só existem no 1.12.314): canônico passa a 1.12.314. Validado: não (falta testar a importação e o botão Orientações do aluno).
 
 **24/11, 21h (Claude): 1.12.314 (seq 420) "Treino por texto" proposto, em PR rascunho.**
 - **Pedido (Tiago, 18:49 e 20:46):** montar o treino do aluno a partir da prescrição colada como texto (formato do ChatGPT), com orientações e exercícios; o card de cardio entra por último no dia, com o tempo exato do texto, e só quando o texto prevê cardio; poder tirar o "Como fazer" do texto (o exercício já tem o do catálogo); o aluno lê as orientações num botão "Orientações" na tela dos treinos.
@@ -12,7 +12,7 @@
 - **Limites conhecidos:** faixa de cardio (ex.: 10–15 min) começa no menor valor, o professor escolhe; faixa de descanso vira um valor só (padrão o maior); a importação parte da ficha de um aluno existente. O aluno precisa do pacote 1.12.314 instalado para ver "Orientações".
 - **Testes (feitos nesta data, sobre o arquivo acima):** `verificar-pacote --modo pr` aprovado; `testar-verificador` 45/45; `mecanismo-real` aprovado (210 verificações); `testes-oficiais-android` 18/18; `verificar_funcionalidades` aprovado (0 falhas, 2 avisos antigos); `conferir-raiz` ok; leitor do texto 15 verificações; Chrome (`equipe/testes/navegador/treino-texto-314/`) 55/55. **Não testado no Xiaomi nem no iPhone.**
 - **Instalar/reverter:** só depois de aprovado e assinado, pelo "Revisar atualização" do app; a correção é um pacote completo, então reverter é instalar de novo o 1.12.313.
-- **Estado no registro:** proposto, aprovado e assinado = sim; publicado, instalado e validado = não.
+- **Estado no registro:** proposto, aprovado, assinado e instalado = sim; publicado e validado = não.
 
 **24/11, 18h (Claude): APK 1.212 gerado e publicado; 1.12.313 assinado. Falta o Tiago instalar e testar no Xiaomi.**
 - **Autorização:** o Tiago escolheu "Pode juntar e gerar (Recomendado)" na pergunta do app ("Posso juntar os PRs #55, #57 e #58, gerar o APK 1.212 e assinar o 1.12.313?").
