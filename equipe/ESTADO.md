@@ -2,6 +2,8 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**25/11, madrugada (Claude): Smartwatch — Fase 0 (só leitura).** O Tiago mandou uma especificação de "plataforma completa para smartwatch" e pediu começar pela Fase 0 (auditoria, Documento A). Entregue `equipe/smartwatch/DOCUMENTO-A-diagnostico.md`, em PR rascunho, sem mudança em app, Firebase, site, chaves ou dados. Principais achados: o app Wear OS (`wear/`, Java, Data Layer, offline, descanso com vibração) já existe no ZIP oficial e nunca foi distribuído; ele não registra cargas e repetições feitas e o resultado não sai do celular; as regras do Firestore não estão no repositório; o Apple Watch só com app nativo (US$ 99/ano) ou com aviso por push, que exige um servidor com agendador. As decisões pendentes estão na seção 13 do documento. A parte da mensagem do Tiago depois de "DOCUMENTO" chegou cortada.
+
 **24/11, 22h (Claude): 1.12.315 (seq 421) "Criar treino manual no Aluno e ficha" proposto, em PR rascunho. Nada assinado, publicado nem instalado.**
 - **Pedido (Tiago, 21:40, print da ficha vazia circulada):** tirar o quadro "Este aluno ainda não tem ficha de treino" e pôr "Criar treino manual" entre os botões quadrados do cartão Aluno e ficha.
 - **Arquivo:** `AgendaPersonal-1.12.315-Criar-Treino-Manual-Para-Assinar.agenda.json`, SHA-256 `8eafe5b7637350a1cb51c9b144fe74242990a80181ab6b9ffe012b730d3a165c`; parte da referência 1.12.314/420 (registro no PR #61). Gerador: `tools/gerar-criar-treino-manual-1.12.315.cjs`. Autorização: `equipe/canonico/alteracoes-autorizadas/1.12.315.json`.
