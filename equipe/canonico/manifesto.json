@@ -11,15 +11,15 @@
   "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: print do Mais (23/11/2026 23:51) com o texto \"Nome e símbolo dos cartões de feedback.\", que só existe no 1.12.309, e confirmação dele na pergunta do app (\"Sim, instalei\", madrugada de 24/11/2026). O 1.12.305, 1.12.306, 1.12.307 e 1.12.308 não foram instalados separadamente: o 1.12.309 inclui todos. Antes: 1.12.304 (22/11 15:30)."
  },
  "referencia": {
-  "id": "pacote-1-12-312-aviso-de-novo-cadastro-na-tela",
+  "id": "pacote-1-12-313-aviso-no-relogio",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-1.12.312-Aviso-Cadastro-Local-Para-Assinar.agenda.json",
-  "sha256": "8c5eb7b4bdf100456069eba71352737d62978547c2111d323940a56c27c8fabb",
-  "versao_efetiva": "1.12.312",
-  "sequencia_efetiva": 418,
-  "proxima_versao_livre": "1.12.313",
-  "proxima_sequencia_livre": 419,
-  "impressao": "f9aa8a2c7d1bc62f8a9c50c91589a9e8aa693c2cf89a5ea4e1bcc1c2c75327b0"
+  "arquivo": "AgendaPersonal-1.12.313-Aviso-No-Relogio-Para-Assinar.agenda.json",
+  "sha256": "b67ea8dc12c1a6629e2f4f0e5efdfd724b5a41dec1bef200a086161faa695ee5",
+  "versao_efetiva": "1.12.313",
+  "sequencia_efetiva": 419,
+  "proxima_versao_livre": "1.12.314",
+  "proxima_sequencia_livre": 420,
+  "impressao": "4b87aea2706532f2cfc9715d51ce3ea594cda7d9dd8a12bdf64e0baf1841a731"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -620,8 +620,8 @@
    "titulo": "Aviso no relógio",
    "status": {
     "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-aviso-relogio-1.12.313.cjs), pedido do Tiago às 15:17 e 15:54 (Smartwatch \"para vários modelos\"; os alunos sem o cartão) e escolha dele na pergunta do app (\"Avisos em qualquer relógio (Recomendado)\"); precisa do APK 1.212 (PR #57)",
-    "aprovado": "não",
-    "assinado": "não",
+    "aprovado": "sim: o Tiago escolheu \"Pode juntar e gerar (Recomendado)\" (24/11/2026, pergunta no app, junto com o #55 e o #57); merge ce732ba (PR #58) feito pelo Claude depois do CI verde",
+    "assinado": "sim: execução 45497636418 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14968419737; pré-lançamento conteudo-45497636418-1 (arquivo assinado SHA-256 9ddd17ffe0fae1b8d51bd7282a5040b7458c74a8d6d5869a76f46c5bf191f3b6; sem a assinatura, idêntico ao proposto). Precisa do APK 1.212 (release android-1.212-conteudo-1.12.269-45496896284)",
     "publicado": "não",
     "instalado": "não",
     "validado": "não"
@@ -1240,8 +1240,18 @@
     "area": "geral",
     "vezes": 1
    },
+   "ap-aviso-relogio-css": {
+    "hash": "1c0edff49952a830a87b0fb0ac40d0fa22ed12c166561622f480b241844a1c49",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-aviso-relogio": {
+    "hash": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff",
+    "area": "geral",
+    "vezes": 1
+   },
    "#fora-dos-blocos": {
-    "hash": "19c11b9a926875c521fc503bf81c3c2ad4f7233b162af031c5bbc10e8487844b",
+    "hash": "3700310e42ae5e1a6c51b44a6762285bd839c1c6d23e3670899dd05b463baae9",
     "area": "geral",
     "vezes": 1
    }
@@ -1987,8 +1997,18 @@
     "area": "geral",
     "vezes": 1
    },
+   "ap-aviso-relogio-css": {
+    "hash": "1c0edff49952a830a87b0fb0ac40d0fa22ed12c166561622f480b241844a1c49",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-aviso-relogio": {
+    "hash": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff",
+    "area": "geral",
+    "vezes": 1
+   },
    "#fora-dos-blocos": {
-    "hash": "a52b81f4e59d471d7f47817ccb45290a94cd7ca3556ef2c9e696256d78cc85a0",
+    "hash": "59ba2ef678c4559d144f6ddabe631fbfbb70f6f9614ffd0e9a1385751cc5c1a9",
     "area": "geral",
     "vezes": 1
    }
@@ -3001,6 +3021,10 @@
    {
     "hash": "19c11b9a926875c521fc503bf81c3c2ad4f7233b162af031c5bbc10e8487844b",
     "desde": "1.12.312"
+   },
+   {
+    "hash": "3700310e42ae5e1a6c51b44a6762285bd839c1c6d23e3670899dd05b463baae9",
+    "desde": "1.12.313"
    }
   ],
   "professor.html|ap-native-store": [
@@ -3977,6 +4001,10 @@
    {
     "hash": "a52b81f4e59d471d7f47817ccb45290a94cd7ca3556ef2c9e696256d78cc85a0",
     "desde": "1.12.312"
+   },
+   {
+    "hash": "59ba2ef678c4559d144f6ddabe631fbfbb70f6f9614ffd0e9a1385751cc5c1a9",
+    "desde": "1.12.313"
    }
   ],
   "avaliacoes.html|ap-native-store": [
@@ -4365,6 +4393,30 @@
    {
     "hash": "580b80c9e9babfebabc4a2ac03cb0f225c137d600ff57cda0354a8e8b44a8f7d",
     "desde": "1.12.312"
+   }
+  ],
+  "index.html|ap-aviso-relogio-css": [
+   {
+    "hash": "1c0edff49952a830a87b0fb0ac40d0fa22ed12c166561622f480b241844a1c49",
+    "desde": "1.12.313"
+   }
+  ],
+  "index.html|ap-aviso-relogio": [
+   {
+    "hash": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff",
+    "desde": "1.12.313"
+   }
+  ],
+  "professor.html|ap-aviso-relogio-css": [
+   {
+    "hash": "1c0edff49952a830a87b0fb0ac40d0fa22ed12c166561622f480b241844a1c49",
+    "desde": "1.12.313"
+   }
+  ],
+  "professor.html|ap-aviso-relogio": [
+   {
+    "hash": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff",
+    "desde": "1.12.313"
    }
   ]
  },

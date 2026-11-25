@@ -2,6 +2,34 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**24/11, 18h (Claude): APK 1.212 gerado e publicado; 1.12.313 assinado. Falta o Tiago instalar e testar no Xiaomi.**
+- **Autorização:** o Tiago escolheu "Pode juntar e gerar (Recomendado)" na pergunta do app ("Posso juntar os PRs #55, #57 e #58, gerar o APK 1.212 e assinar o 1.12.313?").
+- **Merges (squash, feitos pelo Claude com o CI verde):**
+  - #55 → 4c8cd5f.
+  - #57 → 8c7fce3. Antes do merge, o fluxo do emulador falhou uma vez porque o Maven Central devolveu 429 (Too Many Requests) ao baixar o junit; repetido, passou com 7/7.
+  - #58 → ce732ba.
+- **APK 1.212:**
+  - "Gerar e publicar APK Agenda Personal", execução 45496896284 (nº 92).
+  - Release `android-1.212-conteudo-1.12.269-45496896284`, `AgendaPersonal-Android.apk`, 59.101.098 bytes, SHA-256 `d8e3131a0358bf528e54fdd0b3777caf4fe2dc267b62c594e8b5b100165504ed`.
+  - Conferido com o androguard contra o 1.211:
+    - mesmo pacote e **mesmo certificado** (`1166c0b2…`); versão 1.212, código 1092 (era 1091); min 26, target 35;
+    - permissões, atividades e serviços idênticos;
+    - único componente novo: o receptor `AvisoRelogioReceiver`, **não exportado**;
+    - o dex tem `AvisosRelogio`, `AvisoRelogioReceiver`, `AvisosCadastro` e `WatchBridge`.
+- **1.12.313 assinado:**
+  - Execução 45497636418 ("Conferir regressão antes de assinar" e "Assinar e verificar com a chave oficial" ok), artefato 14968419737.
+  - Pré-lançamento `conteudo-45497636418-1`, arquivo `AgendaPersonal-1.12.313-Aviso-No-Relogio-Para-Assinar-Assinado.agenda.json`, SHA-256 `9ddd17ffe0fae1b8d51bd7282a5040b7458c74a8d6d5869a76f46c5bf191f3b6`. Sem a assinatura, é idêntico ao proposto.
+  - **Referência agora 1.12.313/419; próxima livre 1.12.314/420.** O canônico (instalado) continua 1.12.309.
+- **Instalar, na ordem:**
+  1. O APK 1.212 por cima do atual, sem desinstalar. Pode pular o 1.211: o 1.212 traz tudo dele.
+  2. O 1.12.313 assinado. Pode pular o 1.12.310 a 1.12.312: o 1.12.313 traz tudo deles.
+- **Testar no Xiaomi:**
+  1. Mais › Smartwatch › ligar "Avisar no relógio".
+  2. Iniciar um descanso curto e bloquear a tela.
+  3. No fim do descanso deve aparecer "Fim do descanso · <aluno> · <exercício>", sem som extra.
+- **Testar no relógio:** sem relógio (o Tiago não tem), a chegada no pulso fica para um aluno com relógio, pelo "Testar no relógio".
+- **Reverter:** APK 1.211 por cima (mesma assinatura) e o 1.12.312 assinado.
+
 **24/11, 17h (Claude): 1.12.313/419 — Smartwatch: aviso no relógio no fim do descanso, para professor e aluno (PR, proposto; precisa do APK 1.212 do PR #57).**
 - **Pedido do Tiago (15:17 e 15:54):** voltar ao Smartwatch; os alunos não tinham onde configurar o relógio; "faça [funcionar] para vários modelos". Escolheu "Avisos em qualquer relógio (Recomendado)" ("Mexe no aviso do descanso") e respondeu "Não tenho relógio". Avaliação completa na entrada do APK 1.212 (logo abaixo, no PR #57) e no PR #56.
 - **Pacote:** `AgendaPersonal-1.12.313-Aviso-No-Relogio-Para-Assinar.agenda.json`, SHA-256 `b67ea8dc12c1a6629e2f4f0e5efdfd724b5a41dec1bef200a086161faa695ee5`. Gerador `tools/gerar-aviso-relogio-1.12.313.cjs`, a partir do 1.12.312 (referência; SHA conferido). Autorização `equipe/canonico/alteracoes-autorizadas/1.12.313.json`.
