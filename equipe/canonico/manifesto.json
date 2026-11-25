@@ -62,6 +62,7 @@
   "AgendaPersonal-1.12.312-Aviso-Cadastro-Local-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.313-Aviso-No-Relogio-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.314-Treino-Por-Texto-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.315-Criar-Treino-Manual-Para-Assinar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
   "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
@@ -642,6 +643,23 @@
     "assinado": "sim: execução 45525434192 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14981153914; pré-lançamento conteudo-45525434192-1 (arquivo assinado SHA-256 cf67cf77bcd708bad30ea9e4d962d815807dc9318729eff2e29f4d2d719bc958; sem a assinatura, idêntico ao proposto)",
     "publicado": "não",
     "instalado": "sim: no aparelho do Tiago (Xiaomi): prints do Tiago do Perfil do aluno no Xiaomi (24/11/2026 21:39–21:40), com os botões \"Importar treino por texto\" no cartão Aluno e ficha e na ficha vazia, que só existem no 1.12.314",
+    "validado": "não"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.315",
+   "sequencia": 421,
+   "arquivo": "AgendaPersonal-1.12.315-Criar-Treino-Manual-Para-Assinar.agenda.json",
+   "sha256": "8eafe5b7637350a1cb51c9b144fe74242990a80181ab6b9ffe012b730d3a165c",
+   "origem": "main",
+   "titulo": "Criar treino manual no Aluno e ficha",
+   "status": {
+    "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-criar-treino-manual-1.12.315.cjs), pedido do Tiago às 21:40 com print da ficha vazia circulada (tirar o quadro e pôr Criar treino manual entre os botões do Aluno e ficha); parte da referência 1.12.314/420, que depende do registro do PR #61",
+    "aprovado": "não",
+    "assinado": "não",
+    "publicado": "não",
+    "instalado": "não",
     "validado": "não"
    }
   }
@@ -5654,6 +5672,26 @@
    ],
    "depende_de": [
     "pacote-1-12-313-aviso-no-relogio"
+   ]
+  },
+  {
+   "id": "pacote-1-12-315-criar-treino-manual-no-aluno-e-ficha",
+   "titulo": "Criar treino manual no Aluno e ficha",
+   "tipo": "pacote-completo",
+   "versao": "1.12.315",
+   "sequencia": 421,
+   "arquivo": "AgendaPersonal-1.12.315-Criar-Treino-Manual-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "aa32edb2131544be348296ec93d4cd23dc31e7abeea00ee6366c6c8123d7090f",
+     "depois": "22de015f1bce5c85107742bf8ed2877c757ad97ae7d361573f90952c25b0bf7d"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-314-treino-por-texto-e-orientacoes"
    ]
   }
  ],

@@ -2,6 +2,14 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**24/11, 22h (Claude): 1.12.315 (seq 421) "Criar treino manual no Aluno e ficha" proposto, em PR rascunho. Nada assinado, publicado nem instalado.**
+- **Pedido (Tiago, 21:40, print da ficha vazia circulada):** tirar o quadro "Este aluno ainda não tem ficha de treino" e pôr "Criar treino manual" entre os botões quadrados do cartão Aluno e ficha.
+- **Arquivo:** `AgendaPersonal-1.12.315-Criar-Treino-Manual-Para-Assinar.agenda.json`, SHA-256 `8eafe5b7637350a1cb51c9b144fe74242990a80181ab6b9ffe012b730d3a165c`; parte da referência 1.12.314/420 (registro no PR #61). Gerador: `tools/gerar-criar-treino-manual-1.12.315.cjs`. Autorização: `equipe/canonico/alteracoes-autorizadas/1.12.315.json`.
+- **O que muda (só professor.html, três trechos de `renderWorkoutStudent`, fora dos blocos):** botões do Aluno e ficha = Criar treino manual (`openWorkoutPlanEditor()`), Importar treino por PDF, Importar treino por texto, Inativar/Reativar nos treinos (por último); o cartão abre já aberto quando o aluno não tem ficha ativa; sai o quadro da ficha vazia (também o "Nenhuma ficha ativa" de quem só tem arquivadas). Pacote completo porque os trechos estão no texto do app, fora do alcance da correção por área.
+- **Não muda:** index.html, blocos `ap-*`, "Nova ficha" em Ações da ficha, PDF, texto, Orientações, descanso, cronômetros, alarmes, notificações, Firebase, dados de alunos, financeiro, login, mascotes. Com ficha ativa o cartão continua abrindo fechado.
+- **Testes (sobre o arquivo acima):** `verificar-pacote --modo pr` aprovado; `testar-verificador` 45/45; `mecanismo-real` aprovado (210); `testes-oficiais-android` 18/18; `verificar_funcionalidades` aprovado (2 avisos antigos); `conferir-raiz` ok; Chrome (`equipe/testes/navegador/criar-treino-manual-315/`) 25/25. **Não testado no Xiaomi.**
+- **Instalar/reverter:** depois de aprovado e assinado, pelo "Revisar atualização"; reverter = instalar de novo o 1.12.314.
+
 **24/11, 21h20 (Claude): 1.12.314 assinado.** O Tiago autorizou ("Ok pode fazer", 21:11). Merges: #59 → 79aa842, #60 → 99b1761. Assinatura: execução 45525434192, pré-lançamento `conteudo-45525434192-1`, arquivo assinado SHA-256 `cf67cf77bcd708bad30ea9e4d962d815807dc9318729eff2e29f4d2d719bc958` (sem a assinatura, idêntico ao proposto). Referência passa a 1.12.314/420. **Instalado no Xiaomi do Tiago** (prints de 21:39–21:40 com os botões "Importar treino por texto", que só existem no 1.12.314): canônico passa a 1.12.314. Validado: não (falta testar a importação e o botão Orientações do aluno).
 
 **24/11, 21h (Claude): 1.12.314 (seq 420) "Treino por texto" proposto, em PR rascunho.**

@@ -266,6 +266,14 @@
    "publicado": "não",
    "instalado": "sim: no aparelho do Tiago (Xiaomi): prints do Tiago do Perfil do aluno no Xiaomi (24/11/2026 21:39–21:40), com os botões \"Importar treino por texto\" no cartão Aluno e ficha e na ficha vazia, que só existem no 1.12.314",
    "validado": "não"
+  },
+  "1.12.315": {
+   "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-criar-treino-manual-1.12.315.cjs), pedido do Tiago às 21:40 com print da ficha vazia circulada (tirar o quadro e pôr Criar treino manual entre os botões do Aluno e ficha); parte da referência 1.12.314/420, que depende do registro do PR #61",
+   "aprovado": "não",
+   "assinado": "não",
+   "publicado": "não",
+   "instalado": "não",
+   "validado": "não"
   }
  }
 }
