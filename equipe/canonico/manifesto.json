@@ -11,15 +11,15 @@
   "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: print do Mais (23/11/2026 23:51) com o texto \"Nome e símbolo dos cartões de feedback.\", que só existe no 1.12.309, e confirmação dele na pergunta do app (\"Sim, instalei\", madrugada de 24/11/2026). O 1.12.305, 1.12.306, 1.12.307 e 1.12.308 não foram instalados separadamente: o 1.12.309 inclui todos. Antes: 1.12.304 (22/11 15:30)."
  },
  "referencia": {
-  "id": "pacote-1-12-313-aviso-no-relogio",
+  "id": "pacote-1-12-314-treino-por-texto-e-orientacoes",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-1.12.313-Aviso-No-Relogio-Para-Assinar.agenda.json",
-  "sha256": "b67ea8dc12c1a6629e2f4f0e5efdfd724b5a41dec1bef200a086161faa695ee5",
-  "versao_efetiva": "1.12.313",
-  "sequencia_efetiva": 419,
-  "proxima_versao_livre": "1.12.314",
-  "proxima_sequencia_livre": 420,
-  "impressao": "4b87aea2706532f2cfc9715d51ce3ea594cda7d9dd8a12bdf64e0baf1841a731"
+  "arquivo": "AgendaPersonal-1.12.314-Treino-Por-Texto-Para-Assinar.agenda.json",
+  "sha256": "c531474b5436f32f5c19561984f80369994b9c7876299f2c6db85ab8c469ecda",
+  "versao_efetiva": "1.12.314",
+  "sequencia_efetiva": 420,
+  "proxima_versao_livre": "1.12.315",
+  "proxima_sequencia_livre": 421,
+  "impressao": "ea7742bd9c86193d150a49335b285f3b4a4637103a3ed07023511ca0efb21638"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -638,8 +638,8 @@
    "titulo": "Treino por texto e Orientações",
    "status": {
     "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-treino-texto-1.12.314.cjs), pedido do Tiago às 18:49 (colar a prescrição em texto; \"Orientações + colar texto\" e \"Também montar os exercícios\"; regra do card de cardio) e ajuste das 20:46 (poder tirar o \"Como fazer\" e botão \"Orientações\" para o aluno ler); parte da referência 1.12.313/419, que ainda depende do registro do PR #59",
-    "aprovado": "não",
-    "assinado": "não",
+    "aprovado": "sim: o Tiago respondeu \"Ok pode fazer\" (24/11/2026 21:11) à pergunta \"Pode juntar o #59 e o #60 e assinar?\"; merge 99b1761 (PR #60) feito pelo Claude depois do CI verde, após o #59 (79aa842)",
+    "assinado": "sim: execução 45525434192 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14981153914; pré-lançamento conteudo-45525434192-1 (arquivo assinado SHA-256 cf67cf77bcd708bad30ea9e4d962d815807dc9318729eff2e29f4d2d719bc958; sem a assinatura, idêntico ao proposto)",
     "publicado": "não",
     "instalado": "não",
     "validado": "não"
@@ -1268,8 +1268,18 @@
     "area": "geral",
     "vezes": 1
    },
+   "ap-orientacoes-aluno-css": {
+    "hash": "a8e86b80585bd3437c8ded17f9024f600cf7087959e2c45a85c74a2990fee062",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-orientacoes-aluno": {
+    "hash": "bdce06d9c614137bc8d08a4a38157cc58b845bd80ea5183feee04a83168a4c71",
+    "area": "geral",
+    "vezes": 1
+   },
    "#fora-dos-blocos": {
-    "hash": "3700310e42ae5e1a6c51b44a6762285bd839c1c6d23e3670899dd05b463baae9",
+    "hash": "18f52cd209f0544fd76c827658d44b3b9a2c384795a6d0eb7e7cf29cf96751f7",
     "area": "geral",
     "vezes": 1
    }
@@ -2025,8 +2035,18 @@
     "area": "geral",
     "vezes": 1
    },
+   "ap-treino-texto-css": {
+    "hash": "b5ee0d0da7c77ba07b154b1788d3b4ef89d67f98bb2bcd8f8b52539cceb1d207",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-treino-texto": {
+    "hash": "4e430fcd63ce50ec3260b51db90b144a2a71d7d02f64b87f9ad7d68c209bc68b",
+    "area": "geral",
+    "vezes": 1
+   },
    "#fora-dos-blocos": {
-    "hash": "59ba2ef678c4559d144f6ddabe631fbfbb70f6f9614ffd0e9a1385751cc5c1a9",
+    "hash": "aa32edb2131544be348296ec93d4cd23dc31e7abeea00ee6366c6c8123d7090f",
     "area": "geral",
     "vezes": 1
    }
@@ -3043,6 +3063,10 @@
    {
     "hash": "3700310e42ae5e1a6c51b44a6762285bd839c1c6d23e3670899dd05b463baae9",
     "desde": "1.12.313"
+   },
+   {
+    "hash": "18f52cd209f0544fd76c827658d44b3b9a2c384795a6d0eb7e7cf29cf96751f7",
+    "desde": "1.12.314"
    }
   ],
   "professor.html|ap-native-store": [
@@ -4023,6 +4047,10 @@
    {
     "hash": "59ba2ef678c4559d144f6ddabe631fbfbb70f6f9614ffd0e9a1385751cc5c1a9",
     "desde": "1.12.313"
+   },
+   {
+    "hash": "aa32edb2131544be348296ec93d4cd23dc31e7abeea00ee6366c6c8123d7090f",
+    "desde": "1.12.314"
    }
   ],
   "avaliacoes.html|ap-native-store": [
@@ -4435,6 +4463,30 @@
    {
     "hash": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff",
     "desde": "1.12.313"
+   }
+  ],
+  "index.html|ap-orientacoes-aluno-css": [
+   {
+    "hash": "a8e86b80585bd3437c8ded17f9024f600cf7087959e2c45a85c74a2990fee062",
+    "desde": "1.12.314"
+   }
+  ],
+  "index.html|ap-orientacoes-aluno": [
+   {
+    "hash": "bdce06d9c614137bc8d08a4a38157cc58b845bd80ea5183feee04a83168a4c71",
+    "desde": "1.12.314"
+   }
+  ],
+  "professor.html|ap-treino-texto-css": [
+   {
+    "hash": "b5ee0d0da7c77ba07b154b1788d3b4ef89d67f98bb2bcd8f8b52539cceb1d207",
+    "desde": "1.12.314"
+   }
+  ],
+  "professor.html|ap-treino-texto": [
+   {
+    "hash": "4e430fcd63ce50ec3260b51db90b144a2a71d7d02f64b87f9ad7d68c209bc68b",
+    "desde": "1.12.314"
    }
   ]
  },

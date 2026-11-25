@@ -261,8 +261,8 @@
   },
   "1.12.314": {
    "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-treino-texto-1.12.314.cjs), pedido do Tiago às 18:49 (colar a prescrição em texto; \"Orientações + colar texto\" e \"Também montar os exercícios\"; regra do card de cardio) e ajuste das 20:46 (poder tirar o \"Como fazer\" e botão \"Orientações\" para o aluno ler); parte da referência 1.12.313/419, que ainda depende do registro do PR #59",
-   "aprovado": "não",
-   "assinado": "não",
+   "aprovado": "sim: o Tiago respondeu \"Ok pode fazer\" (24/11/2026 21:11) à pergunta \"Pode juntar o #59 e o #60 e assinar?\"; merge 99b1761 (PR #60) feito pelo Claude depois do CI verde, após o #59 (79aa842)",
+   "assinado": "sim: execução 45525434192 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14981153914; pré-lançamento conteudo-45525434192-1 (arquivo assinado SHA-256 cf67cf77bcd708bad30ea9e4d962d815807dc9318729eff2e29f4d2d719bc958; sem a assinatura, idêntico ao proposto)",
    "publicado": "não",
    "instalado": "não",
    "validado": "não"
