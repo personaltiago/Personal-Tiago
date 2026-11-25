@@ -1,0 +1,27 @@
+/* Orientações do treino para o aluno (1.12.314). Segue as cores da tela dos treinos (cor do tema e modo claro). */
+.ap-orient-botao{display:flex;align-items:center;gap:12px;width:calc(100% - 8px);margin:0 4px 10px;padding:11px 13px;text-align:left;color:#f5f6fa;background:linear-gradient(120deg,#0c1a26,#07131d);border:1px solid #2c3947;border-radius:13px;font:inherit;cursor:pointer;min-height:56px}
+.ap-orient-botao[hidden]{display:none}
+.ap-orient-botao .ap-orient-ic{display:grid;place-items:center;flex:none;color:var(--ws-accent)}
+.ap-orient-botao svg{width:26px;height:26px}
+.ap-orient-botao .ap-orient-tx{flex:1;min-width:0}
+.ap-orient-botao strong{display:block;font-size:calc(15px * var(--ws-scale,1));font-weight:700}
+.ap-orient-botao small{display:block;margin-top:2px;font-size:calc(12px * var(--ws-scale,1));color:#b8c2d1}
+.ap-orient-botao .ap-orient-seta{flex:none;color:var(--ws-accent)}
+.ap-orient-botao .ap-orient-seta svg{width:22px;height:22px}
+.ap-orient-botao:focus-visible{outline:2px solid var(--ws-accent);outline-offset:2px}
+.ws-screen.ws-light .ap-orient-botao{background:#fff;border-color:#cad6df;color:#17222d}
+.ws-screen.ws-light .ap-orient-botao small{color:#586777}
+dialog.ap-orient{box-sizing:border-box;width:min(520px,100vw);max-width:100vw;height:min(88dvh,720px);max-height:100dvh;margin:auto auto 0;padding:0;border:1px solid var(--ori-line,#2c3947);border-radius:18px 18px 0 0;background:var(--ori-bg,#0c1a26);color:var(--ori-txt,#f5f6fa);font-family:Arial,Helvetica,sans-serif;overflow:hidden;z-index:200000}
+dialog.ap-orient[open]{display:flex;flex-direction:column}
+dialog.ap-orient::backdrop{background:rgba(0,0,0,.6)}
+dialog.ap-orient *{box-sizing:border-box}
+dialog.ap-orient header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px 10px;border-bottom:1px solid var(--ori-line,#2c3947)}
+dialog.ap-orient h2{margin:0;font-size:20px;outline:none}
+dialog.ap-orient header button{width:40px;height:40px;border:0;background:transparent;color:inherit;font-size:28px;line-height:1;cursor:pointer}
+.ap-orient-corpo{flex:1;overflow:auto;padding:6px 16px 12px;-webkit-overflow-scrolling:touch}
+.ap-orient-corpo h3{margin:16px 0 4px;font-size:16px;color:var(--ori-ac)}
+.ap-orient-corpo h4{margin:16px 0 6px;font-size:14px;letter-spacing:.02em;text-transform:uppercase;color:var(--ori-ac)}
+.ap-orient-corpo p,.ap-orient-corpo li{margin:0 0 8px;font-size:15px;line-height:1.5;color:var(--ori-txt,#f5f6fa)}
+.ap-orient-corpo ul{margin:0;padding-left:20px}
+.ap-orient-ok{margin:0 16px calc(14px + env(safe-area-inset-bottom));min-height:46px;border:0;border-radius:12px;background:var(--ori-ac);color:#fff;font:inherit;font-weight:700;cursor:pointer}
+dialog.ap-orient header button:focus-visible,.ap-orient-ok:focus-visible{outline:2px solid var(--ori-ac);outline-offset:2px}

@@ -1,0 +1,16 @@
+/* Importar treino por texto (1.12.314): só o que a janela de revisão precisa além das classes que o app já tem. */
+#apTextoDialog textarea{width:100%;min-height:120px;resize:vertical;font:inherit;box-sizing:border-box}
+#apTextoDialog .ap-texto-mestre{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+#apTextoDialog .ap-texto-dia{margin:10px 0;border:1px solid var(--line,rgba(128,128,128,.35));border-radius:12px;padding:0 12px}
+#apTextoDialog .ap-texto-dia>summary{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:44px;padding:10px 0;cursor:pointer}
+#apTextoDialog .ap-texto-dia small{opacity:.75}
+#apTextoDialog .ap-texto-dia ol{margin:0;padding:4px 0 12px;list-style:none;display:grid;gap:10px}
+#apTextoDialog .ap-texto-dia li{display:grid;gap:4px;padding-top:10px;border-top:1px solid var(--line,rgba(128,128,128,.25))}
+#apTextoDialog .ap-texto-dia li:first-child{border-top:0;padding-top:0}
+#apTextoDialog .ap-texto-dia li small{display:block}
+#apTextoDialog .ap-texto-usar,#apTextoDialog .ap-texto-cardio-dias label{display:flex;align-items:center;gap:8px;min-height:36px}
+#apTextoDialog .ap-texto-cardio-dias{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:8px}
+#apTextoDialog .ap-texto-cardio-dias>span{flex-basis:100%}
+#apTextoDialog .ap-texto-previa p{margin:6px 0 0;font-size:14px;line-height:1.45;opacity:.85}
+#apTextoDialog .ap-texto-vinculo{display:grid;gap:6px;font-size:14px}
+#apTextoDialog .ap-texto-cardio-linha{font-weight:600}

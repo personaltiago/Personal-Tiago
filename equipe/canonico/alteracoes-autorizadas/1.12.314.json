@@ -1,0 +1,58 @@
+{
+ "versao": "1.12.314",
+ "sequencia": 420,
+ "titulo": "Treino por texto e Orientações para o aluno",
+ "base": {
+  "referencia": "pacote-1-12-313-aviso-no-relogio",
+  "impressao": "4b87aea2706532f2cfc9715d51ce3ea594cda7d9dd8a12bdf64e0baf1841a731"
+ },
+ "pedido": "Tiago, 24/11/2026 18:49, com a prescrição colada: \"eu queria ter como por escrita [...] colocar escrito também\". Na pergunta do app escolheu \"Orientações + colar texto (Recomendado)\" e \"Também montar os exercícios\". Regra do cardio: \"Sempre que houver exercício cardiovascular (cardio) no texto enviado, o aplicativo deverá criar automaticamente um card específico de cardio e adicioná-lo ao final do treino\"; \"respeitar exatamente o tempo de duração indicado no texto\"; \"Não adicionar card de cardio quando ele não estiver previsto no treino original.\" 20:46: poder tirar o \"Como fazer\" do texto (os exercícios já têm) e, na tela dos treinos do aluno, um \"Orientação\" que ele clica para ler.",
+ "aprovado_por": "Pedido específico do Tiago (importar a prescrição por texto e mostrar Orientações ao aluno). Só blocos novos mais as duas marcas/botões na página do professor: descanso do treino, cronômetros, alarmes, notificações da tela bloqueada, Firebase, dados de alunos, financeiro, login e mascotes não mudam. O texto colado não é guardado; a importação só cria uma ficha nova no aluno escolhido. Merge, assinatura e instalação continuam dependendo da autorização dele.",
+ "gerador": "tools/gerar-treino-texto-1.12.314.cjs",
+ "alteracoes": [
+  {
+   "pagina": "index.html",
+   "id": "ap-orientacoes-aluno-css",
+   "antes": null,
+   "depois": "a8e86b80585bd3437c8ded17f9024f600cf7087959e2c45a85c74a2990fee062",
+   "motivo": "Bloco novo antes do último </body>. Visual do botão \"Orientações\" e da janela de leitura do aluno (cores por --ws-accent, modo claro .ws-light)."
+  },
+  {
+   "pagina": "index.html",
+   "id": "ap-orientacoes-aluno",
+   "antes": null,
+   "depois": "bdce06d9c614137bc8d08a4a38157cc58b845bd80ea5183feee04a83168a4c71",
+   "motivo": "Bloco novo antes do último </body>. Na lista de treinos do aluno, botão \"Orientações\" (escondido se a ficha não tem orientações) que abre uma janela só de leitura com as orientações gerais e as de cada dia. Só lê plan.notes/day.notes; não grava nada. Expõe window.APOrientacoesAluno."
+  },
+  {
+   "pagina": "index.html",
+   "id": "#fora-dos-blocos",
+   "antes": "3700310e42ae5e1a6c51b44a6762285bd839c1c6d23e3670899dd05b463baae9",
+   "depois": "18f52cd209f0544fd76c827658d44b3b9a2c384795a6d0eb7e7cf29cf96751f7",
+   "motivo": "Só as marcas dos dois blocos novos (<style id=\"ap-orientacoes-aluno-css\"></style> e <script id=\"ap-orientacoes-aluno\"></script>) antes do último </body>. Tirados os dois blocos, a página é idêntica à do 1.12.313 (conferido no teste do Chrome)."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-treino-texto-css",
+   "antes": null,
+   "depois": "b5ee0d0da7c77ba07b154b1788d3b4ef89d67f98bb2bcd8f8b52539cceb1d207",
+   "motivo": "Bloco novo antes do último </body>. Visual da janela \"Importar treino por texto\" (colar, revisar, cardio, orientações)."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-treino-texto",
+   "antes": null,
+   "depois": "4e430fcd63ce50ec3260b51db90b144a2a71d7d02f64b87f9ad7d68c209bc68b",
+   "motivo": "Bloco novo antes do último </body>. Lê o texto da prescrição, mostra a revisão (escolha de manter/tirar o \"Como fazer\" por exercício, descanso em faixa, cardio com minutos exatos, orientações editáveis) e cria uma ficha nova no aluno com os exercícios do catálogo; o card de cardio entra por último em cada dia quando o texto prevê cardio. Usa commitWorkoutChange só com workoutPlans. Expõe window.APTreinoTexto."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "#fora-dos-blocos",
+   "antes": "59ba2ef678c4559d144f6ddabe631fbfbb70f6f9614ffd0e9a1385751cc5c1a9",
+   "depois": "aa32edb2131544be348296ec93d4cd23dc31e7abeea00ee6366c6c8123d7090f",
+   "motivo": "As marcas dos dois blocos novos antes do </body> e o botão \"Importar treino por texto\" ao lado do botão de importar PDF e na ficha vazia (duas linhas de template). Tirados os blocos e os dois botões, a página é idêntica à do 1.12.313 (conferido no teste do Chrome)."
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}
