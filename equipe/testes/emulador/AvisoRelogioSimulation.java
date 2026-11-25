@@ -36,7 +36,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Aviso no relógio (Android 1.212) num Android de verdade: o emulador do GitHub (Android 14). Só roda no GitHub; não vai para o APK.
+ * Aviso no relógio (Android 1.212, com som desde o 1.213) num Android de verdade: o emulador do GitHub (Android 14). Só roda no GitHub; não vai para o APK.
  * Confere o caminho inteiro do aparelho: alarme do Android, receptor, canal e notificação, com a tela apagada; e a ponte que o
  * conteúdo usa (window.Android.scheduleWatchNotice). A chegada no relógio depende do app da marca e não é testada aqui.
  */
@@ -61,7 +61,11 @@ public class AvisoRelogioSimulation {
     }
 
     @Test public void a_fimDoDescansoComTelaApagada() throws Exception {
+        // Quem vem do 1.212 tem o canal antigo, sem som: o 1.213 apaga e cria o novo, com som.
+        nm.createNotificationChannel(new android.app.NotificationChannel("relogio", "Avisos no relógio", NotificationManager.IMPORTANCE_HIGH));
         assertEquals(Boolean.TRUE, call("ligar", app, true));
+        assertNull("o canal antigo sem som continua", nm.getNotificationChannel("relogio"));
+        assertNotNull("o canal novo tem som", nm.getNotificationChannel("relogio_som").getSound());
         long quando = System.currentTimeMillis() + 8000;
         assertEquals(Boolean.TRUE, call("agendar", app, "aluno", quando, "{\"titulo\":\"Fim do descanso\",\"texto\":\"Leg press 45°\"}"));
         apagar();
@@ -71,7 +75,10 @@ public class AvisoRelogioSimulation {
         salvar(r);
         acordar();
         assertNotNull("o aviso não apareceu", n);
-        assertEquals("relogio", n.getNotification().getChannelId());
+        assertEquals("relogio_som", n.getNotification().getChannelId());
+        assertEquals("Fim do descanso: Leg press 45°", String.valueOf(n.getNotification().tickerText));
+        assertEquals(Notification.CATEGORY_MESSAGE, n.getNotification().category);
+        assertEquals("Leg press 45°", String.valueOf(n.getNotification().extras.getCharSequence(Notification.EXTRA_BIG_TEXT)));
         assertEquals("Fim do descanso", n.getNotification().extras.getString(Notification.EXTRA_TITLE));
         assertEquals("Leg press 45°", String.valueOf(n.getNotification().extras.getCharSequence(Notification.EXTRA_TEXT)));
         assertTrue("tela acesa no momento do aviso", Boolean.TRUE.equals(apagadaNoAviso.get()));
