@@ -282,6 +282,14 @@
    "publicado": "não",
    "instalado": "sim: no aparelho do Tiago (Xiaomi): prints de Mais > Smartwatch com a chave \"Usar smartwatch\" (25/11/2026 22:07, só existe no 1.12.316) e a mensagem dele \"A parte de aparecer o íconezinho lá no [treino] deu certo\" (22:08)",
    "validado": "não"
+  },
+  "1.12.317": {
+   "proposto": "sim: gerado pelo Claude em 26/11/2026 (tools/gerar-cronometro-livre-1.12.317.cjs), pedido do Tiago às 18:07 e 18:10 (cronômetro livre ao lado do tempo da aula; \"Última\" no lugar da meta nas séries por tempo; só no professor); parte da referência 1.12.316/422, que depende do registro do PR #67",
+   "aprovado": "não",
+   "assinado": "não",
+   "publicado": "não",
+   "instalado": "não",
+   "validado": "não"
   }
  }
 }

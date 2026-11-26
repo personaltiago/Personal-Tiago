@@ -1,0 +1,37 @@
+{
+ "versao": "1.12.317",
+ "sequencia": 423,
+ "titulo": "Cronômetro livre no treino",
+ "base": {
+  "referencia": "pacote-1-12-316-smartwatch-no-treino",
+  "impressao": "da85e0eb074bdd4b69acf23c02f97187336ee9e8967e89243551f6566f168943"
+ },
+ "pedido": "Tiago, 26/11/2026 18:07 (prints do \"Treino em andamento\" e de uma série por tempo): \"um quadradinho separando esse aqui fica mais curto e ali na lateral ficasse tipo um cronômetro [...] para todos os treinos [...] para quando sobrar tempo\"; \"Aqui tu promete 30 segundos mas eu quero que seja sem meta [...] aparece [...] o [tempo] que a pessoa durou a última vez que fez\". Respostas às perguntas: \"Livre, contando para cima\", \"Trocar 'Meta' por 'Última'\"; 18:10: \"deixa só o professor\".",
+ "aprovado_por": "Pedido específico do Tiago para um cronômetro livre no Treino em andamento e para a série por tempo mostrar a última vez no lugar da meta, só no professor. Pacote completo: o texto da série fica no script sem id data-agenda-workout-series (#fora-dos-blocos), que não cabe em correção por área. A contagem e o despertador da aula, o descanso, o cronômetro da série, alarmes, sons, o aluno, Firebase, dados de alunos, financeiro, login e mascotes não mudam. Merge, assinatura e instalação continuam dependendo da autorização dele.",
+ "gerador": "tools/gerar-cronometro-livre-1.12.317.cjs",
+ "alteracoes": [
+  {
+   "pagina": "professor.html",
+   "id": "#fora-dos-blocos",
+   "antes": "22de015f1bce5c85107742bf8ed2877c757ad97ae7d361573f90952c25b0bf7d",
+   "depois": "ec8accd794cb081a9ef8f1d3f6d5700c4bd30bd6138ffc662f4f4bf553a87e38",
+   "motivo": "Só uma troca, no script data-agenda-workout-series (tabela de séries do professor): na série por tempo (APTimedSeries.isTimed), o \"Meta: <prescrição>\" embaixo do Iniciar vira \"Última: N s\" (o tempo da mesma série no último treino concluído, o mesmo valor da coluna Último treino, de APWorkoutPreviousSeries) ou \"Última: —\". Séries por repetições continuam com \"Meta\". O que se perde: o texto \"Meta: 30s\" nas séries por tempo (a prescrição continua na ficha e em Séries: 2 × 30s)."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-cronometro-livre-css",
+   "antes": null,
+   "depois": "abc44e96c95684c2e02159c743333f94cd14eea548add801d6993b0a550b70ca",
+   "motivo": "Bloco novo: o tempo da aula e o cronômetro livre lado a lado (um embaixo do outro abaixo de 340 px), com o mesmo visual do quadrado da aula; botões de 44 px."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-cronometro-livre",
+   "antes": null,
+   "depois": "3eed9ea534cf13d5dd604cf4f2f111757f1c0deaaf56c34897956bfc441d74d1",
+   "motivo": "Bloco novo: envolve workoutSessionHtml (como o ap-watch-ui) e, no Treino em andamento, põe ao lado da contagem da aula um cronômetro livre (Iniciar, Pausar, Continuar, Zerar), contando para cima, sem meta, sem som e sem alarme. Um só para todos os treinos, guardado neste aparelho (localStorage apCronometroLivre). Não mexe na contagem nem no despertador da aula."
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}

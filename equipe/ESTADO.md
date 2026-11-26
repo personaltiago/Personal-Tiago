@@ -2,6 +2,14 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**26/11, 18h30 (Claude): 1.12.317 (seq 423) "Cronômetro livre no treino" proposto, em PR rascunho. Nada assinado, publicado nem instalado.**
+- **Pedido (Tiago, 18:07 e 18:10):** cronômetro ao lado do tempo da aula no Treino em andamento, livre e contando para cima; nas séries por tempo, "Última" no lugar da "Meta"; só no professor.
+- **Arquivo:** `AgendaPersonal-1.12.317-Cronometro-Livre-Para-Assinar.agenda.json`, SHA-256 `c04ce773d24fd81603a6836a0aa2ed3b8d4e71ed7416f4769e4eac5656c81329`; parte do 1.12.316/422 (registro no PR #67, que precisa entrar antes). Gerador `tools/gerar-cronometro-livre-1.12.317.cjs`; autorização `equipe/canonico/alteracoes-autorizadas/1.12.317.json`.
+- **O que muda (só professor.html):** blocos novos `ap-cronometro-livre(-css)`, que envolvem `workoutSessionHtml` e põem o cronômetro (Iniciar/Pausar/Continuar/Zerar, sem som, um só para todos os treinos, em localStorage `apCronometroLivre`) ao lado da contagem da aula; abaixo de 340 px, um embaixo do outro; sem a contagem da aula, na largura toda. No script sem id `data-agenda-workout-series` (#fora-dos-blocos), a série por tempo mostra "Última: N s" (último treino concluído) ou "Última: —"; séries por repetições continuam com "Meta".
+- **Não muda:** a contagem e o despertador da aula (o "Parar cronômetro" é o mesmo), o descanso, o cronômetro da série, alarmes, sons, o aluno (index.html idêntico).
+- **Testes:** `verificar-pacote --modo pr` aprovado (1 alterado e 2 novos, autorizados); `testar-verificador` 45/45; `mecanismo-real` aprovado; `testes-oficiais-android` 18/18; `verificar_funcionalidades` aprovado (2 avisos antigos); `conferir-raiz` ok; Chrome (`equipe/testes/navegador/cronometro-livre-317/`) 23/23, com 320, 393 e 430 px e o 1.12.316 como comparação.
+- **Instalar e reverter:** depois de assinado, pelo app (Atualizações) no lugar do 1.12.316; para voltar, o 1.12.316 assinado (`conteudo-45739327113-1`).
+
 **25/11, 22h05 (Claude): 1.12.316 assinado.** O Tiago autorizou ("Pode juntar então", 21:55). Merges: #63 → 417ca8d, #66 → dfb8204. Assinatura: execução 45739327113, pré-lançamento `conteudo-45739327113-1`, arquivo assinado SHA-256 `6c4bcb07b93b5ec69623ad2e47e0e4d77af3b8536dc93ccafb6c59a151f6716a` (sem a assinatura, idêntico ao proposto). Referência passa a 1.12.316/422. O Tiago disse ter instalado o APK 1.213 (sem confirmação do relógio). Falta instalar o 1.12.316 e conferir.
 
 **25/11, 21h30 (Claude): 1.12.316 (seq 422) "Smartwatch no treino" proposto, em PR rascunho. Nada assinado, publicado nem instalado.**
