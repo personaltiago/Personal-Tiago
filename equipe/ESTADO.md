@@ -2,6 +2,8 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**26/11, 18h40 (Claude): 1.12.317 assinado.** O Tiago autorizou ("Pode juntar", 18:21). Merges: #67 → 69560fc, #68 → d531f2f. Assinatura: execução 45904636416, pré-lançamento `conteudo-45904636416-1`, SHA-256 assinado `448bff7abf0274f50bdc91ad020030bff3dbb59c2aa9d37cb68e3f9534454110` (sem a assinatura, idêntico ao proposto). Falta instalar e conferir.
+
 **26/11, 18h30 (Claude): 1.12.317 (seq 423) "Cronômetro livre no treino" proposto, em PR rascunho. Nada assinado, publicado nem instalado.**
 - **Pedido (Tiago, 18:07 e 18:10):** cronômetro ao lado do tempo da aula no Treino em andamento, livre e contando para cima; nas séries por tempo, "Última" no lugar da "Meta"; só no professor.
 - **Arquivo:** `AgendaPersonal-1.12.317-Cronometro-Livre-Para-Assinar.agenda.json`, SHA-256 `c04ce773d24fd81603a6836a0aa2ed3b8d4e71ed7416f4769e4eac5656c81329`; parte do 1.12.316/422 (registro no PR #67, que precisa entrar antes). Gerador `tools/gerar-cronometro-livre-1.12.317.cjs`; autorização `equipe/canonico/alteracoes-autorizadas/1.12.317.json`.
