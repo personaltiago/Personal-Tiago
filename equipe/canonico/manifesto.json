@@ -1,25 +1,25 @@
 {
  "descricao": "Fonte canônica versionada do conteúdo do Agenda Personal e manifesto das funcionalidades. Gerado por equipe/canonico/gerar-manifesto.cjs; não editar à mão (o CI confere).",
  "canonico": {
-  "versao": "1.12.314",
-  "sequencia": 420,
-  "arquivo": "AgendaPersonal-1.12.314-Treino-Por-Texto-Para-Assinar.agenda.json",
-  "sha256": "c531474b5436f32f5c19561984f80369994b9c7876299f2c6db85ab8c469ecda",
+  "versao": "1.12.316",
+  "sequencia": 422,
+  "arquivo": "AgendaPersonal-1.12.316-Smartwatch-No-Treino-Para-Assinar.agenda.json",
+  "sha256": "88c89220889ee15a769be5843537197c42b10aefe819a1f86e481421c07dc991",
   "appId": "com.tiagolima.agendapersonal",
   "bridgeVersion": 3,
   "dataSchema": 4,
-  "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: prints do Tiago do Perfil do aluno no Xiaomi (24/11/2026 21:39–21:40), com os botões \"Importar treino por texto\" no cartão Aluno e ficha e na ficha vazia, que só existem no 1.12.314. O 1.12.314 inclui o 1.12.310 a 1.12.313. Antes: 1.12.309 (print do Mais às 23:51 de 23/11/2026 e \"Sim, instalei\")."
+  "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: prints de Mais > Smartwatch no Xiaomi (25/11/2026 22:07) com a chave \"Usar smartwatch\", que só existe no 1.12.316, e a mensagem dele de que o ícone do relógio apareceu no treino (22:08). O 1.12.316 inclui o 1.12.315. Antes: 1.12.314 (prints de 24/11/2026 21:39–21:40)."
  },
  "referencia": {
-  "id": "pacote-1-12-315-criar-treino-manual-no-aluno-e-ficha",
+  "id": "pacote-1-12-316-smartwatch-no-treino",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-1.12.315-Criar-Treino-Manual-Para-Assinar.agenda.json",
-  "sha256": "8eafe5b7637350a1cb51c9b144fe74242990a80181ab6b9ffe012b730d3a165c",
-  "versao_efetiva": "1.12.315",
-  "sequencia_efetiva": 421,
-  "proxima_versao_livre": "1.12.316",
-  "proxima_sequencia_livre": 422,
-  "impressao": "e00a988bde5d94762290148ef738aa7bdaa175d200020673cde61bac31a25b59"
+  "arquivo": "AgendaPersonal-1.12.316-Smartwatch-No-Treino-Para-Assinar.agenda.json",
+  "sha256": "88c89220889ee15a769be5843537197c42b10aefe819a1f86e481421c07dc991",
+  "versao_efetiva": "1.12.316",
+  "sequencia_efetiva": 422,
+  "proxima_versao_livre": "1.12.317",
+  "proxima_sequencia_livre": 423,
+  "impressao": "da85e0eb074bdd4b69acf23c02f97187336ee9e8967e89243551f6566f168943"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -674,10 +674,10 @@
    "titulo": "Smartwatch no treino",
    "status": {
     "proposto": "sim: gerado pelo Claude em 25/11/2026 (tools/gerar-smartwatch-no-treino-1.12.316.cjs), pedido do Tiago às 18:59 e 21:06 (chave \"quero / não quero smartwatch\" em Mais > Smartwatch, ícone do relógio de volta ao treino e o que for realista mandar ao relógio); parte da referência 1.12.315/421, que depende do registro do PR #63",
-    "aprovado": "não",
-    "assinado": "não",
+    "aprovado": "sim: o Tiago respondeu \"Pode juntar então\" (25/11/2026 21:55) à pergunta \"Pode juntar o #63 e o #66 e assinar o 1.12.316?\"; merges 417ca8d (PR #63) e dfb8204 (PR #66) feitos pelo Claude depois do CI verde",
+    "assinado": "sim: execução 45739327113 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok); pré-lançamento conteudo-45739327113-1 (arquivo assinado SHA-256 6c4bcb07b93b5ec69623ad2e47e0e4d77af3b8536dc93ccafb6c59a151f6716a; sem a assinatura, idêntico ao proposto)",
     "publicado": "não",
-    "instalado": "não",
+    "instalado": "sim: no aparelho do Tiago (Xiaomi): prints de Mais > Smartwatch com a chave \"Usar smartwatch\" (25/11/2026 22:07, só existe no 1.12.316) e a mensagem dele \"A parte de aparecer o íconezinho lá no [treino] deu certo\" (22:08)",
     "validado": "não"
    }
   }
@@ -1295,12 +1295,12 @@
     "vezes": 1
    },
    "ap-aviso-relogio-css": {
-    "hash": "1c0edff49952a830a87b0fb0ac40d0fa22ed12c166561622f480b241844a1c49",
+    "hash": "94176982d39849eebe96985797ef5d69151e3c76e08f62424c5980d695f0c028",
     "area": "geral",
     "vezes": 1
    },
    "ap-aviso-relogio": {
-    "hash": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff",
+    "hash": "97838951898d1574f51b43b47465045666e1db42ca5bd785ec411612b1a83c92",
     "area": "geral",
     "vezes": 1
    },
@@ -2062,12 +2062,12 @@
     "vezes": 1
    },
    "ap-aviso-relogio-css": {
-    "hash": "1c0edff49952a830a87b0fb0ac40d0fa22ed12c166561622f480b241844a1c49",
+    "hash": "94176982d39849eebe96985797ef5d69151e3c76e08f62424c5980d695f0c028",
     "area": "geral",
     "vezes": 1
    },
    "ap-aviso-relogio": {
-    "hash": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff",
+    "hash": "97838951898d1574f51b43b47465045666e1db42ca5bd785ec411612b1a83c92",
     "area": "geral",
     "vezes": 1
    },
@@ -4485,24 +4485,40 @@
    {
     "hash": "1c0edff49952a830a87b0fb0ac40d0fa22ed12c166561622f480b241844a1c49",
     "desde": "1.12.313"
+   },
+   {
+    "hash": "94176982d39849eebe96985797ef5d69151e3c76e08f62424c5980d695f0c028",
+    "desde": "1.12.316"
    }
   ],
   "index.html|ap-aviso-relogio": [
    {
     "hash": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff",
     "desde": "1.12.313"
+   },
+   {
+    "hash": "97838951898d1574f51b43b47465045666e1db42ca5bd785ec411612b1a83c92",
+    "desde": "1.12.316"
    }
   ],
   "professor.html|ap-aviso-relogio-css": [
    {
     "hash": "1c0edff49952a830a87b0fb0ac40d0fa22ed12c166561622f480b241844a1c49",
     "desde": "1.12.313"
+   },
+   {
+    "hash": "94176982d39849eebe96985797ef5d69151e3c76e08f62424c5980d695f0c028",
+    "desde": "1.12.316"
    }
   ],
   "professor.html|ap-aviso-relogio": [
    {
     "hash": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff",
     "desde": "1.12.313"
+   },
+   {
+    "hash": "97838951898d1574f51b43b47465045666e1db42ca5bd785ec411612b1a83c92",
+    "desde": "1.12.316"
    }
   ],
   "index.html|ap-orientacoes-aluno-css": [
