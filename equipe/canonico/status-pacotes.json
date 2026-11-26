@@ -274,6 +274,14 @@
    "publicado": "não",
    "instalado": "não",
    "validado": "não"
+  },
+  "1.12.316": {
+   "proposto": "sim: gerado pelo Claude em 25/11/2026 (tools/gerar-smartwatch-no-treino-1.12.316.cjs), pedido do Tiago às 18:59 e 21:06 (chave \"quero / não quero smartwatch\" em Mais > Smartwatch, ícone do relógio de volta ao treino e o que for realista mandar ao relógio); parte da referência 1.12.315/421, que depende do registro do PR #63",
+   "aprovado": "não",
+   "assinado": "não",
+   "publicado": "não",
+   "instalado": "não",
+   "validado": "não"
   }
  }
 }

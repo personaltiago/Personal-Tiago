@@ -63,6 +63,7 @@
   "AgendaPersonal-1.12.313-Aviso-No-Relogio-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.314-Treino-Por-Texto-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.315-Criar-Treino-Manual-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.316-Smartwatch-No-Treino-Para-Assinar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
   "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
@@ -658,6 +659,23 @@
     "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-criar-treino-manual-1.12.315.cjs), pedido do Tiago às 21:40 com print da ficha vazia circulada (tirar o quadro e pôr Criar treino manual entre os botões do Aluno e ficha); parte da referência 1.12.314/420, que depende do registro do PR #61",
     "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (24/11/2026 21:54) à pergunta \"Pode juntar o #61 e o #62 e assinar o 1.12.315?\"; merge a47c38a (PR #62) feito pelo Claude depois do CI verde, após o #61 (642e4da)",
     "assinado": "sim: execução 45529654324 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14984605220; pré-lançamento conteudo-45529654324-1 (arquivo assinado SHA-256 7eae501d3f3f29d30dd810c02ae8bef62256edd47dc2b2d3f8b6f190667b0d6c; sem a assinatura, idêntico ao proposto)",
+    "publicado": "não",
+    "instalado": "não",
+    "validado": "não"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.316",
+   "sequencia": 422,
+   "arquivo": "AgendaPersonal-1.12.316-Smartwatch-No-Treino-Para-Assinar.agenda.json",
+   "sha256": "88c89220889ee15a769be5843537197c42b10aefe819a1f86e481421c07dc991",
+   "origem": "main",
+   "titulo": "Smartwatch no treino",
+   "status": {
+    "proposto": "sim: gerado pelo Claude em 25/11/2026 (tools/gerar-smartwatch-no-treino-1.12.316.cjs), pedido do Tiago às 18:59 e 21:06 (chave \"quero / não quero smartwatch\" em Mais > Smartwatch, ícone do relógio de volta ao treino e o que for realista mandar ao relógio); parte da referência 1.12.315/421, que depende do registro do PR #63",
+    "aprovado": "não",
+    "assinado": "não",
     "publicado": "não",
     "instalado": "não",
     "validado": "não"
@@ -5696,6 +5714,47 @@
    ],
    "depende_de": [
     "pacote-1-12-314-treino-por-texto-e-orientacoes"
+   ]
+  },
+  {
+   "id": "pacote-1-12-316-smartwatch-no-treino",
+   "titulo": "Smartwatch no treino",
+   "tipo": "pacote-completo",
+   "versao": "1.12.316",
+   "sequencia": 422,
+   "arquivo": "AgendaPersonal-1.12.316-Smartwatch-No-Treino-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "index.html",
+     "id": "ap-aviso-relogio-css",
+     "area": "geral",
+     "antes": "1c0edff49952a830a87b0fb0ac40d0fa22ed12c166561622f480b241844a1c49",
+     "depois": "94176982d39849eebe96985797ef5d69151e3c76e08f62424c5980d695f0c028"
+    },
+    {
+     "pagina": "index.html",
+     "id": "ap-aviso-relogio",
+     "area": "geral",
+     "antes": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff",
+     "depois": "97838951898d1574f51b43b47465045666e1db42ca5bd785ec411612b1a83c92"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-aviso-relogio-css",
+     "area": "geral",
+     "antes": "1c0edff49952a830a87b0fb0ac40d0fa22ed12c166561622f480b241844a1c49",
+     "depois": "94176982d39849eebe96985797ef5d69151e3c76e08f62424c5980d695f0c028"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-aviso-relogio",
+     "area": "geral",
+     "antes": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff",
+     "depois": "97838951898d1574f51b43b47465045666e1db42ca5bd785ec411612b1a83c92"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-313-aviso-no-relogio"
    ]
   }
  ],

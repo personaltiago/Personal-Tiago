@@ -1,0 +1,44 @@
+{
+ "versao": "1.12.316",
+ "sequencia": 422,
+ "titulo": "Smartwatch no treino",
+ "base": {
+  "referencia": "pacote-1-12-315-criar-treino-manual-no-aluno-e-ficha",
+  "impressao": "e00a988bde5d94762290148ef738aa7bdaa175d200020673cde61bac31a25b59"
+ },
+ "pedido": "Tiago, 25/11/2026 18:59, com print de \"Treino em andamento\": \"Antigamente aqui ó parecia muito conhecido de relógio smartwatch para fazer a conexão agora nem aparece mais e colocar a opção lá no mais na smartwatch ativar e desativar\". 21:06, com prints da tela Smartwatch e do treino: \"lá no mais do smartwat tem que ter opção quero smartwatch não quero smartwatch [...] não tem essa opção aqui o código começa o treino ali antigamente um símbolozinho do smartwatch [...] quando eu colocar quero smartwatch na hora que iniciar o trem não tem que ter o símbolozinho do smartwatch me dê coisas que você acha que pode acontecer que a gente pode conseguir realista de conseguir jogar no smartwatch por enquanto e aí você pode fazer\".",
+ "aprovado_por": "Pedido específico do Tiago (chave liga/desliga do smartwatch, ícone de volta ao treino e o que for realista mandar ao relógio agora). Pacote completo porque os blocos ap-aviso-relogio e ap-aviso-relogio-css não estão na área \"relogio\" do UpdateAreaPatch (só ap-watch-model, ap-watch-ui, ap-watch-history e ap-watch-teacher): a correção por área seria recusada. Só esses dois blocos mudam, com o mesmo texto nas duas telas; nenhum outro bloco e nada fora dos blocos. O descanso (state.workoutRest, restUntil) e o treino são só lidos; som, alarme, cartão da tela bloqueada, cronômetros, despertador, app Wear OS, Firebase, dados de alunos, financeiro, login e mascotes não mudam. Merge, assinatura e instalação continuam dependendo da autorização dele.",
+ "gerador": "tools/gerar-smartwatch-no-treino-1.12.316.cjs",
+ "alteracoes": [
+  {
+   "pagina": "index.html",
+   "id": "ap-aviso-relogio-css",
+   "antes": "1c0edff49952a830a87b0fb0ac40d0fa22ed12c166561622f480b241844a1c49",
+   "depois": "94176982d39849eebe96985797ef5d69151e3c76e08f62424c5980d695f0c028",
+   "motivo": "Mesmo texto nas duas telas. O ícone \"Enviar treino ao smartwatch\" (.ap-watch-send-icon) passa a aparecer também com o smartwatch ligado (html[data-ap-relogio=\"ligado\"]), além de com relógio Wear OS pronto (data-ap-wear-os=\"pronto\", como no 1.12.313); com ele escondido, o título do treino do aluno continua no formato sem o ícone. Estilos novos só do painel do ícone (.ap-relogio-rapido, .ap-relogio-previa) e do botão travado. O que se perde do bloco anterior: nada além da regra antiga do ícone, trocada pela nova (mesma condição do Wear OS, mais a do smartwatch ligado)."
+  },
+  {
+   "pagina": "index.html",
+   "id": "ap-aviso-relogio",
+   "antes": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff",
+   "depois": "97838951898d1574f51b43b47465045666e1db42ca5bd785ec411612b1a83c92",
+   "motivo": "Mesmo texto nas duas telas. Pedido do Tiago (25/11 18:59 e 21:06). (1) A chave da tela Smartwatch passa a se chamar \"Usar smartwatch\" (continua chamando Android.setWatchNoticeEnabled, como no 1.12.313) e marca html[data-ap-relogio] ligado/desligado pelo estado do Android; o cartão do Mais e a linha do Perfil mostram Ligado/Desligado (no navegador, \"Funciona no app Android.\"). (2) Sem Wear OS pronto, o toque no ícone do treino abre um painel (clique em captura no document, que impede o APsendTeacherWatchWorkout/APWatchUI.send, que não chegaria a um relógio sem o app Wear OS): mostra o que vai para o relógio e o botão Mandar ao relógio (Android.scheduleWatchNotice com horário 5 s à frente, na mesma chave professor/aluno; travado durante o descanso para não substituir o aviso do fim). Com Wear OS pronto, o ícone faz o envio de antes. (3) O texto do aviso do fim do descanso passa de \"aluno · exercício\" para o próximo passo: exercício, série N de M, repetições e carga (professor: state.workoutDrafts, workoutTechniqueRoundPrescription e workoutBisetGroups; aluno: exStore().active[...].done, exercisesFor e exLoads), ou o próximo exercício, a próxima rodada do bi-set, os minutos do cardio, ou \"Todas as séries feitas. Finalize o treino.\"; até 120 caracteres. Se o cálculo falhar, volta ao texto do 1.12.313. (4) Ao iniciar o treino (até 60 s depois do startedAt), um aviso \"Treino iniciado\" com o primeiro exercício, uma vez por treino (guardado em localStorage apRelogioInicio.<chave>). (5) Textos: tira o \"sem som\" (com o app 1.212 avisa que sai sem som), marca nova Colmi/Pubu Wear/Da Fit no passo a passo. (6) Esc e o voltar do Android (handleAgendaSystemBack) fecham só a tela Smartwatch; antes o voltar mexia na tela de baixo e o Esc fechava também o treino aberto. Só lê treino e descanso: nada de descanso, som, alarme, cronômetro ou registro de série muda. O que se perde do bloco anterior: o texto do cartão do Mais \"Aviso no relógio ao fim do descanso.\" e o da linha do Perfil (viram o estado Ligado/Desligado) e o texto do aviso \"aluno · exercício\" (vira o próximo passo)."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-aviso-relogio-css",
+   "antes": "1c0edff49952a830a87b0fb0ac40d0fa22ed12c166561622f480b241844a1c49",
+   "depois": "94176982d39849eebe96985797ef5d69151e3c76e08f62424c5980d695f0c028",
+   "motivo": "O mesmo bloco do index.html (texto idêntico)."
+  },
+  {
+   "pagina": "professor.html",
+   "id": "ap-aviso-relogio",
+   "antes": "975d9f3f366a85a8036e90a83d853069b09b058f40c4fb84130c28d2145d34ff",
+   "depois": "97838951898d1574f51b43b47465045666e1db42ca5bd785ec411612b1a83c92",
+   "motivo": "O mesmo bloco do index.html (texto idêntico). No professor, o ícone é o do título \"Treino em andamento\" (ap-watch-ui, que não muda)."
+  }
+ ],
+ "remocoes": [],
+ "reversoes": []
+}
