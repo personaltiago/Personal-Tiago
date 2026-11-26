@@ -64,6 +64,7 @@
   "AgendaPersonal-1.12.314-Treino-Por-Texto-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.315-Criar-Treino-Manual-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.316-Smartwatch-No-Treino-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.317-Cronometro-Livre-Para-Assinar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
   "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
@@ -678,6 +679,23 @@
     "assinado": "sim: execução 45739327113 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok); pré-lançamento conteudo-45739327113-1 (arquivo assinado SHA-256 6c4bcb07b93b5ec69623ad2e47e0e4d77af3b8536dc93ccafb6c59a151f6716a; sem a assinatura, idêntico ao proposto)",
     "publicado": "não",
     "instalado": "sim: no aparelho do Tiago (Xiaomi): prints de Mais > Smartwatch com a chave \"Usar smartwatch\" (25/11/2026 22:07, só existe no 1.12.316) e a mensagem dele \"A parte de aparecer o íconezinho lá no [treino] deu certo\" (22:08)",
+    "validado": "não"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.317",
+   "sequencia": 423,
+   "arquivo": "AgendaPersonal-1.12.317-Cronometro-Livre-Para-Assinar.agenda.json",
+   "sha256": "c04ce773d24fd81603a6836a0aa2ed3b8d4e71ed7416f4769e4eac5656c81329",
+   "origem": "main",
+   "titulo": "Cronômetro livre no treino",
+   "status": {
+    "proposto": "sim: gerado pelo Claude em 26/11/2026 (tools/gerar-cronometro-livre-1.12.317.cjs), pedido do Tiago às 18:07 e 18:10 (cronômetro livre ao lado do tempo da aula; \"Última\" no lugar da meta nas séries por tempo; só no professor); parte da referência 1.12.316/422, que depende do registro do PR #67",
+    "aprovado": "não",
+    "assinado": "não",
+    "publicado": "não",
+    "instalado": "não",
     "validado": "não"
    }
   }
@@ -5771,6 +5789,40 @@
    ],
    "depende_de": [
     "pacote-1-12-313-aviso-no-relogio"
+   ]
+  },
+  {
+   "id": "pacote-1-12-317-cronometro-livre-no-treino",
+   "titulo": "Cronômetro livre no treino",
+   "tipo": "pacote-completo",
+   "versao": "1.12.317",
+   "sequencia": 423,
+   "arquivo": "AgendaPersonal-1.12.317-Cronometro-Livre-Para-Assinar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "professor.html",
+     "id": "ap-cronometro-livre-css",
+     "area": "geral",
+     "antes": null,
+     "depois": "abc44e96c95684c2e02159c743333f94cd14eea548add801d6993b0a550b70ca"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "ap-cronometro-livre",
+     "area": "geral",
+     "antes": null,
+     "depois": "3eed9ea534cf13d5dd604cf4f2f111757f1c0deaaf56c34897956bfc441d74d1"
+    },
+    {
+     "pagina": "professor.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "22de015f1bce5c85107742bf8ed2877c757ad97ae7d361573f90952c25b0bf7d",
+     "depois": "ec8accd794cb081a9ef8f1d3f6d5700c4bd30bd6138ffc662f4f4bf553a87e38"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-315-criar-treino-manual-no-aluno-e-ficha"
    ]
   }
  ],
