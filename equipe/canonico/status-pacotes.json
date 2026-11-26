@@ -1,7 +1,7 @@
 {
  "descricao": "Situação de cada pacote completo da cadeia, escrita à mão com a evidência. Os estados são independentes: proposto, aprovado, assinado, publicado, instalado, validado. Não presumir nenhum estado pelo nome do arquivo ou pelo número da versão. Mudar o canônico só por PR aprovado pelo Tiago, depois de o pacote estar assinado e instalado.",
- "canonico": "1.12.314",
- "motivo_canonico": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: prints do Tiago do Perfil do aluno no Xiaomi (24/11/2026 21:39–21:40), com os botões \"Importar treino por texto\" no cartão Aluno e ficha e na ficha vazia, que só existem no 1.12.314. O 1.12.314 inclui o 1.12.310 a 1.12.313. Antes: 1.12.309 (print do Mais às 23:51 de 23/11/2026 e \"Sim, instalei\").",
+ "canonico": "1.12.316",
+ "motivo_canonico": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: prints de Mais > Smartwatch no Xiaomi (25/11/2026 22:07) com a chave \"Usar smartwatch\", que só existe no 1.12.316, e a mensagem dele de que o ícone do relógio apareceu no treino (22:08). O 1.12.316 inclui o 1.12.315. Antes: 1.12.314 (prints de 24/11/2026 21:39–21:40).",
  "pacotes": {
   "1.12.273": {
    "proposto": "sim",
@@ -280,7 +280,7 @@
    "aprovado": "sim: o Tiago respondeu \"Pode juntar então\" (25/11/2026 21:55) à pergunta \"Pode juntar o #63 e o #66 e assinar o 1.12.316?\"; merges 417ca8d (PR #63) e dfb8204 (PR #66) feitos pelo Claude depois do CI verde",
    "assinado": "sim: execução 45739327113 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok); pré-lançamento conteudo-45739327113-1 (arquivo assinado SHA-256 6c4bcb07b93b5ec69623ad2e47e0e4d77af3b8536dc93ccafb6c59a151f6716a; sem a assinatura, idêntico ao proposto)",
    "publicado": "não",
-   "instalado": "não",
+   "instalado": "sim: no aparelho do Tiago (Xiaomi): prints de Mais > Smartwatch com a chave \"Usar smartwatch\" (25/11/2026 22:07, só existe no 1.12.316) e a mensagem dele \"A parte de aparecer o íconezinho lá no [treino] deu certo\" (22:08)",
    "validado": "não"
   }
  }
