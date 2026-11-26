@@ -269,8 +269,8 @@
   },
   "1.12.315": {
    "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-criar-treino-manual-1.12.315.cjs), pedido do Tiago às 21:40 com print da ficha vazia circulada (tirar o quadro e pôr Criar treino manual entre os botões do Aluno e ficha); parte da referência 1.12.314/420, que depende do registro do PR #61",
-   "aprovado": "não",
-   "assinado": "não",
+   "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (24/11/2026 21:54) à pergunta \"Pode juntar o #61 e o #62 e assinar o 1.12.315?\"; merge a47c38a (PR #62) feito pelo Claude depois do CI verde, após o #61 (642e4da)",
+   "assinado": "sim: execução 45529654324 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14984605220; pré-lançamento conteudo-45529654324-1 (arquivo assinado SHA-256 7eae501d3f3f29d30dd810c02ae8bef62256edd47dc2b2d3f8b6f190667b0d6c; sem a assinatura, idêntico ao proposto)",
    "publicado": "não",
    "instalado": "não",
    "validado": "não"

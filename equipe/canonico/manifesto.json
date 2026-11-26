@@ -11,15 +11,15 @@
   "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: prints do Tiago do Perfil do aluno no Xiaomi (24/11/2026 21:39–21:40), com os botões \"Importar treino por texto\" no cartão Aluno e ficha e na ficha vazia, que só existem no 1.12.314. O 1.12.314 inclui o 1.12.310 a 1.12.313. Antes: 1.12.309 (print do Mais às 23:51 de 23/11/2026 e \"Sim, instalei\")."
  },
  "referencia": {
-  "id": "pacote-1-12-314-treino-por-texto-e-orientacoes",
+  "id": "pacote-1-12-315-criar-treino-manual-no-aluno-e-ficha",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-1.12.314-Treino-Por-Texto-Para-Assinar.agenda.json",
-  "sha256": "c531474b5436f32f5c19561984f80369994b9c7876299f2c6db85ab8c469ecda",
-  "versao_efetiva": "1.12.314",
-  "sequencia_efetiva": 420,
-  "proxima_versao_livre": "1.12.315",
-  "proxima_sequencia_livre": 421,
-  "impressao": "ea7742bd9c86193d150a49335b285f3b4a4637103a3ed07023511ca0efb21638"
+  "arquivo": "AgendaPersonal-1.12.315-Criar-Treino-Manual-Para-Assinar.agenda.json",
+  "sha256": "8eafe5b7637350a1cb51c9b144fe74242990a80181ab6b9ffe012b730d3a165c",
+  "versao_efetiva": "1.12.315",
+  "sequencia_efetiva": 421,
+  "proxima_versao_livre": "1.12.316",
+  "proxima_sequencia_livre": 422,
+  "impressao": "e00a988bde5d94762290148ef738aa7bdaa175d200020673cde61bac31a25b59"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -656,8 +656,8 @@
    "titulo": "Criar treino manual no Aluno e ficha",
    "status": {
     "proposto": "sim: gerado pelo Claude em 24/11/2026 (tools/gerar-criar-treino-manual-1.12.315.cjs), pedido do Tiago às 21:40 com print da ficha vazia circulada (tirar o quadro e pôr Criar treino manual entre os botões do Aluno e ficha); parte da referência 1.12.314/420, que depende do registro do PR #61",
-    "aprovado": "não",
-    "assinado": "não",
+    "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (24/11/2026 21:54) à pergunta \"Pode juntar o #61 e o #62 e assinar o 1.12.315?\"; merge a47c38a (PR #62) feito pelo Claude depois do CI verde, após o #61 (642e4da)",
+    "assinado": "sim: execução 45529654324 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok), artefato 14984605220; pré-lançamento conteudo-45529654324-1 (arquivo assinado SHA-256 7eae501d3f3f29d30dd810c02ae8bef62256edd47dc2b2d3f8b6f190667b0d6c; sem a assinatura, idêntico ao proposto)",
     "publicado": "não",
     "instalado": "não",
     "validado": "não"
@@ -2064,7 +2064,7 @@
     "vezes": 1
    },
    "#fora-dos-blocos": {
-    "hash": "aa32edb2131544be348296ec93d4cd23dc31e7abeea00ee6366c6c8123d7090f",
+    "hash": "22de015f1bce5c85107742bf8ed2877c757ad97ae7d361573f90952c25b0bf7d",
     "area": "geral",
     "vezes": 1
    }
@@ -4069,6 +4069,10 @@
    {
     "hash": "aa32edb2131544be348296ec93d4cd23dc31e7abeea00ee6366c6c8123d7090f",
     "desde": "1.12.314"
+   },
+   {
+    "hash": "22de015f1bce5c85107742bf8ed2877c757ad97ae7d361573f90952c25b0bf7d",
+    "desde": "1.12.315"
    }
   ],
   "avaliacoes.html|ap-native-store": [
