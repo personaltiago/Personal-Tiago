@@ -277,8 +277,8 @@
   },
   "1.12.316": {
    "proposto": "sim: gerado pelo Claude em 25/11/2026 (tools/gerar-smartwatch-no-treino-1.12.316.cjs), pedido do Tiago às 18:59 e 21:06 (chave \"quero / não quero smartwatch\" em Mais > Smartwatch, ícone do relógio de volta ao treino e o que for realista mandar ao relógio); parte da referência 1.12.315/421, que depende do registro do PR #63",
-   "aprovado": "não",
-   "assinado": "não",
+   "aprovado": "sim: o Tiago respondeu \"Pode juntar então\" (25/11/2026 21:55) à pergunta \"Pode juntar o #63 e o #66 e assinar o 1.12.316?\"; merges 417ca8d (PR #63) e dfb8204 (PR #66) feitos pelo Claude depois do CI verde",
+   "assinado": "sim: execução 45739327113 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok); pré-lançamento conteudo-45739327113-1 (arquivo assinado SHA-256 6c4bcb07b93b5ec69623ad2e47e0e4d77af3b8536dc93ccafb6c59a151f6716a; sem a assinatura, idêntico ao proposto)",
    "publicado": "não",
    "instalado": "não",
    "validado": "não"

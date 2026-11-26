@@ -2,6 +2,8 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**25/11, 22h05 (Claude): 1.12.316 assinado.** O Tiago autorizou ("Pode juntar então", 21:55). Merges: #63 → 417ca8d, #66 → dfb8204. Assinatura: execução 45739327113, pré-lançamento `conteudo-45739327113-1`, arquivo assinado SHA-256 `6c4bcb07b93b5ec69623ad2e47e0e4d77af3b8536dc93ccafb6c59a151f6716a` (sem a assinatura, idêntico ao proposto). Referência passa a 1.12.316/422. O Tiago disse ter instalado o APK 1.213 (sem confirmação do relógio). Falta instalar o 1.12.316 e conferir.
+
 **25/11, 21h30 (Claude): 1.12.316 (seq 422) "Smartwatch no treino" proposto, em PR rascunho. Nada assinado, publicado nem instalado.**
 - **Pedido (Tiago, 18:59 e 21:06, prints de "Treino em andamento" e da tela Smartwatch):** opção "quero / não quero smartwatch" em Mais > Smartwatch; com ela ligada, o ícone do relógio de volta ao treino; e o que for realista mandar ao relógio agora.
 - **Arquivo:** `AgendaPersonal-1.12.316-Smartwatch-No-Treino-Para-Assinar.agenda.json`, SHA-256 `88c89220889ee15a769be5843537197c42b10aefe819a1f86e481421c07dc991`; parte da referência 1.12.315/421 (registro no PR #63, que precisa entrar antes). Gerador: `tools/gerar-smartwatch-no-treino-1.12.316.cjs`. Autorização: `equipe/canonico/alteracoes-autorizadas/1.12.316.json`.
