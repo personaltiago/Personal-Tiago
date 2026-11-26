@@ -11,15 +11,15 @@
   "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: prints de Mais > Smartwatch no Xiaomi (25/11/2026 22:07) com a chave \"Usar smartwatch\", que só existe no 1.12.316, e a mensagem dele de que o ícone do relógio apareceu no treino (22:08). O 1.12.316 inclui o 1.12.315. Antes: 1.12.314 (prints de 24/11/2026 21:39–21:40)."
  },
  "referencia": {
-  "id": "pacote-1-12-316-smartwatch-no-treino",
+  "id": "pacote-1-12-317-cronometro-livre-no-treino",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-1.12.316-Smartwatch-No-Treino-Para-Assinar.agenda.json",
-  "sha256": "88c89220889ee15a769be5843537197c42b10aefe819a1f86e481421c07dc991",
-  "versao_efetiva": "1.12.316",
-  "sequencia_efetiva": 422,
-  "proxima_versao_livre": "1.12.317",
-  "proxima_sequencia_livre": 423,
-  "impressao": "da85e0eb074bdd4b69acf23c02f97187336ee9e8967e89243551f6566f168943"
+  "arquivo": "AgendaPersonal-1.12.317-Cronometro-Livre-Para-Assinar.agenda.json",
+  "sha256": "c04ce773d24fd81603a6836a0aa2ed3b8d4e71ed7416f4769e4eac5656c81329",
+  "versao_efetiva": "1.12.317",
+  "sequencia_efetiva": 423,
+  "proxima_versao_livre": "1.12.318",
+  "proxima_sequencia_livre": 424,
+  "impressao": "8869bf041cfc4c1eb8032d5da8fe92996b564d2773ce3a0b263a4c618633ae47"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -692,8 +692,8 @@
    "titulo": "Cronômetro livre no treino",
    "status": {
     "proposto": "sim: gerado pelo Claude em 26/11/2026 (tools/gerar-cronometro-livre-1.12.317.cjs), pedido do Tiago às 18:07 e 18:10 (cronômetro livre ao lado do tempo da aula; \"Última\" no lugar da meta nas séries por tempo; só no professor); parte da referência 1.12.316/422, que depende do registro do PR #67",
-    "aprovado": "não",
-    "assinado": "não",
+    "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (26/11/2026 18:21) à pergunta \"Pode juntar o #67 e o #68?\"; merges 69560fc (PR #67) e d531f2f (PR #68) feitos pelo Claude depois do CI verde",
+    "assinado": "sim: execução 45904636416; pré-lançamento conteudo-45904636416-1 (arquivo assinado SHA-256 448bff7abf0274f50bdc91ad020030bff3dbb59c2aa9d37cb68e3f9534454110; sem a assinatura, idêntico ao proposto)",
     "publicado": "não",
     "instalado": "não",
     "validado": "não"
@@ -2099,8 +2099,18 @@
     "area": "geral",
     "vezes": 1
    },
+   "ap-cronometro-livre-css": {
+    "hash": "abc44e96c95684c2e02159c743333f94cd14eea548add801d6993b0a550b70ca",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-cronometro-livre": {
+    "hash": "3eed9ea534cf13d5dd604cf4f2f111757f1c0deaaf56c34897956bfc441d74d1",
+    "area": "geral",
+    "vezes": 1
+   },
    "#fora-dos-blocos": {
-    "hash": "22de015f1bce5c85107742bf8ed2877c757ad97ae7d361573f90952c25b0bf7d",
+    "hash": "ec8accd794cb081a9ef8f1d3f6d5700c4bd30bd6138ffc662f4f4bf553a87e38",
     "area": "geral",
     "vezes": 1
    }
@@ -4109,6 +4119,10 @@
    {
     "hash": "22de015f1bce5c85107742bf8ed2877c757ad97ae7d361573f90952c25b0bf7d",
     "desde": "1.12.315"
+   },
+   {
+    "hash": "ec8accd794cb081a9ef8f1d3f6d5700c4bd30bd6138ffc662f4f4bf553a87e38",
+    "desde": "1.12.317"
    }
   ],
   "avaliacoes.html|ap-native-store": [
@@ -4561,6 +4575,18 @@
    {
     "hash": "4e430fcd63ce50ec3260b51db90b144a2a71d7d02f64b87f9ad7d68c209bc68b",
     "desde": "1.12.314"
+   }
+  ],
+  "professor.html|ap-cronometro-livre-css": [
+   {
+    "hash": "abc44e96c95684c2e02159c743333f94cd14eea548add801d6993b0a550b70ca",
+    "desde": "1.12.317"
+   }
+  ],
+  "professor.html|ap-cronometro-livre": [
+   {
+    "hash": "3eed9ea534cf13d5dd604cf4f2f111757f1c0deaaf56c34897956bfc441d74d1",
+    "desde": "1.12.317"
    }
   ]
  },

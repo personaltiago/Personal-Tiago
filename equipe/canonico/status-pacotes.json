@@ -285,8 +285,8 @@
   },
   "1.12.317": {
    "proposto": "sim: gerado pelo Claude em 26/11/2026 (tools/gerar-cronometro-livre-1.12.317.cjs), pedido do Tiago às 18:07 e 18:10 (cronômetro livre ao lado do tempo da aula; \"Última\" no lugar da meta nas séries por tempo; só no professor); parte da referência 1.12.316/422, que depende do registro do PR #67",
-   "aprovado": "não",
-   "assinado": "não",
+   "aprovado": "sim: o Tiago respondeu \"Pode juntar\" (26/11/2026 18:21) à pergunta \"Pode juntar o #67 e o #68?\"; merges 69560fc (PR #67) e d531f2f (PR #68) feitos pelo Claude depois do CI verde",
+   "assinado": "sim: execução 45904636416; pré-lançamento conteudo-45904636416-1 (arquivo assinado SHA-256 448bff7abf0274f50bdc91ad020030bff3dbb59c2aa9d37cb68e3f9534454110; sem a assinatura, idêntico ao proposto)",
    "publicado": "não",
    "instalado": "não",
    "validado": "não"
