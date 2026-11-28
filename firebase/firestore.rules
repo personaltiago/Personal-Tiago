@@ -1,0 +1,79 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function teacher() {
+      return signedIn() && request.auth.uid == 'R2EmnDVcvMWt7TjPxOP6DjW1VOn1';
+    }
+    function relatedStudent(data) {
+      return data.get('perfil', '') == 'aluno'
+        && data.get('professorId', '') == 'R2EmnDVcvMWt7TjPxOP6DjW1VOn1';
+    }
+    function validPhoto(value) {
+      return value is string && value.size() <= 120000
+        && (value == '' || value.matches('^data:image/jpeg;base64,[A-Za-z0-9+/]+={0,2}$'));
+    }
+    function validRegistration(data) {
+      return data.keys().hasAll(['nome', 'email', 'whatsapp', 'nascimento', 'genero',
+          'perfil', 'ativo', 'professorId', 'criadoEm'])
+        && data.keys().hasOnly(['nome', 'email', 'whatsapp', 'nascimento', 'genero',
+          'perfil', 'ativo', 'professorId', 'criadoEm', 'fotoCadastro'])
+        && data.nome is string && data.nome.size() >= 2 && data.nome.size() <= 120
+        && data.email is string && data.email.size() <= 254
+        && data.email.lower() == request.auth.token.get('email', '').lower()
+        && data.email.matches('^[^@ ]+@[^@ ]+[.][^@ ]+$')
+        && data.whatsapp is string && data.whatsapp.size() <= 25
+        && data.whatsapp.matches('^[+]?[(]?[0-9]{2}[)]?[ -]?[0-9]{4,5}[ -]?[0-9]{4}$')
+        && data.nascimento is string && data.nascimento.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+        && data.genero in ['Masculino', 'Feminino', 'Prefiro não informar']
+        && data.perfil == 'aluno' && data.ativo == false
+        && relatedStudent(data) && data.criadoEm == request.time
+        && validPhoto(data.get('fotoCadastro', ''));
+    }
+
+    match /usuarios/{uid} {
+      // A missing own document must remain readable for the first registration.
+      allow get: if signedIn() && (request.auth.uid == uid
+        || (teacher() && relatedStudent(resource.data)));
+      // Requires the existing teacher query: perfil == aluno AND professorId == teacher UID.
+      allow list: if teacher() && relatedStudent(resource.data);
+      allow create: if (signedIn() && request.auth.uid == uid && !teacher()
+          && validRegistration(request.resource.data))
+        || (teacher() && (uid == request.auth.uid || relatedStudent(request.resource.data)));
+      allow update: if (teacher() && (uid == request.auth.uid
+          || (relatedStudent(resource.data) && relatedStudent(request.resource.data))))
+        || (signedIn() && request.auth.uid == uid && !teacher()
+          && relatedStudent(resource.data) && resource.data.get('ativo', true) == false
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['fotoCadastro'])
+          && validPhoto(request.resource.data.get('fotoCadastro', '')));
+      allow delete: if teacher() && uid != request.auth.uid && relatedStudent(resource.data);
+
+      match /treinos/{workoutId} {
+        function student() {
+          return get(/databases/$(database)/documents/usuarios/$(uid)).data;
+        }
+        function ownerTeacher() { return teacher() && relatedStudent(student()); }
+        allow read: if workoutId == 'atual' && signedIn()
+          && (ownerTeacher() || (request.auth.uid == uid && relatedStudent(student())
+            && student().get('ativo', false) == true));
+        allow create, update: if workoutId == 'atual' && ownerTeacher()
+          && student().get('ativo', false) == true
+          && request.resource.data.keys().hasAll(['version', 'professorId', 'studentId',
+            'studentUid', 'payload', 'updatedAt'])
+          && request.resource.data.keys().hasOnly(['version', 'professorId', 'studentId',
+            'studentUid', 'payload', 'updatedAt'])
+          && request.resource.data.version == 2
+          && request.resource.data.professorId == request.auth.uid
+          && request.resource.data.studentUid == uid
+          && request.resource.data.studentId is string
+          && request.resource.data.studentId.size() > 0 && request.resource.data.studentId.size() <= 200
+          && request.resource.data.payload is string && request.resource.data.payload.size() <= 650000
+          && request.resource.data.updatedAt == request.time;
+        allow delete: if workoutId == 'atual' && ownerTeacher();
+      }
+    }
+    // Push tokens are server-only (Admin SDK/IAM); clients never enumerate them.
+    match /avisosAparelhos/{document=**} { allow read, write: if false; }
+    match /{document=**} { allow read, write: if false; }
+  }
+}
