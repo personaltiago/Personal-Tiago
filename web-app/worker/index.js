@@ -59,7 +59,7 @@ async function installHostedRelease(bucket){
 }
 async function ensureHostedRelease(bucket){
  if(hostedReleaseWork)return hostedReleaseWork;
- hostedReleaseWork=installHostedRelease(bucket).catch(error=>{console.error('AP-RELEASE-INSTALL',error.message);return false}).finally(()=>{hostedReleaseWork=null});
+ hostedReleaseWork=installHostedRelease(bucket).catch(()=>{console.error(JSON.stringify({event:'hosted_release_install_failed',requestId:crypto.randomUUID()}));return false}).finally(()=>{hostedReleaseWork=null});
  return hostedReleaseWork;
 }
 

@@ -50,5 +50,10 @@ try{
  response=await failure(request('/api/teacher-agenda',{method:'GET'}),{BUCKET:bucket});
  assert.equal(response.status,503);const text=await response.text();assert.ok(!text.includes('CANARY'));assert.match(JSON.parse(text).requestId,/^[a-f0-9-]{36}$/);
  assert.equal(logs.length,1);assert.deepEqual(Object.keys(JSON.parse(logs[0])).sort(),['event','requestId']);assert.ok(!logs[0].includes('CANARY'));
+ logs.length=0;let lookups=0;
+ const releaseFailure={BUCKET:{async get(){if(++lookups===2)throw Error('INTERNAL_CANARY_RELEASE_SECRET');return null;}}};
+ response=await h(request('/api/manifest',{who:null,method:'GET'}),releaseFailure);
+ assert.equal(response.status,200);assert.deepEqual(await response.json(),{available:false});
+ assert.equal(logs.length,1);assert.equal(JSON.parse(logs[0]).event,'hosted_release_install_failed');assert.ok(!logs[0].includes('CANARY'));
 }finally{console.error=originalError;}
 console.log('PASS: 15 protected routes, role denials, private URLs, headers, fixed upstream hosts/no redirects, rate limits/concurrency/scopes/expiry/native binding and redacted errors. Synthetic Firebase/R2 only; fallback is isolate-local.');
