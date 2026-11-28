@@ -1,0 +1,75 @@
+{
+  "arquivo-invalido": {
+    "stage": "error",
+    "title": "Falha na etapa: Lendo arquivo",
+    "percent": "",
+    "value": null,
+    "bytes": "1 de 1 bytes",
+    "eta": "",
+    "status": "O arquivo está incompleto ou não contém JSON válido.",
+    "button": "Tentar de novo",
+    "receipt": []
+  },
+  "assinatura-invalida": {
+    "stage": "error",
+    "title": "Falha na etapa: Conferindo assinatura",
+    "percent": "",
+    "value": null,
+    "bytes": "",
+    "eta": "",
+    "status": "A assinatura não corresponde ao conteúdo do arquivo.",
+    "button": "Tentar de novo",
+    "receipt": []
+  },
+  "queda-25": {
+    "stage": "error",
+    "title": "Falha na etapa: Enviando",
+    "percent": "25%",
+    "value": 25,
+    "bytes": "4.799.973 de 19.199.889 bytes",
+    "eta": "",
+    "status": "A conexão caiu. Tente de novo para conferir o servidor antes de reenviar.",
+    "button": "Tentar de novo",
+    "receipt": []
+  },
+  "sem-total": {
+    "stage": "error",
+    "title": "Falha na etapa: Enviando",
+    "percent": "",
+    "value": null,
+    "bytes": "",
+    "eta": "",
+    "status": "A conexão caiu. Tente de novo para conferir o servidor antes de reenviar.",
+    "button": "Tentar de novo",
+    "receipt": []
+  },
+  "manifesto-divergente": {
+    "stage": "error",
+    "title": "Falha na etapa: Confirmando no servidor",
+    "percent": "",
+    "value": null,
+    "bytes": "",
+    "eta": "",
+    "status": "O manifesto disponível aos alunos ainda não confirma este arquivo.",
+    "button": "Tentar de novo",
+    "receipt": []
+  },
+  "recibo": {
+    "stage": "done",
+    "title": "Concluído",
+    "percent": "100%",
+    "value": 100,
+    "bytes": "19.199.889 de 19.199.889 bytes",
+    "eta": "",
+    "status": "Publicação confirmada.",
+    "button": "Publicar para Android e iPhone",
+    "receipt": [
+      "Recibo da publicação",
+      "Arquivo enviado: 1.12.298 · sequência 404",
+      "Disponível no servidor: 1.12.298 · sequência 404",
+      "Em uso neste aparelho: 1.12.294 · sequência 400",
+      "Publicado: 20/11/2026, 15:34:47",
+      "Conferido neste aparelho: 21/11/2026, 09:59:34"
+    ]
+  }
+}

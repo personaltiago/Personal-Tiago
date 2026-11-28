@@ -1,5 +1,22 @@
 # Agenda Personal — ESTADO
 
+## Publicação web com progresso confirmado (21/11/2026)
+
+O rascunho em `chatgpt/web-publication-progress` parte da publicação 44 exportada no PR anterior. O painel informa bytes lidos e enviados e usa barra indeterminada quando a etapa não tem total conhecido. Em caso de erro, preserva a última medição da etapa. Tentar de novo consulta o manifesto antes de reenviar. O sucesso exige que o manifesto sem cache confirme versão, sequência, tamanho e SHA-256 do pacote. O recibo informa o arquivo enviado, a versão disponível no servidor e a versão carregada no aparelho, com data e hora.
+
+O diálogo de atualizações diferencia versão instalada, cópia preparada e manifesto consultado. A instalação da cópia preparada exige correspondência com o SHA-256 e a sequência do manifesto confirmado, inclusive após troca de publicação com a mesma sequência. Retorno ao comportamento anterior consiste em reverter a mudança no código web antes de publicar uma futura versão.
+
+Os quatro cenários pedidos foram validados no Chromium com rede simulada. A suíte do painel verificou também total desconhecido, manifesto divergente e repetição sem segundo envio. As capturas e as asserções estão em `web-app/tests/evidencias/publicacao/`. Não houve publicação nem mudança de pacote na produção.
+
+## Fonte web exportada para revisão (20/11/2026)
+
+O rascunho `chatgpt/app-web` inclui a publicação 44 do Sites, commit de
+origem `7702aa6`, em `web-app/`. Os 17 recursos do cliente conferem
+byte a byte com os recursos embutidos no Worker. O manifesto público
+anunciava 1.12.298/404 e o SHA-256 da cópia exportada coincide com ele.
+A referência assinada do repositório segue 1.12.300/406. Localize os passos
+de construção e os limites de exportação em `web-app/EXPORTACAO.md`.
+
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
 **26/11, 18h30 (Claude): 1.12.317 (seq 423) "Cronômetro livre no treino" proposto, em PR rascunho. Nada assinado, publicado nem instalado.**
