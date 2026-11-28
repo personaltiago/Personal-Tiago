@@ -65,6 +65,8 @@
   "AgendaPersonal-1.12.315-Criar-Treino-Manual-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.316-Smartwatch-No-Treino-Para-Assinar.agenda.json",
   "AgendaPersonal-1.12.317-Cronometro-Livre-Para-Assinar.agenda.json",
+  "AgendaPersonal-1.12.319-Dobras-3-e-7-Para-Revisar.agenda.json",
+  "AgendaPersonal-1.12.320-Dobras-3-e-7-Compacta-Para-Revisar.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo-Assinado.agenda.json",
   "AgendaPersonal-Apagar-Exercicio-do-Catalogo.agenda.json",
   "AgendaPersonal-Feedback-Online-Compartilhar-Para-Assinar.agenda.json",
@@ -692,6 +694,40 @@
    "titulo": "Cronômetro livre no treino",
    "status": {
     "proposto": "sim: gerado pelo Claude em 26/11/2026 (tools/gerar-cronometro-livre-1.12.317.cjs), pedido do Tiago às 18:07 e 18:10 (cronômetro livre ao lado do tempo da aula; \"Última\" no lugar da meta nas séries por tempo; só no professor); parte da referência 1.12.316/422, que depende do registro do PR #67",
+    "aprovado": "não",
+    "assinado": "não",
+    "publicado": "não",
+    "instalado": "não",
+    "validado": "não"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.319",
+   "sequencia": 425,
+   "arquivo": "AgendaPersonal-1.12.319-Dobras-3-e-7-Para-Revisar.agenda.json",
+   "sha256": "4818b39778a37b9c06538c860d998556989b4138bd35c4d8b1a416251087827f",
+   "origem": "main",
+   "titulo": "Avaliação: 3 ou 7 dobras",
+   "status": {
+    "proposto": "sim: o Tiago subiu o arquivo pronto no chat (28/11/2026, ~07:52), \"Dobras 3 e 7\" (Jackson–Pollock de 3 ou 7 dobras na avaliação); não foi gerado pelo Claude nesta sessão. Diz preservar as fotos do 1.12.318, pacote do qual não há arquivo, gerador nem registro nesta árvore — ver nota abaixo. O Claude conferiu o conteúdo (fórmulas batem com Jackson–Pollock/Siri publicadas, pontos de coleta corretos por sexo, trava de comparação entre protocolos diferentes) e achou um problema: avaliacoes.html triplicou de tamanho (3,27 → 10,15 MB) porque 8 das 22 fotos do guia estavam em PNG (deveriam ser JPEG/WebP)",
+    "aprovado": "não (substituído pelo 1.12.320, que o contém com as mesmas fotos recodificadas)",
+    "assinado": "não",
+    "publicado": "não",
+    "instalado": "não",
+    "validado": "não"
+   }
+  },
+  {
+   "tipo": "pacote-completo",
+   "versao": "1.12.320",
+   "sequencia": 426,
+   "arquivo": "AgendaPersonal-1.12.320-Dobras-3-e-7-Compacta-Para-Revisar.agenda.json",
+   "sha256": "d61bdc4b646f0ca48ecab75c9d81572abb83dabf69eb652851f937f54bea0400",
+   "origem": "main",
+   "titulo": "Avaliação: 3 ou 7 dobras · arquivo menor",
+   "status": {
+    "proposto": "sim: o Tiago subiu o arquivo pronto no chat (28/11/2026, ~08:00) com equipe/canonico/alteracoes-autorizadas/1.12.320.json, corrigindo o 1.12.319 (limite de 25 MB para upload no site); não foi gerado pelo Claude nesta sessão. O Claude conferiu: index.html, professor.html e cadastro.html idênticos byte a byte ao 1.12.319; em avaliacoes.html, o código é idêntico ao 1.12.319 tirando os blobs de imagem, e as 8 fotos recodificadas de PNG para WebP batem pixel a pixel com o original (mesma dimensão, diferença máxima de pixel = 0, portanto sem perda). Pacote final 23,13 MB. Mesma ressalva do 1.12.319 sobre a falta de registro do 1.12.318",
     "aprovado": "não",
     "assinado": "não",
     "publicado": "não",
@@ -5823,6 +5859,60 @@
    ],
    "depende_de": [
     "pacote-1-12-315-criar-treino-manual-no-aluno-e-ficha"
+   ]
+  },
+  {
+   "id": "pacote-1-12-319-avaliacao-3-ou-7-dobras",
+   "titulo": "Avaliação: 3 ou 7 dobras",
+   "tipo": "pacote-completo",
+   "versao": "1.12.319",
+   "sequencia": 425,
+   "arquivo": "AgendaPersonal-1.12.319-Dobras-3-e-7-Para-Revisar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "avaliacoes.html",
+     "id": "ap-protocolos-dobras-css",
+     "area": "geral",
+     "antes": null,
+     "depois": "dac9679c435e2ae189a9e101da19422c8cbda108595e2c0c4649c67c677774e7"
+    },
+    {
+     "pagina": "avaliacoes.html",
+     "id": "ap-fotos-medidas",
+     "area": "geral",
+     "antes": null,
+     "depois": "f82b88cb6a767d1ab0df260cf84179319b2badf28da8b406685a985d20396c11"
+    },
+    {
+     "pagina": "avaliacoes.html",
+     "id": "#fora-dos-blocos",
+     "area": "geral",
+     "antes": "d7e829fe775428c74a417626930030423b96467cf552d3621e529b8752521795",
+     "depois": "eea61afb86a827b071e0f59168ca092501d75aa3af9c8333f59a77b392a84d09"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-299-mensalidade-corrigida-e-imc-por-idade"
+   ]
+  },
+  {
+   "id": "pacote-1-12-320-avaliacao-3-ou-7-dobras-arquivo-menor",
+   "titulo": "Avaliação: 3 ou 7 dobras · arquivo menor",
+   "tipo": "pacote-completo",
+   "versao": "1.12.320",
+   "sequencia": 426,
+   "arquivo": "AgendaPersonal-1.12.320-Dobras-3-e-7-Compacta-Para-Revisar.agenda.json",
+   "blocos": [
+    {
+     "pagina": "avaliacoes.html",
+     "id": "ap-fotos-medidas",
+     "area": "geral",
+     "antes": "f82b88cb6a767d1ab0df260cf84179319b2badf28da8b406685a985d20396c11",
+     "depois": "3a4502a7582e125c3acac16201eb70cc1610270338256c3fb22b4eca1c22863c"
+    }
+   ],
+   "depende_de": [
+    "pacote-1-12-319-avaliacao-3-ou-7-dobras"
    ]
   }
  ],

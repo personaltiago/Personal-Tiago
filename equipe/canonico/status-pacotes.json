@@ -290,6 +290,25 @@
    "publicado": "não",
    "instalado": "não",
    "validado": "não"
+  },
+  "1.12.319": {
+   "proposto": "sim: o Tiago subiu o arquivo pronto no chat (28/11/2026, ~07:52), \"Dobras 3 e 7\" (Jackson–Pollock de 3 ou 7 dobras na avaliação); não foi gerado pelo Claude nesta sessão. Diz preservar as fotos do 1.12.318, pacote do qual não há arquivo, gerador nem registro nesta árvore — ver nota abaixo. O Claude conferiu o conteúdo (fórmulas batem com Jackson–Pollock/Siri publicadas, pontos de coleta corretos por sexo, trava de comparação entre protocolos diferentes) e achou um problema: avaliacoes.html triplicou de tamanho (3,27 → 10,15 MB) porque 8 das 22 fotos do guia estavam em PNG (deveriam ser JPEG/WebP)",
+   "aprovado": "não (substituído pelo 1.12.320, que o contém com as mesmas fotos recodificadas)",
+   "assinado": "não",
+   "publicado": "não",
+   "instalado": "não",
+   "validado": "não"
+  },
+  "1.12.320": {
+   "proposto": "sim: o Tiago subiu o arquivo pronto no chat (28/11/2026, ~08:00) com equipe/canonico/alteracoes-autorizadas/1.12.320.json, corrigindo o 1.12.319 (limite de 25 MB para upload no site); não foi gerado pelo Claude nesta sessão. O Claude conferiu: index.html, professor.html e cadastro.html idênticos byte a byte ao 1.12.319; em avaliacoes.html, o código é idêntico ao 1.12.319 tirando os blobs de imagem, e as 8 fotos recodificadas de PNG para WebP batem pixel a pixel com o original (mesma dimensão, diferença máxima de pixel = 0, portanto sem perda). Pacote final 23,13 MB. Mesma ressalva do 1.12.319 sobre a falta de registro do 1.12.318",
+   "aprovado": "não",
+   "assinado": "não",
+   "publicado": "não",
+   "instalado": "não",
+   "validado": "não"
   }
- }
+ },
+ "pendencias": [
+  "1.12.318 (fotos de referência dos pontos de dobra) é citado como base do 1.12.319/1.12.320 (autorização do 1.12.320, item 'ap-fotos-medidas'), mas não existe nesta árvore: sem arquivo .agenda.json, sem gerador em tools/ e sem entrada nesta lista antes de 28/11/2026. Não foi gerado pelo Claude em nenhuma sessão registrada aqui. Perguntar ao Tiago a origem (outra ferramenta/sessão?) antes de tratar a cadeia 317→319→320 como auditável ponta a ponta; por ora, o manifesto pula direto do 1.12.317 para o 1.12.319 (ver gerar-manifesto.cjs)."
+ ]
 }
