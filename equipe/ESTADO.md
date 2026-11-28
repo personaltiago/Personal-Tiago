@@ -1,5 +1,16 @@
 # Agenda Personal — ESTADO
 
+## Segurança proposta — 28/11/2026 (sem implantação)
+
+Pedido do Tiago: corrigir os achados da auditoria de segurança. Base `main` `a5cbe9d`; assunto único de segurança com cadastro, autorização, backups e verificação permanente. Rascunho `claude/seguranca-base`. Cadastro: validação, erros conhecidos, CSP com hashes e SDK 13.4.0. Firestore: regras propostas de isolamento/anti-autoaprovação, testadas no emulador. Backups: ferramenta local opcional AES-GCM para JSON exportado. Minutas de privacidade/termos claramente pendentes de dados operacionais e revisão jurídica. Documentação: `equipe/seguranca/`.
+
+Testes locais: 7/7 segurança Node, 11/11 grupos no emulador oficial Firestore, 9/9 avisos existentes, Chromium com cadastro válido/inválido, CSP e backup protegido/restaurado. Serviços e alunos sintéticos; nenhum dado real. Dependências de funções e testes sem alertas no npm audit da revisão; CI novo sem segredos. O relatório lista comandos/limites, sem atribuir teste de APK ou aparelho a este trabalho.
+
+Dependências para concluir: acesso ao console Firebase (redirecionou para login), confronto com regras publicadas, homologação e decisão de implantação; configurações Auth/App Check/IAM/quotas; dados de controlador/contato, bases legais e retenção. Código web fica em PR separado contra `chatgpt/app-web`.
+
+Nenhum pacote de conteúdo, versão/sequência, chave, APK, treino, descanso ou mascote foi alterado; nada assinado, publicado ou mesclado. Reversão do código: reverter o PR antes de nova implantação. Regras de produção não foram alteradas; uma futura aplicação exige guardar a política anterior e verificar que eventual retorno não reabre o acesso indevido. Detalhes: `equipe/seguranca/OPERACAO.md`.
+
+
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
 **28/11, 08h05 (Claude): 1.12.320 (seq 426) "Protocolos de 3 e 7 dobras, pacote compacto" proposto, em PR rascunho, registrando o 1.12.319 e o 1.12.320. Nada assinado, publicado nem instalado.**

@@ -1,0 +1,9 @@
+# Enforcement requires a ruleset requiring code-owner reviews on the target branch.
+/.github/ @personaltiago
+/firebase/ @personaltiago
+/cadastro-aluno.html @personaltiago
+/seguranca-cadastro.js @personaltiago
+/backup-* @personaltiago
+/privacidade* @personaltiago
+/termos.html @personaltiago
+/equipe/seguranca/ @personaltiago

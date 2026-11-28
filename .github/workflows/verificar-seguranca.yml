@@ -1,0 +1,58 @@
+name: Verificar segurança
+on:
+  pull_request:
+    paths:
+      - 'cadastro-aluno.html'
+      - 'seguranca-cadastro.js'
+      - 'backup-*'
+      - 'privacidade*'
+      - 'termos.html'
+      - 'firebase/**'
+      - 'equipe/seguranca/**'
+      - 'tools/*segredos*'
+      - 'tools/*csp*'
+      - '.github/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  seguranca:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: firebase/security/package-lock.json
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: node --test equipe/seguranca/testes/*.test.cjs
+      - run: node tools/atualizar-csp-cadastro.cjs --conferir
+      - run: node tools/verificar-segredos.cjs
+      - run: npm ci --ignore-scripts --prefix firebase/security
+      - run: npm audit --audit-level=moderate --prefix firebase/security
+      - name: Firestore emulado, sem projeto real
+        run: npm test --prefix firebase/security
+      - name: Chromium com Firebase sintético
+        run: |
+          firebase/security/node_modules/.bin/playwright install --with-deps chromium
+          NODE_PATH="$PWD/firebase/security/node_modules" node equipe/seguranca/testes/navegador.cjs
+  avisos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --prefix firebase/functions
+      - run: npm audit --audit-level=moderate --prefix firebase/functions
+      - run: npm test --prefix firebase/functions
