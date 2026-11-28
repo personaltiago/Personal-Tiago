@@ -2,6 +2,8 @@
 
 ## 0. Atualização de 20/11/2026 (Claude, issues #22 e #23; PR #25 em rascunho, revisão de 20/11 12:47 aplicada) — vale acima das seções antigas
 
+**28/11, 08h14 (Claude): 1.12.320 assinado.** O Tiago escolheu "Mesclar e assinar já" (pergunta no app), ciente de que faltava o teste no Chrome dessa tela. Merge do PR #70 (commit a5cbe9d) pelo Claude depois do CI verde. Assinatura: execução 46143991725, pré-lançamento `conteudo-46143991725-1`, arquivo assinado SHA-256 `8ed6d70fc0d537e70f973c5ecfdf683429e855025b431281637bfd3b2fb06a0f` (sem a assinatura, idêntico ao proposto, conferido pelo Claude). Referência passa a 1.12.320/426. **Pendências que seguem em aberto:** (1) o 1.12.318 não existe nesta árvore — o Tiago confirmou que era trabalho dele fora do repositório, nunca chegou a subir aqui; não é um pacote perdido; (2) falta o teste no Chrome da tela de protocolo 3/7 dobras — vale escrever antes de publicar/instalar. Falta instalar e validar no aparelho.
+
 **28/11, 08h05 (Claude): 1.12.320 (seq 426) "Protocolos de 3 e 7 dobras, pacote compacto" proposto, em PR rascunho, registrando o 1.12.319 e o 1.12.320. Nada assinado, publicado nem instalado.**
 - **Origem:** os dois arquivos (1.12.319 e 1.12.320) e a autorização do 1.12.320 foram entregues prontos pelo Tiago no chat (28/11, ~07:52 e ~08:00) — **não foram gerados pelo Claude nesta sessão**. O Claude revisou o conteúdo, não só confiou no nome do arquivo nem numa análise colada pelo Tiago.
 - **Pedido (Tiago):** "a de três dobras e a de 7" na avaliação, preservando as fotos do 1.12.318; depois, compactar para caber no limite de 25 MB do site de upload, sem tirar função nem mexer nas fotos.

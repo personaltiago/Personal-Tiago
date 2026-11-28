@@ -301,14 +301,15 @@
   },
   "1.12.320": {
    "proposto": "sim: o Tiago subiu o arquivo pronto no chat (28/11/2026, ~08:00) com equipe/canonico/alteracoes-autorizadas/1.12.320.json, corrigindo o 1.12.319 (limite de 25 MB para upload no site); não foi gerado pelo Claude nesta sessão. O Claude conferiu: index.html, professor.html e cadastro.html idênticos byte a byte ao 1.12.319; em avaliacoes.html, o código é idêntico ao 1.12.319 tirando os blobs de imagem, e as 8 fotos recodificadas de PNG para WebP batem pixel a pixel com o original (mesma dimensão, diferença máxima de pixel = 0, portanto sem perda). Pacote final 23,13 MB. Mesma ressalva do 1.12.319 sobre a falta de registro do 1.12.318",
-   "aprovado": "não",
-   "assinado": "não",
+   "aprovado": "sim: o Tiago escolheu \"Mesclar e assinar já\" (28/11/2026, ~08:14, pergunta no app), ciente de que faltava o teste no Chrome; merge a5cbe9d (PR #70) feito pelo Claude depois do CI verde",
+   "assinado": "sim: execução 46143991725 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok); pré-lançamento conteudo-46143991725-1 (arquivo assinado SHA-256 8ed6d70fc0d537e70f973c5ecfdf683429e855025b431281637bfd3b2fb06a0f; sem a assinatura, idêntico ao proposto, conferido pelo Claude)",
    "publicado": "não",
    "instalado": "não",
    "validado": "não"
   }
  },
  "pendencias": [
-  "1.12.318 (fotos de referência dos pontos de dobra) é citado como base do 1.12.319/1.12.320 (autorização do 1.12.320, item 'ap-fotos-medidas'), mas não existe nesta árvore: sem arquivo .agenda.json, sem gerador em tools/ e sem entrada nesta lista antes de 28/11/2026. Não foi gerado pelo Claude em nenhuma sessão registrada aqui. Perguntar ao Tiago a origem (outra ferramenta/sessão?) antes de tratar a cadeia 317→319→320 como auditável ponta a ponta; por ora, o manifesto pula direto do 1.12.317 para o 1.12.319 (ver gerar-manifesto.cjs)."
+  "1.12.318 (fotos de referência dos pontos de dobra) é citado como base do 1.12.319/1.12.320 (autorização do 1.12.320, item 'ap-fotos-medidas'), mas não existe nesta árvore: sem arquivo .agenda.json, sem gerador em tools/ e sem entrada nesta lista antes de 28/11/2026. O Tiago confirmou (28/11, ~08:13) que era trabalho dele mesmo fora deste repositório, que foi crescendo, e que nunca subiu aqui porque ele não publicou essa atualização intermediária; não é um pacote perdido nem um erro de outra sessão.",
+  "O 1.12.320 foi assinado (execução 46143991725) sem o teste no Chrome da tela de protocolo 3/7 dobras, que não existe em equipe/testes/navegador/ — decisão explícita do Tiago (\"Mesclar e assinar já\", 28/11 ~08:14), depois de eu apontar essa lacuna. Vale escrever esse teste antes de publicar/instalar, já que os outros testes automáticos cobrem regressão e integridade do pacote, não o comportamento visual da tela nova."
  ]
 }
