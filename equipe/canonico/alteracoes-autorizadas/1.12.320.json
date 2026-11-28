@@ -1,0 +1,59 @@
+{
+  "versao": "1.12.320",
+  "sequencia": 426,
+  "titulo": "Protocolos de 3 e 7 dobras, pacote abaixo de 25 MB",
+  "base": {
+    "referencia": "pacote-1-12-316-smartwatch-no-treino",
+    "impressao": "da85e0eb074bdd4b69acf23c02f97187336ee9e8967e89243551f6566f168943"
+  },
+  "pedido": "Tiago, nesta conversa: Beleza faz aquelas duas opção mesmo a de três dobras e a de 7. Preservar a proposta de fotos 1.12.318. Tiago informou o limite de 25 MB no site: compactar a entrega sem retirar funções ou alterar as fotografias.",
+  "aprovado_por": "Pedido de implementação e entrega local. A autorização do 1.12.317 é preservada conforme o ZIP; não registra aprovação de merge, assinatura, publicação ou instalação desta proposta.",
+  "gerador": "tools/gerar-dobras-compactas-1.12.320.cjs",
+  "justificativa_pacote_completo": "A avaliação e a geração/importação de relatórios são um script sem id, fora dos blocos que UpdateAreaPatch pode substituir. Preserva exatamente as outras páginas do 1.12.318.",
+  "alteracoes": [
+    {
+      "pagina": "professor.html",
+      "id": "ap-cronometro-livre-css",
+      "antes": null,
+      "depois": "abc44e96c95684c2e02159c743333f94cd14eea548add801d6993b0a550b70ca",
+      "motivo": "Preservação exata do 1.12.317 já presente no ZIP/main e da autorização 1.12.317.json. Não é uma nova alteração de cronômetros nesta tarefa."
+    },
+    {
+      "pagina": "professor.html",
+      "id": "ap-cronometro-livre",
+      "antes": null,
+      "depois": "3eed9ea534cf13d5dd604cf4f2f111757f1c0deaaf56c34897956bfc441d74d1",
+      "motivo": "Preservação exata do 1.12.317 já presente no ZIP/main e da autorização 1.12.317.json. Não é uma nova alteração de cronômetros nesta tarefa."
+    },
+    {
+      "pagina": "professor.html",
+      "id": "#fora-dos-blocos",
+      "antes": "22de015f1bce5c85107742bf8ed2877c757ad97ae7d361573f90952c25b0bf7d",
+      "depois": "ec8accd794cb081a9ef8f1d3f6d5700c4bd30bd6138ffc662f4f4bf553a87e38",
+      "motivo": "Preservação exata do 1.12.317 já presente no ZIP/main e da autorização 1.12.317.json. Não é uma nova alteração de cronômetros nesta tarefa."
+    },
+    {
+      "pagina": "avaliacoes.html",
+      "id": "ap-protocolos-dobras-css",
+      "antes": null,
+      "depois": "dac9679c435e2ae189a9e101da19422c8cbda108595e2c0c4649c67c677774e7",
+      "motivo": "Escolha de protocolo 3/7 solicitada por Tiago: campos, equações publicadas, persistência do protocolo, PDF, histórico e comparação entre o mesmo protocolo; fotos 1.12.318 preservadas."
+    },
+    {
+      "pagina": "avaliacoes.html",
+      "id": "ap-fotos-medidas",
+      "antes": null,
+      "depois": "3a4502a7582e125c3acac16201eb70cc1610270338256c3fb22b4eca1c22863c",
+      "motivo": "Escolha de protocolo 3/7 solicitada por Tiago: campos, equações publicadas, persistência do protocolo, PDF, histórico e comparação entre o mesmo protocolo; fotos 1.12.318 preservadas. Oito fotografias PNG passam a WebP lossless; mesmos pixels e dimensões. Códigos da consulta, créditos e avisos idênticos ao 319."
+    },
+    {
+      "pagina": "avaliacoes.html",
+      "id": "#fora-dos-blocos",
+      "antes": "d7e829fe775428c74a417626930030423b96467cf552d3621e529b8752521795",
+      "depois": "eea61afb86a827b071e0f59168ca092501d75aa3af9c8333f59a77b392a84d09",
+      "motivo": "Escolha de protocolo 3/7 solicitada por Tiago: campos, equações publicadas, persistência do protocolo, PDF, histórico e comparação entre o mesmo protocolo; fotos 1.12.318 preservadas."
+    }
+  ],
+  "remocoes": [],
+  "reversoes": []
+}

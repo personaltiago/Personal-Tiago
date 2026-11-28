@@ -74,6 +74,14 @@ const CADEIA = [
   ['1.12.316', 'AgendaPersonal-1.12.316-Smartwatch-No-Treino-Para-Assinar.agenda.json', '88c89220889ee15a769be5843537197c42b10aefe819a1f86e481421c07dc991', 'main'],
   // Gerado pelo Claude (tools/gerar-cronometro-livre-1.12.317.cjs), entregue no PR junto com a classificação.
   ['1.12.317', 'AgendaPersonal-1.12.317-Cronometro-Livre-Para-Assinar.agenda.json', 'c04ce773d24fd81603a6836a0aa2ed3b8d4e71ed7416f4769e4eac5656c81329', 'main'],
+  // 1.12.319 (mesmo título) foi entregue pelo Tiago (28/11/2026), revisado pelo Claude e substituído pelo 1.12.320 antes de
+  // qualquer mescla (8 das 22 fotos do guia estavam em PNG, 900x598, triplicando avaliacoes.html). Nunca subiu na raiz da main,
+  // de propósito: subir um .agenda.json na raiz aqui dispara a assinatura automática (push na main, *.agenda.json), e o 1.12.319
+  // nunca deveria ser assinado. SHA-256 do arquivo entregue (fora da cadeia): 4818b39778a37b9c06538c860d998556989b4138bd35c4d8b1a416251087827f.
+  // Entregue pelo Tiago (28/11/2026) com equipe/canonico/alteracoes-autorizadas/1.12.320.json; mesmo conteúdo do 1.12.319, as 8 fotos
+  // PNG grandes recodificadas em WebP sem perda, pixel a pixel idêntico (conferido pelo Claude). Sem o 1.12.318 registrado
+  // separadamente — ver equipe/ESTADO.md e status-pacotes.json -> pendencias.
+  ['1.12.320', 'AgendaPersonal-1.12.320-Dobras-3-e-7-Compacta-Para-Revisar.agenda.json', 'd61bdc4b646f0ca48ecab75c9d81572abb83dabf69eb652851f937f54bea0400', 'main'],
 ];
 // Correções por área da raiz da main. "esperado": a situação no canônico que o Tiago já conhece (presente, evoluída ou conflito).
 const CORRECOES = [
