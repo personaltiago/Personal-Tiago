@@ -1,0 +1,66 @@
+name: Compilar app do relógio (teste, sem publicar)
+
+# Avaliação do Smartwatch: compila só o módulo Wear OS (wear/ + watch-common/) do ZIP oficial e roda os testes dele.
+# Usa a chave de depuração do GitHub: não lê a chave oficial, não cria Release, não envia arquivo nenhum e não publica nada.
+# Serve só para saber se o app do relógio compila. O APK oficial continua só em "Gerar e publicar APK Agenda Personal".
+on:
+  pull_request:
+    paths:
+      - 'AgendaPersonal_AndroidStudio_v1.65_contas_convites.zip'
+      - '.github/workflows/compilar-relogio-teste.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: compilar-relogio-teste-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compilar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Extrair o projeto do ZIP oficial
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os, stat, zipfile
+          from pathlib import Path
+          source = Path('AgendaPersonal_AndroidStudio_v1.65_contas_convites.zip')
+          target = Path(os.environ['RUNNER_TEMP']) / 'agenda-project'
+          target.mkdir()
+          with zipfile.ZipFile(source) as archive:
+              for item in archive.infolist():
+                  path = target / item.filename
+                  if not path.resolve().is_relative_to(target.resolve()) or stat.S_ISLNK(item.external_attr >> 16):
+                      raise RuntimeError('Caminho inválido no ZIP.')
+              archive.extractall(target)
+          projects = list(target.rglob('settings.gradle'))
+          if len(projects) != 1:
+              raise RuntimeError('O ZIP precisa conter um único projeto Android.')
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('PROJECT_DIR=' + str(projects[0].parent) + '\n')
+          PY
+      - name: Compilar o app do relógio e rodar os testes dele (depuração, sem a chave oficial)
+        shell: bash
+        run: |
+          cd "$PROJECT_DIR"
+          unset ANDROID_KEYSTORE_PATH ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD
+          gradle :wear:assembleDebug :wear:testDebugUnitTest --console=plain
+          apk=wear/build/outputs/apk/debug/wear-debug.apk
+          test -s "$apk"
+          aapt=$(ls "$ANDROID_HOME"/build-tools/*/aapt2 | sort -V | tail -1)
+          "$aapt" dump badging "$apk" | grep -E "^(package|sdkVersion|targetSdkVersion|uses-feature: name='android.hardware.type.watch')" || true
+          ls -l "$apk"
+          sha256sum "$apk"
+          echo "O APK de teste fica só nesta máquina do GitHub e é apagado ao fim da execução."
