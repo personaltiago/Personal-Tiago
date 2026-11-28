@@ -11,15 +11,15 @@
   "motivo": "Último pacote completo ASSINADO e INSTALADO no aparelho do Tiago: prints de Mais > Smartwatch no Xiaomi (25/11/2026 22:07) com a chave \"Usar smartwatch\", que só existe no 1.12.316, e a mensagem dele de que o ícone do relógio apareceu no treino (22:08). O 1.12.316 inclui o 1.12.315. Antes: 1.12.314 (prints de 24/11/2026 21:39–21:40)."
  },
  "referencia": {
-  "id": "pacote-1-12-316-smartwatch-no-treino",
+  "id": "pacote-1-12-320-avaliacao-3-ou-7-dobras-arquivo-menor",
   "descricao": "Estado consolidado que nenhuma atualização nova pode perder: o último passo ASSINADO da cadeia (pacote completo ou complemento). Não quer dizer instalado: ver status de cada passo.",
-  "arquivo": "AgendaPersonal-1.12.316-Smartwatch-No-Treino-Para-Assinar.agenda.json",
-  "sha256": "88c89220889ee15a769be5843537197c42b10aefe819a1f86e481421c07dc991",
-  "versao_efetiva": "1.12.316",
-  "sequencia_efetiva": 422,
-  "proxima_versao_livre": "1.12.317",
-  "proxima_sequencia_livre": 423,
-  "impressao": "da85e0eb074bdd4b69acf23c02f97187336ee9e8967e89243551f6566f168943"
+  "arquivo": "AgendaPersonal-1.12.320-Dobras-3-e-7-Compacta-Para-Revisar.agenda.json",
+  "sha256": "d61bdc4b646f0ca48ecab75c9d81572abb83dabf69eb652851f937f54bea0400",
+  "versao_efetiva": "1.12.320",
+  "sequencia_efetiva": 426,
+  "proxima_versao_livre": "1.12.321",
+  "proxima_sequencia_livre": 427,
+  "impressao": "10741a7d7480d9fd970a3fd04957f1357b3428b0d4246db7206a48643e6436b7"
  },
  "compartilhados": [
   "ap-workout-audio",
@@ -710,8 +710,8 @@
    "titulo": "Avaliação: 3 ou 7 dobras · arquivo menor",
    "status": {
     "proposto": "sim: o Tiago subiu o arquivo pronto no chat (28/11/2026, ~08:00) com equipe/canonico/alteracoes-autorizadas/1.12.320.json, corrigindo o 1.12.319 (limite de 25 MB para upload no site); não foi gerado pelo Claude nesta sessão. O Claude conferiu: index.html, professor.html e cadastro.html idênticos byte a byte ao 1.12.319; em avaliacoes.html, o código é idêntico ao 1.12.319 tirando os blobs de imagem, e as 8 fotos recodificadas de PNG para WebP batem pixel a pixel com o original (mesma dimensão, diferença máxima de pixel = 0, portanto sem perda). Pacote final 23,13 MB. Mesma ressalva do 1.12.319 sobre a falta de registro do 1.12.318",
-    "aprovado": "não",
-    "assinado": "não",
+    "aprovado": "sim: o Tiago escolheu \"Mesclar e assinar já\" (28/11/2026, ~08:14, pergunta no app), ciente de que faltava o teste no Chrome; merge a5cbe9d (PR #70) feito pelo Claude depois do CI verde",
+    "assinado": "sim: execução 46143991725 (\"Conferir regressão antes de assinar\" e \"Assinar e verificar com a chave oficial\" ok); pré-lançamento conteudo-46143991725-1 (arquivo assinado SHA-256 8ed6d70fc0d537e70f973c5ecfdf683429e855025b431281637bfd3b2fb06a0f; sem a assinatura, idêntico ao proposto, conferido pelo Claude)",
     "publicado": "não",
     "instalado": "não",
     "validado": "não"
@@ -2117,8 +2117,18 @@
     "area": "geral",
     "vezes": 1
    },
+   "ap-cronometro-livre-css": {
+    "hash": "abc44e96c95684c2e02159c743333f94cd14eea548add801d6993b0a550b70ca",
+    "area": "geral",
+    "vezes": 1
+   },
+   "ap-cronometro-livre": {
+    "hash": "3eed9ea534cf13d5dd604cf4f2f111757f1c0deaaf56c34897956bfc441d74d1",
+    "area": "geral",
+    "vezes": 1
+   },
    "#fora-dos-blocos": {
-    "hash": "22de015f1bce5c85107742bf8ed2877c757ad97ae7d361573f90952c25b0bf7d",
+    "hash": "ec8accd794cb081a9ef8f1d3f6d5700c4bd30bd6138ffc662f4f4bf553a87e38",
     "area": "geral",
     "vezes": 1
    }
@@ -2214,6 +2224,11 @@
     "area": "geral",
     "vezes": 1
    },
+   "ap-protocolos-dobras-css": {
+    "hash": "dac9679c435e2ae189a9e101da19422c8cbda108595e2c0c4649c67c677774e7",
+    "area": "geral",
+    "vezes": 1
+   },
    "pdfjs-core-gzip": {
     "hash": "d01e42ec9dea7ac1262e1f9340de350f6ebb54fea7e0e6e876e598919b8a6d21",
     "area": "geral",
@@ -2244,8 +2259,13 @@
     "area": "geral",
     "vezes": 1
    },
+   "ap-fotos-medidas": {
+    "hash": "3a4502a7582e125c3acac16201eb70cc1610270338256c3fb22b4eca1c22863c",
+    "area": "geral",
+    "vezes": 1
+   },
    "#fora-dos-blocos": {
-    "hash": "d7e829fe775428c74a417626930030423b96467cf552d3621e529b8752521795",
+    "hash": "eea61afb86a827b071e0f59168ca092501d75aa3af9c8333f59a77b392a84d09",
     "area": "geral",
     "vezes": 1
    }
@@ -4127,6 +4147,10 @@
    {
     "hash": "22de015f1bce5c85107742bf8ed2877c757ad97ae7d361573f90952c25b0bf7d",
     "desde": "1.12.315"
+   },
+   {
+    "hash": "ec8accd794cb081a9ef8f1d3f6d5700c4bd30bd6138ffc662f4f4bf553a87e38",
+    "desde": "1.12.317"
    }
   ],
   "avaliacoes.html|ap-native-store": [
@@ -4281,6 +4305,10 @@
    {
     "hash": "d7e829fe775428c74a417626930030423b96467cf552d3621e529b8752521795",
     "desde": "1.12.299"
+   },
+   {
+    "hash": "eea61afb86a827b071e0f59168ca092501d75aa3af9c8333f59a77b392a84d09",
+    "desde": "1.12.320"
    }
   ],
   "cadastro.html|ap-registration-photo-css": [
@@ -4579,6 +4607,30 @@
    {
     "hash": "4e430fcd63ce50ec3260b51db90b144a2a71d7d02f64b87f9ad7d68c209bc68b",
     "desde": "1.12.314"
+   }
+  ],
+  "professor.html|ap-cronometro-livre-css": [
+   {
+    "hash": "abc44e96c95684c2e02159c743333f94cd14eea548add801d6993b0a550b70ca",
+    "desde": "1.12.317"
+   }
+  ],
+  "professor.html|ap-cronometro-livre": [
+   {
+    "hash": "3eed9ea534cf13d5dd604cf4f2f111757f1c0deaaf56c34897956bfc441d74d1",
+    "desde": "1.12.317"
+   }
+  ],
+  "avaliacoes.html|ap-protocolos-dobras-css": [
+   {
+    "hash": "dac9679c435e2ae189a9e101da19422c8cbda108595e2c0c4649c67c677774e7",
+    "desde": "1.12.320"
+   }
+  ],
+  "avaliacoes.html|ap-fotos-medidas": [
+   {
+    "hash": "3a4502a7582e125c3acac16201eb70cc1610270338256c3fb22b4eca1c22863c",
+    "desde": "1.12.320"
    }
   ]
  },
