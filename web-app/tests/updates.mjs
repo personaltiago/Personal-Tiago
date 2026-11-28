@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-const source=await readFile(new URL('../worker/index.js',import.meta.url),'utf8');
+const source=await readFile(new URL('../dist/server/index.js',import.meta.url),'utf8');
 const {createHandler}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
 class Bucket{
  map=new Map();counter=0;
@@ -30,5 +30,5 @@ const conflict=bundle(99);conflict.files['index.html']+='different';assert.equal
 const race=await Promise.all([api(post(bundle(100)),env),api(post(bundle(101)),env)]);assert.ok(race.every(r=>[201,409].includes(r.status)));assert.equal((await (await api(get('/api/manifest'),env)).json()).sequence,101);
 const preflight=await api(new Request(url+'/api/publish',{method:'OPTIONS',headers:{Origin:'https://appassets.androidplatform.net'}}),env);assert.equal(preflight.status,204);assert.ok(preflight.headers.get('Access-Control-Allow-Headers').includes('Authorization'));
 assert.equal((await api(new Request(url+'/api/manifest',{headers:{Origin:'https://evil.test'}}),env)).headers.get('Access-Control-Allow-Origin'),null);
-assert.equal((await api(post('x'.repeat(24*1024*1024+1)),env)).status,413);
+const originalNow=Date.now;try{Date.now=()=>originalNow()+60001;assert.equal((await api(post('x'.repeat(24*1024*1024+1)),env)).status,413);}finally{Date.now=originalNow;}
 console.log('PASS: teacher verification, denied student/disabled/invalid tokens, complete bundle, no native snapshots, size limits, atomic monotonic publication, duplicate retry, anonymous manifest/download, SHA-256 and Android CORS. Firebase/R2 simulated.');
