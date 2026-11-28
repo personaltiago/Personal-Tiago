@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {gzipSync} from 'node:zlib';
-const source=await readFile(new URL('../worker/index.js',import.meta.url),'utf8');
+const source=await readFile(new URL('../dist/server/index.js',import.meta.url),'utf8');
 const digest=async bytes=>Buffer.from(await crypto.subtle.digest('SHA-256',bytes)).toString('hex');
 const originalSpec=JSON.parse(source.match(/^const HOSTED_RELEASE=(.*);$/m)[1]);
 const bundle=(version,sequence,text='')=>({format:1,appId:'com.tiagolima.agendapersonal',bridgeVersion:3,dataSchema:4,version,sequence,files:Object.fromEntries(['index.html','professor.html','avaliacoes.html','cadastro.html'].map(name=>[name,'<html><head></head><body>'+text+'<script data-agenda-ready></script></body></html>']))});

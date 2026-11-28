@@ -1,5 +1,14 @@
 # Agenda Personal — ESTADO
 
+## Segurança web proposta — 28/11/2026 (sem publicação)
+
+Base `chatgpt/app-web` `7a0df1b`; rascunho `claude/seguranca-web` contra essa branch. Rate limit por conta e escopo, fallback limitado ao isolate e suporte opcional a bindings nativos (não configurados). Chamadas Firebase sem redirects, headers de segurança e erros inesperados redigidos. SDK 13.4.0, fflate 0.8.3 e gRPC Node 1.14.7 com bundle/recursos reconstruídos; npm audit de 12 entradas para zero. Nenhuma mudança em pacote assinado ou dados reais.
+
+Build e validação ESM passaram. Testes preservam login persistente, APIs privadas e fluxos existentes com Firebase/R2 sintéticos; nova matriz cobre 15 rotas e limites/concorrência/expiração. Testes de atualização/release usam agora o artefato autocontido construído, pois data URL não resolve import relativo do aquário. Evidências, limites e comandos: `web-app/SEGURANCA.md`. CI novo não possui segredos nem deploy.
+
+Ainda requer homologação dos clientes e configurações de infraestrutura; fallback local não é defesa global contra bots/DDoS. Regras publicadas e revisão LGPD ficam no PR da fundação contra main. Não houve publicação no Sites, instalação, merge, assinatura ou alteração de cronômetros/mascotes. Para uma futura implantação, preservar versão anterior do Sites e validar antes de mudar a produção; retorno consiste em restaurar a revisão publicada anterior.
+
+
 ## Publicação web com progresso confirmado (21/11/2026)
 
 O rascunho em `chatgpt/web-publication-progress` parte da publicação 44 exportada no PR anterior. O painel informa bytes lidos e enviados e usa barra indeterminada quando a etapa não tem total conhecido. Em caso de erro, preserva a última medição da etapa. Tentar de novo consulta o manifesto antes de reenviar. O sucesso exige que o manifesto sem cache confirme versão, sequência, tamanho e SHA-256 do pacote. O recibo informa o arquivo enviado, a versão disponível no servidor e a versão carregada no aparelho, com data e hora.
